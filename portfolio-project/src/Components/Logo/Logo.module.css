@@ -1,0 +1,18 @@
+.Logo {
+  position: absolute;
+  top: 20px;
+  left: 60px;
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+  /* Додаємо анімацію */
+  transition: transform 0.3s ease-in-out;
+}
+
+.Logo:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
