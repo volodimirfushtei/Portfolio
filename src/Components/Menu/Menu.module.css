@@ -1,0 +1,27 @@
+Menu {
+  position: absolute;
+  top: 200px;
+  left: 80px;
+  width: 48px;
+  height: 200px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  border-radius: 8px;
+  padding: 1rem;
+  background: linear-gradient(
+    to bottom,
+    #1c1d5033,
+    #4b67e333,
+    /* cc = 80% прозорості */ #7274ed,
+    #4b4ee333,
+    #1c1d5033
+  );
+  border: 1px solid rgba(248, 244, 244, 0.1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
