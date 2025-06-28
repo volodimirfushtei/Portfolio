@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import s from "./homePage.module.css";
 import TechIcon from "../../Components/TechIcon/TechIcon.jsx";
-import Logo from "../../Components/Logo/Logo.jsx";
+
 import MenuIcon from "../../Components/MenuIcon/MenuIcon";
 import { Link, NavLink } from "react-router-dom";
 
-import gsap from "gsap";
 import ControllerSkills from "../../Components/ControllerSkills/ControllerSkills.jsx";
-
+import ControllerMenu from "../../Components/ControllerMenu/ControllerMenu.jsx";
 const HomePage = () => {
   const [hovered, setHovered] = useState(false);
 
@@ -28,95 +27,23 @@ const HomePage = () => {
     { src: "/icons/mongodb.svg", alt: "MongoDB" },
   ];
 
-  const items = [
-    { src: "/icons/home.svg", alt: "Home" },
-    { src: "/icons/tech.svg", alt: "Tech" },
-    { src: "/icons/projects.svg", alt: "Projects" },
-    { src: "/icons/contacts.svg", alt: "Contacts" },
-  ];
-
-  // Анімована стрічка меню
-  useEffect(() => {
-    gsap
-      .to(".menu", {
-        y: "-50%",
-        repeat: -1,
-        duration: 20,
-        ease: "linear",
-        yoyo: true,
-        repeatDelay: 0,
-        delay: 0,
-        paused: true,
-      })
-      .progress(0.2)
-      .play(); // Початкова позиція стрічки меню
-
-    gsap.to(".menu", {
-      y: "0%",
-      repeat: -1,
-      duration: 10,
-      ease: "linear",
-      yoyo: true,
-      repeatDelay: 0,
-      delay: 0,
-      paused: true,
-    });
-
-    return () => gsap.killTweensOf(".menu");
-  }, []);
-
-  useEffect(() => {
-    gsap.to(".skills", {
-      x: "-50%",
-      repeat: -1,
-      duration: 10,
-      ease: "linear",
-      yoyo: true,
-      repeatDelay: 0,
-      delay: 0,
-      paused: true,
-    });
-  }, []);
-
   return (
-    <div className={s.container}>
-      {/* Головний блок */}
+    <div className={s.container_home}>
       <div className={s.content}>
-        <Logo />
-        <div className={s.menu}>
-          <div className="menu">
-            {items.map((item) => (
-              <NavLink
-                key={item.alt}
-                to={`/${item.alt.toLowerCase()}`}
-                className={s.menuItem}
-              >
-                <MenuIcon src={item.src} alt={item.alt} />
-                <span className={s.alt}>{item.alt}</span>
-              </NavLink>
-            ))}
-            {/* Дублюємо для безперервного скролу */}
-            {items.map((item) => (
-              <NavLink
-                key={`dup-${item.alt}`}
-                to={`/${item.alt.toLowerCase()}`}
-                className={s.menuItem}
-              >
-                <MenuIcon src={item.src} alt={item.alt} />
-                <span className={s.alt}>{item.alt}</span>
-              </NavLink>
-            ))}
-          </div>
-        </div>
-
-        {/* Текст і картинка */}
         <div className={s.text}>
           <h1 className={s.title}>Hello, I’m a Fullstack Developer</h1>
           <p className={s.paragraph}>
             I specialize in building modern, fast and scalable websites and web
             applications.
           </p>
-          <button className={s.button}>View My Work</button>
+          <button
+            className={s.button}
+            onClick={() => {
+              window.location.href = "https://github.com/volodimirfushtei";
+            }}
+          >
+            View My Projects
+          </button>
         </div>
         <div className={s.preview}>
           <img
@@ -131,7 +58,6 @@ const HomePage = () => {
           </p>
         </div>
       </div>
-
       {/* Стек технологій */}
       <ControllerSkills items={skills} />
     </div>

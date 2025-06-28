@@ -1,13 +1,13 @@
-.Menu {
+Menu {
   position: absolute;
   top: 200px;
   left: 80px;
-  width: 38px;
+  width: 48px;
   height: 200px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   gap: 1rem;
   margin-top: 2rem;

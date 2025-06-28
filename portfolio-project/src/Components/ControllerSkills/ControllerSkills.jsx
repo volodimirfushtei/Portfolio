@@ -3,37 +3,28 @@ import s from "./ControllerSkills.module.css";
 import TechIcon from "../TechIcon/TechIcon";
 import gsap from "gsap";
 
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 const ControllerSkills = ({ items }) => {
-  const trackRef = useRef(null); // краще вказати ref замість класу
+  const trackRef = useRef(null);
 
   useEffect(() => {
     const animation = gsap.to(trackRef.current, {
-      x: "-60%",
-      repeat: -1,
+      x: "-=100%",
+      ease: "none",
+      scrollTrigger: {
+        trigger: trackRef.current,
+        start: "top top",
+        end: "bottom top",
+        scrub: 1,
+        pin: true,
+        markers: true,
+      },
       duration: 20,
-      ease: "linear",
     });
 
-    animation.timeScale(1.5); // прискорення
-
-    // Пауза при ховері
-    const handleHover = () => {
-      animation.pause();
-    };
-
-    const handleLeave = () => {
-      animation.resume();
-    };
-
-    const container = trackRef.current;
-    container.addEventListener("mouseenter", handleHover);
-    container.addEventListener("mouseleave", handleLeave);
-
-    return () => {
-      animation.kill();
-      container.removeEventListener("mouseenter", handleHover);
-      container.removeEventListener("mouseleave", handleLeave);
-    };
+    return () => animation.kill();
   }, [items]);
 
   return (
@@ -44,7 +35,6 @@ const ControllerSkills = ({ items }) => {
             <TechIcon src={item.src} alt={item.alt} />
           </div>
         ))}
-        {/* Дублюємо для безперервного скролу */}
         {items.map((item) => (
           <div key={`dup-${item.alt}`} className={s.tech_item}>
             <TechIcon src={item.src} alt={item.alt} />
