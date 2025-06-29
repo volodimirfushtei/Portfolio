@@ -202,3 +202,48 @@
   background: #000;
   z-index: 9999;
 }
+@media (max-width: 768px) {
+  .skills {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+    margin-top: 2rem;
+    border-radius: 8px;
+    padding: 1rem;
+    background: linear-gradient(
+      to right,
+      #1c1d5033,
+      #4b67e333,
+      /* cc = 80% прозорості */ #7274ed,
+      #4b4ee333,
+      #1c1d5033
+    );
+    border: 1px solid rgba(248, 244, 244, 0.1);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+}
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column;
+  }
+
+  .text {
+    margin-bottom: 2rem;
+  }
+
+  .preview {
+    width: 100%;
+  }
+}
+@media (max-width: 375px) {
+  .skills {
+    flex-direction: column;
+  }
+
+  .preview {
+    width: 100%;
+  }
+}

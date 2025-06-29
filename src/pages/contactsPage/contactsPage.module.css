@@ -96,3 +96,61 @@
     background-position: 0% 50%;
   }
 }
+@media screen and (max-width: 768px) {
+  .text {
+    width: 100%;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .text {
+    width: 100%;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .title_2 {
+    font-size: 1.5rem;
+  }
+
+  .title_container {
+    width: 100px;
+    height: 20px;
+  }
+
+  .container {
+    padding: 0.5rem;
+  }
+
+  .line {
+    height: 2px;
+  }
+
+  .title_2 {
+    margin-bottom: 1rem;
+  }
+
+  .text {
+    font-size: 0.8rem;
+  }
+
+  .contactsPage {
+    padding: 0.5rem;
+  }
+
+  .container {
+    padding: 0.5rem;
+  }
+
+  .title_container {
+    padding: 0.5rem;
+    width: 100px;
+    height: 20px;
+  }
+}
