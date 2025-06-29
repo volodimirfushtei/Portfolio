@@ -12,7 +12,6 @@ const MenuIcon = ({ src, alt }) => {
         viewBox="0 0 24 24"
         ref={ref}
         className={s.menuIcon}
-        role="img"
         aria-label={alt}
       >
         <title>{alt}</title>

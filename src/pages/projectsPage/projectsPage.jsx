@@ -1,4 +1,5 @@
 import React from "react";
+import { motion as Motion } from "framer-motion";
 
 const projectPage = () => {
   const projects = [
@@ -43,10 +44,17 @@ const projectPage = () => {
   ];
 
   return (
-    <>
-      {/* Секція портфоліо */}
-      <section id="portfolio" className=" ">
-        <div className="container h-[90vh] px-2">
+    <Motion.div
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.5 }}
+      transition={{
+        opacity: { duration: 0.4 },
+        scale: { duration: 0.6 },
+      }}
+    >
+      <div id="portfolio" className="w-full h-full ">
+        <div className="container mx-auto px-2 py-2">
           <div className="text-center mb-16"></div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 ">
@@ -76,7 +84,7 @@ const projectPage = () => {
                     ))}
                   </div>
                   <a
-                    href="#"
+                    href="https://goit-campers-ten.vercel.app/"
                     className="text-primary hover:underline flex items-center"
                   >
                     <span>Live Preview</span>
@@ -87,8 +95,8 @@ const projectPage = () => {
             ))}
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </Motion.div>
   );
 };
 

@@ -1,7 +1,7 @@
 import React from "react";
 import s from "./contactsPage.module.css";
 import { Link } from "react-router-dom";
-
+import { motion as Motion } from "framer-motion";
 import ContactForm from "../../Components/ContactForm/ContactForm";
 
 import ContactInfo from "../../Components/ContactInfo/ContactInfo";
@@ -15,17 +15,28 @@ const contactsPage = () => {
     { src: "/icons/github.svg", alt: "GitHub" },
   ];
   return (
-    <div className={s.contactsPage}>
-      <div className={s.container}>
-        <div className={s.line}></div>
-        <h3 className={s.title_2}>Замовити консультацію</h3>
-        <div className="flex w-full flex-row gap-12">
-          <ContactForm />
-          <ContactInfo items={social_items} key={social_items.alt} />
-          <Consultation />
+    <Motion.div
+      initial={{ width: 0 }}
+      animate={{ width: "95%" }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      style={{
+        height: "3px",
+        background: "linear-gradient(90deg, #ff00cc, #3333ff)",
+        borderRadius: "2px",
+        marginBottom: "2rem",
+      }}
+    >
+      <div className={s.contactsPage}>
+        <div className={s.container}>
+          <h3 className={s.title_2}>Замовити консультацію</h3>
+          <div className="flex w-full flex-row gap-12 ">
+            <ContactForm />
+            <ContactInfo items={social_items} key={social_items.alt} />
+            <Consultation />
+          </div>
         </div>
       </div>
-    </div>
+    </Motion.div>
   );
 };
 

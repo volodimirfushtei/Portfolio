@@ -12,9 +12,9 @@ const Layout = () => {
   ];
   return (
     <div className="flex flex-row mt-4 ">
-      <div className="flex flex-col w-1/10 gap-12 items-center">
-        <Logo />
+      <div className="flex flex-col w-1/10 gap-53 items-center mt-2 ">
         <ControllerMenu items={items} key={items.alt} />
+        <Logo />
       </div>
       <main>
         <Outlet />

@@ -1,4 +1,6 @@
 .menu_scroller {
+  overflow: hidden;
+  white-space: nowrap;
   width: 58px;
   height: 280px;
   cursor: pointer;
@@ -7,14 +9,10 @@
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  gap: 1rem;
-  margin-top: 2rem;
-
+  margin-top: 12rem;
   border-radius: 100px;
-  padding: 1rem;
   background: linear-gradient(
     to bottom,
-
     #202c6133,
     /* cc = 80% прозорості */ #7274ed,
     #4b4ee333

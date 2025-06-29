@@ -2,9 +2,9 @@ import React from "react";
 
 const ContactForm = () => {
   return (
-    <div className="flex w-118 h-full flex-col md:flex-row gap-2 text-left">
+    <div className="flex w-118 h-full flex-col md:flex-row gap-2 text-left hover:shadow-2xl hover:rounded-xl cursor-pointer hover:scale-105 hover:bg-[linear-gradient(90deg,rgba(00,00,00,0.6),rgba(94,96,209,0.6))] transition duration-500 hover:border-2 hover:border-[#5e60ce]">
       <div className="w-full md:min-w-1/2">
-        <div className="bg-[linear-gradient(90deg,rgba(0,255,231,0.1),rgba(94,96,206,0.1))] p-8 rounded-lg shadow-xl hover:shadow-2xl ">
+        <div className="bg-[linear-gradient(90deg,rgba(00,00,00,0.6),rgba(94,96,209,0.6))] p-8 rounded-lg shadow-xl hover:shadow-2xl ">
           <form className="space-y-6">
             <div>
               <label htmlFor="name" className="block text-gray-100 mb-1">
@@ -13,7 +13,7 @@ const ContactForm = () => {
               <input
                 type="text"
                 id="name"
-                className="form-input w-100 px-4 py-3 border border-gray-200 rounded-lg focus:outline-none"
+                className="form-input w-100 px-4 py-2 border border-gray-200 rounded-lg focus:outline-none"
                 placeholder="Ваше ім'я"
               />
             </div>
@@ -25,7 +25,7 @@ const ContactForm = () => {
               <input
                 type="email"
                 id="email"
-                className="form-input w-100 px-4 py-3 border border-gray-200 rounded-lg focus:outline-none"
+                className="form-input w-100 px-4 py-2 border border-gray-200 rounded-lg focus:outline-none"
                 placeholder="Ваш email"
               />
             </div>
@@ -37,7 +37,7 @@ const ContactForm = () => {
               <input
                 type="tel"
                 id="phone"
-                className="form-input w-100 px-4 py-3 border border-gray-200 rounded-lg focus:outline-none"
+                className="form-input w-100 px-4 py-2 border border-gray-200 rounded-lg focus:outline-none"
                 placeholder="Ваш телефон"
               />
             </div>
@@ -53,7 +53,7 @@ const ContactForm = () => {
                 <select
                   id="project-type"
                   defaultValue=""
-                  className="form-input w-100 px-4 py-3 border border-gray-200 rounded-lg focus:outline-none appearance-none pr-8"
+                  className="form-input w-100 px-4 py-2 border border-gray-200 rounded-lg focus:outline-none appearance-none pr-8"
                 >
                   <option value="" disabled>
                     Оберіть тип проєкту
@@ -76,8 +76,8 @@ const ContactForm = () => {
               </label>
               <textarea
                 id="message"
-                rows="5"
-                className="form-input w-100 px-4 py-3 border border-gray-200 rounded-lg focus:outline-none"
+                rows="2"
+                className="form-input w-100 px-4 py-2 border border-gray-200 rounded-lg focus:outline-none"
                 placeholder="Розкажіть детальніше про ваш проєкт..."
               ></textarea>
             </div>

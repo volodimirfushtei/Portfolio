@@ -5,7 +5,7 @@ import SocialIcon from "../SocialIcon/SocialIcon";
 const ContactInfo = ({ items }) => {
   return (
     <div className="w-1/4 h-full">
-      <div className="bg-[linear-gradient(90deg,rgba(0,255,231,0.1),rgba(94,96,206,0.1))] p-8 rounded-lg shadow-xl h-full hover:shadow-2xl">
+      <div className="bg-[linear-gradient(90deg,rgba(00,00,00,0.6),rgba(94,96,209,0.6))] p-8 rounded-lg shadow-xl h-full hover:shadow-2xl hover:rounded-xl cursor-pointer hover:scale-105 hover:bg-[linear-gradient(90deg,rgba(00,00,00,0.6),rgba(94,96,209,0.6))] transition duration-500 hover:border-2 hover:border-[#5e60ce]">
         <div className="space-y-6 mb-4 text-left">
           {/* Email */}
           <div className="flex items-start">
@@ -56,16 +56,13 @@ const ContactInfo = ({ items }) => {
         </div>
 
         {/* Мапа */}
-        <div className="h-64 w-62 rounded-lg overflow-hidden">
-          <div
-            style={{
-              backgroundImage:
-                "url('https://public.readdy.ai/gen_page/map_placeholder_1280x720.png')",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-            className="w-full h-full"
-          ></div>
+        <div className="h-53 w-62 rounded-lg overflow-hidden hover:scale-105 transition duration-500">
+          <img
+            src="https://public.readdy.ai/gen_page/map_placeholder_1280x720.png"
+            alt="Мапа"
+            className="w-full h-full object-cover object-center"
+            loading="lazy"
+          />
         </div>
       </div>
     </div>

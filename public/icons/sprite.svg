@@ -75,7 +75,7 @@
 
   <!-- Technologies Icon -->
   <symbol id="icon-tech" viewBox="0 0 24 24">
-    <path fill="currentColor" d="M19 18l2-2V4H3v12l2 2h3v-2h5v2h7zM5 12h2v2H5v-2zm0 4h2v2H5v-2zm0-8h2V6H5v2zm4 4h2v2H9v-2zm0 4h2v2H9v-2zm0-8h2V6H9v2zm4 4h2v2h-2v-2zm0 4h2v2h-2v-2zm0-8h2V6h-2v2z"/>
+    <path fill="currentColor"  d="M19 18l2-2V4H3v12l2 2h3v-2h5v2h7zM5 12h2v2H5v-2zm0 4h2v2H5v-2zm0-8h2V6H5v2zm4 4h2v2H9v-2zm0 4h2v2H9v-2zm0-8h2V6H9v2zm4 4h2v2h-2v-2zm0 4h2v2h-2v-2zm0-8h2V6h-2v2z"/>
   </symbol>
 
   <!-- Projects Icon -->

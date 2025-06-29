@@ -45,7 +45,7 @@
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  gap: 1rem;
+  margin-top: 2rem;
   width: 95%;
   height: auto;
 
@@ -70,10 +70,11 @@
   margin-bottom: 1rem;
 }
 .title_2 {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   background: linear-gradient(90deg, #00ffe7, #8d8ff2);
   -webkit-background-clip: text;
   background-clip: text;
+  margin-bottom: 2rem;
   -webkit-text-fill-color: transparent;
   animation: shimmerIcon 4s linear infinite;
   filter: brightness(1.1);
