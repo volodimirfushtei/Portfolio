@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
-
 import ControllerMenu from "../ControllerMenu/ControllerMenu";
 import Logo from "../Logo/Logo";
+import Overlay from "../Overlay/Overlay.jsx";
 
 const Layout = () => {
   const items = [
@@ -12,13 +12,13 @@ const Layout = () => {
   ];
   return (
     <div className="flex flex-row mt-4 ">
-      <div className="flex flex-col w-1/10 gap-53 items-center mt-2 ">
+      <div className="flex flex-col w-1/10 gap-46 items-center mt-2 ">
         <ControllerMenu items={items} key={items.alt} />
         <Logo />
       </div>
-      <main>
-        <Outlet />
-      </main>
+      <Overlay />
+
+      <Outlet />
     </div>
   );
 };

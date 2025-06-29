@@ -5,7 +5,7 @@ import SocialIcon from "../SocialIcon/SocialIcon";
 const ContactInfo = ({ items }) => {
   return (
     <div className="w-1/4 h-full">
-      <div className="bg-[linear-gradient(90deg,rgba(00,00,00,0.6),rgba(94,96,209,0.6))] p-8 rounded-lg shadow-xl h-full hover:shadow-2xl hover:rounded-xl cursor-pointer hover:scale-105 hover:bg-[linear-gradient(90deg,rgba(00,00,00,0.6),rgba(94,96,209,0.6))] transition duration-500 hover:border-2 hover:border-[#5e60ce]">
+      <div className="bg-[linear-gradient(90deg,rgba(00,00,00,0.6),rgba(94,96,209,0.6))] p-8 rounded-lg shadow-xl h-full hover:shadow-2xl hover:rounded-xl cursor-pointer hover:scale-102 hover:bg-[linear-gradient(90deg,rgba(00,00,00,0.6),rgba(94,96,209,0.6))] transition duration-500 hover:border-2 hover:border-[#5e60ce]">
         <div className="space-y-6 mb-4 text-left">
           {/* Email */}
           <div className="flex items-start">

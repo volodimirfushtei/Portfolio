@@ -4,7 +4,7 @@ import { RiArrowRightLine } from "react-icons/ri";
 const Consultation = () => {
   return (
     <div
-      className=" w-1/3 h-full hover:shadow-2xl hover:rounded-xl cursor-pointer hover:scale-105 hover:bg-[linear-gradient(90deg,rgba(00,00,00,0.6),rgba(94,96,209,0.6))] transition duration-500 hover:border-2 hover:border-[#5e60ce]"
+      className=" w-1/3 h-full hover:shadow-2xl hover:rounded-xl cursor-pointer hover:scale-102 hover:bg-[linear-gradient(90deg,rgba(00,00,00,0.6),rgba(94,96,209,0.6))] transition duration-500 hover:border-2 hover:border-[#5e60ce]"
       id="consultation"
     >
       <div className="container mx-auto ">
@@ -12,7 +12,7 @@ const Consultation = () => {
           {/* Gradient background with opacity */}
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(00,00,00,0.6),rgba(94,96,209,0.6))] z-0"></div>
 
-          <div className="flex flex-col md:flex-col items-center gap-8 relative z-10">
+          <div className="flex flex-col md:flex-col items-center gap-2 relative z-10">
             <div className="w-full md:w-3/3">
               <h3 className="text-2xl md:text-3xl font-bold mb-2 text-gray-100">
                 Готові обговорити ваш проєкт?
@@ -24,7 +24,7 @@ const Consultation = () => {
               </p>
               <a
                 href="#contact"
-                className="inline-flex items-center bg-gradient-to-r from-primary to-[#5e60ce] text-white px-8 py-3  rounded-full font-medium transition-all hover:opacity-90 whitespace-nowrap shadow-lg hover:shadow-xl transform hover:-translate-y-1 duration-300"
+                className="inline-flex items-center bg-gradient-to-r from-primary to-[#5e60ce] text-white px-8 py-3 rounded-full font-medium transition-all hover:opacity-90 whitespace-nowrap shadow-lg hover:shadow-xl transform hover:-translate-y-1 duration-300 mb-6"
               >
                 Замовити
                 <RiArrowRightLine className="ml-2 text-xl" />

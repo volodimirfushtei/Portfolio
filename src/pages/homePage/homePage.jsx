@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import s from "./homePage.module.css";
 import TechIcon from "../../Components/TechIcon/TechIcon.jsx";
-import { motion as Motion } from "framer-motion";
+import { motion as Motion } from "motion/react";
 import MenuIcon from "../../Components/MenuIcon/MenuIcon";
 import { Link, NavLink } from "react-router-dom";
 import ControllerSkills from "../../Components/ControllerSkills/ControllerSkills.jsx";

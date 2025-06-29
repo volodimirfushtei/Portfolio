@@ -2,7 +2,7 @@ import React from "react";
 
 const ContactForm = () => {
   return (
-    <div className="flex w-118 h-full flex-col md:flex-row gap-2 text-left hover:shadow-2xl hover:rounded-xl cursor-pointer hover:scale-105 hover:bg-[linear-gradient(90deg,rgba(00,00,00,0.6),rgba(94,96,209,0.6))] transition duration-500 hover:border-2 hover:border-[#5e60ce]">
+    <div className="flex w-118 h-full flex-col md:flex-row gap-2 text-left hover:shadow-2xl hover:rounded-xl cursor-pointer hover:scale-102 hover:bg-[linear-gradient(90deg,rgba(00,00,00,0.6),rgba(94,96,209,0.6))] transition duration-500 hover:border-2 hover:border-[#5e60ce]">
       <div className="w-full md:min-w-1/2">
         <div className="bg-[linear-gradient(90deg,rgba(00,00,00,0.6),rgba(94,96,209,0.6))] p-8 rounded-lg shadow-xl hover:shadow-2xl ">
           <form className="space-y-6">

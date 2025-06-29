@@ -1,7 +1,7 @@
 import React from "react";
 import s from "./contactsPage.module.css";
 import { Link } from "react-router-dom";
-import { motion as Motion } from "framer-motion";
+import { motion as Motion } from "motion/react";
 import ContactForm from "../../Components/ContactForm/ContactForm";
 
 import ContactInfo from "../../Components/ContactInfo/ContactInfo";
@@ -17,8 +17,8 @@ const contactsPage = () => {
   return (
     <Motion.div
       initial={{ width: 0 }}
-      animate={{ width: "95%" }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
+      animate={{ width: "1350px" }}
+      transition={{ duration: 2, ease: "easeOut" }}
       style={{
         height: "3px",
         background: "linear-gradient(90deg, #ff00cc, #3333ff)",
