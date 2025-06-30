@@ -1,11 +1,8 @@
 .menuIcon {
-  width: 32px;
-  height: 32px;
-  opacity: 0;
-  transform: translateX(100px);
-  color: #fff;
-  transition: all 0.6s ease-out;
+  opacity: 1;
+
   cursor: pointer;
+  object-fit: contain;
 }
 
 .tooltip {

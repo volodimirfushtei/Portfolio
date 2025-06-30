@@ -1,47 +1,76 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion as Motion } from "framer-motion";
+import s from "./projectsPage.module.css";
 
-const projectPage = () => {
+const ProjectPage = () => {
   const projects = [
     {
       id: 1,
       title: "Ttavel Camper",
-      description:
-        "Мобільний додаток для онлайн-шопінгу з персоналізованими рекомендаціями, інтеграцією з платіжними системами та програмою лояльності.",
-      tags: ["React Native", "Node.js", "Firebase", "Stripe"],
+      description: "Мобільний додаток для онлайн-шопінгу...",
+      tags: [
+        "React.js",
+        "Node.js",
+        "Redux",
+        "MongoDB",
+        "Express.js",
+        "Tailwind CSS",
+      ],
       imageUrl: "/images/Camper.png",
       alt: "E-commerce додаток",
     },
     {
       id: 2,
       title: "FitTrack Pro",
-      description:
-        "Додаток для відстеження фізичної активності з персоналізованими тренуваннями, аналітикою прогресу та соціальними функціями.",
+      description: "Додаток для відстеження фізичної активності...",
       tags: ["Flutter", "Firebase", "HealthKit", "Google Fit"],
-      imageUrl:
-        "https://readdy.ai/api/search-image?query=fitness%2520tracking%2520mobile%2520app%2520interface%2520on%2520smartphone%252C%2520workout%2520tracking%2520with%2520statistics%2520and%2520progress%2520charts%252C%2520modern%2520UI%2520with%2520yellow%2520accent%2520colors%252C%2520clean%2520design%252C%2520high%2520quality%2520screenshot&width=600&height=800&seq=13&orientation=portrait",
+      imageUrl: "/images/logo_b.png",
       alt: "Фітнес-трекер",
     },
     {
       id: 3,
       title: "Weather App",
-      description:
-        "Мобільний додаток для показу погоди з інтерактивними графіками та динамічними іконами.",
+      description: "Мобільний додаток для показу погоди...",
       tags: ["React Native", "OpenWeatherMap API", "React Navigation", "Redux"],
-      imageUrl:
-        "https://readdy.ai/api/search-image?query=finance%2520and%2520banking%2520mobile%2520app%2520interface%2520on%2520smartphone%252C%2520expense%2520tracking%2520and%2520investment%2520screens%252C%2520modern%2520UI%2520with%2520yellow%2520accent%2520colors%252C%2520clean%2520design%252C%2520high%2520quality%2520screenshot&width=600&height=800&seq=17&orientation=portrait",
+      imageUrl: "/images/Programmer_mob.png",
       alt: "Погода",
     },
     {
       id: 4,
       title: "Crypto Tracker",
-      description:
-        "Додаток для відстеження криптовалютових коштів з персоналізованими графіками та аналітикою.",
+      description: "Додаток для відстеження криптовалютових коштів...",
       imageUrl: "/images/Portfolio.png",
       tags: ["Flutter", "Firebase", "CoinGecko API", "Chart.js"],
       alt: "Криптовалюта",
     },
+    {
+      id: 5,
+      title: "Food Delivery",
+      description: "Мобільний додаток для замовлення їжі...",
+      tags: ["React Native", "Node.js", "MongoDB", "Stripe"],
+      imageUrl: "/images/Food_Delivery.png",
+      alt: "Доставка їжі",
+    },
+    {
+      id: 6,
+      title: "Travel Planner",
+      description: "Додаток для планування подорожей...",
+      tags: ["Flutter", "Firebase", "Google Maps API", "Dart"],
+      imageUrl: "/images/Travel_Planner.png",
+      alt: "Планувальник подорожей",
+    },
   ];
+
+  // 🔵 Пагінація
+  const [currentPage, setCurrentPage] = useState(1);
+  const projectsPerPage = 4;
+  const totalPages = Math.ceil(projects.length / projectsPerPage);
+
+  const indexOfLast = currentPage * projectsPerPage;
+  const indexOfFirst = indexOfLast - projectsPerPage;
+  const currentProjects = projects.slice(indexOfFirst, indexOfLast);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <Motion.div
@@ -53,45 +82,55 @@ const projectPage = () => {
         scale: { duration: 0.6 },
       }}
     >
-      <div id="portfolio" className="w-full h-full ">
-        <div className="container mx-auto px-2 py-2">
-          <div className="text-center mb-16"></div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 ">
-            {projects.map((project) => (
-              <div
-                key={project.id}
-                className="project-card hover:border-2 bg-[linear-gradient(90deg,rgba(00,00,00,0.6),rgba(94,96,209,0.6))] w-75 rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-lg hover:scale-105 hover:-translate-y-2 cursor-pointer hover:z-10"
-              >
-                <div className="h-64 overflow-hidden">
+      <div id="portfolio" className={s.wrapper}>
+        <div className={s.container}>
+          <div className={s.grid}>
+            {currentProjects.map((project) => (
+              <div key={project.id} className={s.card}>
+                <div className={s.imageWrapper}>
                   <img
                     src={project.imageUrl}
                     alt={project.alt}
-                    className="w-full h-full object-cover object-top opacity-50 hover:opacity-90 transition-opacity duration-300"
+                    className={s.image}
+                    loading="lazy"
                   />
                 </div>
-                <div className="p-2">
-                  <h4 className="text-xl font-bold mb-2">{project.title}</h4>
-                  <p className="text-gray-100 mb-4">{project.description}</p>
-                  <div className="flex flex-wrap gap-2 mb-4">
+                <div className={s.content}>
+                  <h4>{project.title}</h4>
+                  <p>{project.description}</p>
+                  <div className={s.tags}>
                     {project.tags.map((tag, index) => (
-                      <span
-                        key={index}
-                        className="bg-gray-100 px-2 py-1 rounded-full text-xs"
-                      >
+                      <span key={index} className={s.tag}>
                         {tag}
                       </span>
                     ))}
                   </div>
                   <a
-                    href="https://goit-campers-ten.vercel.app/"
-                    className="text-primary hover:underline flex items-center"
+                    href={project.imageUrl}
+                    className={s.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
-                    <span>Live Preview</span>
-                    <i className="ri-arrow-right-line ml-1 "></i>
+                    <span className={s.linkText}>Live Preview</span>
+                    <i className="ri-arrow-right-line"></i>
                   </a>
                 </div>
               </div>
+            ))}
+          </div>
+
+          {/* 🔵 Пагінація */}
+          <div className={s.pagination}>
+            {[...Array(totalPages)].map((_, index) => (
+              <button
+                key={index + 1}
+                onClick={() => paginate(index + 1)}
+                className={`${s.pageButton} ${
+                  currentPage === index + 1 ? s.activePage : ""
+                }`}
+              >
+                {index + 1}
+              </button>
             ))}
           </div>
         </div>
@@ -100,4 +139,4 @@ const projectPage = () => {
   );
 };
 
-export default projectPage;
+export default ProjectPage;

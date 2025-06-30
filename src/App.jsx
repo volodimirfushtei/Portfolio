@@ -12,6 +12,7 @@ function App() {
   const Contacts = lazy(() => import("./pages/contactsPage/contactsPage.jsx"));
   const Projects = lazy(() => import("./pages/projectsPage/projectsPage.jsx"));
 
+  const Tech = lazy(() => import("./pages/TechPage/TechPage.jsx"));
   return (
     <Suspense fallback={<Loader />}>
       <AnimatePresence mode="wait">
@@ -20,6 +21,16 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/contacts" element={<Contacts />} />
             <Route path="/projects" element={<Projects />} />
+            <Route path="/tech" element={<Tech />} />
+            <Route
+              path="*"
+              element={
+                <div className="not-found">
+                  <h1>404 - Page Not Found</h1>
+                  <p>The page you are looking for does not exist.</p>
+                </div>
+              }
+            />
           </Route>
         </Routes>
       </AnimatePresence>

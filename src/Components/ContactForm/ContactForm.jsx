@@ -1,60 +1,46 @@
 import React from "react";
+import s from "./ContactForm.module.css";
 
 const ContactForm = () => {
   return (
-    <div className="flex w-118 h-full flex-col md:flex-row gap-2 text-left hover:shadow-2xl hover:rounded-xl cursor-pointer hover:scale-102 hover:bg-[linear-gradient(90deg,rgba(00,00,00,0.6),rgba(94,96,209,0.6))] transition duration-500 hover:border-2 hover:border-[#5e60ce]">
-      <div className="w-full md:min-w-1/2">
-        <div className="bg-[linear-gradient(90deg,rgba(00,00,00,0.6),rgba(94,96,209,0.6))] p-8 rounded-lg shadow-xl hover:shadow-2xl ">
-          <form className="space-y-6">
-            <div>
-              <label htmlFor="name" className="block text-gray-100 mb-1">
-                Ім&apos;я
-              </label>
+    <div className={s.contactForm}>
+      <div className={s.formWrapper}>
+        <div className={s.formContainer}>
+          <form className={s.form}>
+            <div className={s.formGroup}>
+              <label htmlFor="name">Ім&apos;я</label>
               <input
                 type="text"
                 id="name"
-                className="form-input w-100 px-4 py-2 border border-gray-200 rounded-lg focus:outline-none"
+                className={s.input}
                 placeholder="Ваше ім'я"
               />
             </div>
 
-            <div>
-              <label htmlFor="email" className="block text-gray-100 mb-1">
-                Email
-              </label>
+            <div className={s.formGroup}>
+              <label htmlFor="email">Email</label>
               <input
                 type="email"
                 id="email"
-                className="form-input w-100 px-4 py-2 border border-gray-200 rounded-lg focus:outline-none"
+                className={s.input}
                 placeholder="Ваш email"
               />
             </div>
 
-            <div>
-              <label htmlFor="phone" className="block text-gray-100 mb-1">
-                Телефон
-              </label>
+            <div className={s.formGroup}>
+              <label htmlFor="phone">Телефон</label>
               <input
                 type="tel"
                 id="phone"
-                className="form-input w-100 px-4 py-2 border border-gray-200 rounded-lg focus:outline-none"
+                className={s.input}
                 placeholder="Ваш телефон"
               />
             </div>
 
-            <div>
-              <label
-                htmlFor="project-type"
-                className="block text-gray-100 mb-1"
-              >
-                Тип проєкту
-              </label>
-              <div className="relative">
-                <select
-                  id="project-type"
-                  defaultValue=""
-                  className="form-input w-100 px-4 py-2 border border-gray-200 rounded-lg focus:outline-none appearance-none pr-8"
-                >
+            <div className={s.formGroup}>
+              <label htmlFor="project-type">Тип проєкту</label>
+              <div className={s.selectWrapper}>
+                <select id="project-type" defaultValue="" className={s.select}>
                   <option value="" disabled>
                     Оберіть тип проєкту
                   </option>
@@ -64,29 +50,25 @@ const ContactForm = () => {
                   <option value="entertainment">Розважальний додаток</option>
                   <option value="other">Інше</option>
                 </select>
-                <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                  <i className="ri-arrow-down-s-line text-gray-500"></i>
+                <div className={s.selectIcon}>
+                  <i className="ri-arrow-down-s-line"></i>
                 </div>
               </div>
             </div>
 
-            <div>
-              <label htmlFor="message" className="block text-gray-100 ">
-                Опис проєкту
-              </label>
+            <div className={s.formGroup}>
+              <label htmlFor="message">Опис проєкту</label>
               <textarea
                 id="message"
                 rows="2"
-                className="form-input w-100 px-4 py-2 border border-gray-200 rounded-lg focus:outline-none"
+                className={s.textarea}
                 placeholder="Розкажіть детальніше про ваш проєкт..."
               ></textarea>
             </div>
 
-            <button
-              type="submit"
-              className="bg-gradient-to-r from-primary to-[#5e60ce] w-100 text-white py-3 px-6 rounded-lg hover:bg-gradient-to-r hover:from-cyan-500 hover:to-indigo-600 transition duration-300 ease-in-out cursor-pointer"
-            >
-              Відправити
+            <button type="submit" className={s.submitButton}>
+              Send Message
+              <i className="ri-send-plane-2-line"></i>
             </button>
           </form>
         </div>

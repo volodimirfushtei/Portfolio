@@ -66,9 +66,6 @@ const HomePage = () => {
                 alt="Preview"
                 className={s.image}
               />
-              <p className={s.overlay}>
-                Check out my projects and learn more about me.
-              </p>
             </div>
           </div>
 

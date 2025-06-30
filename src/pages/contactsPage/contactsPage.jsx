@@ -28,8 +28,8 @@ const contactsPage = () => {
     >
       <div className={s.contactsPage}>
         <div className={s.container}>
-          <h3 className={s.title_2}>Замовити консультацію</h3>
-          <div className="flex w-full flex-row gap-12 md:flex-row  ">
+          <h3 className={s.title}>Замовити консультацію</h3>
+          <div className="flex w-full flex-row gap-12 md:flex-row md:gap-12">
             <ContactForm />
             <ContactInfo items={social_items} key={social_items.alt} />
             <Consultation />

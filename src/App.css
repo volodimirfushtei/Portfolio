@@ -3,14 +3,20 @@
   width: 100%;
   height: 100vh;
   margin: 0 auto;
-
   padding: 0;
   text-align: center;
   border: 2px solid rgb(238, 235, 235);
   border-radius: 8px;
-  background: inherit;
+  background-color: var(--color-background);
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-text);
 }

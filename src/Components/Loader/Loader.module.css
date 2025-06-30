@@ -9,14 +9,8 @@
 
   border-radius: 8px;
 
-  background: linear-gradient(
-    to right,
-    #1c1d5033,
-    #6981e733,
-    /* cc = 80% прозорості */ #8d8ff7,
-    #4b4ee333,
-    #8587f233
-  );
+  padding: 2rem;
+  background-color: var(--color-background);
   border: 1px solid rgba(248, 244, 244, 0.1);
   backdrop-filter: blur(10px);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -25,7 +19,7 @@
   width: 80px;
   height: 80px;
   border: 6px solid #ccc;
-  border-top-color: #4d36d0;
+  border-top-color: var(--color-accent);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -33,7 +27,7 @@
 .loader_text {
   margin-top: 1rem;
   font-size: 1.2rem;
-  color: #220462;
+  color: var(--color-accent);
   text-align: center;
 }
 @keyframes spin {

@@ -20,14 +20,7 @@
   margin-top: 4rem;
   margin-bottom: 2rem;
   border-radius: 8px;
-  background: linear-gradient(
-    to right,
-    #1c1d5033,
-    #4b67e333,
-    /* cc = 80% прозорості */ #7274ed,
-    #4b4ee333,
-    #1c1d5033
-  );
+  background-color: var(--color-background);
   border: 1px solid rgba(248, 244, 244, 0.1);
   backdrop-filter: blur(10px);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
