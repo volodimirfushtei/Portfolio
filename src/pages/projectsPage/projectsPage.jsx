@@ -67,7 +67,17 @@ const ProjectPage = () => {
       colorTitle: "lime",
     },
   ];
-
+  const variants = {
+    hover: {
+      rotateY: 180,
+      scale: 1.1,
+      transition: { duration: 0.7 },
+    },
+    tap: {
+      rotateY: 360,
+      scale: 0.95,
+    },
+  };
   // 🔵 Пагінація
   const [currentPage, setCurrentPage] = useState(1);
   const projectsPerPage = 4;
@@ -82,9 +92,9 @@ const ProjectPage = () => {
   return (
     <div className={s.projectsPage}>
       <Motion.div
-        initial={{ opacity: 0, scale: 0.5 }}
+        initial={{ opacity: 0, scale: 1 }}
         animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 0.5 }}
+        exit={{ opacity: 0, scale: 1 }}
         transition={{
           opacity: { duration: 0.4 },
           scale: { duration: 0.6 },
@@ -95,7 +105,12 @@ const ProjectPage = () => {
             <div className={s.grid}>
               {currentProjects.map((project) => (
                 <div key={project.id} className={s.card}>
-                  <div className={s.imageWrapper}>
+                  <Motion.div
+                    className={s.imageWrapper}
+                    variants={variants}
+                    whileHover="hover"
+                    whileTap="tap"
+                  >
                     <a href="#">
                       <img
                         src={project.imageUrl}
@@ -118,7 +133,7 @@ const ProjectPage = () => {
                         opacity: 1,
                       }}
                     ></div>
-                  </div>
+                  </Motion.div>
                   <div className={s.content}>
                     <p>{project.description}</p>
                     <div className={s.tags}>

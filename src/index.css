@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --color-background: rgba(0, 0, 0, 0.4); /* Dark background */
+  --color-background: #121212; /* Dark background */
   --color-surface: #1e1e1e; /* Elevated surfaces */
   --color-surface-hover: #272727; /* Surface hover */
   --color-text: #e0e0e0; /* Primary text */

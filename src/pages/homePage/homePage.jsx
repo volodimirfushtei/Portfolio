@@ -65,8 +65,8 @@ const HomePage = () => {
               <img
                 src={
                   hovered
-                    ? "/images/mockup-free.jpg"
-                    : "/images/fernando-hernandez.jpg"
+                    ? "/images/Programmer.jpg"
+                    : "/images/Programmer_mob.png"
                 }
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
@@ -79,7 +79,9 @@ const HomePage = () => {
             </div>
           </div>
           {/* Стек технологій */}
-          <ControllerSkills items={skills} />
+          <div className={s.stack}>
+            <ControllerSkills items={skills} />
+          </div>
         </div>
       </>
     </Motion.div>

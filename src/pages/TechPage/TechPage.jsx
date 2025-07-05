@@ -114,7 +114,19 @@ const TechnologyPage = () => {
                 glareBorderRadius="8px"
               >
                 <div className={s.card}>
-                  <i className={`${t.icon} ${s.icon}`} aria-hidden="true" />
+                  <Motion.div
+                    className={s.iconWrapper}
+                    animate={{
+                      rotateY: 360,
+                    }}
+                    transition={{
+                      repeat: Infinity,
+                      duration: 3,
+                      ease: "linear",
+                    }}
+                  >
+                    <i className={`${t.icon} ${s.icon}`} aria-hidden="true" />
+                  </Motion.div>
                   <h3 className={s.title}>{t.name}</h3>
                   <p className={s.description}>{t.description}</p>
                   {t.link && (

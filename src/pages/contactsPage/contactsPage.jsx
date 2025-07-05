@@ -20,10 +20,11 @@ const contactsPage = () => {
       animate={{ width: "1350px" }}
       transition={{ duration: 2, ease: "easeOut" }}
       style={{
-        height: "3px",
-        background: "linear-gradient(90deg, #ff00cc, #3333ff)",
-        borderRadius: "2px",
-        marginBottom: "2rem",
+        height: "6px",
+        background: "linear-gradient(90deg, #03dac6, #3333fb)",
+        borderRadius: "4px",
+        marginBottom: "1rem",
+        marginTop: "1rem",
       }}
     >
       <div className={s.contactsPage}>
