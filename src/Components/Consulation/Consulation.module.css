@@ -1,11 +1,13 @@
 .consultation {
-  width: 100%;
-  height: 100%;
+  width: 33.333%;
+
   cursor: pointer;
+  padding: 0 2rem;
   transition: all 0.5s ease;
   position: relative;
   border: 2px solid rgba(248, 244, 244, 0.1);
   border-radius: 8px;
+  background-color: var(--color-background);
 }
 
 .consultation:hover {
@@ -13,7 +15,7 @@
   transform: scale(1.02);
   background-color: var(--color-background);
   box-shadow: 0 8px 25px rgba(83, 235, 192, 0.4);
-  border: 2px solid var(--color-accent);
+  border: 2px solid var(--color-text);
 }
 
 .container {
@@ -23,17 +25,8 @@
 
 .content {
   position: relative;
-  overflow: hidden;
-  border-radius: 1rem;
-  padding: 2rem;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-}
 
-.gradient {
-  position: absolute;
-  inset: 0;
-  background-color: var(--color-background);
-  z-index: 0;
+  border-radius: 8px;
 }
 
 .inner {
@@ -50,7 +43,8 @@
 }
 
 .title {
-  font-size: 1.2rem;
+  font-size: 1.8rem;
+  margin-top: 20px;
   font-weight: bold;
   margin-bottom: 0.5rem;
   color: var(--color-accent);
@@ -118,13 +112,9 @@
   color: var(--color-accent);
 }
 
-.imageWrapper {
-  width: 100%;
-}
-
 .imageContainer {
-  height: 12rem;
-  border-radius: 0.5rem;
+  border-radius: 8px;
+  margin-top: 8px;
   overflow: hidden;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   transition: transform 0.5s ease;
@@ -137,18 +127,38 @@
 .image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center;
 }
 
 @media (min-width: 768px) {
   .inner {
     flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    max-width: 100%;
   }
-  .text h3 {
-    font-size: 2.25rem;
+  .text p {
+    font-size: 1.2rem;
   }
   .imageContainer {
     height: 13.5rem;
+    max-width: 100;
+  }
+  img {
+    max-width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+@media (max-width: 375px) {
+  .text p {
+    font-size: 1rem;
+  }
+  .button {
+    padding: 0.5rem 1.5rem;
+    font-size: 0.875rem;
+  }
+  .imageContainer {
+    height: 10rem;
   }
 }

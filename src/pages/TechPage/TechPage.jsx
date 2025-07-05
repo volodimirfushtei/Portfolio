@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion as Motion } from "framer-motion";
 import Tilt from "react-parallax-tilt";
-import { useState } from "react";
+import s from "./TechPage.module.css";
 
 const tech = [
   {
@@ -14,56 +14,67 @@ const tech = [
     name: "Node.js",
     description: "Серверне середовище виконання JavaScript.",
     icon: "ri-nodejs-line",
+    link: "https://nodejs.org/en/",
   },
   {
     name: "Next.js",
     description: "Фреймворк для SSR у React.",
     icon: "ri-flutter-fill",
+    link: "https://nextjs.org/",
   },
   {
     name: "Git",
     description: "Система контролю версій.",
     icon: "ri-git-branch-line",
+    link: "https://git-scm.com/",
   },
   {
     name: "Redux",
     description: "Сховище стану для React.",
     icon: "ri-stack-line",
+    link: "https://redux.js.org/",
   },
   {
     name: "TypeScript",
-    icon: "ri-code-s-slash-line",
     description: "Надмножина JavaScript із типами.",
+    icon: "ri-code-s-slash-line",
+    link: "https://www.typescriptlang.org/",
   },
   {
     name: "Tailwind CSS",
-    icon: "ri-tailwind-fill",
     description: "CSS-фреймворк.",
+    icon: "ri-tailwind-css-fill",
+    link: "https://tailwindcss.com/",
   },
   {
     name: "MongoDB",
-    icon: "ri-database-2-line",
     description: "NoSQL база даних.",
+    icon: "ri-database-2-line",
+    link: "https://www.mongodb.com/",
   },
   {
     name: "Express.js",
-    icon: "ri-server-line",
     description: "Фреймворк для Node.js.",
+    icon: "ri-server-line",
+    link: "https://expressjs.com/",
   },
   {
-    name: "Sass",
-    icon: "ri-sass-line",
-    description: "CSS-препроцесор.",
+    name: "Grid",
+    description: "CSS-система для створення сіток.",
+    icon: "ri-grid-fill",
+    link: "https://css-tricks.com/snippets/css/complete-guide-grid/",
   },
   {
     name: "Firebase",
-    icon: "ri-fire-fill",
     description: "Платформа для мобільних і веб-додатків.",
+    icon: "ri-fire-fill",
+    link: "https://firebase.google.com/",
   },
   {
-    name: "Framer Motion",
-    icon: "ri-motion-fill",
-    description: "Бібліотека для анімації в React.",
+    name: "Flutter",
+    description: "Фреймворк для створення мобільних додатків.",
+    icon: "ri-flutter-fill",
+    link: "https://flutter.dev/",
   },
 ];
 
@@ -75,47 +86,32 @@ const cardVariants = {
 const TechnologyPage = () => {
   const [hovered, setHovered] = useState(false);
 
-  const handleMouseEnter = () => {
-    setHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setHovered(false);
-  };
   return (
-    <div
-      id="technologies"
-      className="w-full py-12 bg-black text-gray-100 relative overflow-hidden"
-    >
+    <div id="technologies" className={s.wrapper}>
       <Motion.div
-        className="absolute top-0 left-0 w-full h-full"
+        className={s.background}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
         exit={{ opacity: 0, transition: { duration: 0.5 } }}
-      >
-        <div className="w-full h-full bg-gradient-to-br from-[#333334] via-transparent to-[#1a1a1a] blur-3xl"></div>
-      </Motion.div>
+      />
 
-      <div className="container mx-auto px-4 relative z-10">
-        <h2 className="text-3xl font-bold mb-8  text-center">
-          Технології, які ми використовуємо
-        </h2>
+      <div className={s.container}>
+        <h2 className={s.heading}>Technologies</h2>
         <div
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 cursor-pointer"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+          className={s.grid}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
         >
-          {tech.map((tech, index) => (
+          {tech.map((t, index) => (
             <Motion.div
-              key={tech.name}
+              key={t.name}
               variants={cardVariants}
               initial="hidden"
               animate="visible"
               transition={{ duration: 0.4, delay: index * 0.15 }}
             >
               <Tilt
-                className="w-full h-full"
                 tiltMaxAngleX={15}
                 tiltMaxAngleY={15}
                 perspective={1000}
@@ -126,21 +122,21 @@ const TechnologyPage = () => {
                 glarePosition="all"
                 glareBorderRadius="5px"
               >
-                <div className="bg-[#181717] rounded-lg shadow-md p-3 flex flex-col items-center text-center hover:shadow-xl transition h-full">
-                  <i
-                    className={`${tech.icon} text-5xl text-[#5c74ee] mb-4`}
-                    aria-hidden="true"
-                  ></i>
-                  <h3 className="text-xl font-semibold mb-2">{tech.name}</h3>
-                  <p className="text-gray-400">{tech.description}</p>
-                  <a
-                    href={tech.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-3 inline-flex items-center gap-1 text-[#50d6c7] hover:underline"
-                  >
-                    Докладніше<i className="ri-external-link-line"></i>
-                  </a>
+                <div className={s.card}>
+                  <i className={`${t.icon} ${s.icon}`} aria-hidden="true"></i>
+                  <h3 className={s.title}>{t.name}</h3>
+                  <p className={s.description}>{t.description}</p>
+                  {t.link && (
+                    <a
+                      href={t.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={s.link}
+                    >
+                      Go to website
+                      <i className={`ri-arrow-right-line ${s.arrow}`}></i>
+                    </a>
+                  )}
                 </div>
               </Tilt>
             </Motion.div>

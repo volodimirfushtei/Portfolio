@@ -57,6 +57,7 @@ const ContactInfo = ({ items }) => {
             src="https://public.readdy.ai/gen_page/map_placeholder_1280x720.png"
             alt="Мапа"
             loading="lazy"
+            className={s.map}
           />
         </div>
       </div>

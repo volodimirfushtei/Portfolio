@@ -1,13 +1,20 @@
 .tech_scroller {
   overflow: hidden;
   white-space: nowrap;
-  padding: 20px 0;
+  padding: 40px 0;
+  width: 100%;
+  max-width: 1416px;
+  margin: 0 auto;
 }
 
 .tech {
   display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
   gap: 40px;
   will-change: transform;
+  width: 100%;
 }
 
 .tech_scroller {
@@ -31,4 +38,38 @@
   align-items: center;
   flex-direction: column;
   justify-content: center;
+}
+@media (max-width: 768px) {
+  .tech_scroller {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+    margin-top: 2rem;
+    border-radius: 8px;
+    padding: 1rem;
+    background-color: var(--color-background);
+    border: 1px solid rgba(248, 244, 244, 0.1);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  .tech_item {
+    max-width: 100%;
+    height: auto;
+  }
+}
+@media (max-width: 375px) {
+  .tech_scroller {
+    width: 100%;
+    padding: 1rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tech_item {
+    max-width: 100%;
+    height: auto;
+  }
 }

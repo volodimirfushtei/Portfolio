@@ -1,7 +1,10 @@
 .contactForm {
   display: flex;
-  width: 100%;
-  max-width: 56rem;
+  width: 33.333%;
+  max-width: 1200px;
+
+  align-items: center;
+  justify-content: center;
   height: 100%;
   flex-direction: column;
   gap: 0.5rem;
@@ -10,13 +13,14 @@
   transition: all 0.5s ease;
   border: 2px solid rgba(248, 244, 244, 0.1);
   border-radius: 8px;
+  background-color: var(--color-background);
 }
 
 .contactForm:hover {
   transform: scale(1.02);
   background: var(--color-background);
   box-shadow: 0 8px 25px rgba(83, 235, 192, 0.4);
-  border: 2px solid var(--color-accent);
+  border: 2px solid var(--color-text);
 }
 
 .formWrapper {
@@ -43,7 +47,7 @@
 
 .formGroup label {
   display: block;
-  color: #f3f4f6;
+  color: var(--color-text);
   margin-bottom: 0.25rem;
   font-size: 1rem;
 }
@@ -83,7 +87,7 @@
   top: 50%;
   transform: translateY(-50%);
   pointer-events: none;
-  color: #6b7280;
+  color: var(--color-text);
   font-size: 1.25rem;
 }
 

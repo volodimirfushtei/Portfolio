@@ -1,42 +1,58 @@
 .container_home {
   height: 100%;
-  width: 1200px;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 0;
+  padding: 40px 0;
   border-radius: 8px;
+  background-color: var(--color-background);
 }
 .text {
   max-width: 600px;
-  height: 600px;
+  height: 100%;
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  border-radius: 8px;
 }
 .content {
   display: flex;
-  width: fit-content;
+  width: 100%;
   height: 100%;
   align-items: center;
   flex-direction: row;
   justify-content: center;
+
   gap: 5rem;
 }
 .title {
   font-size: 3rem;
   background-color: var(--color-background);
   -webkit-background-clip: text;
-
+  padding: 20px;
   color: var(--color-accent);
   background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: shimmerIcon 4s linear infinite;
   filter: brightness(1.1);
 }
-
+.experience {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  border-radius: 8px;
+  margin-top: 20px;
+  padding: 0;
+}
 @keyframes shimmerIcon {
   0% {
     filter: brightness(1) drop-shadow(0 0 2px #fff);
@@ -51,7 +67,7 @@
 .paragraph {
   font-size: 1.5rem;
   color: #bdbdbd;
-  max-width: 500px;
+  max-width: 600px;
 }
 
 .button {
@@ -93,6 +109,7 @@
   max-width: 600px;
   width: 100%;
   height: 100%;
+  object-position: center;
   object-fit: cover;
   margin-top: 20px;
   border-radius: 8px;
@@ -113,6 +130,8 @@
 .preview {
   position: relative;
   overflow: hidden;
+
+  height: 100%;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   opacity: 0.9;
@@ -227,15 +246,31 @@
   }
 
   .preview {
-    width: 100%;
+    max-width: 100%;
   }
 }
 @media (max-width: 375px) {
+  .container_home {
+    width: 100%;
+    padding: 1rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
   .skills {
     flex-direction: column;
   }
-
+  .text {
+    max-width: 100%;
+    height: auto;
+  }
   .preview {
-    width: 100%;
+    max-width: 100%;
+    height: auto;
+  }
+  .image {
+    height: auto;
+    max-width: 100%;
+    object-fit: cover;
   }
 }

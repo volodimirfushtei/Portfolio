@@ -7,6 +7,7 @@ import { Link, NavLink } from "react-router-dom";
 import ControllerSkills from "../../Components/ControllerSkills/ControllerSkills.jsx";
 import ControllerMenu from "../../Components/ControllerMenu/ControllerMenu.jsx";
 import ExperienceTable from "../../Components/ExperienceTable/ExperienceTable.jsx";
+
 const HomePage = () => {
   const [hovered, setHovered] = useState(false);
 
@@ -54,7 +55,10 @@ const HomePage = () => {
               >
                 View My Projects
               </button>
-              <ExperienceTable />
+              <div className={s.experience}>
+                {" "}
+                <ExperienceTable />
+              </div>
             </div>
             <div className={s.preview}>
               <img
@@ -64,11 +68,11 @@ const HomePage = () => {
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
                 alt="Preview"
+                loading="lazy"
                 className={s.image}
               />
             </div>
           </div>
-
           {/* Стек технологій */}
           <ControllerSkills items={skills} />
         </div>
