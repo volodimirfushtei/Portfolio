@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { motion as Motion } from "framer-motion";
 import Tilt from "react-parallax-tilt";
 import s from "./TechPage.module.css";
@@ -19,7 +19,7 @@ const tech = [
   {
     name: "Next.js",
     description: "Фреймворк для SSR у React.",
-    icon: "ri-flutter-fill",
+    icon: "ri-nextjs-fill",
     link: "https://nextjs.org/",
   },
   {
@@ -84,10 +84,8 @@ const cardVariants = {
 };
 
 const TechnologyPage = () => {
-  const [hovered, setHovered] = useState(false);
-
   return (
-    <div id="technologies" className={s.wrapper}>
+    <div className={s.wrapper}>
       <Motion.div
         className={s.background}
         initial={{ opacity: 0 }}
@@ -98,32 +96,25 @@ const TechnologyPage = () => {
 
       <div className={s.container}>
         <h2 className={s.heading}>Technologies</h2>
-        <div
-          className={s.grid}
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
-        >
+        <div className={s.grid}>
           {tech.map((t, index) => (
             <Motion.div
               key={t.name}
               variants={cardVariants}
               initial="hidden"
               animate="visible"
-              transition={{ duration: 0.4, delay: index * 0.15 }}
+              transition={{ duration: 0.4, delay: index * 0.1 }}
             >
               <Tilt
-                tiltMaxAngleX={15}
-                tiltMaxAngleY={15}
-                perspective={1000}
-                transitionSpeed={500}
-                glareEnable={true}
-                glareMaxOpacity={0.5}
-                glareColor="#010101"
-                glarePosition="all"
-                glareBorderRadius="5px"
+                tiltMaxAngleX={10}
+                tiltMaxAngleY={10}
+                glareEnable
+                glareMaxOpacity={0.3}
+                glareColor="#ffffff"
+                glareBorderRadius="8px"
               >
                 <div className={s.card}>
-                  <i className={`${t.icon} ${s.icon}`} aria-hidden="true"></i>
+                  <i className={`${t.icon} ${s.icon}`} aria-hidden="true" />
                   <h3 className={s.title}>{t.name}</h3>
                   <p className={s.description}>{t.description}</p>
                   {t.link && (
@@ -133,8 +124,8 @@ const TechnologyPage = () => {
                       rel="noopener noreferrer"
                       className={s.link}
                     >
-                      Go to website
-                      <i className={`ri-arrow-right-line ${s.arrow}`}></i>
+                      Visit
+                      <i className={`ri-arrow-right-line ${s.arrow}`} />
                     </a>
                   )}
                 </div>

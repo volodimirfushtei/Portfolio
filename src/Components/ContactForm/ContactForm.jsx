@@ -3,75 +3,91 @@ import s from "./ContactForm.module.css";
 
 const ContactForm = () => {
   return (
-    <div className={s.contactForm}>
-      <div className={s.formWrapper}>
-        <div className={s.formContainer}>
-          <form className={s.form}>
-            <div className={s.formGroup}>
-              <label htmlFor="name">Ім&apos;я</label>
-              <input
-                type="text"
-                id="name"
-                className={s.input}
-                placeholder="Ваше ім'я"
-              />
-            </div>
+    <div className={s.formContainer}>
+      <div className={`${s.card} ${s.card_contact}`}>
+        <form id="contact-form" method="post" className={s.form}>
+          <div className={s.cardHeader}>
+            <h2 className={s.cardTitle}>Contact Us</h2>
+          </div>
 
-            <div className={s.formGroup}>
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                className={s.input}
-                placeholder="Ваш email"
-              />
-            </div>
+          <div className={s.cardBody}>
+            <div className={s.nameFields}>
+              <div className={s.formGroup}>
+                <input
+                  className={s.formControl}
+                  type="text"
+                  name="name"
+                  id="firstName"
+                  required
+                />
+                <label className={s.bmdLabelFloating} htmlFor="firstName">
+                  First name
+                </label>
+                <span className={s.materialInput}></span>
+              </div>
 
-            <div className={s.formGroup}>
-              <label htmlFor="phone">Телефон</label>
-              <input
-                type="tel"
-                id="phone"
-                className={s.input}
-                placeholder="Ваш телефон"
-              />
-            </div>
-
-            <div className={s.formGroup}>
-              <label htmlFor="project-type">Тип проєкту</label>
-              <div className={s.selectWrapper}>
-                <select id="project-type" defaultValue="" className={s.select}>
-                  <option value="" disabled>
-                    Оберіть тип проєкту
-                  </option>
-                  <option value="e-commerce">E-commerce додаток</option>
-                  <option value="social">Соціальний додаток</option>
-                  <option value="business">Бізнес-додаток</option>
-                  <option value="entertainment">Розважальний додаток</option>
-                  <option value="other">Інше</option>
-                </select>
-                <div className={s.selectIcon}>
-                  <i className="ri-arrow-down-s-line"></i>
-                </div>
+              <div className={s.formGroup}>
+                <input
+                  className={s.formControl}
+                  type="text"
+                  name="lastname"
+                  id="lastName"
+                  required
+                />
+                <label className={s.bmdLabelFloating} htmlFor="lastName">
+                  Last name
+                </label>
+                <span className={s.materialInput}></span>
               </div>
             </div>
 
             <div className={s.formGroup}>
-              <label htmlFor="message">Опис проєкту</label>
-              <textarea
-                id="message"
-                rows="2"
-                className={s.textarea}
-                placeholder="Розкажіть детальніше про ваш проєкт..."
-              ></textarea>
+              <input
+                className={s.formControl}
+                type="email"
+                name="email"
+                id="email"
+                required
+              />
+              <label className={s.bmdLabelFloating} htmlFor="email">
+                Email address
+              </label>
+              <span className={s.materialInput}></span>
             </div>
 
-            <button type="submit" className={s.submitButton}>
+            <div className={s.formGroup}>
+              <textarea
+                id="message"
+                className={s.formControl}
+                name="message"
+                rows="6"
+                required
+              ></textarea>
+              <label className={s.bmdLabelFloating} htmlFor="message">
+                Your Message
+              </label>
+              <span className={s.materialInput}></span>
+            </div>
+          </div>
+
+          <div className={s.cardFooter}>
+            <div className={s.formCheck}>
+              <label className={s.formCheckLabel}>
+                <input
+                  className={s.formCheckInput}
+                  type="checkbox"
+                  name="subscribe"
+                  id="subscribe"
+                />
+                <span className={s.checkboxCustom}></span>
+                Subscribe to newsletter
+              </label>
+            </div>
+            <button type="submit" className={s.btnPrimary}>
               Send Message
-              <i className="ri-send-plane-2-line"></i>
             </button>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
     </div>
   );

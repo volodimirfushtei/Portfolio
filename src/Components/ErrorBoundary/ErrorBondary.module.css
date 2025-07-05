@@ -1,0 +1,78 @@
+.error_container {
+  padding: 2rem;
+  background: url("https://images.unsplash.com/photo-1522252234503-e356532cafd5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80");
+  color: var(--color-text);
+  border-radius: 8px;
+  max-width: 800px;
+  height: 80vh;
+  margin: 2rem auto;
+  text-align: center;
+  font-family: sans-serif;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ffcdd2;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  text-shadow: 0 2px 5px rgba(33, 33, 33, 0.5);
+  opacity: 0.9;
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.error_title {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  color: var(--color-border);
+}
+
+.error_box {
+  background: var(--color-background);
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+  text-align: left;
+  border-radius: 8px;
+  border-left: 6px solid #d32f2f;
+  border-right: 6px solid #d32f2f;
+}
+
+.error_box pre {
+  white-space: pre-wrap;
+  overflow-x: auto;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background: var(--color-background);
+}
+
+.error_button {
+  padding: 0.5rem 2rem;
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  border-left: 3px solid #d32f2f;
+  border-right: 3px solid #d32f2f;
+}
+
+.error_button:hover {
+  background: var(--color-surface-hover);
+  color: var(--color-button-text);
+  transform: translateY(-2px);
+}
+
+.error_note {
+  margin-top: 20rem;
+  font-size: 1.2rem;
+  color: var(--color-border);
+}
+.error_email {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  text-decoration: underline;
+}
+.error_email:hover {
+  color: var(--color-accent-hover);
+}

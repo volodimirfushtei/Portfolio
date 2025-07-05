@@ -10,6 +10,7 @@ import ExperienceTable from "../../Components/ExperienceTable/ExperienceTable.js
 
 const HomePage = () => {
   const [hovered, setHovered] = useState(false);
+  // Додайте цей код в будь-який компонент (наприклад, HomePage)
 
   const skills = [
     { src: "/icons/react.svg", alt: "React" },
@@ -49,9 +50,9 @@ const HomePage = () => {
               </p>
               <button
                 className={s.button}
-                onClick={() => {
-                  window.location.href = "https://github.com/volodimirfushtei";
-                }}
+                onClick={() =>
+                  window.open("https://github.com/volodimirfushtei", "_blank")
+                }
               >
                 View My Projects
               </button>
@@ -63,12 +64,16 @@ const HomePage = () => {
             <div className={s.preview}>
               <img
                 src={
-                  hovered ? "/images/Programmer.jpg" : "/images/Portfolio.png"
+                  hovered
+                    ? "/images/mockup-free.jpg"
+                    : "/images/fernando-hernandez.jpg"
                 }
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
                 alt="Preview"
                 loading="lazy"
+                width="500"
+                height="500"
                 className={s.image}
               />
             </div>

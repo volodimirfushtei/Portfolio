@@ -1,153 +1,190 @@
-.contactForm {
-  display: flex;
-  width: 33.333%;
-  max-width: 1200px;
-
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  flex-direction: column;
-  gap: 0.5rem;
-  text-align: left;
-  cursor: pointer;
-  transition: all 0.5s ease;
-  border: 2px solid rgba(248, 244, 244, 0.1);
-  border-radius: 8px;
-  background-color: var(--color-background);
-}
-
-.contactForm:hover {
-  transform: scale(1.02);
-  background: var(--color-background);
-  box-shadow: 0 8px 25px rgba(83, 235, 192, 0.4);
-  border: 2px solid var(--color-text);
-}
-
-.formWrapper {
-  width: 100%;
-}
-
 .formContainer {
-  background-color: var(--color-background);
-  padding: 2rem;
-  border-radius: 0.75rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-  transition: box-shadow 0.3s ease;
-}
-
-.formContainer:hover {
-  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.5);
-}
-
-.form {
   display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  justify-content: center;
+  align-items: center;
+  max-width: 400px;
+  background-color: var(--color-background);
+  border: 1px solid rgba(248, 244, 244, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 0.1rem;
+  border: 1px solid rgba(248, 244, 244, 0.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 0 0 10px var(--color-surface);
 }
 
-.formGroup label {
-  display: block;
-  color: var(--color-text);
-  margin-bottom: 0.25rem;
-  font-size: 1rem;
-}
-
-.input,
-.select,
-.textarea {
+.card {
+  transition: all 0.3s ease;
   width: 100%;
-  padding: 0.5rem 1rem;
-  border: 1px solid #e5e7eb;
-  border-radius: 0.5rem;
-  background-color: var(--color-surface);
-  font-size: 1rem;
-  outline: none;
-  transition: border-color 0.3s ease;
+  max-width: 400px;
+  text-align: center;
+  padding: 1rem;
 }
 
-.input:focus,
-.select:focus,
-.textarea:focus {
-  box-shadow: 0 8px 25px rgba(83, 235, 192, 0.4);
-  border: 2px solid var(--color-accent);
+/* Header */
+.cardHeader {
+  background: var(--color-accent);
+  color: white;
+  padding: 1rem;
+  border-radius: 4px;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  margin-top: -60px;
+  width: 366px;
+  transform: translateY(-2px);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 0 0 10px var(--color-surface);
 }
 
-.selectWrapper {
+.cardTitle {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* Form Body */
+.cardBody {
+  padding: 0 1.5rem;
+}
+
+.nameFields {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.formGroup {
   position: relative;
+  margin-bottom: 1.5rem;
+  flex: 1;
 }
 
-.select {
-  appearance: none;
-  padding-right: 2rem;
-}
-
-.selectIcon {
-  position: absolute;
-  right: 0.75rem;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
+/* Input Fields */
+.formControl {
+  width: 100%;
+  padding: 0.8rem 0.5rem 0.5rem;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  background-color: transparent;
+  font-size: 1rem;
+  transition: all 0.3s ease;
   color: var(--color-text);
-  font-size: 1.25rem;
 }
 
-.textarea {
+.formControl:focus {
+  outline: none;
+  border-bottom-color: var(--color-primary);
+}
+
+.formControl:focus + .bmdLabelFloating,
+.formControl:not(:placeholder-shown) + .bmdLabelFloating {
+  transform: translateY(-1.2rem) scale(0.8);
+  color: var(--color-text);
+}
+
+.bmdLabelFloating {
+  position: absolute;
+  top: 0.8rem;
+  left: 0.5rem;
+  color: #888;
+  font-size: 1rem;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  transform-origin: left top;
+}
+
+textarea.formControl {
+  min-height: 120px;
   resize: vertical;
 }
 
-.submitButton {
+/* Checkbox */
+.formCheck {
+  margin: 1rem 0;
+}
+
+.formCheckLabel {
   display: flex;
   align-items: center;
-  justify-content: center;
-  background-color: var(--color-background);
-  -webkit-background-clip: text;
-  color: var(--color-text);
-  background-image: linear-gradient(
-    to right,
-    var(--color-accent),
-    var(--color-accent-hover)
-  );
-  border: 2px solid var(--color-accent);
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shimmerIcon 4s linear infinite;
-  filter: brightness(1.1);
-  display: inline-flex;
-  padding: 1rem 1rem;
-
-  border-radius: 8px;
-  font-size: 1rem;
   cursor: pointer;
-  margin-top: 1.5rem;
-  transition: 0.3s ease;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  opacity: 1;
-}
-@keyframes shimmerIcon {
-  0% {
-    filter: brightness(1) drop-shadow(0 0 2px #fff);
-  }
-  50% {
-    filter: brightness(1.5) drop-shadow(0 0 8px #00e5ff);
-  }
-  100% {
-    filter: brightness(1) drop-shadow(0 0 2px #fff);
-  }
+  color: var(--color-text);
+  font-size: 0.9rem;
 }
 
-.submitButton:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(83, 235, 192, 0.4);
-  border: 2px solid var(--color-accent);
-  opacity: 0.9;
-  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
-  transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
-  transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
+.formCheckInput {
+  position: absolute;
+  opacity: 0;
+}
+
+.checkboxCustom {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #ccc;
+  border-radius: 3px;
+  margin-right: 0.5rem;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.formCheckInput:checked + .checkboxCustom {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.formCheckInput:checked + .checkboxCustom::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 1px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Button */
+.btnPrimary {
+  background-color: var(--color-accent);
+  color: white;
+  border: none;
+  padding: 0.8rem 2rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  max-width: 200px;
+  margin-top: 1rem;
+}
+
+.btnPrimary:hover {
+  background-color: var(--color-accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer */
+.cardFooter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem 0 0;
+  margin-top: 1rem;
 }
 
 /* Responsive */
-@media (min-width: 768px) {
-  .contactForm {
-    flex-direction: row;
+@media (max-width: 768px) {
+  .nameFields {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .card {
+    padding: 1.5rem;
+  }
+
+  .cardHeader {
+    padding: 1rem;
   }
 }

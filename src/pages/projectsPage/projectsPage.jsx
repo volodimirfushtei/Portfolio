@@ -6,7 +6,7 @@ const ProjectPage = () => {
   const projects = [
     {
       id: 1,
-      title: "Ttavel Camper",
+      title: "Travel Camper",
       description: "Мобільний додаток для онлайн-шопінгу...",
       tags: [
         "React.js",
@@ -17,7 +17,9 @@ const ProjectPage = () => {
         "Tailwind CSS",
       ],
       imageUrl: "/images/Camper.png",
+      urlVercel: "https://goit-campers-ten.vercel.app/",
       alt: "E-commerce додаток",
+      colorTitle: "red",
     },
     {
       id: 2,
@@ -26,6 +28,7 @@ const ProjectPage = () => {
       tags: ["Flutter", "Firebase", "HealthKit", "Google Fit"],
       imageUrl: "/images/logo_b.png",
       alt: "Фітнес-трекер",
+      colorTitle: "indigo",
     },
     {
       id: 3,
@@ -34,6 +37,7 @@ const ProjectPage = () => {
       tags: ["React Native", "OpenWeatherMap API", "React Navigation", "Redux"],
       imageUrl: "/images/Programmer_mob.png",
       alt: "Погода",
+      colorTitle: "green",
     },
     {
       id: 4,
@@ -42,6 +46,7 @@ const ProjectPage = () => {
       imageUrl: "/images/Portfolio.png",
       tags: ["Flutter", "Firebase", "CoinGecko API", "Chart.js"],
       alt: "Криптовалюта",
+      colorTitle: "yellow",
     },
     {
       id: 5,
@@ -50,6 +55,7 @@ const ProjectPage = () => {
       tags: ["React Native", "Node.js", "MongoDB", "Stripe"],
       imageUrl: "/images/Food_Delivery.png",
       alt: "Доставка їжі",
+      colorTitle: "violet",
     },
     {
       id: 6,
@@ -58,6 +64,7 @@ const ProjectPage = () => {
       tags: ["Flutter", "Firebase", "Google Maps API", "Dart"],
       imageUrl: "/images/Travel_Planner.png",
       alt: "Планувальник подорожей",
+      colorTitle: "lime",
     },
   ];
 
@@ -73,69 +80,86 @@ const ProjectPage = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <Motion.div
-      initial={{ opacity: 0, scale: 0.5 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.5 }}
-      transition={{
-        opacity: { duration: 0.4 },
-        scale: { duration: 0.6 },
-      }}
-    >
-      <div id="portfolio" className={s.wrapper}>
-        <div className={s.container}>
-          <div className={s.grid}>
-            {currentProjects.map((project) => (
-              <div key={project.id} className={s.card}>
-                <div className={s.imageWrapper}>
-                  <img
-                    src={project.imageUrl}
-                    alt={project.alt}
-                    className={s.image}
-                    loading="lazy"
-                  />
-                </div>
-                <div className={s.content}>
-                  <h4>{project.title}</h4>
-                  <p>{project.description}</p>
-                  <div className={s.tags}>
-                    {project.tags.map((tag, index) => (
-                      <span key={index} className={s.tag}>
-                        {tag}
-                      </span>
-                    ))}
+    <div className={s.projectsPage}>
+      <Motion.div
+        initial={{ opacity: 0, scale: 0.5 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.5 }}
+        transition={{
+          opacity: { duration: 0.4 },
+          scale: { duration: 0.6 },
+        }}
+      >
+        <div id="portfolio" className={s.wrapper}>
+          <div className={s.container}>
+            <div className={s.grid}>
+              {currentProjects.map((project) => (
+                <div key={project.id} className={s.card}>
+                  <div className={s.imageWrapper}>
+                    <a href="#">
+                      <img
+                        src={project.imageUrl}
+                        alt={project.alt}
+                        className={s.image}
+                        loading="lazy"
+                      />
+                      <div
+                        className={s.card_title}
+                        style={{ color: project.colorTitle }}
+                      >
+                        {project.title}
+                      </div>
+                    </a>
+                    <div
+                      className={s.coloredShadow}
+                      style={{
+                        backgroundImage:
+                          "url('https://images.unsplash.com/photo-1604964432806-254d07c11f32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80' )",
+                        opacity: 1,
+                      }}
+                    ></div>
                   </div>
-                  <a
-                    href={project.imageUrl}
-                    className={s.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span className={s.linkText}>Live Preview</span>
-                    <i className="ri-arrow-right-line"></i>
-                  </a>
+                  <div className={s.content}>
+                    <p>{project.description}</p>
+                    <div className={s.tags}>
+                      {project.tags.map((tag, index) => (
+                        <span key={index} className={s.tag}>
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <a
+                      href={project.urlVercel}
+                      className={s.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <span className={s.linkText}>Live Preview</span>
+                      <i className="ri-arrow-right-line"></i>
+                    </a>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
 
-          {/* 🔵 Пагінація */}
-          <div className={s.pagination}>
-            {[...Array(totalPages)].map((_, index) => (
-              <button
-                key={index + 1}
-                onClick={() => paginate(index + 1)}
-                className={`${s.pageButton} ${
-                  currentPage === index + 1 ? s.activePage : ""
-                }`}
-              >
-                {index + 1}
-              </button>
-            ))}
+            {/* 🔵 Пагінація */}
+            <div className={s.pagination}>
+              {[...Array(totalPages)].map((_, index) => (
+                <button
+                  key={index + 1}
+                  onClick={() => paginate(index + 1)}
+                  className={`${s.pageButton} ${
+                    currentPage === index + 1 ? s.activePage : ""
+                  }`}
+                >
+                  {index + 1}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-    </Motion.div>
+      </Motion.div>
+    </div>
   );
 };
 
