@@ -34,8 +34,8 @@ const TechIcon = ({ src, alt }) => {
       <svg
         ref={ref}
         alt={alt}
-        width="36"
-        height="36"
+        width="32"
+        height="32"
         viewBox="0 0 24 24"
         className={`${s.techIcon} ${visible ? s.visible : ""}`}
       >

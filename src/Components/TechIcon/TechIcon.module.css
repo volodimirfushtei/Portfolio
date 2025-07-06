@@ -5,8 +5,8 @@
 }
 
 .techIcon {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   opacity: 0;
   transform: translateX(100px);
   transition: all 0.6s ease-out;

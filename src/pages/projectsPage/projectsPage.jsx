@@ -28,7 +28,7 @@ const ProjectPage = () => {
       tags: ["Flutter", "Firebase", "HealthKit", "Google Fit"],
       imageUrl: "/images/logo_b.png",
       alt: "Фітнес-трекер",
-      colorTitle: "indigo",
+      colorTitle: "white",
     },
     {
       id: 3,

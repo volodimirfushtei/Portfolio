@@ -1,6 +1,10 @@
 @import "tailwindcss";
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "bootstrap-icons/font/bootstrap-icons.css";
 
 :root {
+  --bs-primary: #4361ee;
+  --bs-info: #4cc9f0;
   --color-background: #121212; /* Dark background */
   --color-surface: #1e1e1e; /* Elevated surfaces */
   --color-surface-hover: #272727; /* Surface hover */
@@ -27,23 +31,41 @@
   --color-shadow: 0 8px 25px rgba(33, 150, 243, 0.4); /* Blue shadow */
 }
 
-/* bg-[linear-gradient(90deg,rgba(00,00,00,0.6),rgba(94,96,209,0.6))] */
-/* backdrop-filter: blur(20px); */
 body.light-theme {
-  --color-background: #fafafa; /* Загальний фон (light grey) */
-  --color-surface: #ffffff; /* Карти, панелі */
-  --color-surface-hover: #f0f0f0; /* Hover ефект */
-  --color-text: #212121; /* Основний текст */
-  --color-title: #1976d2; /* Primary accent (Material Blue 700) */
-  --color-accent: #009688; /* Teal 500 */
-  --color-accent-hover: #00796b; /* Teal 700 */
-  --color-button-bg: #6200ee; /* Material Deep Purple 500 */
-  --color-button-bg-hover: #3700b3; /* Темніший для hover */
-  --color-button-text: #ffffff; /* Текст на кнопках */
-  --color-border: #cccccc; /* Borders */
-  --color-overlay: rgba(0, 0, 0, 0.4); /* Overlay фон */
-  --color-loader: #009688; /* Teal loader */
-  --color-loader-background: linear-gradient(135deg, #e0e0e0, #f5f5f5);
-  --color-loader-bar: linear-gradient(90deg, #009688, #1976d2);
-  --color-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Light shadow */ /* Тінь з синім відтінком */
+  --color-background: #f8f9fa; /* М'який сірий фон */
+  --color-surface: #ffffff; /* Чисті білі поверхні */
+  --color-surface-hover: #f1f3f5; /* Легкий сірий при наведенні */
+
+  /* Текстова палітра */
+  --color-text: #212529; /* Глибокий чорний для тексту */
+  --color-text-secondary: #495057; /* Другий рівень тексту */
+
+  /* Акцентні кольори з сучасними градієнтами */
+  --color-title: #4361ee; /* Яскраво-синій */
+  --color-accent: #3a86ff; /* Світліший синій */
+  --color-accent-hover: #4895ef; /* Градієнтний варіант */
+
+  /* Кнопки з модними ефектами */
+  --color-button-bg: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+  --color-button-bg-hover: linear-gradient(135deg, #3a0ca3 0%, #480ca8 100%);
+  --color-button-text: #ffffff;
+
+  /* Границі та ефекти */
+  --color-border: #e9ecef; /* Дуже легкі границі */
+  --color-overlay: rgba(255, 255, 255, 0.5); /* Світлий оверлей */
+
+  /* Анімації та завантажувачі */
+  --color-loader: linear-gradient(90deg, #4361ee, #4cc9f0);
+  --color-loader-background: #f1f3f5;
+
+  /* Тіні з модним ефектом */
+  --color-shadow: 0 4px 20px rgba(58, 12, 163, 0.1);
+
+  /* Додаткові сучасні кольори */
+  --color-success: #4cc9f0; /* Бірюзовий */
+  --color-warning: #f8961e; /* Помаранчевий */
+  --color-error: #f72585; /* Рожевий */
+
+  /* Спеціальні ефекти */
+  --glow-effect: 0 0 15px rgba(67, 97, 238, 0.3);
 }

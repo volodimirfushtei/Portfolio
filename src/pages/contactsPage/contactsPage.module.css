@@ -2,8 +2,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 100%;
+  width: 100%;
   height: 100vh;
+  background: var(--color-background);
+  color: var(--color-text);
+  position: relative;
+  overflow: hidden;
+  position: relative;
+  overflow: hidden;
 }
 
 .container_forms {
@@ -11,7 +17,7 @@
   display: flex;
   flex-direction: row;
   gap: 3rem;
-  flex: 1;
+
   padding: 77px 20px;
   height: 100%;
 }

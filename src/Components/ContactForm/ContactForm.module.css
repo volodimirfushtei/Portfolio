@@ -10,7 +10,16 @@
   border: 1px solid rgba(248, 244, 244, 0.1);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 0 0 10px var(--color-surface);
 }
-
+.formContainer:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 174, 193, 0.2);
+  background: var(--color-surface-hover);
+  border: 1px solid rgba(248, 244, 244, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 0.1rem;
+  max-width: 400px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 0 0 10px var(--color-border);
+}
 .card {
   transition: all 0.3s ease;
   width: 100%;
@@ -27,13 +36,17 @@
   border-radius: 4px;
   text-align: center;
   margin-bottom: 1.5rem;
-  margin-top: -60px;
+  margin-top: -50px;
   width: 366px;
   transform: translateY(-2px);
   transform: translateY(-4px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 0 0 10px var(--color-surface);
 }
-
+.cardHeader:hover {
+  transform: translateY(-2px);
+  background-color: var(--color-accent-hover);
+  box-shadow: 0 12px 40px rgba(0, 174, 193, 0.2);
+}
 .cardTitle {
   margin: 0;
   font-size: 1.5rem;
@@ -112,6 +125,7 @@ textarea.formControl {
 .formCheckInput {
   position: absolute;
   opacity: 0;
+  color: var(--color-text);
 }
 
 .checkboxCustom {
@@ -121,7 +135,9 @@ textarea.formControl {
   border: 2px solid #ccc;
   border-radius: 3px;
   margin-right: 0.5rem;
+  color: var(--color-text);
   position: relative;
+  color: var(--color-text);
   transition: all 0.3s ease;
 }
 

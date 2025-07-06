@@ -9,58 +9,94 @@ import {
 } from "react-pro-sidebar";
 import { Link } from "react-router-dom";
 
-const buttonStyles = {
-  color: "var(--color-text)",
-  background: "transparent",
-  border: "1px solid var(--color-border)",
-  borderRadius: "4px",
-  padding: "4px 8px",
-  marginTop: "20px",
-  cursor: "pointer",
-};
+const SidebarMenu = ({ onClose, isMobile }) => {
+  // Стилі для різних розмірів екрану
+  const sidebarStyles = {
+    desktop: {
+      width: "180px",
+      logoSize: { width: "180px", height: "180px" },
+      iconSize: "1.8rem",
+      fontSize: "1rem",
+      padding: "0px",
+    },
+    tablet: {
+      width: "150px",
+      logoSize: { width: "140px", height: "140px" },
+      iconSize: "1.6rem",
+      fontSize: "0.9rem",
+      padding: "15px",
+    },
+    mobile: {
+      width: "100%",
+      logoSize: { width: "120px", height: "120px" },
+      iconSize: "1.4rem",
+      fontSize: "0.8rem",
+      padding: "10px",
+    },
+  };
 
-const menuStyles = {
-  backgroundColor: "var(--color-background)",
-  color: "var(--color-text)",
-  fontSize: "1.2rem",
-  fontWeight: "bold",
-  borderRight: "none", // <-- це
-  boxShadow: "none",
-  border: "none",
-};
+  // Визначаємо поточний стиль на основі ширини екрану
+  const getCurrentStyle = () => {
+    if (isMobile) return sidebarStyles.mobile;
+    if (window.innerWidth <= 768) return sidebarStyles.tablet;
+    return sidebarStyles.desktop;
+  };
 
-const SidebarMenu = ({ onClose }) => {
+  const currentStyle = getCurrentStyle();
+
+  const buttonStyles = {
+    color: "var(--color-text)",
+    background: "transparent",
+    border: "1px solid var(--color-border)",
+    borderRadius: "4px",
+    padding: "4px 8px",
+    marginTop: "20px",
+    cursor: "pointer",
+    fontSize: currentStyle.fontSize,
+  };
+
+  const menuStyles = {
+    backgroundColor: "var(--color-background)",
+    color: "var(--color-text)",
+    fontSize: currentStyle.fontSize,
+    fontWeight: "bold",
+    borderRight: "none",
+    boxShadow: "none",
+    border: "none",
+  };
+
   return (
     <Motion.div
-      initial={{ opacity: 0, x: "-100%" }}
+      initial={{ opacity: 0, x: isMobile ? "-100%" : 0 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{
-        duration: 3,
+        duration: 0.3,
         ease: "easeInOut",
       }}
     >
       <Sidebar
-        width="120px"
-        border="none"
+        width={currentStyle.width}
         rootStyles={{
           [`.${sidebarClasses.container}`]: {
             backgroundColor: "var(--color-background)",
             color: "var(--color-text)",
             height: "100vh",
+            fontSize: currentStyle.fontSize,
             fontWeight: "bold",
             borderRight: "none",
             boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.4)",
-
             border: "transparent",
             "& .ps-menu-button": {
               color: "var(--color-text)",
               cursor: "pointer",
+              fontSize: currentStyle.fontSize,
+              padding: isMobile ? "12px 8px" : "16px 12px",
             },
             "& .ps-menu-button:hover": {
               backgroundColor: "var(--color-surface-hover)",
             },
             "& .ps-menu-button i": {
-              fontSize: "1.6rem",
+              fontSize: currentStyle.iconSize,
               color: "var(--color-text)",
             },
             "& .ps-menu-button:hover i": {
@@ -69,88 +105,111 @@ const SidebarMenu = ({ onClose }) => {
           },
         }}
       >
-        <div style={{ paddingTop: "5px" }}>
+        <div style={{ paddingTop: currentStyle.padding }}>
           <img
             src="/images/Fush-Photoroom.png"
             alt="logo"
             style={{
-              width: "120px",
-              height: "120px",
-              marginBottom: "40px",
+              width: currentStyle.logoSize.width,
+              height: currentStyle.logoSize.height,
+              marginBottom: isMobile ? "20px" : "40px",
               backgroundColor: "var(--color-surface)",
             }}
           />
         </div>
+
         <Menu style={menuStyles}>
-          <SubMenu label="Menu">
-            <MenuItem
-              component={<Link to="/" />}
-              className="font-bold text-[1.4rem] text-[var(--color-text)] bg-[var(--color-surface)]  transition-colors duration-300"
-            >
-              <i className="ri-home-line"></i>
-            </MenuItem>
-            <MenuItem
-              component={<Link to="/projects" />}
-              className="font-bold text-[1.4rem] text-[var(--color-text)] bg-[var(--color-surface)]  transition-colors duration-300"
-            >
-              <i className="ri-code-s-slash-line"></i>
-            </MenuItem>
-            <MenuItem
-              component={<Link to="/tech" />}
-              className="font-bold text-[1.4rem] text-[var(--color-text)] bg-[var(--color-surface)]  transition-colors duration-300"
-            >
-              <i className="ri-stack-line"></i>
-            </MenuItem>
-            <MenuItem
-              component={<Link to="/contacts" />}
-              className="font-bold text-[1.4rem] text-[var(--color-text)] bg-[var(--color-surface)] transition-colors duration-300"
-            >
-              <i className="ri-mail-line"></i>
-            </MenuItem>
-          </SubMenu>
+          {!isMobile && (
+            <SubMenu label="Menu" style={{ fontSize: currentStyle.fontSize }}>
+              <MenuItem component={<Link to="/" />}>
+                <i className="ri-home-line"></i> {!isMobile && "Home"}
+              </MenuItem>
+              <MenuItem component={<Link to="/projects" />}>
+                <i className="ri-code-s-slash-line"></i>{" "}
+                {!isMobile && "Projects"}
+              </MenuItem>
+              <MenuItem component={<Link to="/tech" />}>
+                <i className="ri-stack-line"></i> {!isMobile && "Tech"}
+              </MenuItem>
+              <MenuItem component={<Link to="/contacts" />}>
+                <i className="ri-mail-line"></i> {!isMobile && "Contacts"}
+              </MenuItem>
+            </SubMenu>
+          )}
+
+          {isMobile && (
+            <>
+              <MenuItem component={<Link to="/" />}>
+                <i className="ri-home-line"></i> Home
+              </MenuItem>
+              <MenuItem component={<Link to="/projects" />}>
+                <i className="ri-code-s-slash-line"></i> Projects
+              </MenuItem>
+              <MenuItem component={<Link to="/tech" />}>
+                <i className="ri-stack-line"></i> Tech
+              </MenuItem>
+              <MenuItem component={<Link to="/contacts" />}>
+                <i className="ri-mail-line"></i> Contacts
+              </MenuItem>
+            </>
+          )}
+
           <MenuItem
             component={<Link to="https://github.com/volodimirfushtei" />}
-            style={{
-              fontWeight: "bold",
-              fontSize: "1.6rem",
-              color: "var(--color-text)",
-            }}
           >
-            <i className="ri-github-line p-0"></i>
+            <i className="ri-github-line"></i> {!isMobile && "GitHub"}
           </MenuItem>
-          <MenuItem
-            style={{
-              fontWeight: "bold",
-              fontSize: "1.2rem",
-              color: "var(--color-text)",
-            }}
-          >
-            GOIT
-          </MenuItem>
+
+          {!isMobile && (
+            <MenuItem
+              onClick={() =>
+                window.open("/images/FUSHTEI_VOLODYMYR.pdf", "_blank")
+              }
+            >
+              GOIT Certificate
+            </MenuItem>
+          )}
         </Menu>
 
-        <button
-          style={buttonStyles}
-          onClick={() => {
-            document.body.classList.toggle("light-theme");
-          }}
-        >
-          Tog Theme
-        </button>
+        <div style={{ padding: currentStyle.padding }}>
+          <button
+            style={buttonStyles}
+            onClick={() => {
+              document.body.classList.toggle("light-theme");
+            }}
+          >
+            Toggle Theme
+          </button>
+        </div>
+
         <div
           style={{
             position: "absolute",
             bottom: "20px",
-
+            left: currentStyle.padding,
+            right: currentStyle.padding,
             fontSize: "0.8rem",
             color: "var(--color-text)",
+            textAlign: "center",
           }}
         >
-          &copy; 2025 Volodimir Fushtei
+          &copy; {new Date().getFullYear()} Volodimir Fushtei
         </div>
-        {onClose && (
-          <button onClick={onClose} className="md:hidden">
-            {/* Close icon */}
+
+        {isMobile && (
+          <button
+            onClick={onClose}
+            style={{
+              position: "absolute",
+              top: "10px",
+              right: "10px",
+              background: "transparent",
+              border: "none",
+              color: "var(--color-text)",
+              fontSize: "1.5rem",
+            }}
+          >
+            <i className="ri-close-line"></i>
           </button>
         )}
       </Sidebar>

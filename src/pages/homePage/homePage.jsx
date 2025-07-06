@@ -1,16 +1,12 @@
 import React, { useState } from "react";
-import s from "./homePage.module.css";
-import TechIcon from "../../Components/TechIcon/TechIcon.jsx";
-import { motion as Motion } from "motion/react";
-import MenuIcon from "../../Components/MenuIcon/MenuIcon";
-import { Link, NavLink } from "react-router-dom";
-import ControllerSkills from "../../Components/ControllerSkills/ControllerSkills.jsx";
-import ControllerMenu from "../../Components/ControllerMenu/ControllerMenu.jsx";
-import ExperienceTable from "../../Components/ExperienceTable/ExperienceTable.jsx";
+import { motion as Motion } from "framer-motion";
+import styles from "./homePage.module.css";
 
+import ControllerSkills from "../../Components/ControllerSkills/ControllerSkills.jsx";
+import ExperienceTable from "../../Components/ExperienceTable/ExperienceTable.jsx";
+import { Container, Row, Col, Button, Badge } from "react-bootstrap";
 const HomePage = () => {
   const [hovered, setHovered] = useState(false);
-  // Додайте цей код в будь-який компонент (наприклад, HomePage)
 
   const skills = [
     { src: "/icons/react.svg", alt: "React" },
@@ -33,57 +29,74 @@ const HomePage = () => {
     <Motion.div
       initial={{ opacity: 0, scale: 0.5 }}
       animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.5 }}
-      transition={{
-        opacity: { duration: 0.4 },
-        scale: { duration: 0.6 },
-      }}
+      transition={{ duration: 0.5 }}
+      className={styles.container}
     >
-      <>
-        <div className={s.container_home}>
-          <div className={s.content}>
-            <div className={s.text}>
-              <h1 className={s.title}>Hello, I’m a Fullstack Developer</h1>
-              <p className={s.paragraph}>
-                I specialize in building modern, fast and scalable websites and
-                web applications.
-              </p>
-              <button
-                className={s.button}
-                onClick={() =>
-                  window.open("https://github.com/volodimirfushtei", "_blank")
-                }
-              >
-                View My Projects
-              </button>
-              <div className={s.experience}>
-                {" "}
-                <ExperienceTable />
-              </div>
+      <div className={styles.content}>
+        {/* Text Content */}
+        <div className={styles.textContent}>
+          <Motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            <h1 className={styles.title}>Hello, I'm a Fullstack Developer</h1>
+            <p className={styles.paragraph}>
+              I specialize in building modern, fast and scalable websites and
+              web applications.
+            </p>
+
+            <button
+              className={styles.button}
+              onClick={() =>
+                window.open("https://github.com/volodimirfushtei", "_blank")
+              }
+            >
+              View My Projects
+            </button>
+
+            <div className={styles.experience}>
+              <ExperienceTable />
             </div>
-            <div className={s.preview}>
-              <img
-                src={
-                  hovered
-                    ? "/images/Programmer.jpg"
-                    : "/images/Programmer_mob.png"
-                }
-                onMouseEnter={() => setHovered(true)}
-                onMouseLeave={() => setHovered(false)}
-                alt="Preview"
-                loading="lazy"
-                width="500"
-                height="500"
-                className={s.image}
-              />
-            </div>
-          </div>
-          {/* Стек технологій */}
-          <div className={s.stack}>
-            <ControllerSkills items={skills} />
-          </div>
+          </Motion.div>
         </div>
-      </>
+
+        {/* Image Content */}
+        <div className={styles.imageWrapper}>
+          <Motion.div
+            whileHover={{ scale: 1.02 }}
+            className="position-relative"
+          >
+            <img
+              src={
+                hovered
+                  ? "/images/Fush-Photoroom.png"
+                  : "/images/pexels-jorge.jpg"
+              }
+              onMouseEnter={() => setHovered(true)}
+              onMouseLeave={() => setHovered(false)}
+              alt="Developer Preview"
+              className={styles.profileImage}
+              width="500"
+              height="500"
+              overflow="hidden"
+            />
+            <Badge
+              bg="dark"
+              text="light"
+              className={`${styles.imageBadge} position-absolute`}
+            >
+              <i className="bi bi-star-fill text-warning me-1"></i>
+              Available for work
+            </Badge>
+          </Motion.div>
+        </div>
+      </div>
+
+      {/* Skills Section */}
+      <div className={styles.skillsSection}>
+        <ControllerSkills items={skills} />
+      </div>
     </Motion.div>
   );
 };

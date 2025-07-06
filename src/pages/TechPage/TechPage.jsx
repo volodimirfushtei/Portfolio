@@ -9,24 +9,32 @@ const tech = [
     description: "JavaScript бібліотека для створення інтерфейсів.",
     icon: "ri-reactjs-line",
     link: "https://react.dev/",
+    image:
+      "https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
   },
   {
     name: "Node.js",
     description: "Серверне середовище виконання JavaScript.",
     icon: "ri-nodejs-line",
     link: "https://nodejs.org/en/",
+    image:
+      "https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
   },
   {
     name: "Next.js",
     description: "Фреймворк для SSR у React.",
     icon: "ri-nextjs-fill",
     link: "https://nextjs.org/",
+    image:
+      "https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
   },
   {
     name: "Git",
     description: "Система контролю версій.",
     icon: "ri-git-branch-line",
     link: "https://git-scm.com/",
+    image:
+      "https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
   },
   {
     name: "Redux",
@@ -127,18 +135,24 @@ const TechnologyPage = () => {
                   >
                     <i className={`${t.icon} ${s.icon}`} aria-hidden="true" />
                   </Motion.div>
-                  <h3 className={s.title}>{t.name}</h3>
-                  <p className={s.description}>{t.description}</p>
+                  <div>
+                    <div className={s.backgroundLink} aria-hidden="true"></div>
+                    <h3 className={s.title}>{t.name}</h3>
+                    <p className={s.description}>{t.description}</p>
+                    {t.link && (
+                      <a
+                        href={t.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={s.link}
+                      >
+                        Visit
+                        <i className={`ri-arrow-right-line ${s.arrow}`} />
+                      </a>
+                    )}
+                  </div>
                   {t.link && (
-                    <a
-                      href={t.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={s.link}
-                    >
-                      Visit
-                      <i className={`ri-arrow-right-line ${s.arrow}`} />
-                    </a>
+                    <div className={s.backgroundLink} aria-hidden="true" />
                   )}
                 </div>
               </Tilt>

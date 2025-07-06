@@ -1,38 +1,37 @@
-.tech_scroller {
-  position: relative;
-  overflow: hidden;
+.skills_card {
   width: 100%;
-  padding: 2rem 0;
   margin: 2rem 0;
-  background-color: var(--color-surface);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  padding: 0.5rem;
   border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-  isolation: isolate;
-  background: url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80");
 }
 
-.tech_scroller::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.1);
-  background-size: cover;
-  background-position: center;
+.skills_card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 174, 193, 0.2);
+  background: var(--color-surface-hover);
 
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  z-index: -1;
-  border-radius: inherit;
+  backdrop-filter: blur(10px);
+  border-radius: 0.1rem;
 }
 
-.tech {
+.section_title {
+  font-size: 1.5rem;
+  color: var(--color-text);
+  text-align: center;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.tech_scroller {
+  width: 100%;
+  padding: 1.5rem 0;
+}
+
+.tech_track {
   display: inline-flex;
-  gap: 3rem;
+  gap: 2rem;
   will-change: transform;
-  padding: 0 2rem;
+  padding: 0 1rem;
 }
 
 .tech_item {
@@ -40,73 +39,82 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s ease;
+  gap: 0.5rem;
+  min-width: 80px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  color: var(--color-accent);
+  text-align: center;
 }
 
 .tech_item:hover {
   transform: translateY(-5px) scale(1.05);
 }
 
+.tech_name {
+  font-size: 0.9rem;
+  color: var(--color-text);
+  opacity: 0.8;
+  text-align: center;
+}
+
 /* Responsive styles */
 @media (max-width: 1024px) {
-  .tech {
-    gap: 2.5rem;
+  .tech_track {
+    gap: 1.5rem;
+  }
+
+  .tech_item {
+    min-width: 70px;
   }
 }
 
 @media (max-width: 768px) {
-  .tech_scroller {
-    padding: 2rem 0;
-    margin: 3rem 0;
-    background-attachment: scroll;
+  .skills_card {
+    padding: 1rem;
   }
 
-  .tech {
-    gap: 2rem;
-    padding: 0 1.5rem;
+  .section_title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .tech_track {
+    gap: 1rem;
+  }
+
+  .tech_item {
+    min-width: 60px;
+  }
+
+  .tech_name {
+    font-size: 0.8rem;
   }
 }
 
 @media (max-width: 480px) {
-  .tech_scroller {
-    padding: 1.5rem 0.5rem;
-    margin: 2rem 0;
-    background-attachment: scroll;
-  }
-
-  .tech {
-    gap: 1.5rem;
-    padding: 0 1rem;
+  .tech_track {
+    gap: 0.8rem;
   }
 
   .tech_item {
-    transform: scale(0.9);
+    min-width: 50px;
   }
 
-  .tech_item:hover {
-    transform: scale(0.95) translateY(-3px);
+  .tech_name {
+    font-size: 0.7rem;
   }
 }
 
-/* Animation pause for touch devices */
+/* Touch device adaptation */
 @media (hover: none) {
   .tech_scroller {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
 
-  .tech {
+  .tech_track {
     animation: none;
     width: max-content;
-  }
-
-  .tech_scroller::before {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    z-index: -1;
-    border-radius: inherit;
-    width: 100%;
   }
 }
