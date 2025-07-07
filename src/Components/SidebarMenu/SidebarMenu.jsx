@@ -8,27 +8,27 @@ import {
   sidebarClasses,
 } from "react-pro-sidebar";
 import { Link } from "react-router-dom";
-
+import styles from "./SidebarMenu.module.css";
 const SidebarMenu = ({ onClose, isMobile }) => {
   // Стилі для різних розмірів екрану
   const sidebarStyles = {
     desktop: {
-      width: "180px",
-      logoSize: { width: "180px", height: "180px" },
+      width: "150px",
+      logoSize: { width: "150px", height: "130px" },
       iconSize: "1.8rem",
       fontSize: "1rem",
       padding: "0px",
     },
     tablet: {
-      width: "150px",
-      logoSize: { width: "140px", height: "140px" },
+      width: "100px",
+      logoSize: { width: "100px", height: "100px" },
       iconSize: "1.6rem",
       fontSize: "0.9rem",
       padding: "15px",
     },
     mobile: {
       width: "100%",
-      logoSize: { width: "120px", height: "120px" },
+      logoSize: { width: "100px", height: "100px" },
       iconSize: "1.4rem",
       fontSize: "0.8rem",
       padding: "10px",
@@ -47,12 +47,11 @@ const SidebarMenu = ({ onClose, isMobile }) => {
   const buttonStyles = {
     color: "var(--color-text)",
     background: "transparent",
-    border: "1px solid var(--color-border)",
+    border: "2px solid var(--color-border)",
     borderRadius: "4px",
     padding: "4px 8px",
     marginTop: "20px",
     cursor: "pointer",
-    fontSize: currentStyle.fontSize,
   };
 
   const menuStyles = {
@@ -114,6 +113,8 @@ const SidebarMenu = ({ onClose, isMobile }) => {
               height: currentStyle.logoSize.height,
               marginBottom: isMobile ? "20px" : "40px",
               backgroundColor: "var(--color-surface)",
+
+              cursor: "pointer",
             }}
           />
         </div>
@@ -197,18 +198,7 @@ const SidebarMenu = ({ onClose, isMobile }) => {
         </div>
 
         {isMobile && (
-          <button
-            onClick={onClose}
-            style={{
-              position: "absolute",
-              top: "10px",
-              right: "10px",
-              background: "transparent",
-              border: "none",
-              color: "var(--color-text)",
-              fontSize: "1.5rem",
-            }}
-          >
+          <button onClick={onClose} className={styles.close_button}>
             <i className="ri-close-line"></i>
           </button>
         )}

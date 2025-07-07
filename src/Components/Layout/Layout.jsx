@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import SidebarMenu from "../SidebarMenu/SidebarMenu.jsx";
 import Overlay from "../Overlay/Overlay.jsx";
 import React, { useState, useEffect } from "react";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion as MotionPathHelper } from "framer-motion";
 import useWindowSize from "../../hooks/useWindowSize.js";
 
 const menuItems = [
@@ -51,12 +51,26 @@ const Layout = () => {
   return (
     <div className="flex flex-row h-screen bg-(var(--color-background))">
       {/* Sidebar - hidden on mobile when menu is closed */}
-      <div className={`${isMobile && !isMobileMenuOpen ? "hidden" : "block"}`}>
+      <MotionPathHelper.div
+        initial={{ opacity: 0, x: -100, y: 0 }}
+        animate={{ opacity: 1, x: 0, y: 0 }}
+        transition={{
+          duration: 0.8,
+          ease: "easeInOut",
+        }}
+        className={`fixed top-0 left-0  text-white ${
+          isMobile && !isMobileMenuOpen ? "hidden" : ""
+        }`}
+        aria-label="Sidebar"
+        role="navigation"
+        aria-hidden={!isMobileMenuOpen}
+        aria-expanded={isMobileMenuOpen}
+      >
         <SidebarMenu
           items={menuItems}
           onClose={isMobile ? toggleMobileMenu : null}
         />
-      </div>
+      </MotionPathHelper.div>
 
       {/* Mobile menu button (hamburger) */}
       {isMobile && (
@@ -88,7 +102,7 @@ const Layout = () => {
       </AnimatePresence>
 
       {/* Main content area */}
-      <main className="flex-1 overflow-auto  transition-all duration-300">
+      <main className="flex-1 ml-36 overflow-auto  transition-all duration-300">
         <AnimatePresence mode="wait">
           <Outlet context={{ isMobile }} />
         </AnimatePresence>

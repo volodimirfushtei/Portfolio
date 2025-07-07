@@ -35,7 +35,6 @@ const ControllerSkills = ({ items }) => {
   return (
     <Card
       className={s.skills_card}
-      hoverable
       style={{
         background: "var(--color-background)",
 

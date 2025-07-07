@@ -136,7 +136,7 @@ const TechnologyPage = () => {
                     <i className={`${t.icon} ${s.icon}`} aria-hidden="true" />
                   </Motion.div>
                   <div>
-                    <div className={s.backgroundLink} aria-hidden="true"></div>
+                    <div className={s.backgroundLink}></div>
                     <h3 className={s.title}>{t.name}</h3>
                     <p className={s.description}>{t.description}</p>
                     {t.link && (

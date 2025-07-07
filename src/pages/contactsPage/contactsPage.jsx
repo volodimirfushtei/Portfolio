@@ -30,7 +30,7 @@ const contactsPage = () => {
       <div className={s.contactsPage}>
         <div className={s.container}>
           <div className={s.container_forms}>
-            <ContactForm />
+            <ContactForm key="ContactForm" />
             <ContactInfo items={social_items} key={social_items.alt} />
             <Consultation />
           </div>

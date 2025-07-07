@@ -7,15 +7,8 @@ const ProjectPage = () => {
     {
       id: 1,
       title: "Travel Camper",
-      description: "Мобільний додаток для онлайн-шопінгу...",
-      tags: [
-        "React.js",
-        "Node.js",
-        "Redux",
-        "MongoDB",
-        "Express.js",
-        "Tailwind CSS",
-      ],
+      description: "Мобільний додаток для пошуку та бронювання кампів...",
+      tags: ["React.js", "Redux", "MongoDB", "Server-json", "Tailwind CSS"],
       imageUrl: "/images/Camper.png",
       urlVercel: "https://goit-campers-ten.vercel.app/",
       alt: "E-commerce додаток",
@@ -69,13 +62,13 @@ const ProjectPage = () => {
   ];
   const variants = {
     hover: {
-      rotateY: 180,
-      scale: 1.1,
-      transition: { duration: 0.7 },
-    },
-    tap: {
-      rotateY: 360,
-      scale: 0.95,
+      scale: 1.02,
+      y: -5,
+      transition: {
+        duration: 0.3,
+        repeat: Infinity,
+        repeatType: "reverse",
+      },
     },
   };
   // 🔵 Пагінація
@@ -98,6 +91,10 @@ const ProjectPage = () => {
         transition={{
           opacity: { duration: 0.4 },
           scale: { duration: 0.6 },
+        }}
+        class={{
+          hidden: "hidden",
+          visible: "visible",
         }}
       >
         <div id="portfolio" className={s.wrapper}>
@@ -129,7 +126,7 @@ const ProjectPage = () => {
                       className={s.coloredShadow}
                       style={{
                         backgroundImage:
-                          "url('https://images.unsplash.com/photo-1604964432806-254d07c11f32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80' )",
+                          "url('https://ui-avatars.com/api/?background=random' )",
                         opacity: 1,
                       }}
                     ></div>
@@ -174,6 +171,52 @@ const ProjectPage = () => {
           </div>
         </div>
       </Motion.div>
+      {/* 🔵 Search */}
+      <div className="container mb-6 p-2 rounded w-full bg-surface ">
+        <div className="row g-2">
+          {/* Search */}
+          <div className="col-12 col-md-4 ">
+            <div className="input-group">
+              <span className={"input-group-text"}>
+                <i className="ri-search-line"></i>
+              </span>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Search projects..."
+              />
+            </div>
+          </div>
+
+          {/* Filter */}
+          <div className="col-12 col-md-4">
+            <div className="input-group">
+              <span className="input-group-text">
+                <i className="ri-filter-3-line"></i>
+              </span>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Filter by tag..."
+              />
+            </div>
+          </div>
+
+          {/* Add */}
+          <div className="col-12 col-md-4">
+            <div className="input-group">
+              <span className="input-group-text">
+                <i className="ri-add-line"></i>
+              </span>
+              <input
+                type="text"
+                className="form-control "
+                placeholder="Add a project..."
+              />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

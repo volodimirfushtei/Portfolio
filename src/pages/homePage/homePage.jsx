@@ -5,6 +5,8 @@ import styles from "./homePage.module.css";
 import ControllerSkills from "../../Components/ControllerSkills/ControllerSkills.jsx";
 import ExperienceTable from "../../Components/ExperienceTable/ExperienceTable.jsx";
 import { Container, Row, Col, Button, Badge } from "react-bootstrap";
+import Footer from "../../Components/Footer/Footer.jsx";
+import Header from "../../Components/Header/Header.jsx";
 const HomePage = () => {
   const [hovered, setHovered] = useState(false);
 
@@ -32,6 +34,7 @@ const HomePage = () => {
       transition={{ duration: 0.5 }}
       className={styles.container}
     >
+      <Header />
       <div className={styles.content}>
         {/* Text Content */}
         <div className={styles.textContent}>
@@ -40,7 +43,10 @@ const HomePage = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
           >
-            <h1 className={styles.title}>Hello, I'm a Fullstack Developer</h1>
+            <h1 className={styles.title}>
+              Hello, I'm a{" "}
+              <span className={styles.name}>Fullstack Developer</span>
+            </h1>
             <p className={styles.paragraph}>
               I specialize in building modern, fast and scalable websites and
               web applications.
@@ -69,17 +75,16 @@ const HomePage = () => {
           >
             <img
               src={
-                hovered
-                  ? "/images/Fush-Photoroom.png"
-                  : "/images/pexels-jorge.jpg"
+                hovered ? "/images/pexels-jorge.jpg" : "/images/pexels-digi.jpg"
               }
               onMouseEnter={() => setHovered(true)}
               onMouseLeave={() => setHovered(false)}
               alt="Developer Preview"
               className={styles.profileImage}
-              width="500"
+              width="600"
               height="500"
               overflow="hidden"
+              loading="lazy"
             />
             <Badge
               bg="dark"
@@ -97,6 +102,7 @@ const HomePage = () => {
       <div className={styles.skillsSection}>
         <ControllerSkills items={skills} />
       </div>
+      <Footer />
     </Motion.div>
   );
 };

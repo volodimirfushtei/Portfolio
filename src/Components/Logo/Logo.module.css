@@ -4,7 +4,7 @@
   cursor: pointer;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  border: 2px solid rgba(239, 234, 234, 0.1);
+  border: 1px solid rgba(239, 234, 234, 0.1);
   background-color: var(--color-background);
 
   /* Додаємо анімацію */

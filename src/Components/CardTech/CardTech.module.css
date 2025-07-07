@@ -1,0 +1,36 @@
+.rotatingCardContainer {
+  perspective: 1000px;
+  margin-top: 50px;
+}
+
+.cardRotate {
+  width: 100%;
+  height: 240px;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+.cardRotate:hover {
+  transform: rotateY(180deg);
+}
+
+.cardBackground {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  border-radius: 12px;
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.front {
+  z-index: 2;
+}
+
+.back {
+  transform: rotateY(180deg);
+}

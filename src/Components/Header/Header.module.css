@@ -1,0 +1,28 @@
+.nav_link:hover {
+  color: var(--color-title);
+  text-decoration: none;
+}
+.main_header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 86%;
+  margin-left: 160px;
+  z-index: 999;
+  padding: 1.5rem 1rem;
+  background: transparent;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.main_header.scrolled {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  color: #222;
+}
+
+.nav_link {
+  color: #fff;
+  margin-left: 1rem;
+  text-decoration: none;
+}

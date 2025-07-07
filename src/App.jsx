@@ -32,7 +32,7 @@ function App() {
   useEffect(() => {
     // Попереднє завантаження компонентів
     preloadComponents().then(() => {
-      const timer = setTimeout(() => setLoading(false), 2000); // Зменшено час завантаження
+      const timer = setTimeout(() => setLoading(false), 2500); // Зменшено час завантаження
       return () => clearTimeout(timer);
     });
   }, []);
@@ -43,7 +43,7 @@ function App() {
         {loading ? (
           <Loader key="loader" />
         ) : (
-          <Suspense fallback={<Loader minimal={true} />}>
+          <Suspense fallback={null}>
             <Overlay key={location.pathname} />
             <Routes location={location}>
               <Route path="/" element={<Layout />}>

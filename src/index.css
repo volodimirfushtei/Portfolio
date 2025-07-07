@@ -2,7 +2,7 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
 @import "bootstrap-icons/font/bootstrap-icons.css";
 
-:root {
+body.light-theme {
   --bs-primary: #4361ee;
   --bs-info: #4cc9f0;
   --color-background: #121212; /* Dark background */
@@ -28,20 +28,23 @@
     #03dac6,
     #2196f3
   ); /* Loader progress bar */
-  --color-shadow: 0 8px 25px rgba(33, 150, 243, 0.4); /* Blue shadow */
+  --color-shadow: 0 8px 25px rgba(33, 150, 243, 0.4);
+  --color-success: #4cc9f0; /* Бірюзовий */
+  --color-warning: #f8961e; /* Помаранчевий */
+  --color-error: #f72585; /* Рожевий */ /* Blue shadow */
 }
 
-body.light-theme {
+:root {
   --color-background: #f8f9fa; /* М'який сірий фон */
   --color-surface: #ffffff; /* Чисті білі поверхні */
   --color-surface-hover: #f1f3f5; /* Легкий сірий при наведенні */
 
   /* Текстова палітра */
   --color-text: #212529; /* Глибокий чорний для тексту */
-  --color-text-secondary: #495057; /* Другий рівень тексту */
+  --color-text: #6c757d; /* Другий рівень тексту */
 
   /* Акцентні кольори з сучасними градієнтами */
-  --color-title: #4361ee; /* Яскраво-синій */
+  --color-title: #8c279e;
   --color-accent: #3a86ff; /* Світліший синій */
   --color-accent-hover: #4895ef; /* Градієнтний варіант */
 
