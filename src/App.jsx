@@ -6,6 +6,8 @@ import Loader from "./Components/Loader/Loader.jsx";
 import Layout from "./Components/Layout/Layout.jsx";
 import ErrorBoundary from "./Components/ErrorBoundary/ErrorBondary.jsx";
 import Overlay from "./Components/Overlay/Overlay.jsx";
+import { Toaster } from "react-hot-toast";
+
 // Preload компонентів
 const preloadComponents = () => {
   const components = [
@@ -55,6 +57,50 @@ function App() {
                 <Route path="error" element={<TestError />} />
               </Route>
             </Routes>
+            <Toaster
+              position="top-right"
+              reverseOrder={false}
+              gutter={8}
+              toastOptions={{
+                style: {
+                  borderRadius: "8px",
+                  background: "#333",
+                  color: "#fff",
+                  fontSize: "16px",
+                  padding: "16px",
+                  border: "1px solid #ccc",
+                  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                },
+                success: {
+                  style: {
+                    background: "#4CAF50",
+                    color: "#fff",
+                    icon: "✅",
+                  },
+                },
+                error: {
+                  style: {
+                    background: "#f44336",
+                    color: "#fff",
+                    icon: "❌",
+                  },
+                },
+                loading: {
+                  style: {
+                    background: "#2196F3",
+                    color: "#fff",
+                    icon: "⌛",
+                  },
+                },
+                complete: {
+                  style: {
+                    background: "#4CAF59",
+                    color: "#fff",
+                    icon: "✅",
+                  },
+                },
+              }}
+            />
           </Suspense>
         )}
       </AnimatePresence>

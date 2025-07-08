@@ -4,11 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "concurrently \"vite\" \"node src/backend/server.js\"",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "npm run dev"
+    "start": "npm run dev",
+    "backend": "node src/backend/server.js"
   },
   "eslintConfig": {
     "extends": [
@@ -21,12 +22,16 @@
     "axios": "^1.10.0",
     "bootstrap": "^5.3.7",
     "bootstrap-icons": "^1.13.1",
+    "cors": "^2.8.5",
+    "dotenv": "^17.1.0",
+    "express": "^5.1.0",
     "framer-motion": "^12.19.1",
     "gsap": "^3.13.0",
     "motion": "^12.19.2",
     "react-bootstrap": "^2.10.10",
     "react-fast-marquee": "^1.6.5",
     "react-hook-form": "^7.60.0",
+    "react-hot-toast": "^2.5.2",
     "react-icons": "^5.5.0",
     "react-material-ui-carousel": "^3.4.2",
     "react-parallax-tilt": "^1.7.299",
@@ -39,6 +44,7 @@
   "devDependencies": {
     "@eslint/js": "^9.29.0",
     "@vitejs/plugin-react-swc": "^3.10.2",
+    "concurrently": "^9.2.0",
     "eslint": "^9.29.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",

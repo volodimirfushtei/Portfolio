@@ -14,21 +14,48 @@ const ContactForm = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await fetch("/api/contact", {
+      if (data.subscribe) {
+        const response = await fetch("http://localhost:5000/api/subscribe", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: data.email,
+            firstName: data.firstName,
+            lastName: data.lastName,
+          }),
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error("❌ Server error:", response.status, errorText);
+          toast.error("Помилка підписки");
+          throw new Error("Помилка підписки");
+        }
+
+        console.log("✅ Subscription successful");
+        alert("✅ Subscription successful");
+      }
+
+      //  повідомлення в Telegram
+
+      const response = await fetch("http://localhost:5000/api/telegram", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
 
-      if (!response.ok) throw new Error("Submission failed");
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("❌ Server error:", response.status, errorText);
+        toast.error("Помилка відправки повідомлення");
+        throw new Error("Помилка відправки повідомлення");
+      }
 
+      console.log("✅ Message sent successfully");
+      alert("✅ Message sent successfully");
       reset();
-      alert("Message sent successfully!");
     } catch (error) {
       console.error("Error:", error);
-      alert("Failed to send message. Please try again.");
     }
   };
 
