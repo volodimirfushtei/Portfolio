@@ -6,7 +6,7 @@
 body.light-theme {
   --bs-primary: #4361ee;
   --bs-info: #4cc9f0;
-  --color-background: #121212; /* Dark background */
+  --color-background: #1a1a1a; /* Dark background */
   --color-surface: #1e1e1e; /* Elevated surfaces */
   --color-surface-hover: #272727; /* Surface hover */
   --color-text: #e0e0e0; /* Primary text */
