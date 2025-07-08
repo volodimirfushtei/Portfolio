@@ -91,7 +91,7 @@ const Footer = () => {
       </div>
 
       <div
-        className="text-center py-3 "
+        className="text-center py-3 h-8 "
         style={{
           borderTop: "1px solid rgba(0,0,0,0.1)",
           marginTop: "1rem",

@@ -7,6 +7,8 @@ import ExperienceTable from "../../Components/ExperienceTable/ExperienceTable.js
 import { Container, Row, Col, Button, Badge } from "react-bootstrap";
 import Footer from "../../Components/Footer/Footer.jsx";
 import Header from "../../Components/Header/Header.jsx";
+import CardTech from "../../Components/CardTech/CardTech.jsx";
+import Carusel from "../../Components/Carusel/Carusel.jsx";
 const HomePage = () => {
   const [hovered, setHovered] = useState(false);
 
@@ -73,25 +75,30 @@ const HomePage = () => {
             whileHover={{ scale: 1.02 }}
             className="position-relative"
           >
-            <img
-              src={
-                hovered ? "/images/pexels-jorge.jpg" : "/images/pexels-digi.jpg"
-              }
-              onMouseEnter={() => setHovered(true)}
-              onMouseLeave={() => setHovered(false)}
-              alt="Developer Preview"
-              className={styles.profileImage}
-              width="600"
-              height="500"
-              overflow="hidden"
-              loading="lazy"
-            />
+            <svg width="500" height="500" viewBox="0 20 800 700">
+              <use
+                href={
+                  hovered
+                    ? "/icons/undraw_building.svg"
+                    : "/icons/undraw_developer.svg"
+                }
+                onMouseEnter={() => setHovered(true)}
+                onMouseLeave={() => setHovered(false)}
+                alt="Developer Preview"
+                className={styles.profileImage}
+                width="500"
+                height="500"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                overflow="hidden"
+              />
+            </svg>
             <Badge
-              bg="dark"
+              bg="success"
               text="light"
-              className={`${styles.imageBadge} position-absolute`}
+              className={`${styles.imageBadge} position-absolute border-1 border-warning rounded-pill`}
             >
-              <i className="bi bi-star-fill text-warning me-1"></i>
+              <i className="bi bi-star-fill text-warning  me-1"></i>
               Available for work
             </Badge>
           </Motion.div>
@@ -102,6 +109,7 @@ const HomePage = () => {
       <div className={styles.skillsSection}>
         <ControllerSkills items={skills} />
       </div>
+      <Carusel />
       <Footer />
     </Motion.div>
   );

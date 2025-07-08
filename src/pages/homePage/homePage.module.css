@@ -99,7 +99,7 @@
   z-index: auto;
 }
 .profileImage:hover {
-  transform: scale(1.05);
+  transform: scale(1.01);
   box-shadow: 0 15px 30px rgba(0, 174, 193, 0.3);
   transition: transform 0.5s ease;
 }
@@ -121,8 +121,10 @@
   right: 1rem;
   font-size: 0.9rem;
   padding: 0.5rem 1rem;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
 }
 
 /* Responsive adjustments */

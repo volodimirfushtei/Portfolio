@@ -1,7 +1,8 @@
 @import "tailwindcss";
 @import "bootstrap/dist/css/bootstrap.min.css";
 @import "bootstrap-icons/font/bootstrap-icons.css";
-
+@import "slick-carousel/slick/slick.css";
+@import "slick-carousel/slick/slick-theme.css";
 body.light-theme {
   --bs-primary: #4361ee;
   --bs-info: #4cc9f0;
