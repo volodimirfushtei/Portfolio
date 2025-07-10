@@ -7,11 +7,12 @@ const Header = () => {
     <header
       className="navbar navbar-expand-lg navbar-light w-378 "
       style={{
-        background: "var(--color-header)",
+        background: "transparent",
         color: "var(--color-text)",
-        borderBottom: "1px solid var(--color-border)",
-        padding: "0.75rem 1.5rem",
+
+        padding: "2rem 0",
         backdropFilter: "blur(10px)",
+        borderBottom: "6px solid var(--color-border)",
       }}
     >
       <div className="container-fluid p-0 d-flex align-items-center justify-content-evenly">
@@ -21,7 +22,7 @@ const Header = () => {
           className="navbar-brand fw-bold"
           style={{
             color: "var(--color-title)",
-            fontSize: "1.5rem",
+            fontSize: "1.8rem",
             textDecoration: "none",
           }}
         >

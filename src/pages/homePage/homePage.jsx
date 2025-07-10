@@ -9,6 +9,8 @@ import Footer from "../../Components/Footer/Footer.jsx";
 import Header from "../../Components/Header/Header.jsx";
 import CardTech from "../../Components/CardTech/CardTech.jsx";
 import Carusel from "../../Components/Carusel/Carusel.jsx";
+import HeroMedia from "../../Components/HeroMedia/HeroMedia.jsx";
+import HeroSection from "../../Components/HeroSection/HeroSection.jsx";
 const HomePage = () => {
   const [hovered, setHovered] = useState(false);
 
@@ -37,73 +39,7 @@ const HomePage = () => {
       className={styles.container}
     >
       <Header />
-      <div className={styles.content}>
-        {/* Text Content */}
-        <div className={styles.textContent}>
-          <Motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
-          >
-            <h1 className={styles.title}>
-              Hello, I'm a{" "}
-              <span className={styles.name}>Fullstack Developer</span>
-            </h1>
-            <p className={styles.paragraph}>
-              I specialize in building modern, fast and scalable websites and
-              web applications.
-            </p>
-
-            <button
-              className={styles.button}
-              onClick={() =>
-                window.open("https://github.com/volodimirfushtei", "_blank")
-              }
-            >
-              View My Projects
-            </button>
-
-            <div className={styles.experience}>
-              <ExperienceTable />
-            </div>
-          </Motion.div>
-        </div>
-
-        {/* Image Content */}
-        <div className={styles.imageWrapper}>
-          <Motion.div
-            whileHover={{ scale: 1.02 }}
-            className="position-relative"
-          >
-            <svg width="500" height="500" viewBox="0 20 800 700">
-              <use
-                href={
-                  hovered
-                    ? "/icons/undraw_building.svg"
-                    : "/icons/undraw_developer.svg"
-                }
-                onMouseEnter={() => setHovered(true)}
-                onMouseLeave={() => setHovered(false)}
-                alt="Developer Preview"
-                className={styles.profileImage}
-                width="500"
-                height="500"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                overflow="hidden"
-              />
-            </svg>
-            <Badge
-              bg="success"
-              text="light"
-              className={`${styles.imageBadge} position-absolute border-1 border-warning rounded-pill`}
-            >
-              <i className="bi bi-star-fill text-warning  me-1"></i>
-              Available for work
-            </Badge>
-          </Motion.div>
-        </div>
-      </div>
+      <HeroSection />
 
       {/* Skills Section */}
       <div className={styles.skillsSection}>

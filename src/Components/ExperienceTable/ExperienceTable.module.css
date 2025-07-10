@@ -1,6 +1,6 @@
 .experienceContainer {
   width: 100%;
-  max-width: 800px;
+  max-width: 500px;
   margin: 2rem auto;
 }
 
@@ -15,10 +15,10 @@
 
 .cardTitle {
   font-size: 1.5rem;
-  font-weight: 600;
+  font-weight: 700;
   color: white;
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.2rem;
   position: relative;
 }
 
@@ -48,10 +48,9 @@
 }
 
 .counterNumber {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 700;
   line-height: 1;
-  margin-bottom: 0.5rem;
 }
 
 .experienceLabel {

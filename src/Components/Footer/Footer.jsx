@@ -8,7 +8,6 @@ const Footer = () => {
       style={{
         color: "var(--color-text)",
         padding: "2rem 0",
-        borderTop: "1px solid rgba(0,0,0,0.1)",
       }}
     >
       <div className="container text-center text-md-start">

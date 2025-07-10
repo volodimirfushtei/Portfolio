@@ -4,5 +4,5 @@
   cursor: pointer;
   background-color: inherit;
   transition: transform 0.3s ease-in-out;
-  background: var(--color-background);
+  background: transparent;
 }

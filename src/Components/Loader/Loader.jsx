@@ -9,10 +9,31 @@ import {
 
 const Loader = ({ onComplete }) => {
   const count = useMotionValue(0);
-  const rounded = useTransform(count, (latest) => Math.floor(latest));
-  const width = useTransform(count, (latest) => `${latest}%`);
-  const glowIntensity = useTransform(count, [0, 100], [0.1, 0.3]);
-  const blurIntensity = useTransform(count, [0, 100], [8, 2]);
+  const rounded = useTransform(count, (v) => Math.floor(v));
+  const width = useTransform(count, (v) => `${v}%`);
+  const glow = useTransform(count, [0, 100], [0.1, 0.3]);
+  const blur = useTransform(count, [0, 100], [8, 2]);
+
+  const boxShadow = useTransform(
+    glow,
+    (v) => `0 0 ${v * 40}px rgba(138, 99, 255, ${v * 1.5})`
+  );
+  const textShadow = useTransform(
+    glow,
+    (v) => `0 0 ${v * 15}px rgba(138, 99, 255, ${v * 1.2})`
+  );
+  const loaderBarBg = useTransform(
+    count,
+    (v) =>
+      `linear-gradient(90deg, 
+      rgba(138, 99, 255, 0.95) 0%, 
+      rgba(99, 179, 255, 0.95) ${v}%, 
+      rgba(255, 255, 255, 0.2) ${v}%)`
+  );
+  const loaderBarShadow = useTransform(
+    glow,
+    (v) => `0 0 ${v * 15}px rgba(138, 99, 255, ${v})`
+  );
 
   const [completed, setCompleted] = useState(false);
 
@@ -30,48 +51,30 @@ const Loader = ({ onComplete }) => {
 
   return (
     <Motion.div
-      initial={{ opacity: 1 }}
-      animate={completed ? { opacity: 0 } : { opacity: 1 }}
-      transition={{ duration: 0.6, ease: "easeInOut" }}
       className={s.loader_wrapper}
+      initial={{ opacity: 1 }}
+      animate={{ opacity: completed ? 0 : 1 }}
+      transition={{ duration: 0.6, ease: "easeInOut" }}
       style={{
         pointerEvents: completed ? "none" : "auto",
-        backdropFilter: blurIntensity,
+        backdropFilter: blur,
         backgroundImage: "url(/images/robs.jpg)",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         backgroundAttachment: "fixed",
-        boxShadow: useTransform(
-          glowIntensity,
-          (v) => `0 0 ${v * 40}px rgba(138, 99, 255, ${v * 1.5})`
-        ),
-        transition:
-          "backdrop-filter 250ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1)",
+        boxShadow,
       }}
     >
-      <Motion.div
-        className={s.loader}
-        style={{
-          boxShadow: useTransform(
-            glowIntensity,
-            (v) => `0 0 ${v * 40}px rgba(138, 99, 255, ${v * 1.5})`
-          ),
-          transition: "box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1)",
-        }}
-      >
-        <div className={s.counter}>
-          <Motion.span
-            style={{
-              textShadow: useTransform(
-                glowIntensity,
-                (v) => `0 0 ${v * 15}px rgba(138, 99, 255, ${v * 1.2})`
-              ),
-              transition: "text-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1)",
-            }}
-          >
-            {rounded}
-          </Motion.span>
+      <Motion.div className={s.loader} style={{ boxShadow }}>
+        <div
+          className={s.counter}
+          role="progressbar"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={rounded.get()}
+        >
+          <Motion.span style={{ textShadow }}>{rounded}</Motion.span>
           <span>%</span>
         </div>
 
@@ -80,19 +83,11 @@ const Loader = ({ onComplete }) => {
             className={s.loader_bar}
             style={{
               width,
-              background: useTransform(
-                count,
-                (v) => `linear-gradient(90deg, 
-                rgba(138, 99, 255, 0.95) 0%, 
-                rgba(99, 179, 255, 0.95) ${v}%, 
-                rgba(255, 255, 255, 0.2) ${v}%)`
-              ),
-              boxShadow: useTransform(
-                glowIntensity,
-                (v) => `0 0 ${v * 15}px rgba(138, 99, 255, ${v})`
-              ),
+              background: loaderBarBg,
+              boxShadow: loaderBarShadow,
             }}
           />
+          <p className={s.loader_buffer}>Bufering</p>
         </div>
 
         <Motion.div

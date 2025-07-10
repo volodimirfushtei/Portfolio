@@ -1,6 +1,8 @@
 import { useRef, useEffect } from "react";
 import { useScroll, useTransform, motion } from "framer-motion";
 import styles from "./HeroSection.module.css";
+import ExperienceTable from "../ExperienceTable/ExperienceTable";
+import HeroMedia from "../HeroMedia/HeroMedia";
 
 const HeroSection = () => {
   const sectionRef = useRef(null);
@@ -77,6 +79,22 @@ const HeroSection = () => {
           </div>
         </motion.div>
       </div>
+
+      {/* Додатковий контент нижче */}
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        className="relative z-10 w-full max-w-[1400px] px-2 mt-12 flex flex-col md:flex-row align-items-center justify-between gap-8"
+      >
+        <div className="flex-1">
+          <ExperienceTable />
+        </div>
+        <div className="flex-1">
+          <HeroMedia />
+        </div>
+      </motion.div>
     </motion.section>
   );
 };

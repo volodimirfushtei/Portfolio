@@ -26,7 +26,7 @@
   --color-button-bg: #6200ee; /* Material Deep Purple 500 */
   --color-button-bg-hover: #3700b3; /* Darker hover */
   --color-button-text: #ffffff; /* Button text */
-  --color-border: #333; /* Subtle border */
+  --color-border: #302e2e; /* Subtle border */
   --color-overlay: rgba(0, 0, 0, 0.6); /* Overlay background */
   --color-loader: #03dac6; /* Teal loader */
   --color-loader-background: linear-gradient(

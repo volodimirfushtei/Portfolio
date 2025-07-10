@@ -15,23 +15,23 @@ const SidebarMenu = ({ onClose, isMobile }) => {
   const sidebarStyles = {
     desktop: {
       width: "145px",
-      logoSize: { width: "145px", height: "130px" },
+      logoSize: { width: "145px", height: "123px" },
       iconSize: "1.8rem",
       fontSize: "1rem",
       padding: "0px",
     },
     tablet: {
-      width: "100px",
-      logoSize: { width: "100px", height: "100px" },
-      iconSize: "1.6rem",
-      fontSize: "0.9rem",
+      width: "120px",
+      logoSize: { width: "120px", height: "120px" },
+      iconSize: "1.4rem",
+      fontSize: "0.8rem",
       padding: "0px",
     },
     mobile: {
       width: "100%",
       logoSize: { width: "100px", height: "100px" },
-      iconSize: "1.4rem",
-      fontSize: "0.8rem",
+      iconSize: "1.2rem",
+      fontSize: "0.7rem",
       padding: "0",
     },
   };
@@ -113,8 +113,8 @@ const SidebarMenu = ({ onClose, isMobile }) => {
               width: currentStyle.logoSize.width,
               height: currentStyle.logoSize.height,
               marginBottom: isMobile ? "20px" : "40px",
-              backgroundColor: "var(--color-surface)",
-
+              backgroundColor: "transparent",
+              borderBottom: "6px solid var(--color-border)",
               cursor: "pointer",
             }}
           />

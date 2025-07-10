@@ -1,10 +1,11 @@
-import React from 'react'
+import React from "react";
+import FadeInAnimate from "../FadeInAnimate/FadeInAnimate";
+import styles from "./HeroMedia.module.css";
 
 const HeroMedia = () => {
+  const videoFrame = "/src/assets/Web_developer.mp4";
   return (
-      {/* Image Content */}
-
-      < className={styles.heroMediaWrapper}>
+    <div className={styles.heroMediaWrapper}>
       <FadeInAnimate
         direction="up"
         delay={0.2}
@@ -14,7 +15,7 @@ const HeroMedia = () => {
         <div className={styles.heroMediaContainer}>
           <div className={styles.videoWrapper}>
             <video
-              src={introVideo}
+              src={videoFrame} // Update with your video path
               autoPlay
               muted
               loop
@@ -53,13 +54,10 @@ const HeroMedia = () => {
             </div>
             <div className={styles.badgeGlow} />
           </div>
-              </div>
-              
-        </FadeInAnimate>
-    
-      </div>
-  )
-}
+        </div>
+      </FadeInAnimate>
+    </div>
+  );
+};
 
-
-export default HeroMedia
+export default HeroMedia;

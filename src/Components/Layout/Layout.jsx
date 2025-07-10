@@ -4,6 +4,7 @@ import Overlay from "../Overlay/Overlay.jsx";
 import React, { useState, useEffect } from "react";
 import { AnimatePresence, motion as MotionPathHelper } from "framer-motion";
 import useWindowSize from "../../hooks/useWindowSize.js";
+import Header from "../Header/Header.jsx";
 
 const menuItems = [
   {
