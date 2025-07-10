@@ -11,13 +11,40 @@
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  background: var(--color-background);
+  --blur-amount: 8px;
+  --glass-opacity: 0.85;
+  --border-radius: 12px;
 }
 body {
   margin: 0;
   padding: 0;
-  font-family: "Inter", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 
+  background: var(--color-background);
   color: var(--color-text);
+  transition: all 0.3s ease;
+
+  &::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: var(--bg-image);
+    background-size: cover;
+    background-position: center;
+    z-index: -2;
+  }
+
+  &::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--color-background);
+    z-index: -1;
+  }
 }

@@ -34,7 +34,7 @@ function Item(props) {
     <div
       style={{
         position: "relative",
-        height: "700px",
+        height: "600px",
         width: "1200px",
         margin: "0 auto",
         backgroundImage: `url(${props.item.image})`,
@@ -50,7 +50,7 @@ function Item(props) {
       }}
       className={s.slide}
     >
-      <h2>{props.item.name}</h2>
+      <h2 className="slide-title">{props.item.name}</h2>
       <p>{props.item.description}</p>
     </div>
   );

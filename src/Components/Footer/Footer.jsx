@@ -4,9 +4,8 @@ import s from "./Footer.module.css";
 const Footer = () => {
   return (
     <footer
-      className="text-center text-lg-start text-muted bg-surface"
+      className={`text-center text-lg-start text-muted ${s.footer}`}
       style={{
-        background: "var(--color-surface)",
         color: "var(--color-text)",
         padding: "2rem 0",
         borderTop: "1px solid rgba(0,0,0,0.1)",

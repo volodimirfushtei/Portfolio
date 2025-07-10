@@ -1,5 +1,5 @@
 import React from "react";
-import { motion as Motion } from "framer-motion";
+import { m, motion as Motion } from "framer-motion";
 import {
   Sidebar,
   Menu,
@@ -8,13 +8,14 @@ import {
   sidebarClasses,
 } from "react-pro-sidebar";
 import { Link } from "react-router-dom";
+import ToggleTheme from "../ToggleTheme/ToggleTheme";
 import styles from "./SidebarMenu.module.css";
 const SidebarMenu = ({ onClose, isMobile }) => {
   // Стилі для різних розмірів екрану
   const sidebarStyles = {
     desktop: {
-      width: "150px",
-      logoSize: { width: "150px", height: "130px" },
+      width: "145px",
+      logoSize: { width: "145px", height: "130px" },
       iconSize: "1.8rem",
       fontSize: "1rem",
       padding: "0px",
@@ -24,14 +25,14 @@ const SidebarMenu = ({ onClose, isMobile }) => {
       logoSize: { width: "100px", height: "100px" },
       iconSize: "1.6rem",
       fontSize: "0.9rem",
-      padding: "15px",
+      padding: "0px",
     },
     mobile: {
       width: "100%",
       logoSize: { width: "100px", height: "100px" },
       iconSize: "1.4rem",
       fontSize: "0.8rem",
-      padding: "10px",
+      padding: "0",
     },
   };
 
@@ -47,7 +48,7 @@ const SidebarMenu = ({ onClose, isMobile }) => {
   const buttonStyles = {
     color: "var(--color-text)",
     background: "transparent",
-    border: "2px solid var(--color-border)",
+
     borderRadius: "4px",
     padding: "4px 8px",
     marginTop: "20px",
@@ -83,7 +84,7 @@ const SidebarMenu = ({ onClose, isMobile }) => {
             fontSize: currentStyle.fontSize,
             fontWeight: "bold",
             borderRight: "none",
-            boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.4)",
+            boxShadow: "none",
             border: "transparent",
             "& .ps-menu-button": {
               color: "var(--color-text)",
@@ -172,15 +173,8 @@ const SidebarMenu = ({ onClose, isMobile }) => {
           )}
         </Menu>
 
-        <div style={{ padding: currentStyle.padding }}>
-          <button
-            style={buttonStyles}
-            onClick={() => {
-              document.body.classList.toggle("light-theme");
-            }}
-          >
-            Toggle Theme
-          </button>
+        <div style={{ padding: currentStyle.padding, marginTop: "10px" }}>
+          <ToggleTheme />
         </div>
 
         <div
@@ -189,7 +183,7 @@ const SidebarMenu = ({ onClose, isMobile }) => {
             bottom: "20px",
             left: currentStyle.padding,
             right: currentStyle.padding,
-            fontSize: "0.8rem",
+            fontSize: "0.7rem",
             color: "var(--color-text)",
             textAlign: "center",
           }}

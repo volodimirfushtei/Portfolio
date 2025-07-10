@@ -3,12 +3,22 @@
 @import "bootstrap-icons/font/bootstrap-icons.css";
 @import "slick-carousel/slick/slick.css";
 @import "slick-carousel/slick/slick-theme.css";
-body.light-theme {
+
+:root {
+  /* Базові налаштування */
+  --blur-amount: 8px;
+  --glass-opacity: 0.85;
+  --border-radius: 12px;
+}
+
+.dark-theme {
   --bs-primary: #4361ee;
   --bs-info: #4cc9f0;
   --color-background: #1c1c1c; /* Dark background */
   --color-surface: #1e1e1e; /* Elevated surfaces */
   --color-surface-hover: #272727; /* Surface hover */
+  --color-header: #1c1c1c;
+  --color-footer: #1c1c1c;
   --color-text: #e0e0e0; /* Primary text */
   --color-title: #2196f3; /* Primary accent (Material Blue 500) */
   --color-accent: #03dac6; /* Teal accent */
@@ -17,7 +27,7 @@ body.light-theme {
   --color-button-bg-hover: #3700b3; /* Darker hover */
   --color-button-text: #ffffff; /* Button text */
   --color-border: #333; /* Subtle border */
-  --color-overlay: rgba(0, 0, 0, 0.8); /* Overlay background */
+  --color-overlay: rgba(0, 0, 0, 0.6); /* Overlay background */
   --color-loader: #03dac6; /* Teal loader */
   --color-loader-background: linear-gradient(
     135deg,
@@ -33,43 +43,59 @@ body.light-theme {
   --color-success: #4cc9f0; /* Бірюзовий */
   --color-warning: #f8961e; /* Помаранчевий */
   --color-error: #f72585; /* Рожевий */ /* Blue shadow */
+
+  --bg-color: #121212;
+  --text-color: #ffffff;
 }
 
-:root {
-  --color-background: #f8f9fa; /* М'який сірий фон */
-  --color-surface: #ffffff; /* Чисті білі поверхні */
-  --color-surface-hover: #f1f3f5; /* Легкий сірий при наведенні */
+.light-theme {
+  /* Кольорова палітра */
+  --bs-primary: rgba(67, 97, 238, var(--glass-opacity));
+  --bs-info: rgba(76, 201, 240, var(--glass-opacity));
 
-  /* Текстова палітра */
-  --color-text: #212529; /* Глибокий чорний для тексту */
-  --color-text: #6c757d; /* Другий рівень тексту */
+  /* Фон та поверхні з ефектом скла */
+  --bg-image: url("./assets/images/sunset.jpg");
+  --color-background: rgba(248, 249, 250, 0.9);
+  --color-surface: rgba(255, 255, 255, var(--glass-opacity));
+  --color-surface-hover: rgba(241, 243, 245, 0.95);
 
-  /* Акцентні кольори з сучасними градієнтами */
-  --color-title: #8c279e;
-  --color-accent: #3a86ff; /* Світліший синій */
-  --color-accent-hover: #4895ef; /* Градієнтний варіант */
+  /* Текст */
+  --color-text: rgba(33, 37, 41, 0.95);
+  --color-secondary: rgba(108, 117, 125, 0.8);
 
-  /* Кнопки з модними ефектами */
-  --color-button-bg: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
-  --color-button-bg-hover: linear-gradient(135deg, #3a0ca3 0%, #480ca8 100%);
-  --color-button-text: #ffffff;
+  /* Спеціальні елементи */
+  --color-title: rgba(140, 39, 158, 0.9);
+  --color-accent: rgba(58, 134, 255, 0.9);
+  --color-accent-hover: rgba(72, 149, 239, 0.95);
 
-  /* Границі та ефекти */
-  --color-border: #e9ecef; /* Дуже легкі границі */
-  --color-overlay: rgba(255, 255, 255, 0.5); /* Світлий оверлей */
+  /* Шапка та підвал */
+  --color-header: rgba(248, 249, 250, 0.85);
+  --color-footer: rgba(255, 255, 255, 0.9);
+  --color-overlay: rgba(255, 255, 255, 0.6);
+  /* Кнопки */
+  --color-button-bg: linear-gradient(
+    135deg,
+    rgba(67, 97, 238, 0.9) 0%,
+    rgba(58, 12, 163, 0.9) 100%
+  );
+  --color-button-text: rgba(255, 255, 255, 0.95);
 
-  /* Анімації та завантажувачі */
-  --color-loader: linear-gradient(90deg, #4361ee, #4cc9f0);
-  --color-loader-background: #f1f3f5;
+  /* Границі */
+  --color-border: rgba(216, 221, 221, 0.9);
+  --color-loader: rgba(58, 12, 163, 0.9);
+  --color-loader-bar: linear-gradient(
+    90deg,
+    rgba(67, 97, 238, 0.9),
+    rgba(58, 12, 163, 0.9)
+  );
+  --color-loader-bg: #f4f4f4;
+  --color-counter: #62;
+  /* Ефекти */
+  --glass-effect: blur(var(--blur-amount));
+  --color-shadow: 0 4px 30px rgba(58, 12, 163, 0.1);
+  --glow-effect: 0 0 15px rgba(67, 97, 238, 0.2);
 
-  /* Тіні з модним ефектом */
-  --color-shadow: 0 4px 20px rgba(58, 12, 163, 0.1);
-
-  /* Додаткові сучасні кольори */
   --color-success: #4cc9f0; /* Бірюзовий */
   --color-warning: #f8961e; /* Помаранчевий */
   --color-error: #f72585; /* Рожевий */
-
-  /* Спеціальні ефекти */
-  --glow-effect: 0 0 15px rgba(67, 97, 238, 0.3);
 }

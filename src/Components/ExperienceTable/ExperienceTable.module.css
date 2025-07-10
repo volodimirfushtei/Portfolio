@@ -1,150 +1,102 @@
-.experience_container {
+.experienceContainer {
   width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
-  perspective: 1000px;
+  max-width: 800px;
+  margin: 2rem auto;
 }
 
-.card {
-  background: var(--color-surface);
-  border-radius: 12px;
-  padding: 8px;
-  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.12);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
+.experienceCard {
+  background: rgba(20, 20, 30, 0.6);
+  backdrop-filter: blur(12px);
+  border-radius: 24px;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 40px rgba(0, 174, 193, 0.2);
-}
-
-.card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 4px;
-  height: 100%;
-  background: linear-gradient(
-    to bottom,
-    var(--color-accent),
-    var(--color-accent-hover)
-  );
-}
-
-.card_title {
+.cardTitle {
   font-size: 1.5rem;
   font-weight: 600;
-  color: var(--color-text);
-  margin-bottom: 0.5rem;
-  padding-bottom: 12px;
-  border-bottom: var(--color-border) 1px solid;
-}
-
-.table_container {
-  overflow-x: auto;
-}
-
-.experience_table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-}
-
-.table_row {
-  transition: all 0.3s ease;
-}
-
-.table_row:hover {
-  background: rgba(0, 174, 193, 0.05);
-}
-
-.label {
-  padding: 4px 8px;
-  font-size: 1rem;
-  text-align: left;
-  color: var(--color-text);
-  opacity: 0.8;
-  font-weight: 500;
-  border-bottom: 1px solid rgba(31, 30, 30, 0.05);
-}
-
-.value {
-  padding: 16px 12px;
+  color: white;
   text-align: center;
-  font-weight: 600;
-
-  color: var(--color-text);
+  margin-bottom: 2rem;
+  position: relative;
 }
 
-.counter {
-  font-size: 1.4rem;
+.cardTitle::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #8a63ff, #63b3ff);
+  border-radius: 3px;
+}
+
+.experienceGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1.5rem;
+}
+
+.experienceItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.counterNumber {
+  font-size: 2.5rem;
   font-weight: 700;
-  background: linear-gradient(
-    135deg,
-    var(--color-accent),
-    var(--color-accent-hover)
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  line-height: 1;
+  margin-bottom: 0.5rem;
 }
 
-/* Responsive styles */
+.experienceLabel {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 0.5rem;
+}
+
+.experienceDivider {
+  position: absolute;
+  right: -0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.experienceItem:last-child .experienceDivider {
+  display: none;
+}
+
 @media (max-width: 768px) {
-  .card {
-    padding: 20px;
+  .experienceGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
   }
 
-  .card_title {
-    font-size: 1.3rem;
-    margin-bottom: 20px;
+  .experienceDivider {
+    display: none;
   }
 
-  .label,
-  .value {
-    padding: 12px 8px;
-    font-size: 0.95rem;
+  .experienceCard {
+    padding: 1.5rem;
   }
 
-  .counter {
-    font-size: 1.2rem;
+  .counterNumber {
+    font-size: 2rem;
   }
 }
 
 @media (max-width: 480px) {
-  .card {
-    padding: 16px;
-    border-radius: 10px;
+  .experienceGrid {
+    grid-template-columns: 1fr;
   }
-
-  .card_title {
-    font-size: 1.2rem;
-    margin-bottom: 16px;
-  }
-
-  .label,
-  .value {
-    padding: 10px 6px;
-    font-size: 0.9rem;
-  }
-}
-.experienceLabel {
-  color: var(--color-text);
-  opacity: 0.9;
-  font-weight: 500;
-}
-
-.experienceValue {
-  color: #e12424;
-  font-weight: 600;
-}
-.cardTitle {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--color-text);
-  margin-bottom: 0.5rem;
-  padding-bottom: 12px;
 }

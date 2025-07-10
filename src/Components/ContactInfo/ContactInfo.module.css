@@ -9,6 +9,8 @@
   align-items: center;
   flex-direction: column;
   backdrop-filter: blur(10px);
+
+  max-width: 400px;
 }
 .contactInfo:hover {
   transform: translateY(-2px);

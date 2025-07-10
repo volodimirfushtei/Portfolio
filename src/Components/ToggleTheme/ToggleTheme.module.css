@@ -1,0 +1,13 @@
+/* Light theme */
+.light-theme {
+  --bg-color: #ffffff;
+  --text-color: #212121;
+  /* other light theme variables */
+}
+
+/* Dark theme */
+.dark-theme {
+  --bg-color: #121212;
+  --text-color: #ffffff;
+  /* other dark theme variables */
+}

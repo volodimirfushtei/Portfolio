@@ -178,7 +178,7 @@ const ContactForm = () => {
               className={s.btnPrimary}
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Sending..." : "Send Message"}
+              {isSubmitting ? "Sending..." : "Send Message to Unigram"}
             </button>
           </div>
         </form>

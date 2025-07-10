@@ -5,72 +5,73 @@ import s from "./Header.module.css";
 const Header = () => {
   return (
     <header
-      className="navbar navbar-expand-lg navbar-light"
+      className="navbar navbar-expand-lg navbar-light w-378 "
       style={{
-        background: "var(--color-surface)",
-        borderBottom: "1px solid rgba(0,0,0,0.1)",
+        background: "var(--color-header)",
+        color: "var(--color-text)",
+        borderBottom: "1px solid var(--color-border)",
         padding: "0.75rem 1.5rem",
+        backdropFilter: "blur(10px)",
       }}
     >
-      <div className="container-fluid d-flex align-items-center justify-content-between">
+      <div className="container-fluid p-0 d-flex align-items-center justify-content-evenly">
         {/* Логотип */}
         <Link
           to="/"
           className="navbar-brand fw-bold"
           style={{
             color: "var(--color-title)",
-            fontSize: "1.25rem",
+            fontSize: "1.5rem",
             textDecoration: "none",
           }}
         >
           <i className="bi bi-code-slash mr-2 "></i>
           MyPortfolio
         </Link>
-        <Link to="/notifications" className="position-relative left-60">
+        <Link to="/notifications" className="position-relative left-40">
           <i className="ri-notification-line"></i>
           <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
             3
           </span>
         </Link>
-
         {/* Навігація */}
-        <nav className="d-none d-lg-flex align-items-center gap-3">
+        <nav className="d-none d-lg-flex align-items-center gap-3 text-var(--color-text)">
           <NavLink
             to="/"
             className={({ isActive }) =>
-              `${s.nav_link} ${
-                isActive ? "text-primary fw-bold" : "text-reset"
-              }`
+              `${s.nav_link} ${isActive ? s.active : ""}`
             }
           >
-            Home
+            <i className="ri-home-line mr-2"></i>
           </NavLink>
+
           <NavLink
             to="/projects"
             className={({ isActive }) =>
-              `nav-link ${
-                isActive ? "text-primary fw-bold" : "text-decoration-none"
-              }`
+              `${s.nav_link} ${isActive ? s.active : ""}`
             }
           >
-            Projects
+            <i className="ri-briefcase-line mr-2"></i>
           </NavLink>
+
           <NavLink
             to="/tech"
             className={({ isActive }) =>
-              `nav-link ${isActive ? "text-primary fw-bold" : "text-reset"}`
+              `${s.nav_link} ${isActive ? s.active : ""}`
             }
           >
-            Technology
+            <i className="ri-code-line mr-2"></i>
           </NavLink>
+
           <NavLink
             to="/contacts"
             className={({ isActive }) =>
-              `nav-link ${isActive ? "text-primary fw-bold" : "text-reset"}`
+              `${s.nav_link} ${isActive ? s.active : ""}`
             }
           >
-            Contacts
+            <i className="ri-contacts-line mr-2"></i>
           </NavLink>
+
           <Link
             to="/contacts"
             className="btn btn-primary btn-sm ms-3"

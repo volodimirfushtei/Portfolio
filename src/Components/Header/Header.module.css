@@ -1,5 +1,5 @@
 .nav_link:hover {
-  color: var(--color-title);
+  color: var(--color-secondary);
   text-decoration: none;
 }
 .main_header {
@@ -22,7 +22,21 @@
 }
 
 .nav_link {
-  color: #fff;
-  margin-left: 1rem;
-  text-decoration: none;
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  color: var(--color-text);
+  transition: color 0.3s;
+}
+
+.nav_link i {
+  color: inherit;
+  font-size: 1.2rem;
+  transition: color 0.3s;
+  margin-right: 0.5rem;
+}
+
+.active {
+  color: var(--bs-primary); /* або свій: #0d6efd */
+  font-weight: 600;
 }

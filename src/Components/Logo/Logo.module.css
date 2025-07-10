@@ -2,16 +2,7 @@
   width: 80px;
   height: 80px;
   cursor: pointer;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(239, 234, 234, 0.1);
-  background-color: var(--color-background);
-
-  /* Додаємо анімацію */
+  background-color: inherit;
   transition: transform 0.3s ease-in-out;
-}
-
-.Logo:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  background: var(--color-background);
 }
