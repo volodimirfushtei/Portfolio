@@ -5,14 +5,20 @@
 }
 
 .experienceCard {
-  background: rgba(20, 20, 30, 0.6);
-  backdrop-filter: blur(12px);
+  background: rgba(20, 20, 30, 0.1);
+
   border-radius: 24px;
   padding: 2rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
-
+.experienceContainer:hover {
+  transform: translateY(-2px);
+  transform: scale(1.02);
+  box-shadow: 0 12px 40px rgba(0, 174, 193, 0.2);
+  border-radius: 24px;
+  border: 1px solid rgba(248, 244, 244, 0.1);
+}
 .cardTitle {
   font-size: 1.5rem;
   font-weight: 700;

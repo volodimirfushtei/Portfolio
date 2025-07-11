@@ -7,8 +7,7 @@ const items = [
   {
     name: "React.js",
     description: "Building interactive UIs with modern React ecosystem",
-    image:
-      "https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+    image: "/images/IMG_3674.jpeg",
     color: "rgba(97, 218, 251, 0.15)",
   },
   {

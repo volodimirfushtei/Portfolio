@@ -19,18 +19,25 @@
   background: linear-gradient(
     135deg,
     rgba(138, 99, 255, 0.15) 0%,
-    rgba(20, 20, 30, 0.4) 100%
+    rgba(20, 20, 30, 0.7) 100%
   );
   border: 2px solid var(--color-border);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
-
+.heroMediaContainer:hover {
+  background: "transparent";
+  transition: transform 0.3s ease;
+}
 .videoWrapper {
   position: relative;
   aspect-ratio: 16/9;
   overflow: hidden;
 }
-
+.videoWrapper:hover {
+  cursor: pointer;
+  transform: scale(1.02);
+  transition: transform 0.3s ease;
+}
 .heroVideo {
   width: 100%;
   height: 100%;

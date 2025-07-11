@@ -97,6 +97,7 @@
   font-weight: 700;
   line-height: 1.2;
   margin-bottom: 1.5rem;
+  color: var(--color-text);
 }
 
 .titleHighlight {
@@ -121,6 +122,7 @@
   font-size: 1.5rem;
   max-width: 600px;
   opacity: 0.9;
+  color: var(--color-secondary);
 }
 
 /* Кнопка */
@@ -133,9 +135,10 @@
 .ctaButton {
   position: relative;
   padding: 0.8rem 1.6rem;
-  background: transparent;
+  background: var(--color-button-bg);
   color: white;
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  border: 2px solid var(--color-border);
+  color: var(--color-button-text);
   border-radius: 50px;
   font-size: 1.2rem;
   font-weight: 600;

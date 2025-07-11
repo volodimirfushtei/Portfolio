@@ -14,12 +14,13 @@
 .dark-theme {
   --bs-primary: #4361ee;
   --bs-info: #4cc9f0;
-  --color-background: #1c1c1c; /* Background */
-  --color-surface: #1c1c1c; /* Surface */
+  --color-background: #393939; /* Background */
+  --color-surface: #494949; /* Surface */
   --color-surface-hover: #ece1e1; /* Surface hover */
   --color-header: #1c1c1c;
   --color-footer: #1c1c1c;
-  --color-text: #e0e0e0; /* Primary text */
+  --color-text: #e0e0e0;
+  --color-secondary: #c6c4c4; /* Primary text */
   --color-title: #2196f3; /* Primary accent (Material Blue 500) */
   --color-accent: #03dac6; /* Teal accent */
   --color-accent-hover: #00bfa5; /* Teal darken */
@@ -55,13 +56,13 @@
 
   /* Фон та поверхні з ефектом скла */
   --bg-image: url("./assets/images/sunset.jpg");
-  --color-background: rgba(248, 249, 250, 0.9);
+  --color-background: rgba(181, 212, 243, 0.9);
   --color-surface: rgba(255, 255, 255, var(--glass-opacity));
   --color-surface-hover: rgba(241, 243, 245, 0.95);
 
   /* Текст */
   --color-text: rgba(33, 37, 41, 0.95);
-  --color-secondary: rgba(108, 117, 125, 0.8);
+  --color-secondary: rgba(108, 117, 125, 0.9);
 
   /* Спеціальні елементи */
   --color-title: rgba(140, 39, 158, 0.9);
@@ -98,4 +99,41 @@
   --color-success: #4cc9f0; /* Бірюзовий */
   --color-warning: #f8961e; /* Помаранчевий */
   --color-error: #f72585; /* Рожевий */
+}
+.black-theme {
+  --bs-primary: #4361ee;
+  --bs-info: #4cc9f0;
+  --color-background: #000000; /* Background */
+  --color-surface: #1c1c1c; /* Surface */
+  --color-surface-hover: #ece1e1; /* Surface hover */
+  --color-header: #1c1c1c;
+  --color-footer: #1c1c1c;
+  --color-text: #eaeaea;
+  --color-secondary: #c6c4c4; /* Primary text */
+  --color-title: #8b62f5; /* Primary accent (Material Blue 500) */
+  --color-accent: #aa1e58; /* Teal accent */
+  --color-accent-hover: #aa1e60; /* Teal darken */
+  --color-button-bg: #aa1e58; /* Material Deep Purple 500 */
+  --color-button-bg-hover: #aa1e60; /* Darker hover */
+  --color-button-text: #ffffff; /* Button text */
+  --color-border: #302e2e; /* Subtle border */
+  --color-overlay: rgba(0, 0, 0, 0.6); /* Overlay background */
+  --color-loader: #b51c52; /* Teal loader */
+  --color-loader-background: linear-gradient(
+    135deg,
+    #1f1f1f,
+    #333
+  ); /* Loader bg */
+  --color-loader-bar: linear-gradient(
+    90deg,
+    #03dac6,
+    #2196f3
+  ); /* Loader progress bar */
+  --color-shadow: 0 8px 25px rgba(33, 150, 243, 0.4);
+  --color-success: #4cc9f0; /* Бірюзовий */
+  --color-warning: #f8961e; /* Помаранчевий */
+  --color-error: #f72585; /* Рожевий */ /* Blue shadow */
+
+  --bg-color: #121212;
+  --text-color: #ffffff;
 }
