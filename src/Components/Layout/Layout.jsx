@@ -103,7 +103,7 @@ const Layout = () => {
       </AnimatePresence>
 
       {/* Main content area */}
-      <main className="flex-1 ml-36 overflow-auto  transition-all duration-300">
+      <main className="flex-1 ml-36 overflow-auto  transition-all duration-300 bg-transparent">
         <AnimatePresence mode="wait">
           <Outlet context={{ isMobile }} />
         </AnimatePresence>

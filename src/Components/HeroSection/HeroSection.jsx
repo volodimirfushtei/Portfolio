@@ -55,12 +55,12 @@ const HeroSection = () => {
           className={styles.headingWrapper}
         >
           <h1 className={styles.title}>
-            <span className={styles.titleHighlight}>Сучасні</span> рішення
+            <span className={styles.titleHighlight}>Modern</span> cases
             <br />
-            для вашого бізнесу
+            for your business
           </h1>
           <p className={styles.subtitle}>
-            Інноваційний підхід до створення цифрових продуктів
+            Innovative approach to building digital products
           </p>
         </motion.div>
 
@@ -71,7 +71,7 @@ const HeroSection = () => {
           className={styles.ctaWrapper}
         >
           <button className={styles.ctaButton}>
-            <span>Почати співпрацю</span>
+            <span>Let's get started</span>
             <div className={styles.buttonHoverEffect} />
           </button>
           <div className={styles.scrollIndicator}>

@@ -14,9 +14,9 @@
 .dark-theme {
   --bs-primary: #4361ee;
   --bs-info: #4cc9f0;
-  --color-background: #1c1c1c; /* Dark background */
-  --color-surface: #1e1e1e; /* Elevated surfaces */
-  --color-surface-hover: #272727; /* Surface hover */
+  --color-background: #1c1c1c; /* Background */
+  --color-surface: #1c1c1c; /* Surface */
+  --color-surface-hover: #ece1e1; /* Surface hover */
   --color-header: #1c1c1c;
   --color-footer: #1c1c1c;
   --color-text: #e0e0e0; /* Primary text */

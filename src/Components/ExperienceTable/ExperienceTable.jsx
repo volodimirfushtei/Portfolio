@@ -14,7 +14,7 @@ const Counter = ({ from = 0, to, duration = 2 }) => {
   useEffect(() => {
     const controls = animate(count, to, {
       duration,
-      ease: [0.16, 1, 0.3, 1], // Spring-like easing
+      ease: [0.16, 1, 0.3, 1],
       delay: 0.5,
     });
     return controls.stop;
@@ -57,8 +57,8 @@ const ExperienceTable = () => {
         <div className={styles.experienceGrid}>
           <ExperienceItem label="Years" value={1} duration={1.5} />
           <ExperienceItem label="Clients" value={3} duration={1.5} />
-          <ExperienceItem label="Team Projects" value={3} duration={2} />
-          <ExperienceItem label="Total Projects" value={5} duration={2.5} />
+          <ExperienceItem label="Team Pro" value={3} duration={2} />
+          <ExperienceItem label="Total Pro" value={5} duration={2.5} />
         </div>
       </div>
     </Motion.div>

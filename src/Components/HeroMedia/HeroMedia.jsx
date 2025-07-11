@@ -3,7 +3,9 @@ import FadeInAnimate from "../FadeInAnimate/FadeInAnimate";
 import styles from "./HeroMedia.module.css";
 
 const HeroMedia = () => {
-  const videoFrame = "/src/assets/Web_developer.mp4";
+  const videoFrame1 = "/src/assets/Web_developer.mp4";
+  const videoFrame2 = "/src/assets/Cyber.mp4";
+
   return (
     <div className={styles.heroMediaWrapper}>
       <FadeInAnimate
@@ -15,7 +17,7 @@ const HeroMedia = () => {
         <div className={styles.heroMediaContainer}>
           <div className={styles.videoWrapper}>
             <video
-              src={videoFrame} // Update with your video path
+              src={videoFrame1} // Update with your video path
               autoPlay
               muted
               loop

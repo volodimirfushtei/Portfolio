@@ -1,5 +1,5 @@
 import React from "react";
-import { m, motion as Motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 import {
   Sidebar,
   Menu,
@@ -10,6 +10,8 @@ import {
 import { Link } from "react-router-dom";
 import ToggleTheme from "../ToggleTheme/ToggleTheme";
 import styles from "./SidebarMenu.module.css";
+
+import FullscreenButton from "../FullScreenButton/FullScreenButton";
 const SidebarMenu = ({ onClose, isMobile }) => {
   // Стилі для різних розмірів екрану
   const sidebarStyles = {
@@ -176,7 +178,9 @@ const SidebarMenu = ({ onClose, isMobile }) => {
         <div style={{ padding: currentStyle.padding, marginTop: "10px" }}>
           <ToggleTheme />
         </div>
-
+        <div style={{ padding: currentStyle.padding, marginTop: "10px" }}>
+          <FullscreenButton />
+        </div>
         <div
           style={{
             position: "absolute",
