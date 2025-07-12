@@ -9,13 +9,16 @@ const Footer = () => {
           <h4>Portfolio</h4>
           <p>Modern web development solutions tailored to your needs</p>
           <div className={styles.socialLinks}>
-            {["ri-github-fill", "ri-linkedin-fill", "ri-twitter-fill"].map(
-              (icon, i) => (
-                <a key={i} href="#" aria-label="Social media link">
-                  <i className={icon}></i>
-                </a>
-              )
-            )}
+            {[
+              "ri-github-fill",
+              "ri-linkedin-fill",
+              "ri-slack-fill",
+              "ri-discord-fill",
+            ].map((icon, i) => (
+              <a key={i} href="#" aria-label="Social media link">
+                <i className={icon}></i>
+              </a>
+            ))}
           </div>
         </div>
 

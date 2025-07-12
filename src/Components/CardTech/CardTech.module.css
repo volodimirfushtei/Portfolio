@@ -1,7 +1,7 @@
 .card {
   position: relative;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1000px;
   height: 600px;
   margin: 0 auto;
   perspective: 1000px;
@@ -37,6 +37,7 @@
   padding: 2rem;
   box-sizing: border-box;
   background: url("/images/My_photo.png") center/contain no-repeat fixed;
+  backdrop-filter: blur(1px);
   background-size: 600px 600px;
 
   display: flex;
@@ -107,6 +108,7 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 0.5rem;
   margin: 1rem 0;
+  width: 50px;
 }
 
 .techPill {
@@ -118,7 +120,7 @@
 }
 
 .ctaButton {
-  width: 100%;
+  width: 120px;
   padding: 0.5rem;
   border: none;
   border-radius: 8px;

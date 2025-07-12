@@ -16,7 +16,15 @@ const CardTech = () => {
         </div>
 
         <ul className={styles.skillsList}>
-          {["React", "Node.js", "TypeScript", "UI/UX"].map((skill, i) => (
+          {[
+            "React",
+            "Node.js",
+            "TypeScript",
+            "UI/UX",
+            "MongoDB",
+            "Express",
+            "Figma",
+          ].map((skill, i) => (
             <li key={i} className={styles.skillItem}>
               <span className={styles.checkIcon}>✓</span>
               {skill}
@@ -31,13 +39,25 @@ const CardTech = () => {
         <h3>Technical Stack</h3>
 
         <div className={styles.techGrid}>
-          {["React", "Node", "TS", "MongoDB", "Express", "Figma"].map(
-            (tech, i) => (
-              <div key={i} className={styles.techPill}>
-                {tech}
-              </div>
-            )
-          )}
+          {[
+            "React",
+            "Node",
+            "TS",
+            "MongoDB",
+            "Express",
+            "Figma",
+            "Tailwind",
+            "Prisma",
+            "Next",
+            "Grid",
+            "Framer",
+            "SASS",
+            "GraphQL",
+          ].map((tech, i) => (
+            <div key={i} className={styles.techPill}>
+              {tech}
+            </div>
+          ))}
         </div>
 
         <button className={styles.ctaButton}>View Full Stack</button>
