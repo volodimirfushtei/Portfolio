@@ -7,10 +7,11 @@ import ExperienceTable from "../../Components/ExperienceTable/ExperienceTable.js
 import { Container, Row, Col, Button, Badge } from "react-bootstrap";
 import Footer from "../../Components/Footer/Footer.jsx";
 import Header from "../../Components/Header/Header.jsx";
-import CardTech from "../../Components/CardTech/CardTech.jsx";
+import Expertise from "../../Components/Expertise/Expertise";
 import Carusel from "../../Components/Carusel/Carusel.jsx";
 import HeroMedia from "../../Components/HeroMedia/HeroMedia.jsx";
 import HeroSection from "../../Components/HeroSection/HeroSection.jsx";
+import FadeInAnimate from "../../Components/FadeInAnimate/FadeInAnimate.jsx";
 const HomePage = () => {
   const [hovered, setHovered] = useState(false);
 
@@ -40,12 +41,13 @@ const HomePage = () => {
     >
       <Header />
       <HeroSection />
-
+      <Expertise />
       {/* Skills Section */}
       <div className={styles.skillsSection}>
         <ControllerSkills items={skills} />
       </div>
       <Carusel />
+
       <Footer />
     </Motion.div>
   );

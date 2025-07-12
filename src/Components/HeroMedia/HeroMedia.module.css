@@ -1,194 +1,85 @@
-/* Hero Media Styles */
-.heroMediaWrapper {
+.container {
   position: relative;
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
-.heroMediaContainer {
+.videoContainer {
   position: relative;
-  border-radius: 24px;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
   overflow: hidden;
-  margin: 2rem auto;
+}
 
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  background: linear-gradient(
-    135deg,
-    rgba(138, 99, 255, 0.15) 0%,
-    rgba(20, 20, 30, 0.7) 100%
-  );
-  border: 2px solid var(--color-border);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-}
-.heroMediaContainer:hover {
-  background: "transparent";
-  transition: transform 0.3s ease;
-}
-.videoWrapper {
-  position: relative;
-  aspect-ratio: 16/9;
-  overflow: hidden;
-}
-.videoWrapper:hover {
-  cursor: pointer;
-  transform: scale(1.02);
-  transition: transform 0.3s ease;
-}
-.heroVideo {
+.video {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 24px;
-  transform: scale(1.01); /* Prevents border-radius bleeding */
 }
 
-.videoGradientOverlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(138, 99, 255, 0.15) 0%,
-    rgba(20, 20, 30, 0.6) 100%
-  );
-  border-radius: 24px;
-  pointer-events: none;
-}
-
-/* Floating Particles Effect */
-.floatingParticles {
+.overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  pointer-events: none;
-  overflow: hidden;
-  border-radius: 24px;
-}
-
-.particle {
-  position: absolute;
-  width: var(--size);
-  height: var(--size);
-  background: rgba(110, 130, 245, 0.8);
-  border-radius: 50%;
-  filter: blur(1px);
-  animation: float 6s ease-in-out infinite;
-  animation-delay: var(--delay);
-  top: 50%;
-  left: 50%;
-  transform: translate(
-    calc(-50% + var(--x-offset)),
-    calc(-50% + var(--y-offset))
+  background: linear-gradient(
+    to top,
+    rgba(15, 12, 41, 0.8) 0%,
+    transparent 50%
   );
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 2rem;
 }
 
-@keyframes float {
-  0%,
-  100% {
-    transform: translate(
-      calc(-50% + var(--x-offset)),
-      calc(-50% + var(--y-offset))
-    );
-  }
-  50% {
-    transform: translate(
-      calc(-50% + var(--x-offset)),
-      calc(-50% + var(--y-offset) - 20px)
-    );
-  }
-}
-
-/* Modern Status Badge */
-.statusBadge {
-  position: absolute;
-  cursor: pointer;
-  bottom: 10px;
-  right: 10px;
-  z-index: 2;
-}
-
-.badgeContent {
-  position: relative;
+.badge {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  padding: 0.5rem 1rem;
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 10px;
-  background: rgba(20, 20, 30, 0.8);
-  backdrop-filter: blur(10px);
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: white;
-  z-index: 1;
+  gap: 0.5rem;
+  font-size: 0.9rem;
 }
 
 .pulseDot {
   width: 10px;
   height: 10px;
-  background: #4ade80;
+  background: #63b3ff;
   border-radius: 50%;
   animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
   0% {
-    transform: scale(1);
     opacity: 1;
   }
   50% {
-    transform: scale(1.2);
-    opacity: 0.7;
+    opacity: 0.3;
   }
   100% {
-    transform: scale(1);
     opacity: 1;
   }
 }
 
-.badgeText {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+.content {
+  margin-top: 1.5rem;
 }
 
-.badgeText i {
-  color: #fbbf24;
+.content h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
 }
 
-.badgeGlow {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(74, 222, 128, 0.3);
-  filter: blur(12px);
-  border-radius: 999px;
-  z-index: 0;
-  opacity: 0.6;
-}
-
-@media (max-width: 768px) {
-  .heroMediaContainer {
-    border-radius: 16px;
-  }
-
-  .statusBadge {
-    top: 16px;
-    right: 16px;
-  }
-
-  .badgeContent {
-    font-size: 0.8rem;
-    padding: 8px 12px;
-  }
+.content p {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
 }

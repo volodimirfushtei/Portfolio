@@ -1,103 +1,103 @@
 import React, { useEffect, useState } from "react";
 import s from "./Loader.module.css";
-import {
-  motion as Motion,
-  useMotionValue,
-  useTransform,
-  animate,
-} from "framer-motion";
+import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 
 const Loader = ({ onComplete }) => {
   const count = useMotionValue(0);
   const rounded = useTransform(count, (v) => Math.floor(v));
   const width = useTransform(count, (v) => `${v}%`);
-  const glow = useTransform(count, [0, 100], [0.1, 0.3]);
-  const blur = useTransform(count, [0, 100], [8, 2]);
+
+  // Enhanced animation values
+  const glowIntensity = useTransform(count, [0, 100], [0.1, 0.5]);
+  const blurAmount = useTransform(count, [0, 100], [12, 4]);
+  const saturation = useTransform(count, [0, 100], [0.8, 1.2]);
+  const particleOpacity = useTransform(count, [0, 100], [0, 0.3]);
 
   const boxShadow = useTransform(
-    glow,
-    (v) => `0 0 ${v * 40}px rgba(138, 99, 255, ${v * 1.5})`
+    glowIntensity,
+    (v) => `0 0 ${v * 50}px rgba(138, 99, 255, ${v * 2})`
   );
-  const textShadow = useTransform(
-    glow,
-    (v) => `0 0 ${v * 15}px rgba(138, 99, 255, ${v * 1.2})`
+
+  const textGlow = useTransform(
+    glowIntensity,
+    (v) => `0 0 ${v * 20}px rgba(255, 255, 255, ${v * 1.5})`
   );
-  const loaderBarBg = useTransform(
+
+  const gradientBg = useTransform(
     count,
-    (v) =>
-      `linear-gradient(90deg, 
+    (v) => `linear-gradient(
+      90deg, 
       rgba(138, 99, 255, 0.95) 0%, 
       rgba(99, 179, 255, 0.95) ${v}%, 
-      rgba(255, 255, 255, 0.2) ${v}%)`
-  );
-  const loaderBarShadow = useTransform(
-    glow,
-    (v) => `0 0 ${v * 15}px rgba(138, 99, 255, ${v})`
+      rgba(255, 255, 255, 0.1) ${v}%
+    )`
   );
 
   const [completed, setCompleted] = useState(false);
 
   useEffect(() => {
     const controls = animate(count, 100, {
-      duration: 2.5,
+      duration: 2.8,
       ease: [0.16, 1, 0.3, 1],
       onComplete: () => {
         setCompleted(true);
-        if (onComplete) onComplete();
+        onComplete?.();
       },
     });
     return controls.stop;
   }, [count, onComplete]);
 
   return (
-    <Motion.div
-      className={s.loader_wrapper}
+    <motion.div
+      className={s.loaderContainer}
       initial={{ opacity: 1 }}
       animate={{ opacity: completed ? 0 : 1 }}
-      transition={{ duration: 0.6, ease: "easeInOut" }}
+      transition={{ duration: 0.8, ease: "easeInOut" }}
       style={{
-        pointerEvents: completed ? "none" : "auto",
-        backdropFilter: blur,
-        backgroundImage: "url(/images/robs.jpg)",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundAttachment: "fixed",
-        boxShadow,
+        pointerEvents: completed ? "none" : "all",
+        backdropFilter: blurAmount,
+        filter: `saturate(${saturation})`,
       }}
     >
-      <Motion.div className={s.loader} style={{ boxShadow }}>
-        <div
-          className={s.counter}
-          role="progressbar"
-          aria-valuemin={0}
-          aria-valuemax={100}
-          aria-valuenow={rounded.get()}
-        >
-          <Motion.span style={{ textShadow }}>{rounded}</Motion.span>
-          <span>%</span>
+      <div className={s.backgroundOverlay} />
+
+      <motion.div
+        className={s.loaderCard}
+        style={{ boxShadow }}
+        initial={{ scale: 0.95 }}
+        animate={{ scale: 1 }}
+        transition={{
+          duration: 0.6,
+          ease: "backOut",
+        }}
+      >
+        <div className={s.progressIndicator}>
+          <motion.span
+            className={s.percentage}
+            style={{ textShadow: textGlow }}
+          >
+            {rounded}
+          </motion.span>
+          <span className={s.percentSymbol}>%</span>
         </div>
 
-        <div className={s.loader_bar_wrapper}>
-          <Motion.div
-            className={s.loader_bar}
+        <div className={s.progressBarContainer}>
+          <motion.div
+            className={s.progressBar}
             style={{
               width,
-              background: loaderBarBg,
-              boxShadow: loaderBarShadow,
+              background: gradientBg,
             }}
           />
-          <p className={s.loader_buffer}>Bufering</p>
+          <p className={s.loadingText}>Buffering</p>
         </div>
 
-        <Motion.div
-          className={s.loader_particles}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
+        <motion.div
+          className={s.particles}
+          style={{ opacity: particleOpacity }}
         />
-      </Motion.div>
-    </Motion.div>
+      </motion.div>
+    </motion.div>
   );
 };
 

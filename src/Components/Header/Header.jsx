@@ -1,124 +1,153 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { NavLink } from "react-router-dom";
-import s from "./Header.module.css";
+import React, { useState, useEffect } from "react";
+import { Link, NavLink } from "react-router-dom";
+import styles from "./Header.module.css";
+
 const Header = () => {
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
   return (
     <header
-      className="navbar navbar-expand-lg navbar-light w-378 "
-      style={{
-        background: "transparent",
-        color: "var(--color-text)",
-
-        padding: "2rem 0",
-        backdropFilter: "blur(10px)",
-        borderBottom: "6px solid var(--color-border)",
-      }}
+      className={`${styles.header} ${scrolled ? styles.scrolled : ""} ${
+        mobileMenuOpen ? styles.mobileMenuOpen : ""
+      }`}
     >
-      <div className="container-fluid p-0 d-flex align-items-center justify-content-evenly">
-        {/* Логотип */}
-        <Link
-          to="/"
-          className="navbar-brand fw-bold"
-          style={{
-            color: "var(--color-title)",
-            fontSize: "1.8rem",
-            textDecoration: "none",
-          }}
-        >
-          <i className="bi bi-code-slash mr-2 "></i>
-          MyPortfolio
+      <div className={styles.container}>
+        {/* Logo */}
+        <Link to="/" className={styles.logo}>
+          <i className={`ri-code-s-slash-line ${styles.logoIcon}`}></i>
+          <span>MyPortfolio</span>
         </Link>
-        <Link to="/notifications" className="position-relative left-40">
-          <i className="ri-notification-line"></i>
-          <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-            3
-          </span>
-        </Link>
-        {/* Навігація */}
-        <nav className="d-none d-lg-flex align-items-center gap-3 text-var(--color-text)">
+
+        {/* Desktop Navigation */}
+        <nav className={styles.desktopNav}>
           <NavLink
             to="/"
             className={({ isActive }) =>
-              `${s.nav_link} ${isActive ? s.active : ""}`
+              `${styles.navLink} ${isActive ? styles.active : ""}`
             }
           >
-            <i className="ri-home-line mr-2"></i>
+            <i className="ri-home-line"></i>
+            <span>Home</span>
           </NavLink>
 
           <NavLink
             to="/projects"
             className={({ isActive }) =>
-              `${s.nav_link} ${isActive ? s.active : ""}`
+              `${styles.navLink} ${isActive ? styles.active : ""}`
             }
           >
-            <i className="ri-briefcase-line mr-2"></i>
+            <i className="ri-briefcase-line"></i>
+            <span>Projects</span>
           </NavLink>
 
           <NavLink
             to="/tech"
             className={({ isActive }) =>
-              `${s.nav_link} ${isActive ? s.active : ""}`
+              `${styles.navLink} ${isActive ? styles.active : ""}`
             }
           >
-            <i className="ri-code-line mr-2"></i>
+            <i className="ri-code-line"></i>
+            <span>Tech</span>
           </NavLink>
 
           <NavLink
             to="/contacts"
             className={({ isActive }) =>
-              `${s.nav_link} ${isActive ? s.active : ""}`
+              `${styles.navLink} ${isActive ? styles.active : ""}`
             }
           >
-            <i className="ri-contacts-line mr-2"></i>
+            <i className="ri-contacts-line"></i>
+            <span>Contacts</span>
           </NavLink>
 
-          <Link
-            to="/contacts"
-            className="btn btn-primary btn-sm ms-3"
-            style={{
-              borderRadius: "30px",
-              textTransform: "uppercase",
-              fontWeight: "500",
-            }}
-          >
+          <Link to="/contacts" className={styles.contactButton}>
             Contact Me
           </Link>
         </nav>
 
-        {/* Mobile burger button */}
+        {/* Mobile Menu Button */}
         <button
-          className="btn d-lg-none"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#mobileMenu"
-          aria-controls="mobileMenu"
-          aria-expanded="false"
+          className={styles.mobileMenuButton}
+          onClick={toggleMobileMenu}
           aria-label="Toggle navigation"
         >
-          <i className="ri-menu-line" style={{ fontSize: "1.5rem" }}></i>
+          {mobileMenuOpen ? (
+            <i className="ri-close-line"></i>
+          ) : (
+            <i className="ri-menu-line"></i>
+          )}
         </button>
       </div>
 
-      {/* Mobile menu */}
-      <div className="collapse d-lg-none" id="mobileMenu">
-        <nav className="d-flex flex-column p-3 gap-2">
-          <Link to="/" className={`${s.nav_link} text-reset`}>
-            Home
-          </Link>
-          <Link to="/projects" className={`${s.nav_link} text-reset`}>
-            Projects
-          </Link>
-          <Link to="/tech" className={`${s.nav_link} text-reset`}>
-            Tech Stack
-          </Link>
-          <Link to="/contacts" className={`${s.nav_link} text-reset`}>
-            Contacts
-          </Link>
+      {/* Mobile Menu */}
+      <div
+        className={`${styles.mobileMenu} ${
+          mobileMenuOpen ? styles.mobileMenuActive : ""
+        }`}
+      >
+        <nav className={styles.mobileNav}>
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              `${styles.mobileNavLink} ${isActive ? styles.active : ""}`
+            }
+            onClick={toggleMobileMenu}
+          >
+            <i className="ri-home-line"></i>
+            <span>Home</span>
+          </NavLink>
+
+          <NavLink
+            to="/projects"
+            className={({ isActive }) =>
+              `${styles.mobileNavLink} ${isActive ? styles.active : ""}`
+            }
+            onClick={toggleMobileMenu}
+          >
+            <i className="ri-briefcase-line"></i>
+            <span>Projects</span>
+          </NavLink>
+
+          <NavLink
+            to="/tech"
+            className={({ isActive }) =>
+              `${styles.mobileNavLink} ${isActive ? styles.active : ""}`
+            }
+            onClick={toggleMobileMenu}
+          >
+            <i className="ri-code-line"></i>
+            <span>Tech</span>
+          </NavLink>
+
+          <NavLink
+            to="/contacts"
+            className={({ isActive }) =>
+              `${styles.mobileNavLink} ${isActive ? styles.active : ""}`
+            }
+            onClick={toggleMobileMenu}
+          >
+            <i className="ri-contacts-line"></i>
+            <span>Contacts</span>
+          </NavLink>
+
           <Link
             to="/contacts"
-            className="btn btn-primary btn-sm mt-2"
-            style={{ borderRadius: "30px" }}
+            className={styles.mobileContactButton}
+            onClick={toggleMobileMenu}
           >
             Contact Me
           </Link>

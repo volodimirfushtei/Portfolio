@@ -1,42 +1,186 @@
-.nav_link:hover {
-  color: var(--color-secondary);
-  text-decoration: none;
-}
-.main_header {
+.header {
   position: fixed;
   top: 0;
   left: 0;
-  width: 86%;
-
-  z-index: 999;
-  padding: 1.5rem 1rem;
+  width: 100%;
+  z-index: 1000;
+  padding: 1.5rem 0;
   background: transparent;
-  color: #fff;
-  transition: all 0.3s ease;
-}
-
-.main_header.scrolled {
-  background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(10px);
-  color: #222;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.nav_link {
+.scrolled {
+  background: rgba(15, 23, 42, 0.8);
+  padding: 1rem 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.logo {
   display: flex;
   align-items: center;
-  font-size: 1.2rem;
-  color: var(--color-text);
-  transition: color 0.3s;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s ease;
 }
 
-.nav_link i {
-  color: inherit;
-  font-size: 1.2rem;
-  transition: color 0.3s;
+.logo:hover {
+  color: #8a63ff;
+}
+
+.logoIcon {
   margin-right: 0.5rem;
+  font-size: 1.8rem;
+}
+
+/* Desktop Navigation */
+.desktopNav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.navLink:hover {
+  color: #8a63ff;
+  background: rgba(138, 99, 255, 0.1);
+}
+
+.navLink i {
+  font-size: 1.2rem;
 }
 
 .active {
-  color: var(--bs-primary); /* або свій: #0d6efd */
+  color: #8a63ff;
   font-weight: 600;
+}
+
+.contactButton {
+  background: linear-gradient(135deg, #8a63ff, #63b3ff);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 2rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  margin-left: 1rem;
+}
+
+.contactButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(138, 99, 255, 0.3);
+}
+
+/* Mobile Menu Button */
+.mobileMenuButton {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.8rem;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+/* Mobile Menu */
+.mobileMenu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.98);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.mobileMenuActive {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.mobileNav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+  padding: 2rem;
+}
+
+.mobileNavLink {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  width: 100%;
+  justify-content: center;
+  padding: 1rem 0;
+}
+
+.mobileNavLink:hover {
+  color: #8a63ff;
+}
+
+.mobileContactButton {
+  background: linear-gradient(135deg, #8a63ff, #63b3ff);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 2rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  margin-top: 2rem;
+}
+
+.mobileContactButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(138, 99, 255, 0.3);
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+  .desktopNav {
+    display: none;
+  }
+
+  .mobileMenuButton {
+    display: block;
+  }
 }

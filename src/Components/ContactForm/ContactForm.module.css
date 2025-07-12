@@ -1,61 +1,73 @@
+/* Base Styles */
 .formContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  max-width: 400px;
-  background-color: var(--color-background);
-  border: 1px solid rgba(248, 244, 244, 0.1);
-  backdrop-filter: blur(10px);
-  border-radius: 0.1rem;
-  border: 1px solid rgba(248, 244, 244, 0.1);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 0 0 10px var(--color-surface);
-}
-.formContainer:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 40px rgba(0, 174, 193, 0.2);
-  background: var(--color-surface-hover);
-  border: 1px solid rgba(248, 244, 244, 0.1);
-  backdrop-filter: blur(10px);
-  border-radius: 0.1rem;
-  max-width: 400px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 0 0 10px var(--color-border);
-}
-.card {
-  transition: all 0.3s ease;
+  max-width: 480px;
   width: 100%;
-  max-width: 400px;
-  text-align: center;
-  padding: 1rem;
+  margin: 0 auto;
+  perspective: 1000px;
+}
+
+.card {
+  background: var(--color-surface);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transform-style: preserve-3d;
+}
+
+.card:hover {
+  box-shadow: 0 15px 40px rgba(0, 174, 193, 0.2);
+  transform: translateY(-5px);
 }
 
 /* Header */
 .cardHeader {
-  background: var(--color-accent);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary),
+    var(--color-accent)
+  );
   color: white;
-  padding: 1rem;
-  border-radius: 4px;
+  padding: 2rem 1.5rem;
   text-align: center;
-  margin-bottom: 1.5rem;
-  margin-top: -30px;
-  width: 366px;
-  transform: translateY(-2px);
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 0 0 10px var(--color-surface);
+  position: relative;
+  overflow: hidden;
 }
-.cardHeader:hover {
-  transform: translateY(-2px);
-  background-color: var(--color-accent-hover);
-  box-shadow: 0 12px 40px rgba(0, 174, 193, 0.2);
+
+.cardHeader::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  transform: rotate(30deg);
 }
+
 .cardTitle {
   margin: 0;
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 1.75rem;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+}
+
+.cardSubtitle {
+  margin: 0.5rem 0 0;
+  opacity: 0.9;
+  font-weight: 400;
+  position: relative;
+  z-index: 1;
 }
 
 /* Form Body */
 .cardBody {
-  padding: 0 1.5rem;
+  padding: 2rem 1.5rem;
 }
 
 .nameFields {
@@ -64,22 +76,34 @@
   margin-bottom: 1.5rem;
 }
 
+@media (max-width: 480px) {
+  .nameFields {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
+/* Form Groups */
 .formGroup {
   position: relative;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.75rem;
   flex: 1;
+}
+
+.formGroup:last-child {
+  margin-bottom: 0;
 }
 
 /* Input Fields */
 .formControl {
   width: 100%;
-  padding: 0.8rem 0.5rem 0.5rem;
+  padding: 1rem 0.75rem 0.5rem;
   border: none;
-  border-bottom: 2px solid #ccc;
+  border-bottom: 2px solid var(--color-border);
   background-color: transparent;
   font-size: 1rem;
-  transition: all 0.3s ease;
   color: var(--color-text);
+  transition: all 0.3s ease;
 }
 
 .formControl:focus {
@@ -87,17 +111,17 @@
   border-bottom-color: var(--color-primary);
 }
 
-.formControl:focus + .bmdLabelFloating,
-.formControl:not(:placeholder-shown) + .bmdLabelFloating {
-  transform: translateY(-1.2rem) scale(0.8);
-  color: var(--color-text);
+.formControl:focus + label,
+.formControl:not(:placeholder-shown) + label {
+  transform: translateY(-1.5rem) scale(0.85);
+  color: var(--color-primary);
 }
 
-.bmdLabelFloating {
+label {
   position: absolute;
-  top: 0.8rem;
-  left: 0.5rem;
-  color: #888;
+  top: 0.75rem;
+  left: 0.75rem;
+  color: var(--color-text-secondary);
   font-size: 1rem;
   pointer-events: none;
   transition: all 0.3s ease;
@@ -107,90 +131,122 @@
 textarea.formControl {
   min-height: 120px;
   resize: vertical;
+  padding-top: 1.5rem;
 }
 
 /* Checkbox */
-.formCheck {
-  margin: 1rem 0;
-}
-
-.formCheckLabel {
+.checkboxContainer {
   display: flex;
   align-items: center;
+  margin-bottom: 1.5rem;
   cursor: pointer;
-  color: var(--color-text);
+  color: var(--color-text-secondary);
   font-size: 0.9rem;
+  user-select: none;
 }
 
-.formCheckInput {
+.checkboxInput {
   position: absolute;
   opacity: 0;
-  color: var(--color-text);
+  height: 0;
+  width: 0;
 }
 
 .checkboxCustom {
-  display: inline-block;
-  width: 18px;
-  height: 18px;
-  border: 2px solid #ccc;
-  border-radius: 3px;
-  margin-right: 0.5rem;
-  color: var(--color-text);
   position: relative;
-  color: var(--color-text);
-  transition: all 0.3s ease;
+  height: 20px;
+  width: 20px;
+  margin-right: 0.75rem;
+  border: 2px solid var(--color-border);
+  border-radius: 4px;
+  transition: all 0.2s ease;
 }
 
-.formCheckInput:checked + .checkboxCustom {
+.checkboxInput:checked ~ .checkboxCustom {
   background-color: var(--color-primary);
   border-color: var(--color-primary);
 }
 
-.formCheckInput:checked + .checkboxCustom::after {
+.checkboxInput:checked ~ .checkboxCustom::after {
   content: "";
   position: absolute;
-  left: 5px;
-  top: 1px;
+  left: 6px;
+  top: 2px;
   width: 5px;
   height: 10px;
-  border: solid var(--color-text);
+  border: solid white;
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
 }
 
 /* Button */
-.btnPrimary {
-  background-color: var(--color-accent);
+.submitButton {
+  background: linear-gradient(
+    135deg,
+    var(--color-primary),
+    var(--color-accent)
+  );
   color: white;
   border: none;
-  padding: 0.8rem 2rem;
-  border-radius: 4px;
+  padding: 1rem 2rem;
+  border-radius: 8px;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   width: 100%;
-  max-width: 200px;
-  margin-top: 1rem;
-}
-
-.btnPrimary:hover {
-  background-color: var(--color-accent-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Footer */
-.cardFooter {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  padding: 1.5rem 0 0;
-  margin-top: 1rem;
+  position: relative;
+  overflow: hidden;
 }
 
+.submitButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.submitButton::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  transform: rotate(30deg);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.submitButton:hover::after {
+  opacity: 1;
+}
+
+/* Spinner */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Error States */
 .error {
-  border-color: #ff4444 !important;
+  border-bottom-color: #ff4444 !important;
 }
 
 .errorMessage {
@@ -198,20 +254,14 @@ textarea.formControl {
   font-size: 0.8rem;
   margin-top: 0.25rem;
   display: block;
+  position: absolute;
+  bottom: -1.25rem;
+  left: 0;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .nameFields {
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .card {
-    padding: 1.5rem;
-  }
-
-  .cardHeader {
-    padding: 1rem;
-  }
+/* Footer */
+.cardFooter {
+  padding: 0 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
 }

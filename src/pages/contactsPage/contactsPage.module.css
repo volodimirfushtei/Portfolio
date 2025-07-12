@@ -1,119 +1,86 @@
 .contactsPage {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100vh;
+  min-height: 100vh;
+  padding: 2rem;
   background: var(--color-background);
   color: var(--color-text);
-  position: relative;
-  overflow: hidden;
-  position: relative;
-  overflow: hidden;
-}
-
-.container_forms {
-  width: 100%;
   display: flex;
-  flex-direction: row;
-  gap: 3rem;
-
-  padding: 77px 20px;
-  height: 100%;
+  flex-direction: column;
+  align-items: center;
 }
 
-h3 {
-  font-size: 1.6rem;
-  font-weight: 600;
+.progressBar {
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  border-radius: 4px;
   margin-bottom: 2rem;
-  color: var(--color-accent);
+  width: 100%;
+  max-width: 1200px;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pageTitle {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 700;
+  margin-bottom: 3rem;
+  color: var(--color-text);
   text-align: center;
-  animation: shimmerIcon 4s linear infinite;
-  filter: brightness(1.1);
+  position: relative;
 }
 
-@keyframes shimmerIcon {
-  0% {
-    background-position: 0% 50%;
+.pageTitle::after {
+  content: "";
+  position: absolute;
+  bottom: -1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  border-radius: 2px;
+}
+
+.formsContainer {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+  justify-content: center;
+}
+
+@media (max-width: 900px) {
+  .contactsPage {
+    padding: 1.5rem;
   }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
+
+  .formsContainer {
+    grid-template-columns: 1fr;
+    max-width: 600px;
+    margin: 0 auto;
   }
 }
-@media screen and (max-width: 768px) {
+
+@media (max-width: 480px) {
   .contactsPage {
     padding: 1rem;
   }
-  .container {
-    padding: 1rem;
-    width: 100%;
-    height: auto;
+
+  .progressBar {
+    margin-bottom: 1.5rem;
   }
 
-  .text {
-    width: 100%;
+  .pageTitle {
+    margin-bottom: 2rem;
   }
 
-  .title {
-    font-size: 1.5rem;
-  }
-}
-
-@media screen and (max-width: 375px) {
-  .text {
-    width: 100%;
-  }
-
-  .title {
-    font-size: 1.5rem;
-  }
-
-  .title_2 {
-    font-size: 1.5rem;
-  }
-
-  .title_container {
-    width: 100px;
-    height: 20px;
-  }
-
-  .container {
-    padding: 0.5rem;
-  }
-
-  .line {
-    height: 2px;
-  }
-
-  .title_2 {
-    margin-bottom: 1rem;
-  }
-
-  .text {
-    font-size: 0.8rem;
-  }
-
-  .contactsPage {
-    padding: 0.5rem;
-  }
-
-  .container {
-    padding: 0.5rem;
-  }
-
-  .title_container {
-    padding: 0.5rem;
-    width: 100px;
-    height: 20px;
-  }
-  .container_forms {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    width: 100%;
+  .pageTitle::after {
+    width: 60px;
+    bottom: -0.75rem;
   }
 }

@@ -1,6 +1,8 @@
 import React from "react";
 import s from "./ContactForm.module.css";
 import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
+import { motion } from "framer-motion";
 
 const ContactForm = () => {
   const {
@@ -9,7 +11,7 @@ const ContactForm = () => {
     formState: { errors, isSubmitting },
     reset,
   } = useForm({
-    mode: "onBlur", // Валідація при втраті фокусу
+    mode: "onBlur",
   });
 
   const onSubmit = async (data) => {
@@ -28,47 +30,77 @@ const ContactForm = () => {
         if (!response.ok) {
           const errorText = await response.text();
           console.error("❌ Server error:", response.status, errorText);
-          toast.error("Помилка підписки");
-          throw new Error("Помилка підписки");
+          toast.error("Subscription failed");
+          throw new Error("Subscription failed");
         }
 
-        console.log("✅ Subscription successful");
-        alert("✅ Subscription successful");
+        toast.success("Subscribed successfully!");
       }
 
-      //  повідомлення в Telegram
+      const telegramResponse = await fetch(
+        "http://localhost:5000/api/telegram",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        }
+      );
 
-      const response = await fetch("http://localhost:5000/api/telegram", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error("❌ Server error:", response.status, errorText);
-        toast.error("Помилка відправки повідомлення");
-        throw new Error("Помилка відправки повідомлення");
+      if (!telegramResponse.ok) {
+        const errorText = await telegramResponse.text();
+        console.error("❌ Server error:", telegramResponse.status, errorText);
+        toast.error("Message sending failed");
+        throw new Error("Message sending failed");
       }
 
-      console.log("✅ Message sent successfully");
-      alert("✅ Message sent successfully");
+      toast.success("Message sent successfully!");
       reset();
     } catch (error) {
       console.error("Error:", error);
     }
   };
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut",
+        when: "beforeChildren",
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.3, ease: "easeOut" },
+    },
+  };
+
   return (
-    <div className={s.formContainer}>
-      <div className={`${s.card} ${s.card_contact}`}>
+    <motion.div
+      className={s.formContainer}
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
+      whileHover={{ y: -5 }}
+    >
+      <div className={s.card}>
         <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
-          <div className={s.cardHeader}>
-            <h2 className={s.cardTitle}>Contact Us</h2>
-          </div>
+          <motion.div className={s.cardHeader} variants={itemVariants}>
+            <h2 className={s.cardTitle}>Get in Touch</h2>
+            <p className={s.cardSubtitle}>We'll respond within 24 hours</p>
+          </motion.div>
 
           <div className={s.cardBody}>
-            <div className={s.nameFields}>
+            <motion.div className={s.nameFields} variants={itemVariants}>
               <div className={s.formGroup}>
                 <input
                   className={`${s.formControl} ${
@@ -83,10 +115,9 @@ const ContactForm = () => {
                       message: "Minimum 2 characters",
                     },
                   })}
+                  placeholder=" "
                 />
-                <label className={s.bmdLabelFloating} htmlFor="firstName">
-                  First name
-                </label>
+                <label htmlFor="firstName">First name</label>
                 {errors.firstName && (
                   <span className={s.errorMessage}>
                     {errors.firstName.message}
@@ -104,19 +135,18 @@ const ContactForm = () => {
                   {...register("lastName", {
                     required: "Last name is required",
                   })}
+                  placeholder=" "
                 />
-                <label className={s.bmdLabelFloating} htmlFor="lastName">
-                  Last name
-                </label>
+                <label htmlFor="lastName">Last name</label>
                 {errors.lastName && (
                   <span className={s.errorMessage}>
                     {errors.lastName.message}
                   </span>
                 )}
               </div>
-            </div>
+            </motion.div>
 
-            <div className={s.formGroup}>
+            <motion.div className={s.formGroup} variants={itemVariants}>
               <input
                 className={`${s.formControl} ${errors.email ? s.error : ""}`}
                 type="email"
@@ -128,20 +158,19 @@ const ContactForm = () => {
                     message: "Invalid email address",
                   },
                 })}
+                placeholder=" "
               />
-              <label className={s.bmdLabelFloating} htmlFor="email">
-                Email address
-              </label>
+              <label htmlFor="email">Email address</label>
               {errors.email && (
                 <span className={s.errorMessage}>{errors.email.message}</span>
               )}
-            </div>
+            </motion.div>
 
-            <div className={s.formGroup}>
+            <motion.div className={s.formGroup} variants={itemVariants}>
               <textarea
                 id="message"
                 className={`${s.formControl} ${errors.message ? s.error : ""}`}
-                rows="6"
+                rows="5"
                 {...register("message", {
                   required: "Message is required",
                   minLength: {
@@ -149,41 +178,44 @@ const ContactForm = () => {
                     message: "Minimum 10 characters",
                   },
                 })}
+                placeholder=" "
               ></textarea>
-              <label className={s.bmdLabelFloating} htmlFor="message">
-                Your Message
-              </label>
+              <label htmlFor="message">Your Message</label>
               {errors.message && (
                 <span className={s.errorMessage}>{errors.message.message}</span>
               )}
-            </div>
+            </motion.div>
           </div>
 
-          <div className={s.cardFooter}>
-            <div className={s.formCheck}>
-              <label className={s.formCheckLabel}>
-                <input
-                  type="checkbox"
-                  id="subscribe"
-                  {...register("subscribe")}
-                  className={s.formCheckInput}
-                />
-                <span className={s.checkboxCustom}></span>
-                Subscribe to newsletter
-              </label>
-            </div>
+          <motion.div className={s.cardFooter} variants={itemVariants}>
+            <label className={s.checkboxContainer}>
+              <input
+                type="checkbox"
+                id="subscribe"
+                {...register("subscribe")}
+                className={s.checkboxInput}
+              />
+              <span className={s.checkboxCustom}></span>
+              Subscribe to newsletter
+            </label>
 
-            <button
+            <motion.button
               type="submit"
-              className={s.btnPrimary}
+              className={s.submitButton}
               disabled={isSubmitting}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
-              {isSubmitting ? "Sending..." : "Send Message to Unigram"}
-            </button>
-          </div>
+              {isSubmitting ? (
+                <span className={s.spinner}></span>
+              ) : (
+                "Send Message"
+              )}
+            </motion.button>
+          </motion.div>
         </form>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

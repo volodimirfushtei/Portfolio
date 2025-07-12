@@ -1,107 +1,61 @@
-.experienceContainer {
-  width: 100%;
-  max-width: 500px;
-  margin: 2rem auto;
-}
-
-.experienceCard {
-  background: rgba(20, 20, 30, 0.1);
-
-  border-radius: 24px;
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 2rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
-.experienceContainer:hover {
-  transform: translateY(-2px);
-  transform: scale(1.02);
-  box-shadow: 0 12px 40px rgba(0, 174, 193, 0.2);
-  border-radius: 24px;
-  border: 1px solid rgba(248, 244, 244, 0.1);
+
+.card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
-.cardTitle {
+
+.title {
   font-size: 1.5rem;
-  font-weight: 700;
-  color: white;
+  margin-bottom: 2rem;
   text-align: center;
-  margin-bottom: 1.5rem;
-  position: relative;
-}
-
-.cardTitle::after {
-  content: "";
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60px;
-  height: 3px;
   background: linear-gradient(90deg, #8a63ff, #63b3ff);
-  border-radius: 3px;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
-.experienceGrid {
+.grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 1.5rem;
 }
 
-.experienceItem {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
+.statItem {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
 }
 
-.counterNumber {
+.value {
   font-size: 2.5rem;
   font-weight: 700;
-  line-height: 1;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #8a63ff, #63b3ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 }
 
-.experienceLabel {
+.suffix {
+  font-size: 1.5rem;
+  margin-left: 2px;
+}
+
+.label {
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.8);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-top: 0.5rem;
-}
-
-.experienceDivider {
-  position: absolute;
-  right: -0.75rem;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 1px;
-  height: 40px;
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.experienceItem:last-child .experienceDivider {
-  display: none;
-}
-
-@media (max-width: 768px) {
-  .experienceGrid {
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-
-  .experienceDivider {
-    display: none;
-  }
-
-  .experienceCard {
-    padding: 1.5rem;
-  }
-
-  .counterNumber {
-    font-size: 2rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .experienceGrid {
-    grid-template-columns: 1fr;
-  }
+  color: rgba(255, 255, 255, 0.7);
 }

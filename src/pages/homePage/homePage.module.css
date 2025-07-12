@@ -114,13 +114,8 @@
   border-radius: 20px;
   margin: 0 auto;
   width: 100%;
-  background: var(--color-background);
 }
-.skillsSection:hover {
-  transform: scale(1.02);
-  box-shadow: 0 15px 30px rgba(0, 174, 193, 0.3);
-  transition: transform 0.5s ease;
-}
+
 .imageBadge {
   bottom: 1rem;
   right: 1rem;

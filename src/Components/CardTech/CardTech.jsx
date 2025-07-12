@@ -1,66 +1,46 @@
-import React from "react";
-import s from "./CardTech.module.css";
+import React, { useState } from "react";
+import styles from "./CardTech.module.css";
 
 const CardTech = () => {
-  const bgImage =
-    "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=870&q=80";
+  const [isFlipped, setIsFlipped] = useState(false);
 
   return (
-    <div className="row justify-content-center">
-      <div className="col-md-6">
-        <div className={s.rotatingCardContainer}>
-          <div className={s.cardRotate}>
-            {/* FRONT */}
-            <div
-              className={`${s.front} ${s.cardBackground}`}
-              style={{ backgroundImage: `url('${bgImage}')` }}
-            >
-              <div className={`card-body text-center text-white`}>
-                <h6 className="card-category">Full Background Card</h6>
-                <h3 className="card-title">
-                  This Background Card Will Rotate on Hover
-                </h3>
-                <p className="card-description">
-                  Don't be scared of the truth because we need to restart.
-                </p>
-              </div>
-            </div>
-
-            {/* BACK */}
-            <div
-              className={`${s.back} ${s.cardBackground}`}
-              style={{ backgroundImage: `url('${bgImage}')` }}
-            >
-              <div className="card-body text-center text-white">
-                <h5 className="card-title">Manage Post</h5>
-                <p className="card-description">
-                  As an Admin, you have shortcuts to edit, view or delete the
-                  posts.
-                </p>
-                <div className="footer d-flex justify-content-center gap-2 mt-3">
-                  <a
-                    href="#view"
-                    className="btn btn-info btn-round btn-just-icon"
-                  >
-                    <i className="material-icons">subject</i>
-                  </a>
-                  <a
-                    href="#edit"
-                    className="btn btn-success btn-round btn-just-icon"
-                  >
-                    <i className="material-icons">mode_edit</i>
-                  </a>
-                  <a
-                    href="#delete"
-                    className="btn btn-danger btn-round btn-just-icon"
-                  >
-                    <i className="material-icons">delete</i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+    <div
+      className={`${styles.card} ${isFlipped ? styles.flipped : ""}`}
+      onClick={() => setIsFlipped(!isFlipped)}
+    >
+      <div className={styles.front}>
+        <div className={styles.header}>
+          <span className={styles.badge}>Featured</span>
+          <h3>My Expertise</h3>
         </div>
+
+        <ul className={styles.skillsList}>
+          {["React", "Node.js", "TypeScript", "UI/UX"].map((skill, i) => (
+            <li key={i} className={styles.skillItem}>
+              <span className={styles.checkIcon}>✓</span>
+              {skill}
+            </li>
+          ))}
+        </ul>
+
+        <div className={styles.hint}>Click to flip</div>
+      </div>
+
+      <div className={styles.back}>
+        <h3>Technical Stack</h3>
+
+        <div className={styles.techGrid}>
+          {["React", "Node", "TS", "MongoDB", "Express", "Figma"].map(
+            (tech, i) => (
+              <div key={i} className={styles.techPill}>
+                {tech}
+              </div>
+            )
+          )}
+        </div>
+
+        <button className={styles.ctaButton}>View Full Stack</button>
       </div>
     </div>
   );

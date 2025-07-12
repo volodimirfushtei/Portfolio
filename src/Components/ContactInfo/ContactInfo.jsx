@@ -1,39 +1,75 @@
 import React from "react";
+import { motion } from "framer-motion";
 import SocialIcon from "../SocialIcon/SocialIcon";
 import s from "./ContactInfo.module.css";
 
 const ContactInfo = ({ items }) => {
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut",
+        when: "beforeChildren",
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.3, ease: "easeOut" },
+    },
+  };
+
   return (
-    <div className={s.contactInfo}>
-      <div className={s.headerWrapper}>
-        <h2 className={s.header}>Contact Info</h2>
-      </div>
+    <motion.div
+      className={s.contactInfo}
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
+      whileHover={{ y: -5 }}
+    >
+      <motion.div className={s.headerWrapper} variants={itemVariants}>
+        <h2 className={s.header}>Contact Information</h2>
+        <p className={s.subheader}>Get in touch with me</p>
+      </motion.div>
 
       <div className={s.infoList}>
         {/* Email */}
-        <div className={s.infoItem}>
+        <motion.div className={s.infoItem} variants={itemVariants}>
           <div className={s.iconWrapper}>
             <i className="ri-mail-line"></i>
           </div>
           <div className={s.infoText}>
             <h3 className={s.infoTitle}>Email</h3>
-            <p className={s.infoDetail}>fuschteyy@gmail.com</p>
+            <a href="mailto:fuschteyy@gmail.com" className={s.infoDetail}>
+              fuschteyy@gmail.com
+            </a>
           </div>
-        </div>
+        </motion.div>
 
         {/* Phone */}
-        <div className={s.infoItem}>
+        <motion.div className={s.infoItem} variants={itemVariants}>
           <div className={s.iconWrapper}>
             <i className="ri-phone-line"></i>
           </div>
           <div className={s.infoText}>
             <h3 className={s.infoTitle}>Phone</h3>
-            <p className={s.infoDetail}>+380 95 877 71 07</p>
+            <a href="tel:+380958777107" className={s.infoDetail}>
+              +380 95 877 71 07
+            </a>
           </div>
-        </div>
+        </motion.div>
 
         {/* Working Hours */}
-        <div className={s.infoItem}>
+        <motion.div className={s.infoItem} variants={itemVariants}>
           <div className={s.iconWrapper}>
             <i className="ri-time-line"></i>
           </div>
@@ -41,31 +77,30 @@ const ContactInfo = ({ items }) => {
             <h3 className={s.infoTitle}>Working Hours</h3>
             <p className={s.infoDetail}>Mon-Fri: 9:00 - 18:00</p>
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* Social Networks */}
-      <div className={s.socialSection}>
-        <h3 className={s.socialTitle}>Social Networks</h3>
+      <motion.div className={s.socialSection} variants={itemVariants}>
+        <h3 className={s.socialTitle}>Connect With Me</h3>
         <div className={s.socialIcons}>
           {items.map((item) => (
             <SocialIcon key={item.alt} src={item.src} alt={item.alt} />
           ))}
         </div>
-      </div>
+      </motion.div>
 
       {/* Map */}
-      <div className={s.mapContainer}>
-        <img
-          src="https://public.readdy.ai/gen_page/map_placeholder_1280x720.png"
-          alt="Location Map"
-          loading="lazy"
+      <motion.div className={s.mapContainer} variants={itemVariants}>
+        <iframe
+          src="https://maps.google.com/maps?q=Kyiv&output=embed"
           className={s.map}
-          width="500"
-          height="300"
-        />
-      </div>
-    </div>
+          loading="lazy"
+          title="Location Map"
+          allowFullScreen
+        ></iframe>
+      </motion.div>
+    </motion.div>
   );
 };
 

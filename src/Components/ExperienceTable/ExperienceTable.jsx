@@ -1,67 +1,43 @@
-import React, { useEffect } from "react";
-import {
-  motion as Motion,
-  useMotionValue,
-  useTransform,
-  animate,
-} from "framer-motion";
+import React from "react";
+import { motion } from "framer-motion";
 import styles from "./ExperienceTable.module.css";
 
-const Counter = ({ from = 0, to, duration = 2 }) => {
-  const count = useMotionValue(from);
-  const rounded = useTransform(count, (latest) => Math.floor(latest));
-
-  useEffect(() => {
-    const controls = animate(count, to, {
-      duration,
-      ease: [0.16, 1, 0.3, 1],
-      delay: 0.5,
-    });
-    return controls.stop;
-  }, [count, to, duration]);
-
-  return (
-    <Motion.span
-      className={styles.counterNumber}
-      style={{
-        background: `linear-gradient(135deg, #8a63ff, #63b3ff)`,
-        WebkitBackgroundClip: "text",
-        backgroundClip: "text",
-        color: "transparent",
-      }}
-    >
-      {rounded}
-    </Motion.span>
-  );
-};
-
-const ExperienceItem = ({ label, value, duration }) => (
-  <div className={styles.experienceItem}>
-    <Counter to={value} duration={duration} />
-    <div className={styles.experienceLabel}>{label}</div>
-    <div className={styles.experienceDivider} />
-  </div>
-);
-
 const ExperienceTable = () => {
-  return (
-    <Motion.div
-      className={styles.experienceContainer}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-    >
-      <div className={styles.experienceCard}>
-        <h3 className={styles.cardTitle}>Professional Journey</h3>
+  const stats = [
+    { value: 5, label: "Years Experience", suffix: "+" },
+    { value: 30, label: "Projects Completed", suffix: "+" },
+    { value: 15, label: "Happy Clients", suffix: "+" },
+    { value: 10, label: "Technologies", suffix: "+" },
+  ];
 
-        <div className={styles.experienceGrid}>
-          <ExperienceItem label="Years" value={1} duration={1.5} />
-          <ExperienceItem label="Clients" value={3} duration={1.5} />
-          <ExperienceItem label="Team Pro" value={3} duration={2} />
-          <ExperienceItem label="Total Pro" value={5} duration={2.5} />
+  return (
+    <div className={styles.container}>
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true, margin: "-100px" }}
+        className={styles.card}
+      >
+        <h3 className={styles.title}>Professional Milestones</h3>
+
+        <div className={styles.grid}>
+          {stats.map((stat, index) => (
+            <motion.div
+              key={index}
+              className={styles.statItem}
+              whileHover={{ y: -5 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <div className={styles.value}>
+                {stat.value}
+                <span className={styles.suffix}>{stat.suffix}</span>
+              </div>
+              <div className={styles.label}>{stat.label}</div>
+            </motion.div>
+          ))}
         </div>
-      </div>
-    </Motion.div>
+      </motion.div>
+    </div>
   );
 };
 

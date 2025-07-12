@@ -1,8 +1,14 @@
-import { useRef, useEffect } from "react";
-import { useScroll, useTransform, motion } from "framer-motion";
+import { useRef } from "react";
+import {
+  useScroll,
+  useTransform,
+  motion as Motion,
+  useSpring,
+} from "framer-motion";
 import styles from "./HeroSection.module.css";
-import ExperienceTable from "../ExperienceTable/ExperienceTable";
 import HeroMedia from "../HeroMedia/HeroMedia";
+import CardTech from "../CardTech/CardTech";
+import ExperienceTable from "../ExperienceTable/ExperienceTable";
 
 const HeroSection = () => {
   const sectionRef = useRef(null);
@@ -11,91 +17,156 @@ const HeroSection = () => {
     offset: ["start start", "end start"],
   });
 
-  const yBg = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0.5]);
+  // Smoothed scroll effects with spring physics
+  const smoothScrollY = useSpring(scrollYProgress, {
+    damping: 30,
+    stiffness: 100,
+    mass: 0.5,
+  });
+
+  // Parallax effects
+  const yBg = useTransform(smoothScrollY, [0, 1], ["0%", "15%"]);
+  const opacity = useTransform(smoothScrollY, [0, 0.7], [1, 0]);
+  const scale = useTransform(smoothScrollY, [0, 1], [1, 1.05]);
+  const textY = useTransform(smoothScrollY, [0, 1], ["0%", "30%"]);
+
+  // Gradient animation values
+  const gradientPosition = useTransform(
+    smoothScrollY,
+    [0, 1],
+    ["0% 0%", "100% 100%"]
+  );
 
   return (
-    <motion.section
+    <Motion.section
       ref={sectionRef}
       className={styles.hero}
       style={{ opacity }}
     >
-      {/* Анімований фон з частинками */}
-      <div className={styles.particleBackground}>
-        {[...Array(30)].map((_, i) => (
-          <div
-            key={i}
-            className={styles.particle}
-            style={{
-              "--size": `${Math.random() * 6 + 4}px`,
-              "--x": `${Math.random() * 100}%`,
-              "--y": `${Math.random() * 100}%`,
-              "--delay": `${Math.random() * 5}s`,
-              "--duration": `${Math.random() * 10 + 10}s`,
-            }}
-          />
-        ))}
-      </div>
+      {/* Dynamic gradient background */}
+      <Motion.div
+        className={styles.gradientBackground}
+        style={{ backgroundPosition: gradientPosition }}
+      />
 
-      {/* Відео з паралакс-ефектом */}
-      <motion.div className={styles.videoContainer} style={{ y: yBg }}>
-        <video autoPlay muted loop playsInline className={styles.video}>
-          <source src="/videos/abstract-waves.mp4" type="video/mp4" />
-          <source src="/videos/abstract-waves.webm" type="video/webm" />
+      {/* Optimized video background */}
+      <Motion.div className={styles.videoContainer} style={{ y: yBg, scale }}>
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className={styles.video}
+          preload="auto"
+          aria-label="Background video showing abstract cyber patterns"
+        >
+          <source src="/assets/Cyber.mp4" type="video/mp4" />
+          <track kind="captions" srcLang="en" label="English captions" />
         </video>
         <div className={styles.videoOverlay} />
-      </motion.div>
+      </Motion.div>
 
-      {/* Контент з анімацією */}
+      {/* Content with staggered animations */}
       <div className={styles.content}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
+        <Motion.div
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className={styles.headingWrapper}
+          transition={{ duration: 0.8, delay: 0.2, ease: "backOut" }}
+          className={styles.textContent}
+          style={{ y: textY }}
         >
-          <h1 className={styles.title}>
-            <span className={styles.titleHighlight}>Modern</span> cases
-            <br />
-            for your business
-          </h1>
-          <p className={styles.subtitle}>
-            Innovative approach to building digital products
-          </p>
-        </motion.div>
+          <Motion.h1
+            className={styles.title}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+          >
+            <Motion.span
+              className={styles.titleGradient}
+              animate={{
+                backgroundPosition: ["0% 50%", "100% 50%"],
+              }}
+              transition={{
+                duration: 8,
+                repeat: Infinity,
+                repeatType: "reverse",
+                ease: "linear",
+              }}
+              aria-label="Innovative digital solutions"
+            >
+              Innovative
+            </Motion.span>{" "}
+            digital
+            <br /> solutions
+          </Motion.h1>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className={styles.ctaWrapper}
-        >
-          <button className={styles.ctaButton}>
-            <span>Let's get started</span>
-            <div className={styles.buttonHoverEffect} />
-          </button>
-          <div className={styles.scrollIndicator}>
-            <div className={styles.scrollArrow} />
-          </div>
-        </motion.div>
+          <Motion.p
+            className={styles.subtitle}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6 }}
+          >
+            Transforming ideas into exceptional web experiences
+          </Motion.p>
+
+          <Motion.div
+            className={styles.buttons}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8 }}
+          >
+            <Motion.button
+              whileHover={{
+                scale: 1.05,
+                boxShadow: "0 8px 20px rgba(138, 99, 255, 0.3)",
+              }}
+              whileTap={{ scale: 0.95 }}
+              className={styles.primaryButton}
+              aria-label="Start a project"
+            >
+              Start a project
+            </Motion.button>
+            <Motion.button
+              whileHover={{
+                scale: 1.05,
+                boxShadow: "0 8px 20px rgba(255, 255, 255, 0.1)",
+              }}
+              whileTap={{ scale: 0.95 }}
+              className={styles.secondaryButton}
+              aria-label="View my work"
+            >
+              View my work
+            </Motion.button>
+          </Motion.div>
+        </Motion.div>
+        <HeroMedia />
+        <Motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.4, ease: "backOut" }}
+          className={styles.cardContainer}
+        ></Motion.div>
       </div>
 
-      {/* Додатковий контент нижче */}
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.6, delay: 0.3 }}
-        className="relative z-10 w-full max-w-[1400px] px-2 mt-12 flex flex-col md:flex-row align-items-center justify-between gap-8"
+      {/* Enhanced scroll indicator with accessibility */}
+      <Motion.div
+        className={styles.scrollIndicator}
+        initial={{ opacity: 0 }}
+        animate={{
+          opacity: [0, 1, 0],
+          y: [0, 15, 0],
+        }}
+        transition={{
+          repeat: Infinity,
+          duration: 2.5,
+          times: [0, 0.5, 1],
+        }}
+        aria-hidden="true"
       >
-        <div className="flex-1">
-          <ExperienceTable />
-        </div>
-        <div className="flex-1">
-          <HeroMedia />
-        </div>
-      </motion.div>
-    </motion.section>
+        <div className={styles.scrollArrow} />
+        <div className={styles.scrollText}>Scroll</div>
+      </Motion.div>
+    </Motion.section>
   );
 };
 

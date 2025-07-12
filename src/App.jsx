@@ -7,7 +7,7 @@ import Layout from "./Components/Layout/Layout.jsx";
 import ErrorBoundary from "./Components/ErrorBoundary/ErrorBondary.jsx";
 import Overlay from "./Components/Overlay/Overlay.jsx";
 import { Toaster } from "react-hot-toast";
-
+import ScrollToTop from "./Components/ScrollToTop/ScrollToTop.jsx";
 // Preload компонентів
 const preloadComponents = () => {
   const components = [
@@ -47,6 +47,8 @@ function App() {
         ) : (
           <Suspense fallback={null}>
             <Overlay key={location.pathname} />
+            {/* ✅ Активує прокрутку на верх при зміні маршруту */}
+            <ScrollToTop />
             <Routes location={location}>
               <Route path="/" element={<Layout />}>
                 <Route index element={<Home />} />
