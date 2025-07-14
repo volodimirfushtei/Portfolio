@@ -1,13 +1,14 @@
 .container {
-  max-width: 1200px;
+  max-width: 100%;
   margin: 0 auto;
   padding: 2rem;
+  height: 200px;
 }
 
 .card {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
-  border-radius: 16px;
+
   padding: 2rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -30,7 +31,7 @@
 
 .statItem {
   background: rgba(255, 255, 255, 0.03);
-  border-radius: 12px;
+
   padding: 1.5rem;
   text-align: center;
   border: 1px solid rgba(255, 255, 255, 0.05);

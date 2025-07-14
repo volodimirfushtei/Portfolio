@@ -1,23 +1,17 @@
 import { useRef } from "react";
-import {
-  useScroll,
-  useTransform,
-  motion as Motion,
-  useSpring,
-} from "framer-motion";
+import { useScroll, useTransform, motion, useSpring } from "framer-motion";
 import styles from "./HeroSection.module.css";
 import HeroMedia from "../HeroMedia/HeroMedia";
-import CardTech from "../CardTech/CardTech";
-import ExperienceTable from "../ExperienceTable/ExperienceTable";
 
 const HeroSection = () => {
   const sectionRef = useRef(null);
+
+  // Scroll progress with spring smoothing
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"],
   });
 
-  // Smoothed scroll effects with spring physics
   const smoothScrollY = useSpring(scrollYProgress, {
     damping: 30,
     stiffness: 100,
@@ -25,63 +19,65 @@ const HeroSection = () => {
   });
 
   // Parallax effects
-  const yBg = useTransform(smoothScrollY, [0, 1], ["0%", "15%"]);
-  const opacity = useTransform(smoothScrollY, [0, 0.7], [1, 0]);
-  const scale = useTransform(smoothScrollY, [0, 1], [1, 1.05]);
-  const textY = useTransform(smoothScrollY, [0, 1], ["0%", "30%"]);
+  const parallaxEffects = {
+    yBg: useTransform(smoothScrollY, [0, 1], ["0%", "15%"]),
+    opacity: useTransform(smoothScrollY, [0, 0.7], [1, 0]),
+    scale: useTransform(smoothScrollY, [0, 1], [1, 1.05]),
+    textY: useTransform(smoothScrollY, [0, 1], ["0%", "30%"]),
+    gradientPosition: useTransform(
+      smoothScrollY,
+      [0, 1],
+      ["0% 0%", "100% 100%"]
+    ),
+  };
 
-  // Gradient animation values
-  const gradientPosition = useTransform(
-    smoothScrollY,
-    [0, 1],
-    ["0% 0%", "100% 100%"]
-  );
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        when: "beforeChildren",
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: "backOut",
+      },
+    },
+  };
 
   return (
-    <Motion.section
+    <motion.section
       ref={sectionRef}
       className={styles.hero}
-      style={{ opacity }}
+      style={{ opacity: parallaxEffects.opacity }}
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
     >
       {/* Dynamic gradient background */}
-      <Motion.div
+      <motion.div
         className={styles.gradientBackground}
-        style={{ backgroundPosition: gradientPosition }}
+        style={{ backgroundPosition: parallaxEffects.gradientPosition }}
       />
-
-      {/* Optimized video background */}
-      <Motion.div className={styles.videoContainer} style={{ y: yBg, scale }}>
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className={styles.video}
-          preload="auto"
-          aria-label="Background video showing abstract cyber patterns"
-        >
-          <source src="/assets/Cyber.mp4" type="video/mp4" />
-          <track kind="captions" srcLang="en" label="English captions" />
-        </video>
-        <div className={styles.videoOverlay} />
-      </Motion.div>
-
-      {/* Content with staggered animations */}
+      {/* Main content */}
       <div className={styles.content}>
-        <Motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: "backOut" }}
+        <motion.div
           className={styles.textContent}
-          style={{ y: textY }}
+          style={{ y: parallaxEffects.textY }}
+          variants={itemVariants}
         >
-          <Motion.h1
-            className={styles.title}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-          >
-            <Motion.span
+          <motion.h1 className={styles.title}>
+            <motion.span
               className={styles.titleGradient}
               animate={{
                 backgroundPosition: ["0% 50%", "100% 50%"],
@@ -92,66 +88,47 @@ const HeroSection = () => {
                 repeatType: "reverse",
                 ease: "linear",
               }}
-              aria-label="Innovative digital solutions"
             >
               Innovative
-            </Motion.span>{" "}
+            </motion.span>{" "}
             digital
             <br /> solutions
-          </Motion.h1>
+          </motion.h1>
 
-          <Motion.p
-            className={styles.subtitle}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6 }}
-          >
+          <motion.p className={styles.subtitle} variants={itemVariants}>
             Transforming ideas into exceptional web experiences
-          </Motion.p>
+          </motion.p>
 
-          <Motion.div
-            className={styles.buttons}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8 }}
-          >
-            <Motion.button
+          <motion.div className={styles.buttons} variants={itemVariants}>
+            <motion.button
               whileHover={{
                 scale: 1.05,
                 boxShadow: "0 8px 20px rgba(138, 99, 255, 0.3)",
               }}
               whileTap={{ scale: 0.95 }}
               className={styles.primaryButton}
-              aria-label="Start a project"
             >
               Start a project
-            </Motion.button>
-            <Motion.button
+            </motion.button>
+            <motion.button
               whileHover={{
                 scale: 1.05,
                 boxShadow: "0 8px 20px rgba(255, 255, 255, 0.1)",
               }}
               whileTap={{ scale: 0.95 }}
               className={styles.secondaryButton}
-              aria-label="View my work"
             >
               View my work
-            </Motion.button>
-          </Motion.div>
-        </Motion.div>
+            </motion.button>
+          </motion.div>
+        </motion.div>
+
         <HeroMedia />
-        <Motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: 0.4, ease: "backOut" }}
-          className={styles.cardContainer}
-        ></Motion.div>
       </div>
 
-      {/* Enhanced scroll indicator with accessibility */}
-      <Motion.div
+      {/* Scroll indicator */}
+      <motion.div
         className={styles.scrollIndicator}
-        initial={{ opacity: 0 }}
         animate={{
           opacity: [0, 1, 0],
           y: [0, 15, 0],
@@ -159,14 +136,12 @@ const HeroSection = () => {
         transition={{
           repeat: Infinity,
           duration: 2.5,
-          times: [0, 0.5, 1],
         }}
-        aria-hidden="true"
       >
         <div className={styles.scrollArrow} />
-        <div className={styles.scrollText}>Scroll</div>
-      </Motion.div>
-    </Motion.section>
+        <span className={styles.scrollText}>Scroll</span>
+      </motion.div>
+    </motion.section>
   );
 };
 

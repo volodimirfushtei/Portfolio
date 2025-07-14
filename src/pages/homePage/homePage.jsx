@@ -39,15 +39,30 @@ const HomePage = () => {
       transition={{ duration: 0.5 }}
       className={styles.container}
     >
-      <Header />
-      <HeroSection />
-      <Expertise />
-      {/* Skills Section */}
-      <div className={styles.skillsSection}>
-        <ControllerSkills items={skills} />
-      </div>
-      <Carusel />
-
+      <main>
+        <section id="hero" className={`${styles.hero} ${styles.section}`}>
+          <HeroSection />
+        </section>
+        <section
+          id="expertise"
+          className={`${styles.expertise} ${styles.section}`}
+        >
+          <Expertise />
+        </section>
+        {/* Skills Section */}
+        <section
+          id="skills"
+          className={`${styles.skillsSection} ${styles.section}`}
+        >
+          <ControllerSkills items={skills} />
+        </section>
+        <section
+          id="projects"
+          className={`${styles.projects} ${styles.section}`}
+        >
+          <Carusel />
+        </section>
+      </main>
       <Footer />
     </Motion.div>
   );

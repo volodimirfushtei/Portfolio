@@ -1,41 +1,35 @@
-.homePage {
+.expertise {
+  min-height: 100vh; /* Займає мінімально всю висоту екрану */
+  width: 100%;
+  width: 1400px;
   display: flex;
-  flex-direction: row;
-  gap: 2rem;
-  padding: 2rem;
+  flex-direction: column;
+  justify-content: center;
+  /* Центрує вміст вертикально */
 }
 
-.techSection,
-.experienceSection {
-  padding: 2rem 0;
-}
-
-.sectionContent {
-  max-width: 1400px;
+.container {
+  width: 100%;
   margin: 0 auto;
+}
+
+.section {
   width: 100%;
 }
 
-.sectionTitle {
-  font-size: 2rem;
-  margin-bottom: 2rem;
-  color: var(--color-text);
-  text-align: center;
-}
+/* Стилі для CardTech та ExperienceTable можна додати тут або в їх власних модулях */
 
 /* Адаптація для мобільних пристроїв */
 @media (max-width: 768px) {
-  .homePage {
+  .expertise {
     padding: 1rem;
-    gap: 2rem;
   }
 
-  .techSection,
-  .experienceSection {
-    padding: 2rem 0;
+  .container {
+    padding: 0 0.5rem;
   }
 
-  .sectionTitle {
-    font-size: 1.5rem;
+  .section {
+    margin-bottom: 1.5rem;
   }
 }

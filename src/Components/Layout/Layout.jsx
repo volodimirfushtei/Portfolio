@@ -79,33 +79,19 @@ const Layout = () => {
         </button>
       )}
 
-      <motion.div
-        id="sidebar-menu"
-        initial={{ x: -300 }}
-        animate={{
-          x: isMobileMenuOpen || !isMobile ? 0 : -300,
-          opacity: isMobileMenuOpen || !isMobile ? 1 : 0,
-        }}
-        transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        className={`${s.sidebar} ${isMobile ? s.mobileSidebar : ""}`}
-        aria-hidden={isMobile ? !isMobileMenuOpen : false}
-      >
-        <Header />
-        <SidebarMenu
-          items={menuItems}
-          onClose={isMobile ? toggleMobileMenu : null}
-        />
-        <div className={s.themeToggleContainer}>
-          <ToggleTheme />
-        </div>
-      </motion.div>
+      <Header />
+      <SidebarMenu
+        menuItems={menuItems}
+        isMobileMenuOpen={isMobileMenuOpen}
+        toggleMobileMenu={toggleMobileMenu}
+      />
 
       <AnimatePresence>
         {isMobile && isMobileMenuOpen && <Overlay onClick={toggleMobileMenu} />}
       </AnimatePresence>
 
       <motion.main
-        className={s.mainContent}
+        className={`${s.mainContent} ${isMobileMenuOpen ? s.blurContent : ""}`}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3 }}

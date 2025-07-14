@@ -1,6 +1,7 @@
 .hero {
   position: relative;
   width: 100%;
+  width: 1300px;
   min-height: 100vh;
   min-height: 100dvh; /* Dynamic viewport height for mobile browsers */
   display: flex;
@@ -8,18 +9,16 @@
   overflow: hidden;
   isolation: isolate;
   color-scheme: dark;
+  will-change: transform;
+
+  border-top: 4px solid var(--color-surface);
+  border-bottom: 4px solid var(--color-surface);
 }
 
 .gradientBackground {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    45deg,
-    #0f0c29 0%,
-    #302b63 30%,
-    #24243e 60%,
-    #1a1a2e 100%
-  );
+  background-image: var(--color-hero);
   background-size: 300% 300%;
   z-index: -1;
   will-change: background-position;
@@ -31,6 +30,11 @@
   height: 100%;
   z-index: 2;
   overflow: hidden;
+  will-change: transform;
+  /* Improve video rendering performance */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000;
   will-change: transform;
 }
 
@@ -61,7 +65,7 @@
   position: relative;
   z-index: 4;
   width: 100%;
-  max-width: 1400px;
+  max-width: 100%;
   margin: 0 auto;
   padding: 2rem;
   display: grid;

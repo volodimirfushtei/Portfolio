@@ -1,38 +1,23 @@
-/* Layout.module.css */
-
 .layoutContainer {
   display: flex;
-  min-height: 100vh;
+  min-height: calc(100vh - 5rem);
   background-color: var(--color-background);
   position: relative;
-}
-
-.sidebar {
-  width: 240px;
   margin-top: 5rem;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background: var(--color-surface);
-  border-right: 1px solid var(--color-border);
-  z-index: 40;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-}
-
-.mobileSidebar {
-  z-index: 50;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  margin-left: 200px;
 }
 
 .mainContent {
   flex: 1;
-  margin-left: 240px;
-  margin-top: 2rem;
 
-  transition: margin-left 0.3s ease;
+  /* Ширина сайдбара */
+  transition: all 0.3s ease;
+  min-height: calc(100vh - 5rem);
+}
+
+.mainContent.blurContent {
+  filter: blur(2px);
+  pointer-events: none;
 }
 
 .mobileMenuButton {
@@ -65,5 +50,10 @@
   .mainContent {
     margin-left: 0;
     width: 100%;
+    padding: 1rem;
+  }
+
+  .mainContent.blurContent {
+    filter: blur(2px);
   }
 }

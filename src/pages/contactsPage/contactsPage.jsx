@@ -54,17 +54,9 @@ const ContactsPage = () => {
         initial="hidden"
         animate="visible"
       >
-        <motion.h3 className={s.pageTitle} variants={childVariants}>
-          Get In Touch
-        </motion.h3>
-
         <div className={s.formsContainer}>
           <motion.div variants={childVariants}>
             <ContactForm key="ContactForm" />
-          </motion.div>
-
-          <motion.div variants={childVariants}>
-            <ContactInfo items={socialItems} key="ContactInfo" />
           </motion.div>
         </div>
       </motion.div>

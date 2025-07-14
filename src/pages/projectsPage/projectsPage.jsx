@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import styles from "./ProjectsPage.module.css";
+import styles from "./projectsPage.module.css";
 
 const ProjectPage = () => {
   const projects = [
@@ -76,7 +76,7 @@ const ProjectPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterTag, setFilterTag] = useState("");
-  const projectsPerPage = 3;
+  const projectsPerPage = 4;
 
   // Filter and pagination logic
   const filteredProjects = projects.filter((project) => {

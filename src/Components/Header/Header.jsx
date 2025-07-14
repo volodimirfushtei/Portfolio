@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import styles from "./Header.module.css";
+import ToggleTheme from "../ToggleTheme/ToggleTheme";
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -31,7 +32,7 @@ const Header = () => {
           <i className={`ri-code-s-slash-line ${styles.logoIcon}`}></i>
           <span>MyPortfolio</span>
         </Link>
-
+        <ToggleTheme />
         {/* Desktop Navigation */}
         <nav className={styles.desktopNav}>
           <NavLink
@@ -41,7 +42,6 @@ const Header = () => {
             }
           >
             <i className="ri-home-line"></i>
-            <span>Home</span>
           </NavLink>
 
           <NavLink
@@ -51,7 +51,6 @@ const Header = () => {
             }
           >
             <i className="ri-briefcase-line"></i>
-            <span>Projects</span>
           </NavLink>
 
           <NavLink
@@ -61,7 +60,6 @@ const Header = () => {
             }
           >
             <i className="ri-code-line"></i>
-            <span>Tech</span>
           </NavLink>
 
           <NavLink
@@ -71,7 +69,6 @@ const Header = () => {
             }
           >
             <i className="ri-contacts-line"></i>
-            <span>Contacts</span>
           </NavLink>
 
           <Link to="/contacts" className={styles.contactButton}>

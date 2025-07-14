@@ -29,7 +29,7 @@ const Expertise = () => {
   };
 
   return (
-    <section className={styles.expertise}>
+    <section className={styles.expertise} id="expertise">
       <motion.div
         className={styles.container}
         initial="hidden"
@@ -39,22 +39,11 @@ const Expertise = () => {
       >
         {/* Technical Skills Section */}
         <motion.div className={styles.section} variants={itemVariants}>
-          <motion.h2
-            className={styles.sectionTitle}
-            whileHover={{ scale: 1.02 }}
-          >
-            My Technical Expertise
-          </motion.h2>
-
           <CardTech />
         </motion.div>
 
         {/* Experience Section */}
-        <motion.div
-          className={styles.section}
-          variants={itemVariants}
-          style={{ marginTop: "4rem" }}
-        >
+        <motion.div className={styles.section} variants={itemVariants}>
           <ExperienceTable />
         </motion.div>
       </motion.div>

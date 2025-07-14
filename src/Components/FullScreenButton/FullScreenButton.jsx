@@ -73,7 +73,7 @@ const FullscreenButton = () => {
           padding: "0.5rem 1rem",
           fontSize: "1.25rem",
           cursor: "pointer",
-          color: "white",
+          color: "var(--color-text)",
           background: "transparent",
           border: "none",
           borderRadius: "8px",
