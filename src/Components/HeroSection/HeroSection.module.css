@@ -1,7 +1,7 @@
 .hero {
   position: relative;
   width: 100%;
-  width: 1300px;
+
   min-height: 100vh;
   min-height: 100dvh; /* Dynamic viewport height for mobile browsers */
   display: flex;
@@ -10,13 +10,11 @@
   isolation: isolate;
   color-scheme: dark;
   will-change: transform;
-
-  border-top: 4px solid var(--color-surface);
-  border-bottom: 4px solid var(--color-surface);
 }
 
 .gradientBackground {
   position: absolute;
+
   inset: 0;
   background-image: var(--color-hero);
   background-size: 300% 300%;
@@ -55,8 +53,8 @@
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(15, 12, 41, 0.7) 0%,
-    rgba(15, 12, 41, 0.3) 100%
+    rgba(98, 80, 255, 0.7) 0%,
+    rgba(137, 129, 214, 0.3) 100%
   );
   z-index: 3;
 }
@@ -67,7 +65,7 @@
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 2rem 2rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
@@ -80,6 +78,10 @@
 .textContent {
   max-width: 600px;
   will-change: transform;
+  text-align: left;
+  /* Improve text rendering */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 .title {
@@ -88,7 +90,7 @@
   line-height: 1.1;
   margin-bottom: 1.5rem;
   color: white;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  text-shadow: 0 2px 10px rgba(0, 5, 61, 0.5);
   /* Better font loading */
   font-display: swap;
 }
@@ -102,13 +104,13 @@
   display: inline-block;
   will-change: background-position;
   animation: gradientAnimation 10s ease infinite;
-  font-size: 5rem;
+  font-size: 6rem;
 }
 
 .subtitle {
   font-size: 1.25rem;
   color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
   line-height: 1.6;
   font-weight: 300;
   max-width: 80%;
@@ -119,7 +121,7 @@
 .buttons {
   display: flex;
   gap: 1.5rem;
-  margin-top: 3rem;
+  margin-top: 4rem;
 }
 
 .primaryButton {
@@ -141,8 +143,8 @@
 
 .secondaryButton {
   background: transparent;
-  color: white;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: var(--color-text);
+  border: 1px solid var(--contrast-color);
   padding: 1rem 2rem;
   border-radius: 12px;
   font-weight: 600;
@@ -151,7 +153,7 @@
   transition: all 0.3s ease;
   will-change: transform;
   /* Better button contrast */
-  --contrast-color: #ffffff;
+  --contrast-color: #7a7a7a;
 }
 
 .scrollIndicator {

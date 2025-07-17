@@ -79,12 +79,7 @@ const Layout = () => {
         </button>
       )}
 
-      <Header />
-      <SidebarMenu
-        menuItems={menuItems}
-        isMobileMenuOpen={isMobileMenuOpen}
-        toggleMobileMenu={toggleMobileMenu}
-      />
+      <Header isMobile={isMobile} isMobileMenuOpen={isMobileMenuOpen} />
 
       <AnimatePresence>
         {isMobile && isMobileMenuOpen && <Overlay onClick={toggleMobileMenu} />}

@@ -32,7 +32,7 @@
   height: 100%;
   background: linear-gradient(
     to top,
-    rgba(15, 12, 41, 0.6) 0%,
+    rgba(16, 12, 248, 0.1) 0%,
     transparent 40%
   );
   display: flex;
@@ -60,7 +60,12 @@
   border-radius: 50%;
   animation: pulse 2s infinite;
 }
-
+.text {
+  animation: pulse 2s infinite;
+  color: var(--color-warning);
+  font-size: 1rem;
+  cursor: pointer;
+}
 @keyframes pulse {
   0% {
     opacity: 1;

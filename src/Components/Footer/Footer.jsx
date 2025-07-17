@@ -6,8 +6,11 @@ const Footer = () => {
     <footer className={styles.footer}>
       <div className={styles.content}>
         <div className={styles.column}>
-          <h4>Portfolio</h4>
-          <p>Modern web development solutions tailored to your needs</p>
+          <div className={styles.logo}>
+            <h4>Portfolio</h4>
+            <h2>GET STARTED</h2>
+            <p>Modern web development solutions tailored to your needs</p>
+          </div>
           <div className={styles.socialLinks}>
             {[
               "ri-github-fill",

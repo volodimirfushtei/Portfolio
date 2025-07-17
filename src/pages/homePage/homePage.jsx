@@ -37,12 +37,11 @@ const HomePage = () => {
       initial={{ opacity: 0, scale: 0.5 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5 }}
-      className={styles.container}
+      className={`${styles.container} `}
     >
+      <HeroSection />
+
       <main>
-        <section id="hero" className={`${styles.hero} ${styles.section}`}>
-          <HeroSection />
-        </section>
         <section
           id="expertise"
           className={`${styles.expertise} ${styles.section}`}
@@ -50,10 +49,7 @@ const HomePage = () => {
           <Expertise />
         </section>
         {/* Skills Section */}
-        <section
-          id="skills"
-          className={`${styles.skillsSection} ${styles.section}`}
-        >
+        <section id="skills" className={`${styles.skillsSection}`}>
           <ControllerSkills items={skills} />
         </section>
         <section

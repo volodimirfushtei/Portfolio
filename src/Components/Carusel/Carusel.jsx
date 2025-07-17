@@ -7,13 +7,15 @@ const slides = [
     title: "UI/UX Design",
     description: "Creating intuitive and beautiful user interfaces",
     bgColor: "rgba(138, 99, 255, 0.1)",
-    imageUrl: "/images/Programmer_mob.png",
+    imageUrl:
+      "https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
   },
   {
     title: "Frontend Development",
     description: "Building responsive web applications",
     bgColor: "rgba(99, 179, 255, 0.1)",
-    imageUrl: "/images/Programmer_mob.png",
+    imageUrl:
+      "https://img.freepik.com/premium-vector/programmer-working-with-laptop-computer_23-2147865009.jpg?w=2000",
   },
   {
     title: "Backend Solutions",
@@ -33,8 +35,11 @@ const MyCarousel = () => {
           <motion.div
             key={index}
             className={styles.slide}
+            initial={{ x: `${(index - currentIndex) * 100}%` }}
+            exit={{ x: `${(index - currentIndex) * 100}%` }}
             style={{
               backgroundColor: slide.bgColor,
+              backgroundImage: `url(${slide.imageUrl})`,
               opacity: currentIndex === index ? 1 : 0,
               zIndex: currentIndex === index ? 1 : 0,
             }}

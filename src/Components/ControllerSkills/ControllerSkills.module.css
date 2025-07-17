@@ -1,69 +1,102 @@
 .container {
-  max-width: 100%;
-  margin: 2rem auto;
-  padding: 0 2rem;
-}
+  width: 100%;
 
-.header {
-  text-align: center;
-  margin-bottom: 2rem;
+  transform-style: preserve-3d;
+
+  overflow: hidden;
+
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .header h3 {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   margin-bottom: 0.5rem;
-  background: linear-gradient(90deg, #8a63ff, #63b3ff);
+  margin-left: 60px;
+
   -webkit-background-clip: text;
   background-clip: text;
-  color: transparent;
-}
-
-.header p {
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--color-text);
+  text-align: left;
 }
 
 .sliderContainer {
   position: relative;
   overflow: hidden;
-  padding: 1rem 0;
+  padding: 0.5rem 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.sliderContainer::-webkit-scrollbar {
+  display: none;
+  width: 100%;
 }
 
 .sliderTrack {
   display: flex;
-  gap: 1rem;
-  width: max-content;
+  gap: 1.5rem;
+  width: fit-content;
+  will-change: transform;
 }
 
-.techCard {
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 12px;
-  padding: 1rem 1.5rem;
+/* Flip Card Styles */
+.flipCard {
+  background: transparent;
+  width: 140px;
+  height: 100px;
+  perspective: 1000px;
+}
+
+.flipInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.7s;
+  transform-style: preserve-3d;
+}
+
+.flipCard:hover .flipInner {
+  transform: rotateY(180deg);
+}
+
+.flipFront,
+.flipBack {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
   display: flex;
+  flex-direction: row;
   align-items: center;
-  gap: 0.75rem;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  transition: all 0.3s ease;
+  justify-content: center;
+  backface-visibility: hidden;
+  background: "transparent";
+  gap: 0.5rem;
+  backdrop-filter: blur(6px);
+
+  text-align: center;
+  padding: 0.5rem;
 }
 
-.techCard i {
-  font-size: 1.5rem;
+.flipFront i {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
 }
 
-.techCard:nth-child(1) i {
-  color: #61dafb;
-} /* React */
-.techCard:nth-child(2) i {
-  color: #3178c6;
-} /* TypeScript */
-.techCard:nth-child(3) i {
-  color: #68a063;
-} /* Node.js */
-.techCard:nth-child(4) i {
-  color: #a259ff;
-} /* Figma */
-.techCard:nth-child(5) i {
-  color: #47a248;
-} /* MongoDB */
-.techCard:nth-child(6) i {
-  color: #38bdf8;
-} /* Tailwind */
+.flipFront span {
+  font-weight: 600;
+}
+
+.flipBack {
+  transform: rotateY(180deg);
+}
+
+.flipBack p {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: var(--color-secondary);
+}
+
+.tech .more {
+  font-size: 0.8rem;
+  color: #63b3ff;
+}

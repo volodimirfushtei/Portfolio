@@ -20,6 +20,29 @@
 .scrollbar-hidden::-webkit-scrollbar {
   display: none;
 }
+
+/* tailwind-custom.css або inline */
+.light-theme .glass-effect {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0.2) 100%
+  );
+  border-color: rgba(0, 0, 0, 0.1);
+  color: rgba(0, 0, 0, 0.8);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+}
+
+/* Для темного фону */
+.dark-theme .glass-effect {
+  background: linear-gradient(
+    135deg,
+    rgba(00, 00, 00, 01) 0%,
+    rgba(17, 17, 17, 0.07) 100%
+  );
+  border-color: rgba(163, 162, 162, 0.15);
+}
+
 .light-theme {
   /* Кольорова палітра */
   --bs-primary: rgba(67, 97, 238, var(--glass-opacity));
@@ -27,7 +50,7 @@
 
   /* Фон та поверхні з ефектом скла */
   --bg-image: url("./assets/images/sunset.jpg");
-  --color-background: #f5f5f7;
+  --color-background: #ececec;
 
   --color-surface: rgba(255, 255, 255, var(--glass-opacity));
   --color-surface-hover: rgba(241, 243, 245, 0.95);
@@ -65,7 +88,7 @@
     #f0f4f8 40%,
     #e0f7ff 100%
   );
-  --color-overlay: rgba(255, 255, 255, 0.6);
+  --color-overlay: rgba(255, 255, 255, 0.9);
   /* Кнопки */
   --color-button-bg: linear-gradient(
     135deg,
@@ -83,7 +106,7 @@
   --color-button2-text-hover: #484848;
 
   /* Границі */
-  --color-border: rgba(240, 237, 237, 0.9);
+  --color-border: rgba(210, 210, 210, 0.9);
   --color-loader: rgba(58, 12, 163, 0.9);
   --color-loader-bar: linear-gradient(
     90deg,
@@ -108,7 +131,13 @@
   --color-background: #121212; /* Background */
   --color-surface: #1c1c1c; /* Surface */
   --color-surface-hover: #ece1e1; /* Surface hover */
-  --color-header: #1c1c1c;
+  --color-header: linear-gradient(
+    145deg,
+    #0f0c29 0%,
+    #302b63 30%,
+    #24243e 60%,
+    #1a1a2e 90%
+  );
   --color-hero: linear-gradient(
     145deg,
     #0f0c29 0%,
@@ -127,8 +156,8 @@
   --color-button-bg-hover: #aa1e60; /* Darker hover */
   --color-button-text: #ffffff; /* Button text */
   --color-border: #302e2e; /* Subtle border */
-  --color-overlay: rgba(0, 0, 0, 0.6); /* Overlay background */
-  --color-loader: #b51c52; /* Teal loader */
+  --color-overlay: rgba(0, 0, 0, 0.9); /* Overlay background */
+  --color-loader: rgba(180, 0, 0, 0.9); /* Teal loader */
   --color-loader-background: linear-gradient(
     135deg,
     #1f1f1f,

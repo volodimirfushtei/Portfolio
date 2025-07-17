@@ -117,8 +117,8 @@ const ProjectPage = () => {
       transition: { duration: 0.5, ease: "easeOut" },
     },
     hover: {
-      y: -10,
-      scale: 1.02,
+      y: 0,
+      scale: 0.99,
       boxShadow: "0 15px 30px rgba(0, 0, 0, 0.15)",
       transition: { type: "spring", stiffness: 300 },
     },
@@ -134,7 +134,6 @@ const ProjectPage = () => {
         transition={{ duration: 0.5 }}
       >
         <h1 className={styles.title}>My Projects</h1>
-        <p className={styles.subtitle}></p>
       </motion.div>
 
       {/* Search and Filter */}

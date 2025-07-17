@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import FadeInAnimate from "../FadeInAnimate/FadeInAnimate";
-
+import styles from "./CardTech.module.css";
 const CardTechAutoFlip = () => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [manualFlip, setManualFlip] = useState(false);
@@ -11,7 +11,7 @@ const CardTechAutoFlip = () => {
     if (manualFlip) return;
     const interval = setInterval(() => {
       setIsFlipped((prev) => !prev);
-    }, 5000);
+    }, 6000);
     return () => clearInterval(interval);
   }, [manualFlip]);
 
@@ -24,7 +24,7 @@ const CardTechAutoFlip = () => {
     <FadeInAnimate direction="bottom" duration={1.2} distance={100}>
       <div className="flex w-full justify-center items-center min-h-screen">
         <div
-          className="relative w-screen max-w-4xl h-[800px] cursor-pointer"
+          className="relative w-full max-w-4xl h-[600px] cursor-pointer"
           style={{ perspective: 1000 }}
           onClick={handleFlip}
           role="button"
@@ -35,7 +35,7 @@ const CardTechAutoFlip = () => {
           }}
         >
           <div
-            className="relative w-full h-full transition-transform duration-700"
+            className="relative w-full h-full  transition-transform duration-700"
             style={{
               transformStyle: "preserve-3d",
               transform: `rotateY(${isFlipped ? 180 : 0}deg)`,
@@ -43,56 +43,37 @@ const CardTechAutoFlip = () => {
           >
             {/* Front Side */}
             <div
-              className="absolute inset-0 backface-hidden bg-cover bg-center rounded-2xl overflow-hidden"
+              className="absolute rounded-2xl   inset-0 border backface-hidden bg-cover bg-center  overflow-hidden"
               style={{
-                backgroundImage: "url('/images/ueruko.jpg')",
                 zIndex: isFlipped ? 1 : 2,
+
+                borderBottom: "6px solid var(--color-success)",
+                backgroundImage: "url('/images/pexels-digi.jpg')",
+                boxShadow: "0 15px 30px rgba(0, 0, 0, 0.2)",
               }}
             >
-              <div className="absolute inset-0 bg-black/40  p-10 flex flex-col">
-                <FadeInAnimate direction="left" delay={0.2}>
-                  <span className="badge badge-primary text-white w-fit">
-                    Featured
-                  </span>
-                </FadeInAnimate>
-
-                <ul className="mt-6 space-y-3 flex-1 overflow-y-auto scrollbar-hidden">
-                  {[
-                    "React",
-                    "Node.js",
-                    "TypeScript",
-                    "UI/UX",
-                    "MongoDB",
-                    "Express",
-                    "Figma",
-                  ].map((skill, i) => (
-                    <FadeInAnimate
-                      key={i}
-                      direction="right"
-                      delay={0.3 + i * 0.1}
-                    >
-                      <li className="flex items-center text-white">
-                        <svg
-                          className="w-5 h-5 mr-2 text-primary"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M5 13l4 4L19 7"
-                          />
-                        </svg>
-                        {skill}
-                      </li>
-                    </FadeInAnimate>
-                  ))}
-                </ul>
+              {" "}
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                className={styles.video}
+                poster="/images/pexels-digi.jpg"
+              >
+                <source src="src/assets/Web_developer.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+              <div
+                className="absolute inset-0 glass-effect p-8 flex flex-col"
+                style={{ backdropFilter: "blur(0px)" }}
+              >
+                <span className="badge badge-primary text-info w-fit">
+                  Featured
+                </span>
 
                 <FadeInAnimate direction="up" delay={0.8}>
-                  <div className="text-center text-white/60 text-sm mt-auto">
+                  <div className="text-center text-primary/90 text-sm mt-auto">
                     Auto-flips every 5s. Click to pause & flip.
                   </div>
                 </FadeInAnimate>
@@ -101,54 +82,66 @@ const CardTechAutoFlip = () => {
 
             {/* Back Side */}
             <div
-              className="absolute inset-0 backface-hidden bg-cover bg-center rounded-2xl overflow-hidden"
+              className="absolute inset-0 rounded-2xl backface-hidden overflow-hidden tabIndex={0}"
               style={{
-                backgroundImage: "url('/images/My_photo.png')",
                 transform: "rotateY(180deg)",
                 zIndex: isFlipped ? 2 : 1,
               }}
             >
-              <div className="absolute inset-0 bg-black/50  p-10 flex flex-col">
-                <FadeInAnimate direction="right" delay={0.2}>
-                  <h3 className="text-2xl font-bold text-white mb-6">
-                    Technical Stack
-                  </h3>
-                </FadeInAnimate>
-
-                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3 mb-8 flex-1 overflow-y-auto scrollbar-hidden">
-                  {[
-                    "React",
-                    "Node",
-                    "TS",
-                    "MongoDB",
-                    "Express",
-                    "Figma",
-                    "Tailwind",
-                    "Prisma",
-                    "Next",
-                    "Grid",
-                    "Framer",
-                    "SASS",
-                    "GraphQL",
-                  ].map((tech, i) => (
-                    <FadeInAnimate
-                      key={i}
-                      direction="bottom"
-                      delay={0.3 + i * 0.05}
-                    >
-                      <div className="badge badge-outline text-white hover:badge-primary transition-colors">
-                        {tech}
-                      </div>
-                    </FadeInAnimate>
-                  ))}
+              {/* Розділене зображення */}
+              <div className="absolute inset-0 flex">
+                {/* Ліва частина */}
+                <div
+                  className="w-1/2 h-full glass-effect overflow-hidden"
+                  style={{
+                    boxShadow: "0 15px 30px rgba(0, 0, 0, 0.6)",
+                    border: "1px solid var(--color-border)",
+                  }}
+                >
+                  <img
+                    src="/images/My_photo.png"
+                    alt="Left half"
+                    className="w-full h-full object-cover "
+                  />
+                </div>
+                <div className="absolute w-60 top-48 left-65 z-10 text-sm font-bold text-white text-left mb-6">
+                  <h2>Freelance Web Developer</h2>
+                  <h1 className="text-info text-5xl m-4 font-">
+                    <span className="text-info font-bold text-6xl">
+                      Volodymyr
+                    </span>{" "}
+                    Fushtei
+                  </h1>
+                  <p>
+                    Hi there! I'm a junior freelance web developer from Ukraine.
+                    I have a strong passion for creating visually stunning and
+                    user-friendly websites.
+                  </p>
                 </div>
 
-                <FadeInAnimate direction="up" delay={0.6}>
-                  <button className="btn btn-primary w-40 mx-auto mt-auto">
-                    View Full Stack
-                    <i className="ri-arrow-right-line ml-1" />
-                  </button>
-                </FadeInAnimate>
+                {/* Права частина */}
+                <div className="w-1/2 h-full glass-effect relative  overflow-hidden">
+                  <img
+                    src="/images/pex_code.jpg"
+                    alt="Right half"
+                    className="w-full h-full object-cover "
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-b from-black via-blue-950 to-transparent">
+                    <i className="ri-code-s-slash-fill text-2xl  absolute top-1 left-65 ">
+                      VF
+                    </i>
+                  </div>
+                </div>
+              </div>
+
+              {/* оверлей + контент */}
+              <div className="absolute  inset-0   p-4 flex flex-col">
+                <button className="btn btn-info bg-transparent border-0 cursor-pointer text-white w-30 mx-auto mt-auto group ">
+                  <span className=" group-hover:translate-x-1 transition-transform duration-200 ">
+                    View
+                  </span>
+                  <i className="ri-arrow-right-line  ml-1 group-hover:translate-x-2 transition-transform duration-200" />
+                </button>
               </div>
             </div>
           </div>

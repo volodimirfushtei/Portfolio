@@ -5,6 +5,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import Loader from "./Components/Loader/Loader.jsx";
 import Layout from "./Components/Layout/Layout.jsx";
 import ErrorBoundary from "./Components/ErrorBoundary/ErrorBondary.jsx";
+import { OverlayProvider } from "./Components/OverlayProvider/OverlayProvider";
 import Overlay from "./Components/Overlay/Overlay.jsx";
 import { Toaster } from "react-hot-toast";
 import ScrollToTop from "./Components/ScrollToTop/ScrollToTop.jsx";
@@ -40,73 +41,76 @@ function App() {
   }, []);
 
   return (
-    <ErrorBoundary>
-      <AnimatePresence mode="wait">
-        {loading ? (
-          <Loader key="loader" />
-        ) : (
-          <Suspense fallback={null}>
-            <Overlay key={location.pathname} />
-            {/* ✅ Активує прокрутку на верх при зміні маршруту */}
-            <ScrollToTop />
-            <Routes location={location}>
-              <Route path="/" element={<Layout />}>
-                <Route index element={<Home />} />
-                <Route path="contacts" element={<Contacts />} />
-                <Route path="projects" element={<Projects />} />
-                <Route path="tech" element={<Tech />} />
-                <Route path="*" element={<NotFound />} />
-                <Route path="error" element={<TestError />} />
-              </Route>
-            </Routes>
-            <Toaster
-              position="top-right"
-              reverseOrder={false}
-              gutter={8}
-              toastOptions={{
-                style: {
-                  borderRadius: "8px",
-                  background: "#333",
-                  color: "#fff",
-                  fontSize: "16px",
-                  padding: "16px",
-                  border: "1px solid #ccc",
-                  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-                },
-                success: {
+    <OverlayProvider>
+      <ErrorBoundary>
+        <AnimatePresence mode="wait">
+          {loading && <Loader key="loader" />}
+
+          <div
+            className={`app-wrapper ${loading ? "pointer-events-none " : ""}`}
+          >
+            <OverlayProvider></OverlayProvider>
+            <Suspense fallback={null}>
+              <ScrollToTop />
+              <Routes location={location}>
+                <Route path="/" element={<Layout />}>
+                  <Route index element={<Home />} />
+                  <Route path="contacts" element={<Contacts />} />
+                  <Route path="projects" element={<Projects />} />
+                  <Route path="tech" element={<Tech />} />
+                  <Route path="*" element={<NotFound />} />
+                  <Route path="error" element={<TestError />} />
+                </Route>
+              </Routes>
+              <Toaster
+                position="top-right"
+                reverseOrder={false}
+                gutter={8}
+                toastOptions={{
                   style: {
-                    background: "#4CAF50",
+                    borderRadius: "8px",
+                    background: "#333",
                     color: "#fff",
-                    icon: "✅",
+                    fontSize: "16px",
+                    padding: "16px",
+                    border: "1px solid #ccc",
+                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
                   },
-                },
-                error: {
-                  style: {
-                    background: "#f44336",
-                    color: "#fff",
-                    icon: "❌",
+                  success: {
+                    style: {
+                      background: "#4CAF50",
+                      color: "#fff",
+                      icon: "✅",
+                    },
                   },
-                },
-                loading: {
-                  style: {
-                    background: "#2196F3",
-                    color: "#fff",
-                    icon: "⌛",
+                  error: {
+                    style: {
+                      background: "#f44336",
+                      color: "#fff",
+                      icon: "❌",
+                    },
                   },
-                },
-                complete: {
-                  style: {
-                    background: "#4CAF59",
-                    color: "#fff",
-                    icon: "✅",
+                  loading: {
+                    style: {
+                      background: "#2196F3",
+                      color: "#fff",
+                      icon: "⌛",
+                    },
                   },
-                },
-              }}
-            />
-          </Suspense>
-        )}
-      </AnimatePresence>
-    </ErrorBoundary>
+                  complete: {
+                    style: {
+                      background: "#4CAF59",
+                      color: "#fff",
+                      icon: "✅",
+                    },
+                  },
+                }}
+              />
+            </Suspense>
+          </div>
+        </AnimatePresence>
+      </ErrorBoundary>
+    </OverlayProvider>
   );
 }
 

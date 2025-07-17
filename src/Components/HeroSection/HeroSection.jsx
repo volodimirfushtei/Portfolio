@@ -123,7 +123,12 @@ const HeroSection = () => {
           </motion.div>
         </motion.div>
 
-        <HeroMedia />
+        <motion.div
+          className={styles.mediaContainer}
+          style={{ y: parallaxEffects.yBg }}
+        >
+          <HeroMedia />
+        </motion.div>
       </div>
 
       {/* Scroll indicator */}

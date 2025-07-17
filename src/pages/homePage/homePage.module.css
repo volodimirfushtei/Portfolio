@@ -1,6 +1,8 @@
 .section {
   /* top-bottom 80px, left-right 32px */
-  margin-bottom: 4rem; /* gap between sections */
+  margin-bottom: 4rem;
+
+  /* gap between sections */
 }
 
 @media (max-width: 1024px) {
@@ -17,20 +19,20 @@
 
 @media (max-width: 480px) {
   .section {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
   }
 }
 
 .container {
   background: var(--color-background);
   background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   color: var(--color-text);
   height: auto;
-  width: 1440px;
-  margin: 0 auto;
+  width: 100%;
+
   position: relative;
   overflow: hidden;
 }
@@ -128,15 +130,15 @@
   transition: transform 0.5s ease;
 }
 .projects {
-  margin-top: 3rem;
+  margin-top: 2rem;
 }
 .experience {
   margin-top: 3rem;
 }
 
 .skillsSection {
-  max-width: 1300px;
-  margin: 0 auto;
+  max-width: 1400px;
+
   width: 100%;
 }
 

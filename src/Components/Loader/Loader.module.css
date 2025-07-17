@@ -1,18 +1,14 @@
 .loaderContainer {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0; /* ← охоплює весь екран */
+  z-index: 99999;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999;
-  background: linear-gradient(
-    135deg,
-    rgba(10, 10, 20, 0.9) 0%,
-    rgba(20, 15, 40, 0.9) 100%
-  );
+  /* або black/gray з прозорістю */
+  background: "transparent";
+
+  pointer-events: all;
 }
 
 .backgroundOverlay {
@@ -21,21 +17,23 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("/images/robs.jpg") center/cover no-repeat fixed;
-  opacity: 0.4;
+  background: transparent;
+  opacity: 1;
   z-index: -1;
 }
 
 .loaderCard {
-  width: min(90vw, 420px);
+  width: min(100vw, 160px);
   padding: 3rem 2.5rem;
-  border-radius: 24px;
-  background: rgba(15, 15, 25, 0.7);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  height: min(100vh, 160px);
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ade2fe 0%, #e9f2fb 40%, #bce8f7 100%);
+  opacity: 0.99;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
   position: relative;
   overflow: hidden;
 }
@@ -43,36 +41,42 @@
 .progressIndicator {
   font-size: clamp(3rem, 8vw, 4rem);
   font-weight: 700;
-  color: white;
+  color: var(--color-loader);
   display: flex;
   justify-content: center;
-  align-items: flex-end;
-  gap: 0.3rem;
+  align-items: center;
+  gap: 0.1rem;
   font-family: "Inter", sans-serif;
   text-align: center;
-}
+  background: var(--color-background);
 
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.percentage {
+  font-size: 0.4em;
+  opacity: 1;
+  margin-bottom: 0.2em;
+}
 .percentSymbol {
-  font-size: 0.6em;
-  opacity: 0.8;
+  font-size: 0.3em;
+  opacity: 0.9;
   margin-bottom: 0.2em;
 }
 
 .progressBarContainer {
   width: 100%;
-  height: 24px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
+  height: 4px;
+  background: var(--color-background);
+  border-radius: 2px;
   overflow: hidden;
   position: relative;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .progressBar {
   height: 100%;
-  border-radius: 12px;
+  border-radius: 2px;
   will-change: transform;
-  transition: background 0.3s ease;
 }
 
 .loadingText {
@@ -80,8 +84,9 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 0.9rem;
+  color: var(--color-text);
+  text-align: center;
+  font-size: 0.5rem;
   font-weight: 500;
   letter-spacing: 1px;
   text-transform: uppercase;

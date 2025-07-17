@@ -132,9 +132,14 @@ const ToggleTheme = () => {
   return (
     <Tooltip title={getTooltipTitle()} arrow>
       <StyledIconButton
-        color="inherit"
+        color="info"
+        size="large"
         onClick={toggleTheme}
         aria-label="Toggle theme"
+        aria-expanded={mode === "dark"}
+        aria-controls="toggle-theme"
+        aria-haspopup="true"
+        aria-owns="toggle-theme"
       >
         {getIcon()}
       </StyledIconButton>

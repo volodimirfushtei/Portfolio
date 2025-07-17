@@ -13,11 +13,6 @@ const Loader = ({ onComplete }) => {
   const saturation = useTransform(count, [0, 100], [0.8, 1.2]);
   const particleOpacity = useTransform(count, [0, 100], [0, 0.3]);
 
-  const boxShadow = useTransform(
-    glowIntensity,
-    (v) => `0 0 ${v * 50}px rgba(138, 99, 255, ${v * 2})`
-  );
-
   const textGlow = useTransform(
     glowIntensity,
     (v) => `0 0 ${v * 20}px rgba(255, 255, 255, ${v * 1.5})`
@@ -49,7 +44,7 @@ const Loader = ({ onComplete }) => {
 
   return (
     <motion.div
-      className={s.loaderContainer}
+      className={`${s.loaderContainer}`}
       initial={{ opacity: 1 }}
       animate={{ opacity: completed ? 0 : 1 }}
       transition={{ duration: 0.8, ease: "easeInOut" }}
@@ -62,8 +57,7 @@ const Loader = ({ onComplete }) => {
       <div className={s.backgroundOverlay} />
 
       <motion.div
-        className={s.loaderCard}
-        style={{ boxShadow }}
+        className={`glass-card  ${s.loaderCard}`}
         initial={{ scale: 0.95 }}
         animate={{ scale: 1 }}
         transition={{
@@ -71,25 +65,21 @@ const Loader = ({ onComplete }) => {
           ease: "backOut",
         }}
       >
-        <div className={s.progressIndicator}>
-          <motion.span
-            className={s.percentage}
-            style={{ textShadow: textGlow }}
-          >
-            {rounded}
-          </motion.span>
-          <span className={s.percentSymbol}>%</span>
-        </div>
+        <div className="flex flex-col items-center g-1">
+          <div className={s.progressIndicator}>
+            <motion.span className={s.percentage}>{rounded}</motion.span>
+            <span className={s.percentSymbol}>%</span>
+          </div>
 
-        <div className={s.progressBarContainer}>
-          <motion.div
-            className={s.progressBar}
-            style={{
-              width,
-              background: gradientBg,
-            }}
-          />
-          <p className={s.loadingText}>Buffering</p>
+          <div className={s.progressBarContainer}>
+            <motion.div
+              className={s.progressBar}
+              style={{
+                width,
+                background: gradientBg,
+              }}
+            />
+          </div>
         </div>
 
         <motion.div

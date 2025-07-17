@@ -1,35 +1,50 @@
 .expertise {
-  min-height: 100vh; /* Займає мінімально всю висоту екрану */
   width: 100%;
-  width: 1400px;
+  height: 100vh;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  /* Центрує вміст вертикально */
+  align-items: center;
+
+  background: var(--color-surface);
+  color: var(--color-text);
 }
 
 .container {
   width: 100%;
+  max-width: 1400px;
   margin: 0 auto;
+  padding: 2rem 1rem;
+  display: flex;
+  gap: 2rem;
+  align-items: stretch; /* Вирівнюємо за висотою */
 }
 
 .section {
-  width: 100%;
+  flex: 1;
+  min-width: 0; /* Фікс для overflow */
+  display: flex;
+  flex-direction: column;
 }
 
-/* Стилі для CardTech та ExperienceTable можна додати тут або в їх власних модулях */
-
-/* Адаптація для мобільних пристроїв */
-@media (max-width: 768px) {
-  .expertise {
-    padding: 1rem;
-  }
-
+/* Адаптація для планшетів */
+@media (max-width: 1024px) {
   .container {
-    padding: 0 0.5rem;
+    flex-direction: column;
+    gap: 3rem;
   }
 
   .section {
-    margin-bottom: 1.5rem;
+    width: 100%;
+  }
+}
+
+/* Адаптація для мобільних */
+@media (max-width: 768px) {
+  .expertise {
+    padding: 2rem 0;
+  }
+
+  .container {
+    padding: 0 1rem;
+    gap: 2rem;
   }
 }

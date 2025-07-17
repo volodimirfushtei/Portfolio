@@ -11,7 +11,7 @@ const HeroMedia = () => {
           loop
           playsInline
           className={styles.video}
-          poster="/images/pexels-jorge.jpg"
+          poster="/images/pexels-digi.jpg"
         >
           <source src="src/assets/Cyber.mp4" type="video/mp4" />
           Your browser does not support the video tag.
@@ -20,7 +20,16 @@ const HeroMedia = () => {
         <div className={styles.overlay}>
           <div className={styles.badge} role="status" aria-live="polite">
             <span className={styles.pulseDot} aria-hidden="true"></span>
-            <span>Available for work</span>
+            <span className={styles.text}>Available for work</span>
+            <span className={styles.pulseText} aria-hidden="true">
+              <a
+                href="https://djinni.co/my/profile/"
+                target="_blank"
+                className="    "
+              >
+                Follow
+              </a>
+            </span>
           </div>
         </div>
       </div>
