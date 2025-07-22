@@ -13,7 +13,7 @@ const HeroMedia = () => {
           className={styles.video}
           poster="/images/pexels-digi.jpg"
         >
-          <source src="src/assets/Cyber.mp4" type="video/mp4" />
+          <source src="src/assets/tiny.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
 

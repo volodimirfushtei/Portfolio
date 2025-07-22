@@ -1,10 +1,19 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useScroll, useTransform, motion, useSpring } from "framer-motion";
 import styles from "./HeroSection.module.css";
 import HeroMedia from "../HeroMedia/HeroMedia";
-
+import FadeInAnimate from "../FadeInAnimate/FadeInAnimate";
 const HeroSection = () => {
   const sectionRef = useRef(null);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    const handleScrollPage = () => setScrolled(window.scrollY > 100);
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Scroll progress with spring smoothing
   const { scrollYProgress } = useScroll({
@@ -66,7 +75,20 @@ const HeroSection = () => {
     >
       {/* Dynamic gradient background */}
       <motion.div
-        className={styles.gradientBackground}
+        className={`${styles.gradientBackground}  ${
+          scrolled ? styles.scrolled : ""
+        }`}
+        variants={{
+          hidden: { scale: 1.1, y: "15%" },
+          visible: {
+            scale: 1,
+            y: "0%",
+            transition: {
+              duration: 0.8,
+              ease: "easeOut",
+            },
+          },
+        }}
         style={{ backgroundPosition: parallaxEffects.gradientPosition }}
       />
       {/* Main content */}
@@ -81,6 +103,12 @@ const HeroSection = () => {
               className={styles.titleGradient}
               animate={{
                 backgroundPosition: ["0% 50%", "100% 50%"],
+                transition: {
+                  duration: 8,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                  ease: "linear",
+                },
               }}
               transition={{
                 duration: 8,

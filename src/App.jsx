@@ -9,6 +9,7 @@ import { OverlayProvider } from "./Components/OverlayProvider/OverlayProvider";
 import Overlay from "./Components/Overlay/Overlay.jsx";
 import { Toaster } from "react-hot-toast";
 import ScrollToTop from "./Components/ScrollToTop/ScrollToTop.jsx";
+
 // Preload компонентів
 const preloadComponents = () => {
   const components = [
@@ -31,11 +32,27 @@ const TestError = lazy(() => import("./Components/TestError/TestError.jsx"));
 function App() {
   const location = useLocation();
   const [loading, setLoading] = useState(true);
+  const [routeLoading, setRouteLoading] = useState(false);
+  const [prevLocation, setPrevLocation] = useState(location);
+
+  useEffect(() => {
+    if (location !== prevLocation) {
+      setRouteLoading(true);
+      setPrevLocation(location);
+
+      // Simulate route loading delay
+      const timer = setTimeout(() => {
+        setRouteLoading(false);
+      }, 500); // Adjust this time as needed
+
+      return () => clearTimeout(timer);
+    }
+  }, [location, prevLocation]);
 
   useEffect(() => {
     // Попереднє завантаження компонентів
     preloadComponents().then(() => {
-      const timer = setTimeout(() => setLoading(false), 2500); // Зменшено час завантаження
+      const timer = setTimeout(() => setLoading(false), 2500);
       return () => clearTimeout(timer);
     });
   }, []);
@@ -45,13 +62,29 @@ function App() {
       <ErrorBoundary>
         <AnimatePresence mode="wait">
           {loading && <Loader key="loader" />}
-
           <div
             className={`app-wrapper ${loading ? "pointer-events-none " : ""}`}
           >
-            <OverlayProvider></OverlayProvider>
-            <Suspense fallback={null}>
+            {/* Route loading overlay */}
+            {routeLoading && (
+              <Overlay>
+                <div className="flex justify-center items-center h-full">
+                  <Loader />
+                </div>
+              </Overlay>
+            )}
+
+            <Suspense
+              fallback={
+                <Overlay>
+                  <div className="flex justify-center items-center h-full">
+                    <Loader />
+                  </div>
+                </Overlay>
+              }
+            >
               <ScrollToTop />
+
               <Routes location={location}>
                 <Route path="/" element={<Layout />}>
                   <Route index element={<Home />} />

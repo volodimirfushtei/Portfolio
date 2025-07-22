@@ -25,6 +25,7 @@
     "cors": "^2.8.5",
     "dotenv": "^17.1.0",
     "express": "^5.1.0",
+    "firebase": "^12.0.0",
     "framer-motion": "^12.23.0",
     "gsap": "^3.13.0",
     "motion": "^12.19.2",
@@ -38,10 +39,15 @@
     "react-parallax-tilt": "^1.7.299",
     "react-pro-sidebar": "^1.1.0",
     "react-router-dom": "^7.6.2",
+    "react-scrollbars-custom": "^4.1.1",
     "react-slick": "^0.30.3",
+    "react-tsparticles": "^2.12.2",
     "scrolltrigger": "^1.0.1",
+    "simplebar-react": "^3.3.2",
     "slick-carousel": "^1.8.1",
-    "tailwind-scrollbar-hide": "^4.0.0"
+    "tailwind-scrollbar-hide": "^4.0.0",
+    "tsparticles": "^3.8.1",
+    "tsparticles-engine": "^2.12.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",

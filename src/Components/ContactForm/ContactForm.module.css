@@ -177,7 +177,7 @@ textarea.formControl {
   top: 2px;
   width: 5px;
   height: 10px;
-  border: solid var(--color-text);
+  border: solid var(--color-success);
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
 }

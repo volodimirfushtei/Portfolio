@@ -8,22 +8,23 @@ const Loader = ({ onComplete }) => {
   const width = useTransform(count, (v) => `${v}%`);
 
   // Enhanced animation values
-  const glowIntensity = useTransform(count, [0, 100], [0.1, 0.5]);
-  const blurAmount = useTransform(count, [0, 100], [12, 4]);
-  const saturation = useTransform(count, [0, 100], [0.8, 1.2]);
-  const particleOpacity = useTransform(count, [0, 100], [0, 0.3]);
+  const glowIntensity = useTransform(count, [0, 100], [0.1, 0.8]);
+  const blurAmount = useTransform(count, [0, 100], ["blur(12px)", "blur(0px)"]);
+  const saturation = useTransform(count, [0, 100], [0.8, 1.5]);
+  const particleOpacity = useTransform(count, [0, 100], [0, 0.5]);
+  const scale = useTransform(count, [0, 100], [0.9, 1.1]);
 
   const textGlow = useTransform(
     glowIntensity,
-    (v) => `0 0 ${v * 20}px rgba(255, 255, 255, ${v * 1.5})`
+    (v) => `0 0 ${v * 20}px rgba(138, 99, 255, ${v * 1.5})`
   );
 
   const gradientBg = useTransform(
     count,
     (v) => `linear-gradient(
       90deg, 
-      rgba(138, 99, 255, 0.95) 0%, 
-      rgba(99, 179, 255, 0.95) ${v}%, 
+      rgba(138, 99, 255, 0.75) 0%, 
+      rgba(99, 179, 255, 0.75) ${v}%, 
       rgba(255, 255, 255, 0.1) ${v}%
     )`
   );
@@ -44,9 +45,10 @@ const Loader = ({ onComplete }) => {
 
   return (
     <motion.div
-      className={`${s.loaderContainer}`}
+      className={s.loaderContainer}
       initial={{ opacity: 1 }}
       animate={{ opacity: completed ? 0 : 1 }}
+      exit={{ opacity: 0 }}
       transition={{ duration: 0.8, ease: "easeInOut" }}
       style={{
         pointerEvents: completed ? "none" : "all",
@@ -54,21 +56,50 @@ const Loader = ({ onComplete }) => {
         filter: `saturate(${saturation})`,
       }}
     >
-      <div className={s.backgroundOverlay} />
+      <motion.div
+        className={s.backgroundOverlay}
+        style={{
+          opacity: useTransform(count, [0, 100], [0.8, 0.2]),
+          background: useTransform(
+            count,
+            [0, 100],
+            ["rgba(0, 0, 0, 0.8)", "rgba(0, 0, 0, 0.2)"]
+          ),
+        }}
+      />
 
       <motion.div
-        className={`glass-card  ${s.loaderCard}`}
-        initial={{ scale: 0.95 }}
-        animate={{ scale: 1 }}
+        className={s.loaderCard}
+        style={{
+          scale,
+          boxShadow: textGlow,
+        }}
         transition={{
-          duration: 0.6,
-          ease: "backOut",
+          type: "spring",
+          damping: 10,
+          stiffness: 100,
         }}
       >
-        <div className="flex flex-col items-center g-1">
+        <div className={s.contentWrapper}>
           <div className={s.progressIndicator}>
-            <motion.span className={s.percentage}>{rounded}</motion.span>
-            <span className={s.percentSymbol}>%</span>
+            <motion.span
+              className={s.percentage}
+              style={{
+                textShadow: textGlow,
+                color: useTransform(count, [0, 100], ["#8a63ff", "#63b3ff"]),
+              }}
+            >
+              {rounded}
+            </motion.span>
+            <motion.span
+              className={s.percentSymbol}
+              style={{
+                textShadow: textGlow,
+                color: useTransform(count, [0, 100], ["#8a63ff", "#63b3ff"]),
+              }}
+            >
+              %
+            </motion.span>
           </div>
 
           <div className={s.progressBarContainer}>
@@ -84,7 +115,17 @@ const Loader = ({ onComplete }) => {
 
         <motion.div
           className={s.particles}
-          style={{ opacity: particleOpacity }}
+          style={{
+            opacity: particleOpacity,
+            background: useTransform(
+              count,
+              [0, 100],
+              [
+                "radial-gradient(circle at center, rgba(138, 99, 255, 0.2) 0%, transparent 70%)",
+                "radial-gradient(circle at center, rgba(99, 179, 255, 0.4) 0%, transparent 70%)",
+              ]
+            ),
+          }}
         />
       </motion.div>
     </motion.div>

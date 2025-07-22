@@ -34,7 +34,6 @@ const Expertise = () => {
         className={styles.container}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-50px" }}
         variants={sectionVariants}
       >
         {/* Technical Skills Section */}

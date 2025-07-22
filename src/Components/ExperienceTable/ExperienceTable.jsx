@@ -1,44 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import styles from "./ExperienceTable.module.css";
+import FadeInAnimate from "./../FadeInAnimate/FadeInAnimate";
+import Particles from "react-tsparticles";
+const Counter = ({ value, suffix }) => {
+  const [count, setCount] = useState(0);
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.2,
+  });
 
-const FadeInAnimate = ({
-  children,
-  direction = "left",
-  delay = 0.4,
-  duration = 1.6,
-  triggerOnce = false,
-  threshold = 0.2,
-  distance = 200,
-}) => {
-  const { ref, inView } = useInView({ triggerOnce, threshold });
+  useEffect(() => {
+    if (inView) {
+      const duration = 4000;
+      const steps = 10;
+      const increment = Math.ceil(value / steps);
+      const intervalTime = duration / steps;
 
-  const variants = {
-    hidden: {
-      opacity: 0,
-      x:
-        direction === "left" ? -distance : direction === "right" ? distance : 0,
-      y:
-        direction === "top" ? -distance : direction === "bottom" ? distance : 0,
-    },
-    visible: {
-      opacity: 1,
-      x: 0,
-      y: 0,
-    },
-  };
+      let start = 0;
+      const timer = setInterval(() => {
+        start += increment;
+        if (start >= value) {
+          setCount(value);
+          clearInterval(timer);
+        } else {
+          setCount(start);
+        }
+      }, intervalTime);
+
+      return () => clearInterval(timer);
+    }
+  }, [inView, value]); // Залежність від inView
 
   return (
-    <motion.div
+    <motion.span
       ref={ref}
-      initial="hidden"
-      animate={inView ? "visible" : "hidden"}
-      variants={variants}
-      transition={{ duration, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
+      initial={{ opacity: 0 }}
+      animate={inView ? { opacity: 1 } : { opacity: 0 }}
+      transition={{ duration: 1.5 }}
     >
-      {children}
-    </motion.div>
+      {count}
+      {suffix && <span className={styles.suffix}>{suffix}</span>}
+    </motion.span>
   );
 };
 
@@ -54,27 +58,30 @@ const ExperienceTable = () => {
 
   return (
     <div className={styles.container}>
-      <FadeInAnimate direction="bottom" delay={0.2}>
-        <div className={styles.card}>
-          <h3 className={styles.title}>Professional Milestones</h3>
-          <div className={styles.grid}>
-            {stats.map((stat, index) => (
-              <motion.div
-                key={index}
-                className={styles.statItem}
-                whileHover={{ y: -5 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <div className={styles.value}>
-                  {stat.value}
-                  <span className={styles.suffix}>{stat.suffix}</span>
-                </div>
-                <div className={styles.label}>{stat.label}</div>
-              </motion.div>
-            ))}
-          </div>
+      <div
+        className={`${styles.card}`}
+        style={{
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <h3 className={styles.title}>Professional Milestones</h3>
+        <div className={styles.grid}>
+          {stats.map((stat, index) => (
+            <motion.div
+              key={index}
+              className={styles.statItem}
+              whileHover={{ y: -5 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <div className={styles.value}>
+                <Counter value={stat.value} suffix={stat.suffix} />
+              </div>
+              <div className={styles.label}>{stat.label}</div>
+            </motion.div>
+          ))}
         </div>
-      </FadeInAnimate>
+      </div>
     </div>
   );
 };

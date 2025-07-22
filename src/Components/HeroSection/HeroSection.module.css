@@ -21,7 +21,10 @@
   z-index: -1;
   will-change: background-position;
 }
-
+.scrolled {
+  background-image: var(--color-background-scrolled);
+  color: var(--color-text);
+}
 .videoContainer {
   position: absolute;
   width: 100%;
@@ -109,7 +112,7 @@
 
 .subtitle {
   font-size: 1.25rem;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-secondary);
   margin-bottom: 3rem;
   line-height: 1.6;
   font-weight: 300;
@@ -158,11 +161,11 @@
 
 .scrollIndicator {
   position: absolute;
-  bottom: 3rem;
+  bottom: 1rem;
   left: 50%;
   transform: translateX(-50%);
   z-index: 5;
-  color: white;
+  color: var(--color-secondary);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -173,7 +176,11 @@
 .scrollArrow {
   width: 24px;
   height: 24px;
-  border-left: 2px solid white;
+  border-left: 2px solid var(--color-secondary);
+  border-bottom: 2px solid var(--color-secondary);
+  transform: rotate(45deg);
+  opacity: 0.8;
+
   border-bottom: 2px solid white;
   transform: rotate(-45deg);
   opacity: 0.8;

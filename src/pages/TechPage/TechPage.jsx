@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 
 import styles from "./TechPage.module.css";
@@ -60,9 +60,58 @@ const techStack = [
     color: "#F05033",
     link: "https://git-scm.com/ ",
   },
+  {
+    name: "GitHub",
+    description: "Інструмент для зберігання та обміну кодом.",
+    icon: "ri-github-fill",
+    color: "#181717",
+    link: "https://github.com/ ",
+  },
+  {
+    name: "NPM",
+    description: "Менеджер пакетів для JavaScript.",
+    icon: "ri-npmjs-fill",
+    color: "#CB3837",
+    link: "https://www.npmjs.com/ ",
+  },
+  {
+    name: "Postman",
+    description: "Інструмент для тестування API.",
+    icon: "ri-postman-line",
+    color: "#FF6C37",
+    link: "https://www.postman.com/ ",
+  },
+  {
+    name: "Vercel",
+    description: "Платформа для розгортання і деплою додатків.",
+    icon: "ri-rocket-line",
+    color: "#000000",
+    link: "https://vercel.com/ ",
+  },
 ];
 
 const TechnologyPage = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const containerRef = useRef(null);
+  const projectsPerPage = 6;
+  const totalPages = Math.ceil(techStack.length / projectsPerPage);
+
+  const currentProjects = techStack.slice(
+    (currentPage - 1) * projectsPerPage,
+    currentPage * projectsPerPage
+  );
+
+  const handleScroll = () => {
+    if (!containerRef.current) return;
+
+    const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+    const isBottom = scrollTop + clientHeight >= scrollHeight - 10;
+
+    if (isBottom && currentPage < totalPages) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
+
   return (
     <motion.section
       className={styles.wrapper}
@@ -83,8 +132,16 @@ const TechnologyPage = () => {
           </h2>
         </motion.header>
 
-        <div className={styles.grid}>
-          {techStack.map((tech) => (
+        <motion.div
+          className={styles.grid}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+          ref={containerRef}
+          onScroll={handleScroll}
+        >
+          {currentProjects.map((tech) => (
             <a
               key={tech.name}
               href={tech.link}
@@ -107,7 +164,28 @@ const TechnologyPage = () => {
               </div>
             </a>
           ))}
-        </div>
+        </motion.div>
+
+        {totalPages > 1 && (
+          <motion.div
+            className={styles.pagination}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
+            {Array.from({ length: totalPages }, (_, i) => (
+              <button
+                key={i + 1}
+                onClick={() => setCurrentPage(i + 1)}
+                className={`${styles.pageButton} ${
+                  currentPage === i + 1 ? styles.activePage : ""
+                }`}
+              >
+                {i + 1}
+              </button>
+            ))}
+          </motion.div>
+        )}
       </div>
     </motion.section>
   );

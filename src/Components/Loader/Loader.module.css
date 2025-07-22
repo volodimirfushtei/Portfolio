@@ -23,12 +23,16 @@
 }
 
 .loaderCard {
-  width: min(100vw, 160px);
+  width: min(80vw, 120px);
+  height: min(100vh, 120px);
   padding: 3rem 2.5rem;
-  height: min(100vh, 160px);
   border-radius: 50%;
-  background: linear-gradient(135deg, #ade2fe 0%, #e9f2fb 40%, #bce8f7 100%);
-  opacity: 0.99;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.57),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,6 +40,7 @@
   gap: 1rem;
   position: relative;
   overflow: hidden;
+  animation: float 6s ease-in-out infinite;
 }
 
 .progressIndicator {
@@ -102,7 +107,7 @@
   height: 100%;
   background: radial-gradient(
     circle at center,
-    rgba(138, 99, 255, 0.2) 0%,
+    rgba(26, 14, 61, 0.2) 0%,
     transparent 70%
   );
   pointer-events: none;

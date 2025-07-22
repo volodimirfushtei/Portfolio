@@ -94,7 +94,12 @@ const CardTechAutoFlip = () => {
                 <div
                   className="w-1/2 h-full glass-effect overflow-hidden"
                   style={{
-                    boxShadow: "0 15px 30px rgba(0, 0, 0, 0.6)",
+                    boxShadow: "0 15px 30px rgba(0, 0, 0, 0.4)",
+                    backgroundImage:
+                      "linear-gradient(135deg, rgba(138, 138, 231, 0.4) 0%, rgba(54, 51, 62, 0.4) 100%)",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+
                     border: "1px solid var(--color-border)",
                   }}
                 >
@@ -104,10 +109,10 @@ const CardTechAutoFlip = () => {
                     className="w-full h-full object-cover "
                   />
                 </div>
-                <div className="absolute w-60 top-48 left-65 z-10 text-sm font-bold text-white text-left mb-6">
+                <div className="absolute w-50 top-40 left-65 z-10 text-sm font-bold text-white text-left mb-6">
                   <h2>Freelance Web Developer</h2>
-                  <h1 className="text-info text-5xl m-4 font-">
-                    <span className="text-info font-bold text-6xl">
+                  <h1 className=" text-4xl m-4 font-bold text-uppercase text-white">
+                    <span className="text-primary font-bold text-5xl">
                       Volodymyr
                     </span>{" "}
                     Fushtei
@@ -126,11 +131,7 @@ const CardTechAutoFlip = () => {
                     alt="Right half"
                     className="w-full h-full object-cover "
                   />
-                  <div className="absolute inset-0 bg-gradient-to-b from-black via-blue-950 to-transparent">
-                    <i className="ri-code-s-slash-fill text-2xl  absolute top-1 left-65 ">
-                      VF
-                    </i>
-                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-blue-950 to-black/30"></div>
                 </div>
               </div>
 

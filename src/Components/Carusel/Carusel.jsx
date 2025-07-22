@@ -21,7 +21,7 @@ const slides = [
     title: "Backend Solutions",
     description: "Developing robust server architectures",
     bgColor: "rgba(255, 152, 0, 0.1)",
-    imageUrl: "/images/Programmer_mob.png",
+    imageUrl: "/images/Camper.png",
   },
 ];
 
@@ -38,6 +38,13 @@ const MyCarousel = () => {
             initial={{ x: `${(index - currentIndex) * 100}%` }}
             exit={{ x: `${(index - currentIndex) * 100}%` }}
             style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
               backgroundColor: slide.bgColor,
               backgroundImage: `url(${slide.imageUrl})`,
               opacity: currentIndex === index ? 1 : 0,

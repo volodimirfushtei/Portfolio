@@ -1,26 +1,107 @@
-.backface-hidden {
-  backface-visibility: hidden;
+/* CardTech.module.css */
 
-  transform-style: preserve-3d;
+/* Базова стилізація при 3D-фліпі */
+.cardContainer {
+  perspective: 1000px;
 }
 
-.transition-transform {
-  transition: transform 0.7s ease;
-  transform-style: preserve-3d;
-}
-
-.glass-card {
+.cardInner {
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  border: 1px solid rgba(188, 188, 188, 0.1);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-
-  border-radius: 24px;
-  overflow: hidden;
-  /* Додаємо ефект 3D */
+  position: relative;
   transform-style: preserve-3d;
-  transform: perspective(1000px) rotateX(0deg);
+  transition: transform 0.7s ease;
+}
+
+/* Сторони картки */
+.cardSide {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 1rem;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Передня сторона */
+.frontSide {
+  z-index: 2;
+  /* при потребі можна додати border-bottom */
+}
+
+/* Задня сторона */
+.backSide {
+  transform: rotateY(180deg);
+  z-index: 1;
+}
+
+/* Відео-фон */
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video:hover {
+  filter: brightness(1.1);
+}
+
+/* Додаткові стилі вмісту */
+.overlayGradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+}
+
+.contentContainer {
+  position: absolute;
+  inset: 0;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Текст поверх */
+.infoText {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* Кнопка */
+.flipButton {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.flipButton:hover {
+  transform: scale(1.05);
+  border-color: var(--color-info);
+  color: var(--color-info);
+}
+.content::-webkit-scrollbar {
+  width: 5px;
+}
+.content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+.cardContainer {
+  overflow: hidden;
+  touch-action: pan-y;
+}
+
+.cardContainer > div {
+  scroll-behavior: auto; /* уникнення конфліктів з transition */
 }

@@ -1,84 +1,36 @@
-import React, { useState } from "react";
+// src/components/ProjectPage.jsx
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import styles from "./projectsPage.module.css";
+import { db } from "../../firebase";
+import { collection, getDocs } from "firebase/firestore";
 
 const ProjectPage = () => {
-  const projects = [
-    {
-      id: 1,
-      title: "Travel Camper",
-      description:
-        "Mobile app for finding and booking campsites with real-time availability and user reviews.",
-      tags: ["React.js", "Redux", "MongoDB", "Tailwind CSS"],
-      imageUrl: "/images/Camper.png",
-      urlVercel: "https://goit-campers-ten.vercel.app/",
-      accentColor: "#FF6B6B",
-    },
-    {
-      id: 2,
-      title: "Travel Campers",
-      description:
-        "Website for booking campsites with real-time availability and user reviews.",
-      tags: ["React.js", "Redux", "MongoDB", "Tailwind CSS"],
-      imageUrl: "/images/Campers.png",
-      urlVercel:
-        "https://images.unsplash.com/photo-1522202176988-66274cf831e4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-      accentColor: "#FF8",
-    },
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    {
-      id: 3,
-      title: "Travel Campers",
-      description:
-        "Website for booking campsites with real-time availability and user reviews.",
-      tags: ["React.js", "Redux", "MongoDB", "Tailwind CSS"],
-      imageUrl: "/images/Campers.png",
-      urlVercel: "https://goit-campers-ten.vercel.app/",
-      accentColor: "#FF6333",
-    },
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "projects"));
+        const projectsData = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setProjects(projectsData);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching projects: ", error);
+      }
+    };
 
-    {
-      id: 4,
-      title: "Travel Campers",
-      description:
-        "Website for booking campsites with real-time availability and user reviews.",
-      tags: ["React.js", "Redux", "MongoDB", "Tailwind CSS"],
-      imageUrl: "/images/Campers.png",
-      urlVercel: "https://goit-campers-ten.vercel.app/",
-      accentColor: "#Fccc22",
-    },
-
-    {
-      id: 5,
-      title: "Travel Campers",
-      description:
-        "Website for booking campsites with real-time availability and user reviews.",
-      tags: ["React.js", "Redux", "MongoDB", "Tailwind CSS"],
-      imageUrl: "/images/Campers.png",
-      urlVercel: "https://goit-campers-ten.vercel.app/",
-      accentColor: "#FF6bbb",
-    },
-
-    {
-      id: 6,
-      title: "Travel Campers",
-      description:
-        "Website for booking campsites with real-time availability and user reviews.",
-      tags: ["React.js", "Redux", "MongoDB", "Tailwind CSS"],
-      imageUrl: "/images/Campers.png",
-      urlVercel: "https://goit-campers-ten.vercel.app/",
-      accentColor: "#6B6B",
-    },
-    // ... other projects with improved descriptions
-  ];
-
-  // State management
+    fetchProjects();
+  }, []);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterTag, setFilterTag] = useState("");
   const projectsPerPage = 4;
 
-  // Filter and pagination logic
   const filteredProjects = projects.filter((project) => {
     const matchesSearch = project.title
       .toLowerCase()
@@ -97,7 +49,6 @@ const ProjectPage = () => {
     currentPage * projectsPerPage
   );
 
-  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -123,10 +74,18 @@ const ProjectPage = () => {
       transition: { type: "spring", stiffness: 300 },
     },
   };
+  if (loading) {
+    return (
+      <div className={styles.projectsPage}>
+        <p className={styles.loading}>
+          <i className="ri-loader-line"></i>Loading projects...
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.projectsPage}>
-      {/* Header Section */}
       <motion.div
         className={styles.header}
         initial={{ y: -20, opacity: 0 }}
@@ -136,7 +95,6 @@ const ProjectPage = () => {
         <h1 className={styles.title}>My Projects</h1>
       </motion.div>
 
-      {/* Search and Filter */}
       <motion.div
         className={styles.controls}
         initial={{ opacity: 0 }}
@@ -153,6 +111,7 @@ const ProjectPage = () => {
               setSearchTerm(e.target.value);
               setCurrentPage(1);
             }}
+            aria-label="Search projects"
           />
         </div>
 
@@ -164,6 +123,7 @@ const ProjectPage = () => {
               setFilterTag(e.target.value);
               setCurrentPage(1);
             }}
+            aria-label="Filter by technology"
           >
             <option value="">All Technologies</option>
             {Array.from(new Set(projects.flatMap((p) => p.tags))).map((tag) => (
@@ -175,7 +135,6 @@ const ProjectPage = () => {
         </div>
       </motion.div>
 
-      {/* Projects Grid */}
       <motion.div
         className={styles.projectsGrid}
         variants={containerVariants}
@@ -190,7 +149,6 @@ const ProjectPage = () => {
                 className={styles.projectCard}
                 variants={cardVariants}
                 whileHover="hover"
-                layout
               >
                 <div
                   className={styles.cardHeader}
@@ -217,23 +175,24 @@ const ProjectPage = () => {
                   </p>
 
                   <div className={styles.tagsContainer}>
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className={styles.tag}
-                        style={{
-                          backgroundColor: `${project.accentColor}15`,
-                          color: project.accentColor,
-                        }}
-                      >
-                        {tag}
-                      </span>
-                    ))}
+                    {Array.isArray(project.tags) &&
+                      (project.tags ?? []).map((tag) => (
+                        <span
+                          key={tag}
+                          className={styles.tag}
+                          style={{
+                            backgroundColor: `${project.accentColor}15`,
+                            color: project.accentColor,
+                          }}
+                        >
+                          {tag}
+                        </span>
+                      ))}
                   </div>
 
                   <div className={styles.cardFooter}>
                     <a
-                      href={project.urlVercel}
+                      href={project.urlVercel.trim()}
                       className={styles.projectLink}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -268,7 +227,6 @@ const ProjectPage = () => {
         </AnimatePresence>
       </motion.div>
 
-      {/* Pagination */}
       {totalPages > 1 && (
         <motion.div
           className={styles.pagination}
@@ -283,6 +241,7 @@ const ProjectPage = () => {
               className={`${styles.pageButton} ${
                 currentPage === i + 1 ? styles.activePage : ""
               }`}
+              disabled={currentPage === i + 1}
             >
               {i + 1}
             </button>

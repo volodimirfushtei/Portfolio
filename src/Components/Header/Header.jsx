@@ -4,20 +4,42 @@ import { motion, AnimatePresence } from "framer-motion";
 import styles from "./Header.module.css";
 import ToggleTheme from "../ToggleTheme/ToggleTheme";
 import FullscreenButton from "../FullScreenButton/FullScreenButton";
+import useScrollDetection from "../../hooks/useScrollDetection";
 
-const Header = () => {
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isHovering, setIsHovering] = useState(null);
+// Додаємо хук для визначення напрямку скролу
+const useScrollDirection = () => {
+  const [scrollDirection, setScrollDirection] = useState(null);
+  const [prevOffset, setPrevOffset] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      const currentOffset = window.pageYOffset;
+      setScrollDirection(prevOffset > currentOffset ? "up" : "down");
+      setPrevOffset(currentOffset);
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [prevOffset]);
+
+  return scrollDirection;
+};
+
+const Header = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isHovering, setIsHovering] = useState(null);
+  const [isHidden, setIsHidden] = useState(false);
+
+  const isScrolled = useScrollDetection(100); // Змінив на 100px
+  const scrollDirection = useScrollDirection();
+
+  useEffect(() => {
+    if (isScrolled && scrollDirection === "down") {
+      setIsHidden(true);
+    } else if (scrollDirection === "up" || !isScrolled) {
+      setIsHidden(false);
+    }
+  }, [isScrolled, scrollDirection]);
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -29,16 +51,28 @@ const Header = () => {
     { path: "/projects", icon: "ri-briefcase-line", label: "Projects" },
     { path: "/tech", icon: "ri-code-line", label: "Tech" },
     { path: "/contacts", icon: "ri-contacts-line", label: "Contacts" },
+    {
+      path: "/error",
+      icon: "ri-error-warning-line",
+      label: "Test Error",
+    },
   ];
 
   return (
-    <header
-      className={`${styles.header} ${scrolled ? styles.scrolled : ""} ${
+    <motion.header
+      className={`${styles.header} ${isScrolled ? styles.scrolled : ""} ${
         mobileMenuOpen ? styles.mobileMenuOpen : ""
       }`}
+      initial={{ y: 0 }}
+      animate={{
+        y: isHidden ? -100 : 0,
+        opacity: isHidden ? 0 : 1,
+      }}
+      transition={{ type: "spring", damping: 15, stiffness: 100 }}
     >
       <div className={styles.container}>
         {/* Logo */}
+
         <motion.div whileHover={{ scale: 1.05 }}>
           <Link to="/" className={styles.logo}>
             <i className={`ri-code-s-slash-line ${styles.logoIcon}`}></i>
@@ -153,7 +187,7 @@ const Header = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </motion.header>
   );
 };
 
