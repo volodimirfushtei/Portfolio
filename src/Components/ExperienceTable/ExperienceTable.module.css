@@ -1,65 +1,65 @@
-/* ExperienceTable.module.css */
 .container {
   width: 100%;
-  min-width: 400px;
   height: 100%;
   padding: 1rem;
   display: flex;
-
+  justify-content: center;
   align-items: center;
 }
 
 .card {
-  background: var(--color-background);
+  background: rgba(0, 0, 0, 0.45);
   color: var(--color-text);
-
   width: 100%;
+  max-width: 1200px;
   padding: 2rem;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-
   transition: all 0.3s ease;
   height: auto;
-
-  border-radius: 8px;
+  border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .title {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   margin-bottom: 2rem;
   text-align: center;
-  background: linear-gradient(90deg, #8a63ff, #63b3ff);
+  background: linear-gradient(90deg, #562ad9, #42a0f7);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  font-weight: 600;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 колонки */
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
 }
 
 .statItem {
-  background: var(--color-surface);
+  background: transparent;
+  width: 100%;
   color: var(--color-text);
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 1.5rem;
   text-align: center;
   border: 1px solid rgba(255, 255, 255, 0.05);
   transition: all 0.3s ease;
+  cursor: default;
 }
 
 .statItem:hover {
   transform: translateY(-5px);
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .value {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
-  background: linear-gradient(135deg, #8a63ff, #63b3ff);
+  background: linear-gradient(135deg, #2e1186, #2b91f1);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -74,20 +74,41 @@
 }
 
 .label {
-  font-size: 0.9rem;
-  color: var(--color-secondary);
+  font-size: 1rem;
+  color: #ffffff;
   line-height: 1.4;
+  font-weight: 500;
 }
 
-/* Адаптація для мобільних пристроїв */
-@media (max-width: 768px) {
-  .container {
-    min-width: 100%;
-    padding: 0.5rem;
+/* Планшетні стилі (768px - 1023px) */
+@media (max-width: 1023px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .card {
     padding: 1.5rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .value {
+    font-size: 2.25rem;
+  }
+}
+
+/* Мобільні стилі (до 767px) */
+@media (max-width: 767px) {
+  .container {
+    padding: 0.75rem;
+  }
+
+  .card {
+    padding: 1.25rem;
+    border-radius: 10px;
   }
 
   .grid {
@@ -95,7 +116,44 @@
     gap: 1rem;
   }
 
+  .title {
+    font-size: 1.4rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .statItem {
+    padding: 1.25rem;
+    border-radius: 10px;
+  }
+
   .value {
     font-size: 2rem;
+  }
+
+  .label {
+    font-size: 0.95rem;
+  }
+}
+
+/* Дуже малі екрани (до 400px) */
+@media (max-width: 400px) {
+  .card {
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 1.3rem;
+  }
+
+  .statItem {
+    padding: 1rem;
+  }
+
+  .value {
+    font-size: 1.8rem;
+  }
+
+  .suffix {
+    font-size: 1.2rem;
   }
 }

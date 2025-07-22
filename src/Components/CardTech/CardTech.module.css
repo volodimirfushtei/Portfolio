@@ -1,107 +1,299 @@
-/* CardTech.module.css */
+.container {
+  padding: 1rem;
+}
 
-/* Базова стилізація при 3D-фліпі */
-.cardContainer {
+.cardWrapper {
   perspective: 1000px;
+  cursor: pointer;
+  max-height: 90vh;
 }
 
 .cardInner {
+  transition: transform 0.7s ease;
+  transform-style: preserve-3d;
   width: 100%;
   height: 100%;
   position: relative;
-  transform-style: preserve-3d;
-  transition: transform 0.7s ease;
 }
 
 /* Сторони картки */
-.cardSide {
+.frontSide,
+.backSide {
   position: absolute;
   inset: 0;
   backface-visibility: hidden;
   border-radius: 1rem;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(56, 56, 56, 0.5);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  display: flex;
-  flex-direction: column;
 }
 
-/* Передня сторона */
 .frontSide {
   z-index: 2;
-  /* при потребі можна додати border-bottom */
+  border-bottom: 6px solid var(--color-success);
 }
 
-/* Задня сторона */
 .backSide {
   transform: rotateY(180deg);
   z-index: 1;
+  border-bottom: 6px solid var(--color-success);
 }
 
-/* Відео-фон */
+/* Стилі для передньої сторони */
+.videoContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.videoContainer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.6),
+    transparent 30%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.6)
+  );
+}
 .video {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.video:hover {
-  filter: brightness(1.1);
-}
-
-/* Додаткові стилі вмісту */
-.overlayGradient {
+.frontContent {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
-}
-
-.contentContainer {
-  position: absolute;
-  inset: 0;
-  padding: 2rem;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
 
-/* Текст поверх */
-.infoText {
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 0.9rem;
+.badge {
+  background: var(--color-success);
+  color: var(--color-primary);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  width: fit-content;
+  font-size: 0.75rem;
+}
+
+.autoFlipText {
   text-align: center;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.8rem;
+  margin-top: auto;
 }
 
-/* Кнопка */
+/* Стилі для задньої сторони */
+.splitContainer {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.leftSide,
+.rightSide {
+  position: relative;
+  overflow: hidden;
+  width: 50%;
+}
+
+.leftSide img,
+.rightSide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.leftSide::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.2),
+    transparent 30%,
+    rgba(0, 0, 0, 0.5)
+  );
+}
+
+.rightSide::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.5),
+    rgba(55, 65, 81, 0.5),
+    transparent
+  );
+}
+
+.initials {
+  position: absolute;
+  top: 1rem;
+  left: 1.5rem;
+  font-size: 1.5rem;
+  color: white;
+  font-family: monospace;
+  z-index: 2;
+}
+
+.mainText {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 85%;
+  text-align: center;
+  color: white;
+  z-index: 2;
+}
+
+.mainText h2 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.mainText h1 {
+  font-size: 3em;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.nameHighlight {
+  color: var(--color-blue-700);
+  font-size: 2rem;
+}
+
+.mainText p {
+  opacity: 0.9;
+  margin-bottom: 1.5rem;
+  line-height: 1.4;
+  color: whitesmoke;
+  font-size: 1rem;
+}
+
+.buttonWrapper {
+  position: absolute;
+  bottom: 1rem;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  z-index: 2;
+}
+
 .flipButton {
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.3);
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
-  cursor: pointer;
-  transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
 }
 
 .flipButton:hover {
-  transform: scale(1.05);
   border-color: var(--color-info);
   color: var(--color-info);
 }
-.content::-webkit-scrollbar {
-  width: 5px;
-}
-.content::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 10px;
-}
-.cardContainer {
-  overflow: hidden;
-  touch-action: pan-y;
+
+.autoFlipIndicator {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.75rem;
 }
 
-.cardContainer > div {
-  scroll-behavior: auto; /* уникнення конфліктів з transition */
+.indicatorDot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Мобільні стилі (до 640px) */
+@media (max-width: 640px) {
+  .cardWrapper {
+    height: 400px !important;
+    width: 300px !important;
+  }
+
+  .frontSide,
+  .backSide {
+    border-radius: 0.75rem;
+    width: 100%;
+    height: 100%;
+  }
+
+  .mainText {
+    width: 95%;
+  }
+
+  .mainText h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .nameHighlight {
+    font-size: 1.75rem;
+  }
+
+  .mainText p {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+
+  .splitContainer {
+    flex-direction: column;
+  }
+
+  .leftSide,
+  .rightSide {
+    width: 100%;
+    height: 50%;
+  }
+
+  .mainText {
+    top: 45%;
+    padding: 0 1rem;
+  }
+
+  .buttonWrapper {
+    bottom: 0.5rem;
+  }
+}
+
+/* Планшетні стилі (641px - 1023px) */
+@media (min-width: 641px) and (max-width: 1023px) {
+  .cardWrapper {
+    height: 500px !important;
+    width: 400px !important;
+  }
+
+  .mainText {
+    width: 90%;
+  }
+
+  .mainText h1 {
+    font-size: 2rem;
+  }
+
+  .nameHighlight {
+    font-size: 2.25rem;
+  }
 }

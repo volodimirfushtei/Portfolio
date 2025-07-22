@@ -19,7 +19,7 @@
   display: inline-block;
   width: 100%;
   height: 100px;
-  margin-bottom: 2rem;
+
   padding: 0.5rem 0.5rem;
   background: white;
   border-bottom: 4px solid #63b3ff;
@@ -240,8 +240,8 @@
 .loading {
   text-align: center;
   padding: 3rem;
-  color: var(--color-info);
-  font-size: 1.25rem;
+
+  font-size: 1.5rem;
   font-weight: 500;
   display: flex;
   align-items: center;
@@ -252,8 +252,20 @@
 }
 .loading i {
   font-size: 2rem;
-  color: var(--color-icon);
+  color: #bc7905;
+  margin-right: 0.5rem;
+  animation: spin 1s linear infinite;
+  transition: all 0.3s ease;
 }
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 @media (max-width: 768px) {
   .projectsPage {
     padding: 1.5rem;

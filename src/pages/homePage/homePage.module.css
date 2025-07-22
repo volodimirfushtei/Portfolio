@@ -81,7 +81,7 @@
   width: 100%;
 
   position: relative;
-  overflow: au;
+  overflow: auto;
 }
 
 .content {
@@ -179,9 +179,6 @@
 .projects {
   margin-top: 2rem;
 }
-.experience {
-  margin-top: 3rem;
-}
 
 .skillsSection {
   max-width: 1400px;
@@ -273,14 +270,14 @@
   }
 
   .container {
-    padding: 1rem;
+    padding: 0, 5rem;
   }
 
   .textContent {
     padding: 1rem;
   }
   .imageWrapper {
-    margin-top: 1rem;
+    margin-top: 0, 5rem;
   }
 
   .button {

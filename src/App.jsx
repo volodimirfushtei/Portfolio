@@ -4,7 +4,7 @@ import { AnimatePresence } from "framer-motion";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Loader from "./Components/Loader/Loader.jsx";
 import Layout from "./Components/Layout/Layout.jsx";
-import ErrorBoundary from "./Components/ErrorBoundary/ErrorBondary.jsx";
+import ErrorBoundary from "./Components/ErrorBoundary/ErrorBoundary.jsx";
 import { OverlayProvider } from "./Components/OverlayProvider/OverlayProvider";
 import Overlay from "./Components/Overlay/Overlay.jsx";
 import { Toaster } from "react-hot-toast";
@@ -52,7 +52,7 @@ function App() {
   useEffect(() => {
     // Попереднє завантаження компонентів
     preloadComponents().then(() => {
-      const timer = setTimeout(() => setLoading(false), 2500);
+      const timer = setTimeout(() => setLoading(false), 2000);
       return () => clearTimeout(timer);
     });
   }, []);
@@ -61,30 +61,12 @@ function App() {
     <OverlayProvider>
       <ErrorBoundary>
         <AnimatePresence mode="wait">
-          {loading && <Loader key="loader" />}
-          <div
-            className={`app-wrapper ${loading ? "pointer-events-none " : ""}`}
-          >
-            {/* Route loading overlay */}
-            {routeLoading && (
-              <Overlay>
-                <div className="flex justify-center items-center h-full">
-                  <Loader />
-                </div>
-              </Overlay>
-            )}
-
-            <Suspense
-              fallback={
-                <Overlay>
-                  <div className="flex justify-center items-center h-full">
-                    <Loader />
-                  </div>
-                </Overlay>
-              }
-            >
+          {loading ? (
+            <Loader />
+          ) : (
+            <Suspense fallback={<Loader />}>
               <ScrollToTop />
-
+              <Overlay />
               <Routes location={location}>
                 <Route path="/" element={<Layout />}>
                   <Route index element={<Home />} />
@@ -140,11 +122,11 @@ function App() {
                 }}
               />
             </Suspense>
-          </div>
+          )}
         </AnimatePresence>
       </ErrorBoundary>
     </OverlayProvider>
   );
 }
 
-export default App;
+export default React.memo(App);

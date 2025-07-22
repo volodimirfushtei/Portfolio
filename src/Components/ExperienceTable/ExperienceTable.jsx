@@ -2,20 +2,19 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import styles from "./ExperienceTable.module.css";
-import FadeInAnimate from "./../FadeInAnimate/FadeInAnimate";
-import Particles from "react-tsparticles";
+
 const Counter = ({ value, suffix }) => {
   const [count, setCount] = useState(0);
   const [ref, inView] = useInView({
     triggerOnce: true,
-    threshold: 0.2,
+    threshold: 0.1, // Нижчий поріг для кращої роботи на мобільних
   });
 
   useEffect(() => {
     if (inView) {
-      const duration = 4000;
-      const steps = 10;
-      const increment = Math.ceil(value / steps);
+      const duration = 3000; // Скорочено тривалість для мобільних
+      const steps = value; // Кроків стільки ж, скільки значення для плавності
+      const increment = 1; // Фіксований інкремент для плавності
       const intervalTime = duration / steps;
 
       let start = 0;
@@ -31,14 +30,14 @@ const Counter = ({ value, suffix }) => {
 
       return () => clearInterval(timer);
     }
-  }, [inView, value]); // Залежність від inView
+  }, [inView, value]);
 
   return (
     <motion.span
       ref={ref}
       initial={{ opacity: 0 }}
       animate={inView ? { opacity: 1 } : { opacity: 0 }}
-      transition={{ duration: 1.5 }}
+      transition={{ duration: 1 }}
     >
       {count}
       {suffix && <span className={styles.suffix}>{suffix}</span>}
@@ -58,13 +57,7 @@ const ExperienceTable = () => {
 
   return (
     <div className={styles.container}>
-      <div
-        className={`${styles.card}`}
-        style={{
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
+      <div className={`${styles.card} glass-effect`}>
         <h3 className={styles.title}>Professional Milestones</h3>
         <div className={styles.grid}>
           {stats.map((stat, index) => (
@@ -72,6 +65,7 @@ const ExperienceTable = () => {
               key={index}
               className={styles.statItem}
               whileHover={{ y: -5 }}
+              whileTap={{ scale: 0.98 }} // Додано для мобільних пристроїв
               transition={{ type: "spring", stiffness: 300 }}
             >
               <div className={styles.value}>

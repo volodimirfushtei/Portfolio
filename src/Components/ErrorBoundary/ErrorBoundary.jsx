@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { motion } from "framer-motion";
-import s from "./ErrorBondary.module.css";
+import s from "./ErrorBoundary.module.css";
 
 class ErrorBoundary extends Component {
   state = {

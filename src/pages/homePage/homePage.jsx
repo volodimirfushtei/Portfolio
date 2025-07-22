@@ -12,7 +12,7 @@ import ScrollBar from "../../Components/ScrollBar/ScrollBar.jsx";
 import HeroSection from "../../Components/HeroSection/HeroSection.jsx";
 import FadeInAnimate from "../../Components/FadeInAnimate/FadeInAnimate.jsx";
 import useScrollDetection from "../../hooks/useScrollDetection";
-
+import ParticlesBackground from "../../Components/ParBG/ParBG.jsx";
 const HomePage = () => {
   const [hovered, setHovered] = useState(false);
   const isScrolled = useScrollDetection(1200);
@@ -61,6 +61,7 @@ const HomePage = () => {
         </section>
       </main>
       <Footer />
+
       <div
         id="scrollButton"
         className={`${

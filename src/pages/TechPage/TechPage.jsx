@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 
 import styles from "./TechPage.module.css";
-
+import AnimatedPage from "../../Components/AnimatedPage/AnimatedPage";
 const techStack = [
   {
     name: "React",
@@ -88,12 +88,40 @@ const techStack = [
     color: "#000000",
     link: "https://vercel.com/ ",
   },
+  {
+    name: "Netlify",
+    description: "Платформа для розгортання і деплою додатків.",
+    icon: "ri-rocket-line",
+    color: "#000000",
+    link: "https://netlify.com/ ",
+  },
+  {
+    name: "Heroku",
+    description: "Платформа для розгортання і деплою додатків.",
+    icon: "ri-rocket-line",
+    color: "#000000",
+    link: "https://heroku.com/ ",
+  },
+  {
+    name: "Firebase",
+    description: "Платформа для розгортання і деплою додатків.",
+    icon: "ri-rocket-line",
+    color: "#000000",
+    link: "https://firebase.google.com/ ",
+  },
+  {
+    name: "AWS",
+    description: "Платформа для розгортання і деплою додатків.",
+    icon: "ri-rocket-line",
+    color: "#000000",
+    link: "https://aws.amazon.com/ ",
+  },
 ];
 
 const TechnologyPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const containerRef = useRef(null);
-  const projectsPerPage = 6;
+  const projectsPerPage = 8;
   const totalPages = Math.ceil(techStack.length / projectsPerPage);
 
   const currentProjects = techStack.slice(
@@ -113,81 +141,81 @@ const TechnologyPage = () => {
   };
 
   return (
-    <motion.section
-      className={styles.wrapper}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-      <div className={styles.container}>
-        <motion.header
-          className={styles.header}
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.2 }}
-        >
-          <h2 className={styles.heading}>
-            My <span>Toolkit</span>
-          </h2>
-        </motion.header>
+    <AnimatedPage>
+      <section
+        className={styles.wrapper}
+        id="tech"
+        style={{ overflowY: "auto" }}
+      >
+        <div className={styles.container}>
+          <motion.header
+            className={styles.header}
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
+            <h2 className={styles.heading}>
+              My <span>Toolkit</span>
+            </h2>
+          </motion.header>
 
-        <motion.div
-          className={styles.grid}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.5 }}
-          ref={containerRef}
-          onScroll={handleScroll}
-        >
-          {currentProjects.map((tech) => (
-            <a
-              key={tech.name}
-              href={tech.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.cardLink}
-            >
-              <div className={styles.card}>
-                <div
-                  className={styles.iconWrapper}
-                  style={{ color: tech.color }}
-                >
-                  <i className={`${tech.icon} ${styles.icon}`} />
-                </div>
-                <h3 className={styles.title}>{tech.name}</h3>
-                <p className={styles.description}>{tech.description}</p>
-                <span className={styles.readMore}>
-                  Explore <i className="ri-arrow-right-s-line" />
-                </span>
-              </div>
-            </a>
-          ))}
-        </motion.div>
-
-        {totalPages > 1 && (
           <motion.div
-            className={styles.pagination}
+            className={styles.grid}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            ref={containerRef}
+            onScroll={handleScroll}
           >
-            {Array.from({ length: totalPages }, (_, i) => (
-              <button
-                key={i + 1}
-                onClick={() => setCurrentPage(i + 1)}
-                className={`${styles.pageButton} ${
-                  currentPage === i + 1 ? styles.activePage : ""
-                }`}
+            {currentProjects.map((tech) => (
+              <a
+                key={tech.name}
+                href={tech.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.cardLink}
               >
-                {i + 1}
-              </button>
+                <div className={styles.card}>
+                  <div
+                    className={styles.iconWrapper}
+                    style={{ color: tech.color }}
+                  >
+                    <i className={`${tech.icon} ${styles.icon}`} />
+                  </div>
+                  <h3 className={styles.title}>{tech.name}</h3>
+                  <p className={styles.description}>{tech.description}</p>
+                  <span className={styles.readMore}>
+                    Explore <i className="ri-arrow-right-s-line" />
+                  </span>
+                </div>
+              </a>
             ))}
           </motion.div>
-        )}
-      </div>
-    </motion.section>
+
+          {totalPages > 1 && (
+            <motion.div
+              className={styles.pagination}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3 }}
+            >
+              {Array.from({ length: totalPages }, (_, i) => (
+                <button
+                  key={i + 1}
+                  onClick={() => setCurrentPage(i + 1)}
+                  className={`${styles.pageButton} ${
+                    currentPage === i + 1 ? styles.activePage : ""
+                  }`}
+                >
+                  {i + 1}
+                </button>
+              ))}
+            </motion.div>
+          )}
+        </div>
+      </section>
+    </AnimatedPage>
   );
 };
 

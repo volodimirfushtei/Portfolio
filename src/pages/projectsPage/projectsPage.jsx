@@ -77,8 +77,9 @@ const ProjectPage = () => {
   if (loading) {
     return (
       <div className={styles.projectsPage}>
-        <p className={styles.loading}>
-          <i className="ri-loader-line"></i>Loading projects...
+        <p className={`${styles.loading} aria-label="Loading text-amber-500  `}>
+          <i className="ri-loader-line color-primary animate-rotate "></i>
+          Loading Firebase...
         </p>
       </div>
     );
