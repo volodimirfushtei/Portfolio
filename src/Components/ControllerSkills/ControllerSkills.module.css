@@ -100,3 +100,31 @@
   font-size: 0.8rem;
   color: #63b3ff;
 }
+@media (max-width: 768px) {
+  .flipCard {
+    width: 100px;
+    height: 80px;
+  }
+
+  .flipFront span {
+    font-size: 0.8rem;
+  }
+
+  .flipBack p {
+    font-size: 0.8rem;
+  }
+}
+@media (max-width: 480px) {
+  .flipCard {
+    width: 60px;
+    height: 40px;
+  }
+
+  .flipFront span {
+    font-size: 0.6rem;
+  }
+
+  .flipBack p {
+    font-size: 0.6rem;
+  }
+}

@@ -39,7 +39,9 @@ const HomePage = () => {
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5 }}
       className={`${styles.container}`}
-      style={{ overflowY: "auto" }}
+      style={{
+        overflowY: "auto",
+      }}
     >
       <HeroSection />
       <main>
@@ -66,7 +68,7 @@ const HomePage = () => {
         id="scrollButton"
         className={`${
           styles.scrollContainer
-        }  fixed bottom-6  right-6 z-50 transition-all duration-300 border-2 border-secondary rounded-2 p-2 bg-indigo-500 text-white shadow-md hover:shadow-lg cursor-pointer ${
+        }  fixed bottom-6  right-6 z-50 transition-all duration-300 border-2 border-secondary rounded-2 p-2 bg-secondary text-white shadow-md hover:shadow-lg cursor-pointer ${
           isScrolled
             ? "opacity-100 visible"
             : "opacity-0 invisible pointer-events-none  cursor-not-allowed"

@@ -92,13 +92,20 @@ const HeroSection = () => {
         style={{ backgroundPosition: parallaxEffects.gradientPosition }}
       />
       {/* Main content */}
-      <div className={styles.content}>
+      <div
+        className={`${styles.content} `}
+        style={{ transform: `scale(${parallaxEffects.scale})` }}
+      >
         <motion.div
           className={styles.textContent}
           style={{ y: parallaxEffects.textY }}
           variants={itemVariants}
         >
-          <motion.h1 className={styles.title}>
+          <motion.h1
+            className={`${styles.title} ${
+              scrolled ? styles.scrolledTitle : ""
+            }`}
+          >
             <motion.span
               className={styles.titleGradient}
               animate={{
@@ -145,6 +152,9 @@ const HeroSection = () => {
               }}
               whileTap={{ scale: 0.95 }}
               className={styles.secondaryButton}
+              onClick={() => window.open("https://github.com/volodimirfushtei")}
+              target="_blank"
+              rel="noopener noreferrer"
             >
               View my work
             </motion.button>
@@ -155,7 +165,14 @@ const HeroSection = () => {
           className={styles.mediaContainer}
           style={{ y: parallaxEffects.yBg }}
         >
-          <HeroMedia />
+          <div
+            className={`${styles.media} ${
+              scrolled ? styles.scrolledMedia : ""
+            }`}
+            style={{ transform: `scale(${parallaxEffects.scale})` }}
+          >
+            <HeroMedia />
+          </div>
         </motion.div>
       </div>
 

@@ -6,9 +6,11 @@
   justify-content: center;
   align-items: center;
   /* або black/gray з прозорістю */
-  background: "transparent";
 
-  pointer-events: all;
+  background: linear-gradient(135deg, #080c1e 0%, #070e2d 50%, #010913 100%);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  pointer-events: none;
 }
 
 .backgroundOverlay {

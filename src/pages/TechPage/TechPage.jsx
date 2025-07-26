@@ -152,7 +152,11 @@ const TechnologyPage = () => {
             className={styles.header}
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.2 }}
+            transition={{
+              delay: 0.2,
+              duration: 0.5,
+              ease: "easeOut",
+            }}
           >
             <h2 className={styles.heading}>
               My <span>Toolkit</span>
@@ -161,8 +165,8 @@ const TechnologyPage = () => {
 
           <motion.div
             className={styles.grid}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
             ref={containerRef}

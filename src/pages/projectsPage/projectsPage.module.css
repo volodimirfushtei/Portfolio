@@ -2,27 +2,37 @@
   width: 100%;
   margin: 0 auto;
 
-  padding: 2rem 1rem;
+  padding: 2rem 2rem;
   height: 100vh;
+  overflow: hidden;
 }
 
 .header {
   text-align: center;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border-bottom: 4px solid #63b3ff;
+  margin-bottom: 4rem;
 }
 
-.title {
+.heading {
   font-size: clamp(2rem, 6vw, 3rem);
   font-weight: 700;
-  color: #111827;
+  color: var(--color-accent);
   line-height: 1.2;
   position: relative;
   display: inline-block;
   width: 100%;
-  height: 100px;
+  height: 100%;
 
   padding: 0.5rem 0.5rem;
-  background: white;
-  border-bottom: 4px solid #63b3ff;
+  background: var(--color-surface);
+}
+
+.heading span {
+  position: relative;
+  color: var(--color-title);
+  z-index: 1;
 }
 
 .controls {
@@ -35,7 +45,7 @@
 .searchContainer,
 .filterContainer {
   flex: 1;
-  min-width: 250px;
+  min-width: 200px;
   display: flex;
   align-items: center;
   background: var(--color-hero);
@@ -61,10 +71,13 @@
   color: var(--color-text);
   font-size: 1rem;
 }
-
+.filterOption {
+  color: var(--color-secondary);
+}
 .filterContainer select {
   appearance: none;
   cursor: pointer;
+  color: var(--color-text);
 }
 
 .projectsGrid {
@@ -138,7 +151,7 @@
 }
 
 .projectDescription {
-  color: var(--color-text-secondary);
+  color: var(--color-secondary);
   font-size: 0.95rem;
   line-height: 1.6;
   margin-bottom: 1.5rem;
@@ -240,8 +253,8 @@
 .loading {
   text-align: center;
   padding: 3rem;
-
-  font-size: 1.5rem;
+  color: #bc7905;
+  font-size: 1.6rem;
   font-weight: 500;
   display: flex;
   align-items: center;
@@ -251,7 +264,7 @@
   flex-direction: column;
 }
 .loading i {
-  font-size: 2rem;
+  font-size: 2.5rem;
   color: #bc7905;
   margin-right: 0.5rem;
   animation: spin 1s linear infinite;
@@ -295,7 +308,10 @@
   .header {
     margin-bottom: 2rem;
   }
-
+  .searchContainer,
+  .filterContainer {
+    width: 100%;
+  }
   .title {
     font-size: 1.75rem;
   }

@@ -6,8 +6,8 @@
   width: 100%;
   z-index: 1000;
   padding: 1.5rem 0;
-  background: var(--color-header);
-  backdrop-filter: blur(12px);
+  background: transparent;
+
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
@@ -103,8 +103,12 @@
 }
 
 .contactButton {
-  background: linear-gradient(135deg, #8a63ff, #63b3ff);
-  color: white;
+  background: linear-gradient(
+    135deg,
+    var(--color-primary),
+    var(--color-accent)
+  );
+  color: var(--color-title);
   border: none;
   padding: 0.75rem 1.5rem;
   border-radius: 2rem;

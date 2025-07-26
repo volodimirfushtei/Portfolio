@@ -49,7 +49,7 @@ const techItems = [
 
 const ControllerSkills = () => {
   return (
-    <div className={`${styles.container}`}>
+    <section className={styles.container} aria-label="Technologies I use">
       <div className={styles.header}>
         <h3>Coding process and tools at:</h3>
       </div>
@@ -58,7 +58,11 @@ const ControllerSkills = () => {
         <motion.div
           className={styles.sliderTrack}
           animate={{ x: ["0%", "-100%"] }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+          transition={{
+            duration: 25,
+            repeat: Infinity,
+            ease: "linear",
+          }}
         >
           {[...techItems, ...techItems].map((tech, index) => (
             <div key={`${tech.name}-${index}`} className={styles.flipCard}>
@@ -68,6 +72,7 @@ const ControllerSkills = () => {
                   <i
                     className={`${tech.icon} ${styles.icon}`}
                     style={{ color: tech.color }}
+                    aria-hidden="true"
                   ></i>
                   <span>{tech.name}</span>
                 </div>
@@ -80,7 +85,7 @@ const ControllerSkills = () => {
           ))}
         </motion.div>
       </div>
-    </div>
+    </section>
   );
 };
 

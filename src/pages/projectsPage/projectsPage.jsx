@@ -93,7 +93,9 @@ const ProjectPage = () => {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <h1 className={styles.title}>My Projects</h1>
+        <h2 className={styles.heading}>
+          My <span>Toolkit</span>
+        </h2>
       </motion.div>
 
       <motion.div
@@ -150,6 +152,13 @@ const ProjectPage = () => {
                 className={styles.projectCard}
                 variants={cardVariants}
                 whileHover="hover"
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{
+                  duration: 0.5,
+                  delay: 0.2,
+                  ease: "easeOut",
+                }}
               >
                 <div
                   className={styles.cardHeader}

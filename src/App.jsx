@@ -64,7 +64,7 @@ function App() {
           {loading ? (
             <Loader />
           ) : (
-            <Suspense fallback={<Loader />}>
+            <Suspense>
               <ScrollToTop />
               <Overlay />
               <Routes location={location}>
@@ -77,6 +77,7 @@ function App() {
                   <Route path="error" element={<TestError />} />
                 </Route>
               </Routes>
+
               <Toaster
                 position="top-right"
                 reverseOrder={false}

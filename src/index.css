@@ -4,24 +4,13 @@
 @import "slick-carousel/slick/slick.css";
 @import "slick-carousel/slick/slick-theme.css";
 
-.loaderContainer::before,
-.loaderContainer::after {
-  content: "";
-  position: absolute;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(138, 99, 255, 0.3), transparent 70%);
-  filter: blur(80px);
-  z-index: -2;
-  animation: moveGlow 12s ease-in-out infinite alternate;
+html[data-theme="dark-theme"] body {
+  background-color: #111;
+  color: #eee;
 }
-
-.loaderContainer::after {
-  top: auto;
-  bottom: -100px;
-  right: -100px;
-  background: radial-gradient(circle, rgba(99, 179, 255, 0.2), transparent 70%);
-  animation-delay: 3s;
+html[light-theme="light-theme"] body {
+  background-color: #fff;
+  color: #111;
 }
 
 @keyframes moveGlow {
@@ -54,7 +43,7 @@
 .light-theme .glass-effect {
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.01) 0%,
+    rgba(255, 255, 255, 0.06) 0%,
     rgba(49, 48, 48, 0.7) 100%
   );
   border-color: rgba(0, 0, 0, 0.1);
@@ -66,102 +55,101 @@
 .dark-theme .glass-effect {
   background: linear-gradient(
     135deg,
-    rgba(17, 17, 17, 0.1) 0%,
+    rgba(17, 17, 17, 0.8) 0%,
     rgba(17, 17, 17, 0.7) 100%
   );
   border-color: rgba(163, 162, 162, 0.15);
 }
 
 .light-theme {
-  /* Кольорова палітра */
-  --bs-primary: rgba(67, 97, 238, var(--glass-opacity));
-  --bs-info: rgba(76, 201, 240, var(--glass-opacity));
+  /* === Base Colors === */
+  --color-primary: #d4af37; /* Насичене золото */
+  --color-info: #4cc9f0;
+  --color-success: #198754;
+  --color-warning: #f59e0b;
+  --color-error: #d90429;
 
-  /* Фон та поверхні з ефектом скла */
-  --bg-image: url("./assets/images/sunset.jpg");
-  --color-background: #ececec;
-  --color-background-scrolled: #fffbfb;
+  /* === Backgrounds & Surfaces === */
+  --bg-color: #ffffff;
+  --color-background: #fdfdfb;
+  --color-surface: #f7f7f3;
+  --color-surface-hover: #f0f0eb;
+  --color-background-scrolled: #f3f2ef;
+  --color-sidebar: var(--color-surface);
+  --color-footer: var(--color-surface);
 
-  --color-surface: rgba(255, 255, 255, var(--glass-opacity));
-  --color-surface-hover: rgba(241, 243, 245, 0.95);
+  /* === Text === */
+  --text-color: #121212;
+  --color-text: #7a5e00; /* Темно-золотий */
+  --color-secondary: #a1862c; /* Світле золото для підзаголовків */
+  --color-title: #634c00; /* Максимальний контраст */
 
-  /* Текст */
-  --color-text: rgba(33, 37, 41, 0.95);
-  --color-secondary: rgba(108, 117, 125, 0.9);
+  /* === Accent === */
+  --color-accent: #aa1e58;
+  --color-accent-hover: #8e1546;
 
-  /* Спеціальні елементи */
-  --color-title: rgba(140, 39, 158, 0.9);
-  --color-accent: rgba(58, 134, 255, 0.9);
-  --color-accent-hover: rgba(72, 149, 239, 0.95);
+  /* === Buttons === */
+  --color-button-bg: var(--color-primary);
+  --color-button-bg-hover: #e0c148;
+  --color-button-text: #ffffff;
 
-  /* Шапка та підвал */
+  /* === Gradients === */
   --color-header: linear-gradient(
-    135deg,
-    #dcf0fb 0%,
-    #f0f4f8 40%,
-    #e0f7ff 100%
+    145deg,
+    #fff8e1 0%,
+    #fff8dc 30%,
+    #fffbeb 60%,
+    #fbf5e3 90%
   );
-  --color-hero: linear-gradient(
-    to bottom right,
-    rgba(255, 255, 255, 0.9),
-    rgba(245, 245, 245, 0.7)
-  );
-  --color-sidebar: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.9),
-    rgba(245, 245, 245, 0.7)
-  );
+  --color-hero: var(--color-header);
 
-  --color-footer: linear-gradient(
-    135deg,
-    #dcf0fb 0%,
-    #f0f4f8 40%,
-    #e0f7ff 100%
-  );
-  --color-overlay: rgba(255, 255, 255, 0.9);
-  /* Кнопки */
-  --color-button-bg: linear-gradient(
-    135deg,
-    rgba(67, 97, 238, 0.9) 0%,
-    rgba(58, 12, 163, 0.9) 100%
-  );
-  --color-button-bg-hover: linear-gradient(
-    135deg,
-    rgba(67, 97, 238, 0.9) 0%,
-    rgba(39, 4, 119, 0.9) 100%
-  );
-  --color-button-text: #efeded;
-  --color-button-text-hover: #ffffff;
-  --color-button2-text: #5d5d5d;
-  --color-button2-text-hover: #484848;
+  /* === Loaders === */
+  --color-loader: rgba(212, 175, 55, 0.85);
+  --color-loader-bg: #f5f5f5;
+  --color-loader-background: linear-gradient(135deg, #fafafa, #dddddd);
+  --color-loader-bar: linear-gradient(90deg, #d4af37, #fff176);
 
-  /* Границі */
-  --color-border: rgba(210, 210, 210, 0.9);
-  --color-loader: rgba(58, 12, 163, 0.9);
-  --color-loader-bar: linear-gradient(
-    90deg,
-    rgba(67, 97, 238, 0.9),
-    rgba(58, 12, 163, 0.9)
-  );
-  --color-loader-bg: #f4f4f4;
-  --color-counter: #62;
-  /* Ефекти */
-  --glass-effect: blur(var(--blur-amount));
-  --color-shadow: 0 4px 30px rgba(58, 12, 163, 0.1);
-  --glow-effect: 0 0 15px rgba(67, 97, 238, 0.2);
+  /* === Overlays & Borders === */
+  --color-overlay: rgba(255, 255, 255, 0.95);
+  --color-border: #d4cfc1;
 
-  --color-success: #4cc9f0; /* Бірюзовий */
-  --color-warning: #f8961e; /* Помаранчевий */
-  --color-error: #f72585; /* Рожевий */
+  /* === Shadow === */
+  --color-shadow: 0 8px 25px rgba(212, 175, 55, 0.2);
 }
 
 .dark-theme {
-  --bs-primary: #4361ee;
-  --bs-info: #4cc9f0;
-  --color-background: #030303; /* Background */
-  --color-surface: linear-gradient(90deg, #111010, #121212); /* Surface */
-  --color-background-scrolled: #1c1c1c;
-  --color-surface-hover: #ece1e1; /* Surface hover */
+  /* === Base Colors === */
+  --color-primary: #f6c009; /* Золотий */
+  --color-info: #4cc9f0;
+  --color-success: #4cc9f0;
+  --color-warning: #f8961e;
+  --color-error: #f72585;
+
+  /* === Backgrounds & Surfaces === */
+  --bg-color: #121212;
+  --color-background: #111111;
+  --color-surface: #1d1c1c;
+  --color-surface-hover: #2b2b2b;
+  --color-background-scrolled: #141313;
+  --color-sidebar: var(--color-surface);
+  --color-footer: var(--color-surface);
+
+  /* === Text === */
+  --text-color: var(--color-primary); /* Золотий основний */
+  --color-text: #f6b109; /* Трохи м’якіший золотий */
+  --color-secondary: #ebbb55; /* Світло-золотистий */
+  --color-title: #f4e2d8; /* Контрастний кремовий для заголовків */
+
+  /* === Accent === */
+  --color-accent: #aa1e58;
+  --color-accent-hover: #aa1e60;
+
+  /* === Buttons === */
+  --color-button-bg: var(--color-primary);
+  --color-button-bg-hover: #ffdb4d;
+  --color-button-text: #121212;
+
+  /* === Gradients === */
   --color-header: linear-gradient(
     145deg,
     #0f0c29 0%,
@@ -169,41 +157,18 @@
     #24243e 60%,
     #1a1a2e 90%
   );
-  --color-hero: linear-gradient(
-    145deg,
-    #0f0c29 0%,
-    #302b63 30%,
-    #24243e 60%,
-    #1a1a2e 90%
-  );
-  --color-sidebar: #1c1c1c;
-  --color-footer: #1c1c1c;
-  --color-text: #eaeaea;
-  --color-secondary: #c6c4c4; /* Primary text */
-  --color-title: #8b62f5; /* Primary accent (Material Blue 500) */
-  --color-accent: #aa1e58; /* Teal accent */
-  --color-accent-hover: #aa1e60; /* Teal darken */
-  --color-button-bg: #aa1e58; /* Material Deep Purple 500 */
-  --color-button-bg-hover: #aa1e60; /* Darker hover */
-  --color-button-text: #ffffff; /* Button text */
-  --color-border: #302e2e; /* Subtle border */
-  --color-overlay: rgba(0, 0, 0, 0.9); /* Overlay background */
-  --color-loader: rgba(180, 0, 0, 0.9); /* Teal loader */
-  --color-loader-background: linear-gradient(
-    135deg,
-    #1f1f1f,
-    #333
-  ); /* Loader bg */
-  --color-loader-bar: linear-gradient(
-    90deg,
-    #03dac6,
-    #2196f3
-  ); /* Loader progress bar */
-  --color-shadow: 0 8px 25px rgba(33, 150, 243, 0.4);
-  --color-success: #4cc9f0; /* Бірюзовий */
-  --color-warning: #f8961e; /* Помаранчевий */
-  --color-error: #f72585; /* Рожевий */ /* Blue shadow */
+  --color-hero: var(--color-header);
 
-  --bg-color: #121212;
-  --text-color: #ffffff;
+  /* === Loaders === */
+  --color-loader: rgba(255, 193, 7, 0.8); /* Золотий з прозорістю */
+  --color-loader-bg: #1f1f1f;
+  --color-loader-background: linear-gradient(135deg, #1f1f1f, #333);
+  --color-loader-bar: linear-gradient(90deg, #f6c009, #ffe066);
+
+  /* === Overlays & Borders === */
+  --color-overlay: rgba(0, 0, 0, 0.9);
+  --color-border: #2e2e2e;
+
+  /* === Shadow === */
+  --color-shadow: 0 8px 25px rgba(246, 176, 9, 0.4); /* Золотий світло */
 }

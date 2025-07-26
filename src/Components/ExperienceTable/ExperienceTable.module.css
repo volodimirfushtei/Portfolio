@@ -24,7 +24,7 @@
   font-size: 1.75rem;
   margin-bottom: 2rem;
   text-align: center;
-  background: linear-gradient(90deg, #562ad9, #42a0f7);
+  background: var(--color-title);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -59,7 +59,7 @@
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
-  background: linear-gradient(135deg, #2e1186, #2b91f1);
+  background: var(--color-text);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -75,7 +75,7 @@
 
 .label {
   font-size: 1rem;
-  color: #ffffff;
+  color: var(--color-title);
   line-height: 1.4;
   font-weight: 500;
 }

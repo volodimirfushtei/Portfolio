@@ -86,7 +86,7 @@ const ContactForm = () => {
 
   return (
     <motion.div
-      className={s.formContainer}
+      className={`${s.formContainer} `}
       initial="hidden"
       animate="visible"
       variants={containerVariants}

@@ -7,8 +7,7 @@ const slides = [
     title: "UI/UX Design",
     description: "Creating intuitive and beautiful user interfaces",
     bgColor: "rgba(138, 99, 255, 0.1)",
-    imageUrl:
-      "https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    imageUrl: "/images/yves.jpg",
   },
   {
     title: "Frontend Development",

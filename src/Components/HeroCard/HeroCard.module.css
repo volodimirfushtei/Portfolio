@@ -1,0 +1,166 @@
+:root {
+  --color-bg-light: #f4f4f5;
+  --color-bg-dark: #1a1a1a;
+  --color-text-light: #1a1a1a;
+  --color-text-dark: #f4f4f5;
+  --color-accent: #7c3aed;
+  --glass-bg: rgba(255, 255, 255, 0.2);
+}
+
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4rem;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, #e8e8e8, #ffffff);
+  border-radius: 2rem;
+  color: var(--color-text-light);
+  position: relative;
+}
+
+.content {
+  flex: 1;
+  max-width: 550px;
+}
+
+.tag {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  background: #ede9fe;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 3rem;
+  line-height: 1.2;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.highlight {
+  color: var(--color-accent);
+}
+
+p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #555;
+}
+
+.actions {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.primary {
+  background-color: var(--color-accent);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.primary:hover {
+  background-color: #5b21b6;
+}
+
+.secondary {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid #ccc;
+  color: #333;
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.trustedBy {
+  margin-top: 2.5rem;
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.logos {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 0.5rem;
+  align-items: center;
+}
+
+.logos img {
+  height: 24px;
+  opacity: 0.8;
+  transition: 0.3s;
+}
+
+.logos img:hover {
+  opacity: 1;
+}
+
+.imageBlock {
+  position: relative;
+  flex: 1;
+  max-width: 450px;
+}
+
+.portrait {
+  width: 100%;
+  border-radius: 2rem;
+  object-fit: cover;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.badge {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  padding: 0.6rem 1rem;
+  border-radius: 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.stat {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  padding: 0.6rem 1rem;
+  border-radius: 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .imageBlock {
+    order: -1;
+  }
+
+  .actions {
+    justify-content: center;
+  }
+
+  .trustedBy {
+    justify-content: center;
+  }
+}

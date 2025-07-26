@@ -29,9 +29,9 @@ const Expertise = () => {
   };
 
   return (
-    <section className={styles.expertise} id="expertise">
+    <section className={`${styles.expertise} `}>
       <motion.div
-        className={`${styles.container} glass-effect `}
+        className={`${styles.container} glass-effect`}
         initial="hidden"
         whileInView="visible"
         variants={sectionVariants}
