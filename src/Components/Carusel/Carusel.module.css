@@ -1,9 +1,11 @@
 .carousel {
   position: relative;
-  width: 1300px;
+  width: 800px;
   margin: 0 auto;
 
   overflow: hidden;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
 }
 
 .slideContainer {
@@ -48,16 +50,16 @@
 }
 
 .dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
+  width: 20px;
+  height: 4px;
+  border-radius: 4px;
+  background: whitesmoke;
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .dot.active {
-  background: white;
+  background: goldenrod;
   transform: scale(1.2);
 }

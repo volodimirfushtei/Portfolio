@@ -1,114 +1,167 @@
+/* ExperienceTable.module.css */
 .container {
   width: 100%;
-  height: 100%;
-  padding: 1rem;
+
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .card {
-  background: rgba(0, 0, 0, 0.45);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   color: var(--color-text);
   width: 100%;
-  max-width: 1200px;
-  padding: 2rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  height: auto;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  max-width: 1000px;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  position: relative;
 }
 
-.title {
-  font-size: 1.75rem;
-  margin-bottom: 2rem;
-  text-align: center;
-  background: var(--color-title);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  font-weight: 600;
+.card::before {
+  content: "";
+  position: absolute;
+  top: -25%;
+  left: -50%;
+  border-radius: 50%;
+  width: 50%;
+  height: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(247, 183, 23, 0.05) 0%,
+    transparent 70%
+  );
+  animation: rotate 15s linear infinite;
+  z-index: -1;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 .statItem {
-  background: transparent;
-  width: 100%;
-  color: var(--color-text);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 0.5rem;
   border-radius: 12px;
-  padding: 1.5rem;
   text-align: center;
   border: 1px solid rgba(255, 255, 255, 0.05);
   transition: all 0.3s ease;
   cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+
+.statItem::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--color-primary),
+    var(--color-secondary)
+  );
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.statItem:hover::after {
+  transform: scaleX(1);
 }
 
 .statItem:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.counter {
+  display: inline-block;
+  font-weight: 700;
 }
 
 .value {
-  font-size: 2.5rem;
+  font-size: 2.4rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
-  background: var(--color-text);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary),
+    var(--color-secondary)
+  );
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .suffix {
-  font-size: 1.5rem;
-  margin-left: 2px;
+  font-size: 1.8rem;
+  margin-left: 4px;
+  color: var(--color-primary);
+  opacity: 0.8;
 }
 
 .label {
-  font-size: 1rem;
-  color: var(--color-title);
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
   line-height: 1.4;
   font-weight: 500;
+  letter-spacing: 0.5px;
 }
 
-/* Планшетні стилі (768px - 1023px) */
+/* Tablet styles (768px - 1023px) */
 @media (max-width: 1023px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem;
   }
 
   .card {
     padding: 1.5rem;
   }
 
-  .title {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
+  .value {
+    font-size: 2.5rem;
   }
 
-  .value {
-    font-size: 2.25rem;
+  .label {
+    font-size: 1rem;
   }
 }
 
-/* Мобільні стилі (до 767px) */
+/* Mobile styles (up to 767px) */
 @media (max-width: 767px) {
   .container {
-    padding: 0.75rem;
+    padding: 1rem;
   }
 
   .card {
-    padding: 1.25rem;
-    border-radius: 10px;
+    padding: 1.5rem 1rem;
+    border-radius: 12px;
   }
 
   .grid {
@@ -116,18 +169,16 @@
     gap: 1rem;
   }
 
-  .title {
-    font-size: 1.4rem;
-    margin-bottom: 1.25rem;
-  }
-
   .statItem {
-    padding: 1.25rem;
-    border-radius: 10px;
+    padding: 1.5rem;
   }
 
   .value {
-    font-size: 2rem;
+    font-size: 2.2rem;
+  }
+
+  .suffix {
+    font-size: 1.5rem;
   }
 
   .label {
@@ -135,25 +186,17 @@
   }
 }
 
-/* Дуже малі екрани (до 400px) */
+/* Very small screens (up to 400px) */
 @media (max-width: 400px) {
   .card {
-    padding: 1rem;
-  }
-
-  .title {
-    font-size: 1.3rem;
+    padding: 1.25rem 0.75rem;
   }
 
   .statItem {
-    padding: 1rem;
+    padding: 1.25rem;
   }
 
   .value {
-    font-size: 1.8rem;
-  }
-
-  .suffix {
-    font-size: 1.2rem;
+    font-size: 2rem;
   }
 }

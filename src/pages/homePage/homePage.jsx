@@ -13,6 +13,7 @@ import HeroSection from "../../Components/HeroSection/HeroSection.jsx";
 import FadeInAnimate from "../../Components/FadeInAnimate/FadeInAnimate.jsx";
 import useScrollDetection from "../../hooks/useScrollDetection";
 import ParticlesBackground from "../../Components/ParBG/ParBG.jsx";
+
 const HomePage = () => {
   const [hovered, setHovered] = useState(false);
   const isScrolled = useScrollDetection(1200);

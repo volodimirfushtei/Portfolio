@@ -39,28 +39,47 @@ html[light-theme="light-theme"] body {
   display: none;
 }
 
-/* tailwind-custom.css або inline */
 .light-theme .glass-effect {
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.06) 0%,
-    rgba(49, 48, 48, 0.7) 100%
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.3) 100%
   );
-  border-color: rgba(0, 0, 0, 0.1);
-  color: rgba(0, 0, 0, 0.8);
-  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: rgba(0, 0, 0, 0.6);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+  border-radius: 1rem;
 }
 
-/* Для темного фону */
+/* 🌑 Темна тема */
 .dark-theme .glass-effect {
   background: linear-gradient(
     135deg,
-    rgba(17, 17, 17, 0.8) 0%,
-    rgba(17, 17, 17, 0.7) 100%
+    rgba(17, 17, 17, 0.5) 0%,
+    rgba(17, 17, 17, 0.6) 100%
   );
-  border-color: rgba(163, 162, 162, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f9d441; /* Оранжевий замість золотистого */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 4px 24px rgba(255, 123, 37, 0.15); /* Оранжевий */
+  border-radius: 1rem;
 }
 
+/* 🌑 Темна тема */
+.dark-theme .glass-effect {
+  background: linear-gradient(
+    135deg,
+    rgba(17, 17, 17, 0.4) 0%,
+    rgba(17, 17, 17, 0.5) 100%
+  );
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #d4af37; /* Золотистий */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 4px 24px rgba(212, 175, 55, 0.15);
+  border-radius: 1rem;
+}
 .light-theme {
   /* === Base Colors === */
   --color-primary: #d4af37; /* Насичене золото */
@@ -81,8 +100,8 @@ html[light-theme="light-theme"] body {
   /* === Text === */
   --text-color: #121212;
   --color-text: #7a5e00; /* Темно-золотий */
-  --color-secondary: #a1862c; /* Світле золото для підзаголовків */
-  --color-title: #634c00; /* Максимальний контраст */
+  --color-secondary: #46402d; /* Світле золото для підзаголовків */
+  --color-title: #403100; /* Максимальний контраст */
 
   /* === Accent === */
   --color-accent: #aa1e58;
@@ -98,7 +117,7 @@ html[light-theme="light-theme"] body {
     145deg,
     #fff8e1 0%,
     #fff8dc 30%,
-    #fffbeb 60%,
+    #efe6c1 60%,
     #fbf5e3 90%
   );
   --color-hero: var(--color-header);
@@ -110,8 +129,8 @@ html[light-theme="light-theme"] body {
   --color-loader-bar: linear-gradient(90deg, #d4af37, #fff176);
 
   /* === Overlays & Borders === */
-  --color-overlay: rgba(255, 255, 255, 0.95);
-  --color-border: #d4cfc1;
+  --color-overlay: rgba(155, 127, 0, 0.45);
+  --color-border: #cac2ad;
 
   /* === Shadow === */
   --color-shadow: 0 8px 25px rgba(212, 175, 55, 0.2);
@@ -127,7 +146,7 @@ html[light-theme="light-theme"] body {
 
   /* === Backgrounds & Surfaces === */
   --bg-color: #121212;
-  --color-background: #111111;
+  --color-background: linear-gradient(135deg, #181919 0%, #151616 100%);
   --color-surface: #1d1c1c;
   --color-surface-hover: #2b2b2b;
   --color-background-scrolled: #141313;
@@ -155,7 +174,7 @@ html[light-theme="light-theme"] body {
     #0f0c29 0%,
     #302b63 30%,
     #24243e 60%,
-    #1a1a2e 90%
+    #151529 90%
   );
   --color-hero: var(--color-header);
 
@@ -166,8 +185,8 @@ html[light-theme="light-theme"] body {
   --color-loader-bar: linear-gradient(90deg, #f6c009, #ffe066);
 
   /* === Overlays & Borders === */
-  --color-overlay: rgba(0, 0, 0, 0.9);
-  --color-border: #2e2e2e;
+  --color-overlay: rgba(2, 0, 31, 0.9);
+  --color-border: #0e0e0e;
 
   /* === Shadow === */
   --color-shadow: 0 8px 25px rgba(246, 176, 9, 0.4); /* Золотий світло */

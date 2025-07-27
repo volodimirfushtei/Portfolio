@@ -94,7 +94,7 @@ const ProjectPage = () => {
         transition={{ duration: 0.5 }}
       >
         <h2 className={styles.heading}>
-          My <span>Toolkit</span>
+          My <span>Projects</span>
         </h2>
       </motion.div>
 

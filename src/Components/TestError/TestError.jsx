@@ -59,7 +59,7 @@ const TestError = () => {
       <motion.h2
         style={{
           marginBottom: "30px",
-          color: "white",
+          color: "var(--color-text)",
           fontSize: "clamp(24px, 3vw, 36px)",
           fontWeight: "600",
           textShadow: "0 2px 4px rgba(0,0,0,0.5)",
@@ -71,9 +71,11 @@ const TestError = () => {
 
       <motion.div
         style={{
-          background: "rgba(255, 255, 255, 0.1)",
-          backdropFilter: "blur(10px)",
-          borderRadius: "16px",
+          background: "transparent",
+          boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+
+          backdropFilter: "blur(2px)",
+
           padding: "30px",
           maxWidth: "600px",
           width: "100%",

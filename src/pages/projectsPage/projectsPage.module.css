@@ -2,9 +2,11 @@
   width: 100%;
   margin: 0 auto;
 
-  padding: 2rem 2rem;
+  padding: 5rem 2rem;
   height: 100vh;
   overflow: hidden;
+  background-color: var(--color-background);
+  color: var(--color-text);
 }
 
 .header {
@@ -84,7 +86,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 0.2rem;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 .projectCard {

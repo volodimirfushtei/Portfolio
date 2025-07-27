@@ -5,9 +5,9 @@
   left: 0;
   width: 100%;
   z-index: 1000;
-  padding: 1.5rem 0;
+  padding: 1rem 0;
   background: transparent;
-
+  background: transparent;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
@@ -68,9 +68,9 @@
   position: relative;
   color: var(--color-secondary);
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 400;
   transition: all 0.3s ease;
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 1rem;
   border-radius: 0.5rem;
 }
 
@@ -110,7 +110,7 @@
   );
   color: var(--color-title);
   border: none;
-  padding: 0.75rem 1.5rem;
+  padding: 0.6rem 1.2rem;
   border-radius: 2rem;
   font-weight: 500;
   text-decoration: none;

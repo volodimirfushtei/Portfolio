@@ -13,7 +13,6 @@ const ContactsPage = () => {
     { src: "/icons/github.svg", alt: "GitHub" },
   ];
 
-  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -40,14 +39,6 @@ const ContactsPage = () => {
 
   return (
     <div className={s.contactsPage}>
-      {/* Animated progress bar */}
-      <motion.div
-        className={s.progressBar}
-        initial={{ width: 0 }}
-        animate={{ width: "100%" }}
-        transition={{ duration: 1, ease: "easeOut" }}
-      />
-
       <motion.div
         className={s.container}
         variants={containerVariants}
@@ -55,6 +46,34 @@ const ContactsPage = () => {
         animate="visible"
       >
         <div className={s.formsContainer}>
+          <motion.div className={s.textSection} variants={childVariants}>
+            <div className={s.glassBox}>
+              <h3 className={s.title}>
+                <i className="ri-mail-line" /> Get in Touch
+              </h3>
+              <p className={s.description}>
+                Fill in the form and I will get back to you as soon as possible.
+                I will be happy to answer your questions.
+              </p>
+
+              <h3 className={s.title}>
+                <i className="ri-reactjs-line" /> Built with React
+              </h3>
+              <p className={s.description}>
+                This contact page is fully built with modern React and Framer
+                Motion.There is also a Pro version with more advanced features
+                by Creative Tim
+              </p>
+
+              <h3 className={s.title}>
+                <i className="ri-group-line" /> For Startups
+              </h3>
+              <p className={s.description}>
+                Ideal for portfolio, freelance or startup projects.
+              </p>
+            </div>
+          </motion.div>
+
           <motion.div variants={childVariants}>
             <ContactForm key="ContactForm" />
           </motion.div>

@@ -1,8 +1,9 @@
 .layoutContainer {
   display: flex;
   min-height: calc(100vh - 5rem);
-  background-color: var(--color-background);
+  background-color: transparent;
   position: relative;
+  overflow: hidden;
 }
 
 .mainContent {
