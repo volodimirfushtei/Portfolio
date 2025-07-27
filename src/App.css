@@ -4,6 +4,6 @@
   padding: 0;
   text-align: center;
 
-  background: #101010;
+  background: linear-gradient(135deg, #181919 0%, #151616 100%);
   overflow: hidden;
 }

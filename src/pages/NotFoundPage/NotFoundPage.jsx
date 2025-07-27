@@ -17,7 +17,7 @@ const NotFoundPage = () => {
       }}
     >
       <div
-        className="relative top-0 left-0 w-full h-full bg-cover glass-effect 
+        className="relative top-0 left-0 w-full h-full bg-cover  
       "
       ></div>
       <h1

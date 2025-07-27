@@ -4,7 +4,7 @@
   transform-style: preserve-3d;
 
   overflow: hidden;
-
+  padding: 2rem;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
@@ -101,6 +101,9 @@
   color: #63b3ff;
 }
 @media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
   .flipCard {
     width: 100px;
     height: 80px;
@@ -113,8 +116,15 @@
   .flipBack p {
     font-size: 0.8rem;
   }
+  .header h3 {
+    font-size: 1.2rem;
+  }
 }
 @media (max-width: 480px) {
+  .container {
+    padding: 0.5rem;
+  }
+
   .flipCard {
     width: 60px;
     height: 40px;
@@ -126,5 +136,9 @@
 
   .flipBack p {
     font-size: 0.6rem;
+  }
+
+  .header h3 {
+    font-size: 0.8rem;
   }
 }

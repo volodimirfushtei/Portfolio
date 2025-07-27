@@ -35,12 +35,12 @@
 }
 
 .front {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-  color: white;
+  background: var(--color-header);
+  color: var(--colot-text);
 }
 
 .back {
-  background: linear-gradient(135deg, #0f2027 0%, #4c4924 50%, #554820 100%);
+  background: var(--color-header);
   transform: rotateY(180deg);
 }
 
@@ -71,14 +71,14 @@
   font-size: 2rem;
   font-weight: 700;
   margin: 0.5rem 0;
-  color: white;
+  color: var(--color-text);
   line-height: 1.2;
 }
 
 .subtitle {
   font-size: 1.1rem;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-secondary);
   margin-bottom: 0.5rem;
 }
 
@@ -99,7 +99,7 @@
 
 .badge {
   background-color: #f5c34b;
-  color: #000;
+  color: var(--color-title);
   padding: 0.5rem 1.2rem;
   border-radius: 50px;
   font-size: 0.85rem;
@@ -125,7 +125,7 @@
   border-radius: 8px;
   font-size: 0.9rem;
   font-weight: 500;
-  color: white;
+  color: var(--color-text);
   display: flex;
   align-items: center;
   justify-content: center;
