@@ -78,6 +78,14 @@ const ContactsPage = () => {
             <ContactForm key="ContactForm" />
           </motion.div>
         </div>
+        <div className={s.infoContainer}>
+          <p className={s.copyright}>
+            <i className="ri-copyright-line" />
+            2025 Volodymyr Fushtey
+            <i className="ri-heart-fill text-warning ml-1 animate-pulse"></i>
+          </p>
+          <p className={s.copyright}>Made with React and Framer Motion</p>
+        </div>
       </motion.div>
     </div>
   );

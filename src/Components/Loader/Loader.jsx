@@ -8,6 +8,7 @@ const Loader = ({ onComplete, showSpinner = true }) => {
   const width = useTransform(progress, (v) => `${v}%`);
   const [done, setDone] = useState(false);
   const [displayPercent, setDisplayPercent] = useState(0);
+  const [showSpinnerState, setShowSpinnerState] = useState(false);
 
   useEffect(() => {
     const controls = animate(progress, 100, {
@@ -15,6 +16,7 @@ const Loader = ({ onComplete, showSpinner = true }) => {
       ease: [0.33, 1, 0.68, 1],
       onUpdate: (latest) => {
         setDisplayPercent(Math.floor(latest));
+        setShowSpinnerState(latest > 0 && latest < 100);
       },
       onComplete: () => {
         setDone(true);
@@ -32,9 +34,14 @@ const Loader = ({ onComplete, showSpinner = true }) => {
       transition={{ duration: 0.5 }}
     >
       <motion.div className={s.loaderBox}>
-        <motion.div className={s.progressBar} style={{ width }}>
-          <i className={`ri-spinner-line ${s.spinner}`} />
-        </motion.div>
+        {showSpinner && (
+          <motion.i
+            className={`ri-spinner-line ${s.spinner}`}
+            animate={{ opacity: showSpinnerState ? 1 : 0 }}
+            transition={{ duration: 0.3 }}
+          />
+        )}
+        <motion.div className={s.progressBar} style={{ width }}></motion.div>
         <motion.div className={s.percent}>{displayPercent}%</motion.div>
       </motion.div>
     </motion.div>

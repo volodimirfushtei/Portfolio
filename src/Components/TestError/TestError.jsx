@@ -38,6 +38,7 @@ const TestError = () => {
 
   return (
     <motion.div
+      className="test-error"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -46,7 +47,7 @@ const TestError = () => {
         textAlign: "center",
         minHeight: "100vh",
         backgroundImage:
-          "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg)",
+          " linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)), url(https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg)",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundAttachment: "fixed",
@@ -74,7 +75,7 @@ const TestError = () => {
           background: "transparent",
           boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
 
-          backdropFilter: "blur(2px)",
+          backdropFilter: "blur(8px)",
 
           padding: "30px",
           maxWidth: "600px",
@@ -93,6 +94,10 @@ const TestError = () => {
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
             gap: "15px",
+
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundAttachment: "fixed",
           }}
         >
           <motion.button

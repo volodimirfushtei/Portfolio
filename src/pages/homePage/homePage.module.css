@@ -215,6 +215,16 @@
     transform: translateY(-15px);
   }
 }
+
+.scrollContainer {
+  color: var(--color-text);
+  background: var(--color-header);
+}
+
+.scrollArrow {
+  color: var(--color-text);
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .container {

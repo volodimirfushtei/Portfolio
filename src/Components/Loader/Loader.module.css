@@ -1,7 +1,8 @@
+/* Loader.module.css */
 .loader {
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at center, #1a1a1a 0%, #111 100%);
+  background: radial-gradient(circle at center, #201f1f 0%, #0c0c0c 100%);
   display: grid;
   place-items: center;
   z-index: 9999;
@@ -24,12 +25,14 @@
   background: linear-gradient(90deg, #f6b009 0%, #ffdd77 100%);
   border-radius: 10px;
   will-change: width; /* Optimize for animation */
+  position: relative;
 }
 
 .percent {
   position: absolute;
   top: -35px;
   left: 50%;
+
   transform: translateX(-50%);
   font-family: "Inter", sans-serif;
   font-size: clamp(1rem, 4vw, 1.2rem);
@@ -44,29 +47,15 @@
   top: 50%;
   transform: translateY(-50%);
   color: #ecc907;
+  font-size: 1.2rem;
   animation: spin 1s linear infinite;
-  opacity: 0; /* Start hidden */
-  transition: opacity 0.3s ease;
-}
-
-/* Show spinner only when progress is between 1-99% */
-.progressBar[style*="width: 0%"] .spinner,
-.progressBar[style*="width: 100%"] .spinner {
   opacity: 0;
-}
-
-.progressBar:not([style*="width: 0%"]):not([style*="width: 100%"]) .spinner {
-  opacity: 1;
 }
 
 @keyframes spin {
   to {
     transform: translateY(-50%) rotate(360deg);
   }
-}
-.progressBar {
-  position: relative;
-  overflow: hidden;
 }
 
 .progressBar::after {

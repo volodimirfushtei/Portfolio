@@ -67,7 +67,6 @@ function App() {
             <Suspense>
               <ScrollToTop />
               <Overlay />
-
               <Routes location={location}>
                 <Route path="/" element={<Layout />}>
                   <Route index element={<Home />} />
