@@ -2,7 +2,7 @@
 .loader {
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at center, #201f1f 0%, #0c0c0c 100%);
+  background: radial-gradient(circle at center, #202021 0%, #0c0c0c 100%);
   display: grid;
   place-items: center;
   z-index: 9999;
@@ -12,7 +12,7 @@
 .loaderBox {
   position: relative;
   width: min(90vw, 260px);
-  height: 4px;
+  height: 5px;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   overflow: hidden;

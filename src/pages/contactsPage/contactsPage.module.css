@@ -1,5 +1,5 @@
 .contactsPage {
-  height: 100vh;
+  min-height: 100vh;
   background: url("/images/ryan_wilson_map.jpg") center/cover no-repeat fixed;
   backdrop-filter: blur(2px);
   display: flex;

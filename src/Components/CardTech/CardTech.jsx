@@ -111,8 +111,10 @@ const CardTech = () => {
                     {/* Add your tech icons/logos here */}
                     <div className={styles.techItem}>React</div>
                     <div className={styles.techItem}>Node.js</div>
-                    <div className={styles.techItem}>CSS3</div>
+                    <div className={styles.techItem}>Next.js</div>
                     <div className={styles.techItem}>JavaScript</div>
+                    <div className={styles.techItem}>CSS</div>
+                    <div className={styles.techItem}>HTML</div>
                   </motion.div>
                 </div>
               </motion.div>

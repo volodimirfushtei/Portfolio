@@ -11,11 +11,11 @@
 
 .card {
   width: 400px;
-  height: 380px;
+  height: 340px;
   position: relative;
   cursor: pointer;
   transform-style: preserve-3d;
-  border-radius: 20px;
+
   box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
 }
 
@@ -23,7 +23,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  border-radius: 20px;
+
   backface-visibility: hidden;
   overflow: hidden;
   display: flex;
@@ -35,12 +35,12 @@
 }
 
 .front {
-  background: var(--color-header);
+  background: var(--color-surface);
   color: var(--colot-text);
 }
 
 .back {
-  background: var(--color-header);
+  background: var(--color-surface);
   transform: rotateY(180deg);
 }
 
@@ -122,13 +122,14 @@
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(5px);
   padding: 0.8rem;
-  border-radius: 8px;
+
   font-size: 0.9rem;
   font-weight: 500;
   color: var(--color-text);
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 16px;
   transition: all 0.3s ease;
 }
 

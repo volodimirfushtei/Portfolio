@@ -146,8 +146,18 @@ html[light-theme="light-theme"] body {
 
   /* === Backgrounds & Surfaces === */
   --bg-color: #121212;
-  --color-background: linear-gradient(135deg, #181919 0%, #151616 100%);
-  --color-surface: #1d1c1c;
+  --color-background: linear-gradient(
+    145deg,
+    #101010 0%,
+    #1b1b1b 50%,
+    #080808 100%
+  );
+  --color-surface: linear-gradient(
+    145deg,
+    #0a0a0a 0%,
+    #1c1c2b 30%,
+    #0f0f1a 90%
+  );
   --color-surface-hover: #2b2b2b;
   --color-background-scrolled: #141313;
   --color-sidebar: var(--color-surface);
@@ -186,7 +196,7 @@ html[light-theme="light-theme"] body {
 
   /* === Overlays & Borders === */
   --color-overlay: rgba(2, 0, 31, 0.9);
-  --color-border: #0e0e0e;
+  --color-border: #383737;
 
   /* === Shadow === */
   --color-shadow: 0 8px 25px rgba(246, 176, 9, 0.4); /* Золотий світло */
