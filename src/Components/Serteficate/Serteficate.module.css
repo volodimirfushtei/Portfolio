@@ -1,0 +1,386 @@
+/* Serteficate.module.css */
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 2rem;
+
+  max-width: 100%;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: left;
+  padding: 2rem;
+
+  text-align: left;
+  width: 100%;
+  max-width: 1000px;
+  transition: transform 0.3s ease;
+}
+
+.cardWrapper {
+  width: 100%;
+  max-width: 200px;
+}
+
+/* CertificateCard.module.css */
+.card {
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  z-index: 1;
+  width: 200px;
+  margin: 0 auto;
+  position: relative;
+  transition: all 0.3s ease;
+  border: 1px solid #eaeaea;
+  font-size: 10px; /* Base font size */
+}
+.scaled {
+  transform: scale(2.6);
+  z-index: 10;
+}
+.certificate {
+  padding: 12px;
+  position: relative;
+  background: linear-gradient(to bottom, #ede8ca, #f9e887);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.certificateTitle {
+  font-size: 1.2em; /* 12px */
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 4px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.name {
+  font-size: 1em; /* 10px */
+  font-weight: 600;
+  color: #222;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.body {
+  text-align: center;
+}
+
+.achievement {
+  font-size: 0.9em; /* 9px */
+  line-height: 1.4;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.course {
+  font-size: 1em; /* 10px */
+  font-weight: 700;
+  color: #2c3e50;
+  display: block;
+  margin: 4px 0;
+}
+
+.divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, #ddd, transparent);
+  margin: 8px auto;
+  width: 70%;
+}
+
+.details {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.date,
+.id,
+.specialty,
+.website {
+  font-size: 0.8em; /* 8px */
+  color: #666;
+  line-height: 1.3;
+}
+
+.signature {
+  margin-top: 8px;
+  text-align: center;
+}
+
+.signatureLine {
+  width: 100px;
+  height: 1px;
+  background: #333;
+  margin: 0 auto 4px;
+}
+
+.ceo {
+  font-size: 0.7em; /* 7px */
+  color: #777;
+}
+
+.ceoName {
+  font-size: 0.8em; /* 8px */
+  font-weight: 600;
+  color: #333;
+  margin-top: 2px;
+}
+
+.watermark {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 1.6em; /* 16px */
+  font-weight: 800;
+  color: rgba(0, 0, 0, 0.05);
+  transform: rotate(-15deg);
+  user-select: none;
+}
+
+.downloadButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  background: #0e206f;
+  color: white;
+  padding: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.8em; /* 8px */
+  transition: all 0.2s ease;
+}
+
+.downloadButton:hover {
+  background: #0323ae;
+}
+
+.downloadButton i {
+  font-size: 1em; /* 10px */
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .card {
+    width: 180px;
+    font-size: 9px;
+  }
+
+  .certificate {
+    padding: 10px;
+  }
+
+  .details {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .certificate {
+    padding: 0.5rem;
+  }
+
+  .certificateTitle {
+    font-size: 1, 2rem;
+  }
+
+  .name {
+    font-size: 0, 7rem;
+  }
+
+  .course {
+    font-size: 0, 4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .details {
+    grid-template-columns: 1fr;
+  }
+
+  .certificateTitle {
+    font-size: 1.8rem;
+  }
+
+  .name {
+    font-size: 1.3rem;
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .card {
+    max-width: 100%;
+    padding: 1.25rem;
+  }
+
+  .title {
+    font-size: 1.3rem;
+  }
+
+  .viewText {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .card {
+    max-width: 300px;
+    padding: 1.2rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    max-width: 100%;
+  }
+
+  .viewText {
+    font-size: 1rem;
+  }
+}
+
+h4 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: var(--color-text);
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: var(--color-text);
+}
+
+.time {
+  color: var(--color-primary);
+  font-weight: 600;
+  font-size: 2rem;
+}
+
+p {
+  font-size: 1.1rem;
+  margin: 0.5rem 0;
+  color: var(--color-text-secondary);
+}
+
+.emailLink {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.emailLink:hover {
+  text-decoration: underline;
+  color: var(--color-accent);
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(
+    90deg,
+    var(--color-primary),
+    var(--color-accent),
+    var(--color-primary)
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.line {
+  margin: 1rem auto;
+  width: 100%;
+}
+
+.certificateImage {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+  .wrapper {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .container,
+  .cardWrapper {
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container,
+  .card {
+    padding: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .wrapper {
+    padding: 1rem;
+  }
+
+  .container {
+    padding: 1rem;
+  }
+
+  h4 {
+    font-size: 1rem;
+  }
+
+  h2 {
+    font-size: 1.1rem;
+  }
+
+  .title {
+    font-size: 1.3rem;
+  }
+}

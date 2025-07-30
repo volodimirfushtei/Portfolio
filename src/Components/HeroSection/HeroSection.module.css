@@ -16,8 +16,8 @@
   position: absolute;
 
   inset: 0;
-  background-image: var(--color-hero);
-  background-size: 300% 300%;
+  background-image: var(--color-surface);
+
   z-index: -1;
   will-change: background-position;
 }
@@ -126,6 +126,7 @@
 .subtitle {
   font-size: 1.25rem;
   color: var(--color-secondary);
+
   margin-bottom: 3rem;
   line-height: 1.6;
   font-weight: 300;

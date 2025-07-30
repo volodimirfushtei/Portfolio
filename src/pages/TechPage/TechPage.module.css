@@ -59,7 +59,7 @@
   background: var(--color-surface);
   border-radius: 16px;
   padding: 2rem;
-  height: 260px;
+  height: 280px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

@@ -13,7 +13,7 @@ import HeroSection from "../../Components/HeroSection/HeroSection.jsx";
 import FadeInAnimate from "../../Components/FadeInAnimate/FadeInAnimate.jsx";
 import useScrollDetection from "../../hooks/useScrollDetection";
 import ParticlesBackground from "../../Components/ParBG/ParBG.jsx";
-
+import Serteficate from "../../Components/Serteficate/Serteficate.jsx";
 const HomePage = () => {
   const [hovered, setHovered] = useState(false);
   const isScrolled = useScrollDetection(1200);
@@ -60,7 +60,18 @@ const HomePage = () => {
           id="projects"
           className={`${styles.projects} ${styles.section}`}
         >
-          <Carusel />
+          <section
+            id="carusel"
+            className={`${styles.carusel} ${styles.section}`}
+          >
+            <Carusel />
+          </section>
+          <section
+            id="serteficate"
+            className={`${styles.serteficate} ${styles.section}`}
+          >
+            <Serteficate />
+          </section>
         </section>
       </main>
       <Footer />

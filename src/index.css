@@ -150,7 +150,7 @@ html[light-theme="light-theme"] body {
     145deg,
     #101010 0%,
     #1b1b1b 50%,
-    #080808 100%
+    #0d0d0d 100%
   );
   --color-surface: linear-gradient(
     145deg,
@@ -164,10 +164,10 @@ html[light-theme="light-theme"] body {
   --color-footer: var(--color-surface);
 
   /* === Text === */
-  --text-color: var(--color-primary); /* Золотий основний */
-  --color-text: #f6b109; /* Трохи м’якіший золотий */
-  --color-secondary: #ebbb55; /* Світло-золотистий */
-  --color-title: #f4e2d8; /* Контрастний кремовий для заголовків */
+  /* Золотий основний */
+  --color-text: #90d81b; /* Трохи м’якіший золотий */
+  --color-secondary: #d5ff91; /* Трохи м’якіший золотий */ /* Світло-золотистий */
+  --color-title: #f4eeeb; /* Контрастний кремовий для заголовків */
 
   /* === Accent === */
   --color-accent: #aa1e58;
@@ -189,7 +189,7 @@ html[light-theme="light-theme"] body {
   --color-hero: var(--color-header);
 
   /* === Loaders === */
-  --color-loader: rgba(255, 193, 7, 0.8); /* Золотий з прозорістю */
+  --color-loader: #90d81b; /* Золотий з прозорістю */
   --color-loader-bg: #1f1f1f;
   --color-loader-background: linear-gradient(135deg, #1f1f1f, #333);
   --color-loader-bar: linear-gradient(90deg, #f6c009, #ffe066);
