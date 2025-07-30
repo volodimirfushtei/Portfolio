@@ -1,16 +1,20 @@
 import React from "react";
-import s from "./contactsPage.module.css";
 import { motion } from "framer-motion";
+import s from "./contactsPage.module.css";
 import ContactForm from "../../Components/ContactForm/ContactForm";
 import ContactInfo from "../../Components/ContactInfo/ContactInfo";
 
 const ContactsPage = () => {
   const socialItems = [
-    { src: "/icons/facebook.svg", alt: "Facebook" },
-    { src: "/icons/instagram.svg", alt: "Instagram" },
-    { src: "/icons/telegram.svg", alt: "Telegram" },
-    { src: "/icons/linkedin.svg", alt: "LinkedIn" },
-    { src: "/icons/github.svg", alt: "GitHub" },
+    { src: "/icons/facebook.svg", alt: "Facebook", icon: "ri-facebook-fill" },
+    {
+      src: "/icons/instagram.svg",
+      alt: "Instagram",
+      icon: "ri-instagram-line",
+    },
+    { src: "/icons/telegram.svg", alt: "Telegram", icon: "ri-telegram-line" },
+    { src: "/icons/linkedin.svg", alt: "LinkedIn", icon: "ri-linkedin-fill" },
+    { src: "/icons/github.svg", alt: "GitHub", icon: "ri-github-fill" },
   ];
 
   const containerVariants = {
@@ -18,7 +22,7 @@ const ContactsPage = () => {
     visible: {
       opacity: 1,
       transition: {
-        duration: 0.5,
+        duration: 0.6,
         when: "beforeChildren",
         staggerChildren: 0.2,
       },
@@ -26,68 +30,117 @@ const ContactsPage = () => {
   };
 
   const childVariants = {
-    hidden: { y: 20, opacity: 0 },
+    hidden: { y: 30, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
       transition: {
-        duration: 0.5,
-        ease: "easeOut",
+        duration: 0.8,
+        ease: [0.16, 0.77, 0.47, 0.97],
       },
     },
   };
 
+  const socialVariants = {
+    hover: {
+      y: -5,
+      scale: 1.1,
+      transition: { type: "spring", stiffness: 400, damping: 10 },
+    },
+  };
+
   return (
-    <div className={s.contactsPage}>
+    <motion.div
+      className={s.contactsPage}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <motion.div
         className={s.container}
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
+        <motion.h1 className={s.pageTitle} variants={childVariants}>
+          Let's Connect
+        </motion.h1>
+
         <div className={s.formsContainer}>
           <motion.div className={s.textSection} variants={childVariants}>
             <div className={s.glassBox}>
-              <h3 className={s.title}>
-                <i className="ri-mail-line" /> Get in Touch
-              </h3>
-              <p className={s.description}>
-                Fill in the form and I will get back to you as soon as possible.
-                I will be happy to answer your questions.
-              </p>
+              <motion.div variants={childVariants}>
+                <h3 className={s.title}>
+                  <i className="ri-mail-line" /> Get in Touch
+                </h3>
+                <p className={s.description}>
+                  Fill in the form and I'll get back to you within 24 hours. I'm
+                  excited to hear about your project ideas!
+                </p>
+              </motion.div>
 
-              <h3 className={s.title}>
-                <i className="ri-reactjs-line" /> Built with React
-              </h3>
-              <p className={s.description}>
-                This contact page is fully built with modern React and Framer
-                Motion.There is also a Pro version with more advanced features
-                by Creative Tim
-              </p>
+              <motion.div variants={childVariants}>
+                <h3 className={s.title}>
+                  <i className="ri-reactjs-line" /> Modern Tech Stack
+                </h3>
+                <p className={s.description}>
+                  Built with React, Framer Motion, and CSS Modules for buttery
+                  smooth animations and responsive design.
+                </p>
+              </motion.div>
 
-              <h3 className={s.title}>
-                <i className="ri-group-line" /> For Startups
-              </h3>
-              <p className={s.description}>
-                Ideal for portfolio, freelance or startup projects.
-              </p>
+              <motion.div variants={childVariants}>
+                <h3 className={s.title}>
+                  <i className="ri-group-line" /> Collaboration Ready
+                </h3>
+                <p className={s.description}>
+                  Perfect for startups, agencies, and freelance projects. Let's
+                  build something amazing together!
+                </p>
+              </motion.div>
+
+              <motion.div className={s.socials} variants={childVariants}>
+                {socialItems.map((item, index) => (
+                  <motion.a
+                    key={index}
+                    href="#"
+                    className={s.socialLink}
+                    variants={socialVariants}
+                    whileHover="hover"
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    <i className={item.icon} />
+                  </motion.a>
+                ))}
+              </motion.div>
             </div>
           </motion.div>
 
-          <motion.div variants={childVariants}>
+          <motion.div variants={childVariants} whileHover={{ scale: 1.01 }}>
             <ContactForm key="ContactForm" />
           </motion.div>
         </div>
-        <div className={s.infoContainer}>
+
+        <motion.div className={s.infoContainer} variants={childVariants}>
           <p className={s.copyright}>
-            <i className="ri-copyright-line" />
-            2025 Volodymyr Fushtey
-            <i className="ri-heart-fill text-warning ml-1 animate-pulse"></i>
+            <i className="ri-copyright-line" /> 2025 Volodymyr Fushtey
+            <motion.i
+              className="ri-heart-fill"
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{
+                repeat: Infinity,
+                duration: 1.5,
+                ease: "easeInOut",
+              }}
+            />
           </p>
-          <p className={s.copyright}>Made with React and Framer Motion</p>
-        </div>
+          <p className={s.copyright}>
+            Crafted with React <i className="ri-reactjs-line" /> & Framer Motion{" "}
+            <i className="ri-motion-line" />
+          </p>
+        </motion.div>
       </motion.div>
-    </div>
+    </motion.div>
   );
 };
 

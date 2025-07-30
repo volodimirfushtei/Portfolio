@@ -1,4 +1,3 @@
-// src/components/ProjectPage.jsx
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import styles from "./projectsPage.module.css";
@@ -8,6 +7,10 @@ import { collection, getDocs } from "firebase/firestore";
 const ProjectPage = () => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterTag, setFilterTag] = useState("");
+  const projectsPerPage = 4;
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -21,15 +24,12 @@ const ProjectPage = () => {
         setLoading(false);
       } catch (error) {
         console.error("Error fetching projects: ", error);
+        setLoading(false);
       }
     };
 
     fetchProjects();
   }, []);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filterTag, setFilterTag] = useState("");
-  const projectsPerPage = 4;
 
   const filteredProjects = projects.filter((project) => {
     const matchesSearch = project.title
@@ -37,9 +37,10 @@ const ProjectPage = () => {
       .includes(searchTerm.toLowerCase());
     const matchesTag =
       filterTag === "" ||
-      project.tags.some((tag) =>
-        tag.toLowerCase().includes(filterTag.toLowerCase())
-      );
+      (project.tags &&
+        project.tags.some((tag) =>
+          tag.toLowerCase().includes(filterTag.toLowerCase())
+        ));
     return matchesSearch && matchesTag;
   });
 
@@ -61,47 +62,79 @@ const ProjectPage = () => {
   };
 
   const cardVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 50, scale: 0.95 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5, ease: "easeOut" },
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        ease: [0.16, 0.77, 0.47, 0.97],
+      },
     },
     hover: {
-      y: 0,
-      scale: 0.99,
-      boxShadow: "0 15px 30px rgba(0, 0, 0, 0.15)",
-      transition: { type: "spring", stiffness: 300 },
+      y: -5,
+      scale: 1.02,
+      boxShadow: "0 15px 30px rgba(0, 0, 0, 0.2)",
+      transition: {
+        type: "spring",
+        stiffness: 400,
+        damping: 10,
+      },
     },
   };
+
   if (loading) {
     return (
-      <div className={styles.projectsPage}>
-        <p className={`${styles.loading} aria-label="Loading text-amber-500  `}>
-          <i className="ri-loader-line color-primary animate-rotate "></i>
-          Loading Firebase...
-        </p>
-      </div>
+      <motion.div
+        className={styles.loadingContainer}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+      >
+        <div className={styles.loading}>
+          <motion.i
+            className="ri-loader-4-line"
+            animate={{ rotate: 360 }}
+            transition={{
+              repeat: Infinity,
+              duration: 1,
+              ease: "linear",
+            }}
+          />
+          <p>Loading projects...</p>
+        </div>
+      </motion.div>
     );
   }
 
   return (
-    <div className={styles.projectsPage}>
+    <motion.div
+      className={styles.projectsPage}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <motion.div
         className={styles.header}
-        initial={{ y: -20, opacity: 0 }}
+        initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5 }}
+        transition={{
+          duration: 0.8,
+          ease: [0.16, 0.77, 0.47, 0.97],
+        }}
       >
         <h2 className={styles.heading}>
           My <span>Projects</span>
         </h2>
+        <p className={styles.subheading}>
+          A collection of my recent work and experiments
+        </p>
       </motion.div>
 
       <motion.div
         className={styles.controls}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
       >
         <div className={styles.searchContainer}>
@@ -129,11 +162,13 @@ const ProjectPage = () => {
             aria-label="Filter by technology"
           >
             <option value="">All Technologies</option>
-            {Array.from(new Set(projects.flatMap((p) => p.tags))).map((tag) => (
-              <option key={tag} value={tag}>
-                {tag}
-              </option>
-            ))}
+            {Array.from(new Set(projects.flatMap((p) => p.tags || []))).map(
+              (tag) => (
+                <option key={tag} value={tag}>
+                  {tag}
+                </option>
+              )
+            )}
           </select>
         </div>
       </motion.div>
@@ -144,7 +179,7 @@ const ProjectPage = () => {
         initial="hidden"
         animate="visible"
       >
-        <AnimatePresence>
+        <AnimatePresence mode="wait">
           {paginatedProjects.length > 0 ? (
             paginatedProjects.map((project) => (
               <motion.div
@@ -152,17 +187,11 @@ const ProjectPage = () => {
                 className={styles.projectCard}
                 variants={cardVariants}
                 whileHover="hover"
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{
-                  duration: 0.5,
-                  delay: 0.2,
-                  ease: "easeOut",
-                }}
+                layout
               >
                 <div
                   className={styles.cardHeader}
-                  style={{ borderColor: project.accentColor }}
+                  style={{ borderColor: project.accentColor || "#6366f1" }}
                 >
                   <div className={styles.imageContainer}>
                     <img
@@ -171,9 +200,15 @@ const ProjectPage = () => {
                       className={styles.projectImage}
                       loading="lazy"
                     />
-                    <div
+                    <motion.div
                       className={styles.overlay}
-                      style={{ backgroundColor: `${project.accentColor}30` }}
+                      initial={{ opacity: 0 }}
+                      whileHover={{ opacity: 0.85 }}
+                      style={{
+                        backgroundColor: `${
+                          project.accentColor || "#6366f1"
+                        }80`,
+                      }}
                     />
                   </div>
                 </div>
@@ -201,16 +236,19 @@ const ProjectPage = () => {
                   </div>
 
                   <div className={styles.cardFooter}>
-                    <a
-                      href={project.urlVercel.trim()}
+                    <motion.a
+                      href={project.urlVercel?.trim() || "#"}
                       className={styles.projectLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      style={{ color: project.accentColor }}
+                      whileHover={{ x: 5 }}
+                      style={{
+                        color: project.accentColor || "#6366f1",
+                      }}
                     >
                       View Project
                       <i className="ri-arrow-right-line"></i>
-                    </a>
+                    </motion.a>
                   </div>
                 </div>
               </motion.div>
@@ -218,20 +256,24 @@ const ProjectPage = () => {
           ) : (
             <motion.div
               className={styles.noResults}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
             >
               <i className="ri-emotion-sad-line"></i>
               <p>No projects found matching your criteria</p>
-              <button
+              <motion.button
                 className={styles.resetButton}
                 onClick={() => {
                   setSearchTerm("");
                   setFilterTag("");
                 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 Reset filters
-              </button>
+              </motion.button>
             </motion.div>
           )}
         </AnimatePresence>
@@ -240,25 +282,27 @@ const ProjectPage = () => {
       {totalPages > 1 && (
         <motion.div
           className={styles.pagination}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
         >
           {Array.from({ length: totalPages }, (_, i) => (
-            <button
+            <motion.button
               key={i + 1}
               onClick={() => setCurrentPage(i + 1)}
               className={`${styles.pageButton} ${
                 currentPage === i + 1 ? styles.activePage : ""
               }`}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
               disabled={currentPage === i + 1}
             >
               {i + 1}
-            </button>
+            </motion.button>
           ))}
         </motion.div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

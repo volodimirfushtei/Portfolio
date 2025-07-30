@@ -1,8 +1,8 @@
 import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
-
 import styles from "./TechPage.module.css";
 import AnimatedPage from "../../Components/AnimatedPage/AnimatedPage";
+
 const techStack = [
   {
     name: "React",
@@ -129,71 +129,83 @@ const TechnologyPage = () => {
     currentPage * projectsPerPage
   );
 
-  const handleScroll = () => {
-    if (!containerRef.current) return;
-
-    const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
-    const isBottom = scrollTop + clientHeight >= scrollHeight - 10;
-
-    if (isBottom && currentPage < totalPages) {
-      setCurrentPage((prev) => prev + 1);
-    }
+  const cardVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+      },
+    },
   };
 
   return (
     <AnimatedPage>
-      <section
-        className={styles.wrapper}
-        id="tech"
-        style={{ overflowY: "auto" }}
-      >
+      <section className={styles.wrapper} id="tech">
         <div className={styles.container}>
           <motion.header
             className={styles.header}
-            initial={{ y: -20, opacity: 0 }}
+            initial={{ y: -50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{
               delay: 0.2,
-              duration: 0.5,
-              ease: "easeOut",
+              duration: 0.8,
+              ease: [0.16, 0.77, 0.47, 0.97],
             }}
           >
             <h2 className={styles.heading}>
-              My <span>Toolkit</span>
+              My <span>Tech Stack</span>
             </h2>
+            <p className={styles.subheading}>
+              Tools and technologies I use to bring ideas to life
+            </p>
           </motion.header>
 
           <motion.div
             className={styles.grid}
-            initial={{ y: -20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
+            initial="hidden"
+            animate="visible"
+            variants={{
+              visible: {
+                transition: {
+                  staggerChildren: 0.1,
+                  delayChildren: 0.3,
+                },
+              },
+            }}
             ref={containerRef}
-            onScroll={handleScroll}
           >
             {currentProjects.map((tech) => (
-              <a
+              <motion.a
                 key={tech.name}
                 href={tech.link}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.cardLink}
+                variants={cardVariants}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
               >
                 <div className={styles.card}>
-                  <div
+                  <motion.div
                     className={styles.iconWrapper}
                     style={{ color: tech.color }}
+                    whileHover={{ rotate: 10, scale: 1.2 }}
                   >
                     <i className={`${tech.icon} ${styles.icon}`} />
-                  </div>
+                  </motion.div>
                   <h3 className={styles.title}>{tech.name}</h3>
                   <p className={styles.description}>{tech.description}</p>
-                  <span className={styles.readMore}>
+                  <motion.span
+                    className={styles.readMore}
+                    whileHover={{ x: 5 }}
+                  >
                     Explore <i className="ri-arrow-right-s-line" />
-                  </span>
+                  </motion.span>
                 </div>
-              </a>
+              </motion.a>
             ))}
           </motion.div>
 
@@ -202,18 +214,20 @@ const TechnologyPage = () => {
               className={styles.pagination}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
+              transition={{ delay: 0.5 }}
             >
               {Array.from({ length: totalPages }, (_, i) => (
-                <button
+                <motion.button
                   key={i + 1}
                   onClick={() => setCurrentPage(i + 1)}
                   className={`${styles.pageButton} ${
                     currentPage === i + 1 ? styles.activePage : ""
                   }`}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
                 >
                   {i + 1}
-                </button>
+                </motion.button>
               ))}
             </motion.div>
           )}
