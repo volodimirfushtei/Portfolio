@@ -129,11 +129,25 @@ html[light-theme="light-theme"] body {
   --color-loader-bar: linear-gradient(90deg, #d4af37, #fff176);
 
   /* === Overlays & Borders === */
-  --color-overlay: rgba(155, 127, 0, 0.45);
+  --color-overlay: rgba(252, 248, 227, 0.95);
   --color-border: #cac2ad;
 
   /* === Shadow === */
   --color-shadow: 0 8px 25px rgba(212, 175, 55, 0.2);
+  --color-grid: repeating-linear-gradient(
+      to right,
+      rgba(41, 40, 40, 0.8) 0px,
+      rgba(255, 215, 0, 0.6) 1px,
+      transparent 1px,
+      transparent 40px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(41, 40, 40, 0.8) 0px,
+      rgba(255, 215, 0, 0.6) 1px,
+      transparent 1px,
+      transparent 40px
+    );
 }
 
 .dark-theme {
@@ -174,8 +188,8 @@ html[light-theme="light-theme"] body {
   --color-accent-hover: #aa1e60;
 
   /* === Buttons === */
-  --color-button-bg: var(--color-primary);
-  --color-button-bg-hover: #ffdb4d;
+  --color-button-bg: #4f701a;
+  --color-button-bg-hover: #31470d;
   --color-button-text: #121212;
 
   /* === Gradients === */
@@ -195,9 +209,23 @@ html[light-theme="light-theme"] body {
   --color-loader-bar: linear-gradient(90deg, #f6c009, #ffe066);
 
   /* === Overlays & Borders === */
-  --color-overlay: rgba(2, 0, 31, 0.9);
+  --color-overlay: rgba(2, 0, 31, 0.95);
   --color-border: #383737;
 
   /* === Shadow === */
   --color-shadow: 0 8px 25px rgba(246, 176, 9, 0.4); /* Золотий світло */
+  --color-grid: repeating-linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.2) 0px,
+      rgba(255, 215, 0, 0.15) 1px,
+      transparent 1px,
+      transparent 40px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.2) 0px,
+      rgba(255, 215, 0, 0.15) 1px,
+      transparent 1px,
+      transparent 40px
+    );
 }

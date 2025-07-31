@@ -15,6 +15,9 @@
   position: relative;
   cursor: pointer;
   transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.75, 0, 0.85, 1);
+
+  border-radius: 16px;
 
   box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
 }
@@ -31,17 +34,20 @@
   justify-content: center;
   align-items: center;
   padding: 2rem;
+
   box-sizing: border-box;
 }
 
 .front {
   background: var(--color-surface);
   color: var(--colot-text);
+  border-radius: 16px;
 }
 
 .back {
   background: var(--color-surface);
   transform: rotateY(180deg);
+  border-radius: 16px;
 }
 
 .cardContent {

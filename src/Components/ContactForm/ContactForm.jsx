@@ -17,7 +17,7 @@ const ContactForm = () => {
   const onSubmit = async (data) => {
     try {
       if (data.subscribe) {
-        const response = await fetch("http://localhost:5000/api/subscribe", {
+        const response = await fetch("/api/subscribe", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -29,7 +29,7 @@ const ContactForm = () => {
 
         if (!response.ok) {
           const errorText = await response.text();
-          console.error("❌ Server error:", response.status, errorText);
+          console.error("❌ Subscribe error:", response.status, errorText);
           toast.error("Subscription failed");
           throw new Error("Subscription failed");
         }
@@ -37,18 +37,15 @@ const ContactForm = () => {
         toast.success("Subscribed successfully!");
       }
 
-      const telegramResponse = await fetch(
-        "http://localhost:5000/api/telegram",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        }
-      );
+      const telegramResponse = await fetch("/api/telegram", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
 
       if (!telegramResponse.ok) {
         const errorText = await telegramResponse.text();
-        console.error("❌ Server error:", telegramResponse.status, errorText);
+        console.error("❌ Telegram error:", telegramResponse.status, errorText);
         toast.error("Message sending failed");
         throw new Error("Message sending failed");
       }
@@ -56,11 +53,10 @@ const ContactForm = () => {
       toast.success("Message sent successfully!");
       reset();
     } catch (error) {
-      console.error("Error:", error);
+      console.error("❌ Error sending form:", error);
     }
   };
 
-  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -86,14 +82,20 @@ const ContactForm = () => {
 
   return (
     <motion.div
-      className={`${s.formContainer} `}
+      className={s.formContainer}
       initial="hidden"
       animate="visible"
       variants={containerVariants}
-      whileHover={{ y: -5 }}
     >
       <div className={s.card}>
-        <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className={s.form}
+          style={{
+            pointerEvents: isSubmitting ? "none" : "auto",
+            opacity: isSubmitting ? 0.6 : 1,
+          }}
+        >
           <motion.div className={s.cardHeader} variants={itemVariants}>
             <h2 className={s.cardTitle}>Get in Touch</h2>
             <p className={s.cardSubtitle}>We'll respond within 24 hours</p>
@@ -119,7 +121,11 @@ const ContactForm = () => {
                 />
                 <label htmlFor="firstName">First name</label>
                 {errors.firstName && (
-                  <span className={s.errorMessage}>
+                  <span
+                    className={s.errorMessage}
+                    role="alert"
+                    aria-live="polite"
+                  >
                     {errors.firstName.message}
                   </span>
                 )}
@@ -139,7 +145,11 @@ const ContactForm = () => {
                 />
                 <label htmlFor="lastName">Last name</label>
                 {errors.lastName && (
-                  <span className={s.errorMessage}>
+                  <span
+                    className={s.errorMessage}
+                    role="alert"
+                    aria-live="polite"
+                  >
                     {errors.lastName.message}
                   </span>
                 )}
@@ -162,7 +172,13 @@ const ContactForm = () => {
               />
               <label htmlFor="email">Email address</label>
               {errors.email && (
-                <span className={s.errorMessage}>{errors.email.message}</span>
+                <span
+                  className={s.errorMessage}
+                  role="alert"
+                  aria-live="polite"
+                >
+                  {errors.email.message}
+                </span>
               )}
             </motion.div>
 
@@ -182,7 +198,13 @@ const ContactForm = () => {
               ></textarea>
               <label htmlFor="message">Your Message</label>
               {errors.message && (
-                <span className={s.errorMessage}>{errors.message.message}</span>
+                <span
+                  className={s.errorMessage}
+                  role="alert"
+                  aria-live="polite"
+                >
+                  {errors.message.message}
+                </span>
               )}
             </motion.div>
           </div>

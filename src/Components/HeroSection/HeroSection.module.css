@@ -11,7 +11,36 @@
   color-scheme: dark;
   will-change: transform;
 }
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-grid);
+  animation: gridMove 8s linear infinite, gridGlow 3s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
 
+@keyframes gridMove {
+  0% {
+    background-position: 0 0, 0 0;
+  }
+  100% {
+    background-position: 80px 80px, 80px 80px;
+  }
+}
+
+@keyframes gridGlow {
+  0%,
+  100% {
+    opacity: 0.1;
+    filter: drop-shadow(0 0 1px #ffd700);
+  }
+  50% {
+    opacity: 0.25;
+    filter: drop-shadow(0 0 6px #fff76a);
+  }
+}
 .gradientBackground {
   position: absolute;
 

@@ -11,7 +11,7 @@
 
 .slideContainer {
   position: relative;
-  height: 400px;
+  height: 500px;
   width: 100%;
 }
 
@@ -98,7 +98,7 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 0 1rem;
+  padding: 1rem;
   box-sizing: border-box;
   z-index: 10;
 }
@@ -107,7 +107,6 @@
   justify-content: center;
   align-items: center;
 
-  background: rgba(0, 0, 0, 0.4);
   border-radius: 8px;
   width: 40px;
   height: 40px;

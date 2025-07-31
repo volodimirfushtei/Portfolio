@@ -1,97 +1,76 @@
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
 import styles from "./Serteficate.module.css";
 
 const Certificate = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [isScaled, setIsScaled] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
+  // Motion values for mouse position
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
 
-  // Update time every second
+  const rotateX = useTransform(mouseY, [0, window.innerHeight], [5, -5]);
+  const rotateY = useTransform(mouseX, [0, window.innerWidth], [-5, 5]);
+
+  const smoothX = useSpring(rotateX, { stiffness: 100, damping: 20 });
+  const smoothY = useSpring(rotateY, { stiffness: 100, damping: 20 });
+
+  const scale = useSpring(isScaled ? 2.6 : 1, {
+    stiffness: 200,
+    damping: 20,
+  });
+
+  const handleMouseMove = (e) => {
+    mouseX.set(e.clientX);
+    mouseY.set(e.clientY);
+  };
+
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000);
+    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
 
-  const handleScale = () => {
-    setIsScaled(true);
-    setIsAnimating(true);
-  };
-
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        when: "beforeChildren",
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-      },
-    },
-  };
-
   return (
-    <motion.div
-      className={styles.wrapper}
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants}
-    >
-      <motion.div
-        className={styles.container}
-        variants={itemVariants}
-        whileHover={{ y: -5 }}
-      >
-        <motion.h4 variants={itemVariants}>
+    <motion.div className={styles.wrapper} onMouseMove={handleMouseMove}>
+      <motion.div className={styles.container}>
+        <h4>
           From{" "}
           <i
             className="ri-flag-fill"
             style={{ color: "#0057B7", fontSize: "1.5rem" }}
           ></i>{" "}
           with Passion
-        </motion.h4>
+        </h4>
 
-        <motion.h2 variants={itemVariants}>
+        <h2>
           Local time -{" "}
           <span className={styles.time}>
             {currentTime.toLocaleTimeString()}
-            <i className="ri-time-line"></i>
+            <i className="ri-time-line" aria-hidden="true"></i>
           </span>
-        </motion.h2>
+        </h2>
 
-        <motion.p variants={itemVariants}>Got a question?</motion.p>
-
-        <motion.p variants={itemVariants}>
+        <p>Got a question?</p>
+        <p>
           Email me at{" "}
           <a href="mailto:fuschteyy@gmail.com" className={styles.emailLink}>
             fuschteyy@gmail.com
           </a>
-        </motion.p>
+        </p>
       </motion.div>
 
       <motion.div
-        className={`${styles.card} ${isScaled ? styles.scaled : ""}`}
-        variants={itemVariants}
-        whileHover={{ scale: 1.02 }}
-        transition={{ type: "spring", stiffness: 300 }}
+        className={`${styles.card} `}
+        style={{
+          rotateX: smoothX,
+          rotateY: smoothY,
+          scale,
+        }}
+        onClick={() => setIsScaled((prev) => !prev)}
       >
-        <div className={styles.certificate} onClick={handleScale}>
+        <div className={styles.certificate}>
           <div className={styles.header}>
-            <h1 className={styles.certificateTitle}>CERTIFICATE</h1>
+            <h1 className={styles.certificateTitle}>CERTIFICATE GOIT</h1>
             <h2 className={styles.name}>FUSHTEI VOLODYMYR</h2>
           </div>
 
