@@ -2,15 +2,13 @@ import { useRef, useState, useEffect } from "react";
 import { useScroll, useTransform, motion, useSpring } from "framer-motion";
 import styles from "./HeroSection.module.css";
 import HeroMedia from "../HeroMedia/HeroMedia";
-import FadeInAnimate from "../FadeInAnimate/FadeInAnimate";
+
 const HeroSection = () => {
   const sectionRef = useRef(null);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
-    const handleScrollPage = () => setScrolled(window.scrollY > 100);
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -24,20 +22,14 @@ const HeroSection = () => {
   const smoothScrollY = useSpring(scrollYProgress, {
     damping: 30,
     stiffness: 100,
-    mass: 0.5,
   });
 
   // Parallax effects
   const parallaxEffects = {
-    yBg: useTransform(smoothScrollY, [0, 1], ["0%", "15%"]),
-    opacity: useTransform(smoothScrollY, [0, 0.7], [1, 0]),
-    scale: useTransform(smoothScrollY, [0, 1], [1, 1.05]),
-    textY: useTransform(smoothScrollY, [0, 1], ["0%", "30%"]),
-    gradientPosition: useTransform(
-      smoothScrollY,
-      [0, 1],
-      ["0% 0%", "100% 100%"]
-    ),
+    yBg: useTransform(smoothScrollY, [0, 1], ["0%", "20%"]),
+    opacity: useTransform(smoothScrollY, [0, 0.8], [1, 0]),
+    scale: useTransform(smoothScrollY, [0, 1], [1, 1.1]),
+    textY: useTransform(smoothScrollY, [0, 1], ["0%", "40%"]),
   };
 
   // Animation variants
@@ -59,7 +51,7 @@ const HeroSection = () => {
       y: 0,
       transition: {
         duration: 0.8,
-        ease: "backOut",
+        ease: [0.16, 1, 0.3, 1],
       },
     },
   };
@@ -68,54 +60,62 @@ const HeroSection = () => {
     <motion.section
       ref={sectionRef}
       className={styles.hero}
-      style={{ opacity: parallaxEffects.opacity }}
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
-      {/* Dynamic gradient background */}
+      {/* Animated gradient background */}
       <motion.div
-        className={`${styles.gradientBackground}  ${
-          scrolled ? styles.scrolled : ""
-        }`}
-        variants={{
-          hidden: { scale: 1.1, y: "15%" },
-          visible: {
-            scale: 1,
-            y: "0%",
-            transition: {
-              duration: 0.8,
-              ease: "easeOut",
-            },
-          },
+        className={styles.gradientBackground}
+        animate={{
+          backgroundPosition: ["0% 0%", "100% 100%"],
         }}
-        style={{ backgroundPosition: parallaxEffects.gradientPosition }}
+        transition={{
+          duration: 15,
+          repeat: Infinity,
+          repeatType: "reverse",
+          ease: "linear",
+        }}
       />
+
+      {/* Decorative floating shapes */}
+      <div className={styles.floatingShapes}>
+        <motion.div
+          className={styles.shapeCircle}
+          animate={{
+            y: [0, 30, 0],
+            x: [0, 20, 0],
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        <motion.div
+          className={styles.shapeTriangle}
+          animate={{
+            rotate: [0, 360],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+        />
+      </div>
+
       {/* Main content */}
-      <div
-        className={`${styles.content} `}
-        style={{ transform: `scale(${parallaxEffects.scale})` }}
-      >
+      <div className={styles.content}>
         <motion.div
           className={styles.textContent}
           style={{ y: parallaxEffects.textY }}
-          variants={itemVariants}
         >
-          <motion.h1
-            className={`${styles.title} ${
-              scrolled ? styles.scrolledTitle : ""
-            }`}
-          >
+          <motion.h1 className={styles.title} variants={itemVariants}>
             <motion.span
               className={styles.titleGradient}
               animate={{
                 backgroundPosition: ["0% 50%", "100% 50%"],
-                transition: {
-                  duration: 8,
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                  ease: "linear",
-                },
               }}
               transition={{
                 duration: 8,
@@ -136,25 +136,25 @@ const HeroSection = () => {
 
           <motion.div className={styles.buttons} variants={itemVariants}>
             <motion.button
+              className={styles.primaryButton}
               whileHover={{
                 scale: 1.05,
-                boxShadow: "0 8px 20px rgba(138, 99, 255, 0.3)",
+                boxShadow: "0 8px 24px rgba(67, 104, 255, 0.3)",
               }}
               whileTap={{ scale: 0.95 }}
-              className={styles.primaryButton}
             >
               Start a project
+              <span className={styles.buttonArrow}>→</span>
             </motion.button>
+
             <motion.button
+              className={styles.secondaryButton}
               whileHover={{
                 scale: 1.05,
-                boxShadow: "0 8px 20px rgba(255, 255, 255, 0.1)",
+                boxShadow: "0 8px 24px rgba(255, 255, 255, 0.1)",
               }}
               whileTap={{ scale: 0.95 }}
-              className={styles.secondaryButton}
               onClick={() => window.open("https://github.com/volodimirfushtei")}
-              target="_blank"
-              rel="noopener noreferrer"
             >
               View my work
             </motion.button>
@@ -163,16 +163,9 @@ const HeroSection = () => {
 
         <motion.div
           className={styles.mediaContainer}
-          style={{ y: parallaxEffects.yBg }}
+          style={{ y: parallaxEffects.yBg, opacity: parallaxEffects.opacity }}
         >
-          <div
-            className={`${styles.media} ${
-              scrolled ? styles.scrolledMedia : ""
-            }`}
-            style={{ transform: `scale(${parallaxEffects.scale})` }}
-          >
-            <HeroMedia />
-          </div>
+          <HeroMedia />
         </motion.div>
       </div>
 
@@ -180,16 +173,17 @@ const HeroSection = () => {
       <motion.div
         className={styles.scrollIndicator}
         animate={{
-          opacity: [0, 1, 0],
           y: [0, 15, 0],
+          opacity: [0.6, 1, 0.6],
         }}
         transition={{
+          duration: 2,
           repeat: Infinity,
-          duration: 2.5,
+          ease: "easeInOut",
         }}
       >
         <div className={styles.scrollArrow} />
-        <span className={styles.scrollText}>Scroll</span>
+        <span>Scroll to explore</span>
       </motion.div>
     </motion.section>
   );

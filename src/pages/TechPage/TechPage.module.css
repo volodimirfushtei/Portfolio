@@ -20,7 +20,7 @@
 }
 
 .heading {
-  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-size: clamp(1, 5rem, 6vw, 2rem);
   font-weight: 700;
   color: var(--color-title);
   line-height: 1.2;

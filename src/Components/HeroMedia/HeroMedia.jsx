@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./HeroMedia.module.css";
-
+import videoSrc from "../../assets/tiny.mp4";
 const HeroMedia = () => {
   return (
     <div className={styles.container}>
@@ -13,7 +13,7 @@ const HeroMedia = () => {
           className={styles.video}
           poster="/images/pexels-digi.jpg"
         >
-          <source src="src/assets/tiny.mp4" type="video/mp4" />
+          <source src={videoSrc} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
 

@@ -1,233 +1,281 @@
-/* Serteficate.module.css */
+/* Certificate.module.css */
 .wrapper {
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  gap: 2rem;
-  padding: 2rem;
-  background: transparent;
-  max-width: 100%;
+  gap: 4rem;
+  padding: 4rem;
+  max-width: 1200px;
   margin: 0 auto;
-  flex-wrap: wrap;
-  perspective: 800px;
+  position: relative;
 }
 
-.container {
+.infoContainer {
+  flex: 1;
+  max-width: 500px;
+}
+
+.infoContent {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: left;
-  padding: 2rem;
-
-  text-align: left;
-  width: 100%;
-  max-width: 1000px;
-  transition: transform 0.3s ease;
+  gap: 1.5rem;
 }
 
-.cardWrapper {
-  width: 100%;
-  max-width: 200px;
+.infoSubtitle {
+  font-size: 1.25rem;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-/* CertificateCard.module.css */
-.card {
+.flagIcon {
+  color: #4368ff;
+  font-size: 1.5rem;
+  display: inline-flex;
+}
+
+.infoTitle {
+  font-size: 2.5rem;
+  color: var(--color-text);
+  line-height: 1.2;
+  margin: 0;
+}
+
+.time {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+.infoText {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.emailLink {
+  background-color: rgba(67, 104, 255, 0.1);
+  color: #4368ff;
+  padding: 0.5rem 1rem;
   border-radius: 8px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cardContainer {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1000px;
+  position: relative;
+}
+
+.card {
+  width: 320px;
+  background: #fcfbf8 url("data:image/svg+xml;base64,...") repeat;
+  border-radius: 16px;
   overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
   position: relative;
   cursor: pointer;
-  z-index: 1;
-  width: 180px;
-  margin: 0 auto;
-  border: 2px solid #b8b8b8;
-  color: var(--color-text);
-  font-family: Arial, sans-serif;
-  font-weight: 600;
-  font-size: 10px;
   transform-style: preserve-3d;
-  perspective: 800px;
   will-change: transform;
-  transition: all 0.3s ease;
-}
-.card:hover {
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.certificateTitle {
-  font-size: 1.2rem;
-  color: var(--color-title);
-}
-
-.name {
-  font-size: 0.7rem;
-}
-
-.course {
-  font-size: 0.9rem;
-}
-@keyframes glow {
-  0% {
-    box-shadow: 0 0 5px rgba(238, 218, 99, 0.2);
-  }
-  50% {
-    box-shadow: 0 0 20px rgba(235, 240, 133, 0.5);
-  }
-  100% {
-    box-shadow: 0 0 5px rgba(238, 214, 77, 0.2);
-  }
-}
-
-.card {
-  animation: glow 3s ease-in-out infinite;
-}
-
-/* Combine responsive fixes */
-@media (max-width: 768px) {
-  .card {
-    max-width: 100%;
-    padding: 1.2rem;
-  }
-
-  .certificateTitle {
-    font-size: 1.2rem;
-  }
-
-  .name {
-    font-size: 1rem;
-  }
-
-  .course {
-    font-size: 0.8rem;
-  }
+.glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, #4368ff, transparent 60%);
+  z-index: 0;
+  pointer-events: none;
 }
 
 .certificate {
-  padding: 12px;
   position: relative;
-  background: var(--color-hero);
-
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  background: #fffefe;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIiB3aWR0aD0iMTAiIGhlaWdodD0iMTAiPjxwYXRoIGQ9Ik0wLDEwIEwxMCwwIE0tNSw1IEwxNSw1IE01LC01IEw1LDE1IiBzdHJva2U9InJnYmEoMCwwLDAsMC4wNSkiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3QgZmlsbD0idXJsKCNwYXR0ZXJuKSIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIvPjwvc3ZnPg==");
+  border-radius: 12px;
   overflow: hidden;
-  position: relative;
-  cursor: pointer;
-
-  perspective: 800px;
-
-  transition: transform 0.3s ease;
-
   z-index: 1;
-  width: 180px;
-  margin: 0 auto;
-  transition: all 0.3s ease;
-  border: 1px solid #eaeaea;
-  color: var(--color-text);
-  font-family: Arial, sans-serif;
-  font-weight: 600;
-  font-size: 10px;
 }
+
+.corner {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-top: 2px solid #4368ff;
+  border-left: 2px solid #4368ff;
+  top: 0;
+  left: 0;
+}
+
+.cornerRight {
+  left: auto;
+  right: 0;
+  border-right: 2px solid #4368ff;
+  border-left: none;
+}
+
 .header {
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
+  position: relative;
 }
 
 .certificateTitle {
-  font-size: 1em; /* 12px */
-  font-weight: 700;
-  color: var(--color-text);
-  margin-bottom: 4px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.goitBadge {
+  background: #4368ff;
+  color: white;
+  padding: 0.25rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
 }
 
 .name {
-  font-size: 1em; /* 10px */
+  font-size: 1.1rem;
   font-weight: 600;
-  color: var(--color-text);
+  color: #333;
   margin: 0;
-  line-height: 1.2;
 }
 
 .body {
   text-align: center;
+  position: relative;
 }
 
 .achievement {
-  font-size: 0.9em; /* 9px */
-  line-height: 1.4;
-  color: var(--color-secondary);
-  margin-bottom: 10px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #666;
+  margin-bottom: 1rem;
 }
 
 .course {
-  font-size: 1em; /* 10px */
+  font-size: 1.1rem;
   font-weight: 700;
-  color: var(--color-secondary);
+  color: #4368ff;
   display: block;
-  margin: 4px 0;
+  margin: 0.5rem 0;
 }
 
 .divider {
   height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    var(--color-secondary),
-    transparent
-  );
-  margin: 8px auto;
-  width: 70%;
+  background: linear-gradient(to right, transparent, #ddd, transparent);
+  margin: 1.5rem auto;
+  position: relative;
+  width: 80%;
+}
+
+.dividerInner {
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 3px;
+  background: #4368ff;
 }
 
 .details {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 4px;
-  margin-bottom: 8px;
-  text-align: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
-.date,
-.id,
-.specialty,
-.website {
-  font-size: 0.8em; /* 8px */
-  color: var(--color-secondary);
-  line-height: 1.3;
+.detailItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.detailItem span:first-child {
+  font-size: 0.7rem;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.25rem;
+}
+
+.detailValue {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
 }
 
 .signature {
-  margin-top: 8px;
-  text-align: center;
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .signatureLine {
-  width: 100px;
+  width: 120px;
+  height: 2px;
+  background: #333;
+  margin-bottom: 0.5rem;
+  position: relative;
+}
+
+.signatureLine:after {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: 0;
+  width: 100%;
   height: 1px;
-  background: var(--color-text);
-  margin: 0 auto 4px;
+  background: #ddd;
+}
+
+.signatureDetails {
+  text-align: center;
 }
 
 .ceo {
-  font-size: 0.7em; /* 7px */
-  color: var(--color-text);
+  font-size: 0.7rem;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .ceoName {
-  font-size: 0.8em; /* 8px */
+  font-size: 0.9rem;
   font-weight: 600;
-  color: var(--color-text);
-  margin-top: 2px;
+  color: #333;
+  margin-top: 0.25rem;
 }
 
 .watermark {
   position: absolute;
-  bottom: 10px;
-  right: 10px;
-  font-size: 1.6em; /* 16px */
+  bottom: 1rem;
+  right: 1rem;
+  font-size: 3rem;
   font-weight: 800;
-  color: rgba(174, 174, 174, 0.1);
+  color: rgba(67, 104, 255, 0.05);
   letter-spacing: 4px;
   text-transform: uppercase;
   transform: rotate(-15deg);
@@ -238,216 +286,110 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  background: var(--color-button-bg);
-  color: var(--color-secondary);
-  padding: 6px;
+  gap: 0.5rem;
+  background-color: #4368ff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  padding: 1rem;
   text-decoration: none;
   font-weight: 600;
-  font-size: 0.8em; /* 8px */
-  transition: all 0.2s ease;
-}
+  font-size: 1rem;
+  transition: all 0.3s ease;
 
-.downloadButton:hover {
-  background: var(--color-button-bg-hover);
+  width: 100%;
 }
 
 .downloadButton i {
-  font-size: 1em; /* 10px */
+  font-size: 1rem;
 }
-
-/* Responsive adjustments */
-@media (max-width: 480px) {
-  .card {
-    width: 180px;
-    font-size: 9px;
-  }
-
-  .certificate {
-    padding: 10px;
-  }
-
-  .details {
-    grid-template-columns: 1fr;
-  }
+.downloadButton:hover i {
+  transform: translateY(5px);
 }
-
-/* Responsive styles */
-@media (max-width: 768px) {
-  .certificate {
-    padding: 0.5rem;
-  }
-
-  .certificateTitle {
-    font-size: 1, 2rem;
-  }
-
-  .name {
-    font-size: 0, 7rem;
-  }
-
-  .course {
-    font-size: 0, 4rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .details {
-    grid-template-columns: 1fr;
-  }
-
-  .certificateTitle {
-    font-size: 1.8rem;
-  }
-
-  .name {
-    font-size: 1.3rem;
-  }
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-  .card {
-    max-width: 100%;
-    padding: 1.25rem;
-  }
-
-  .title {
-    font-size: 1.3rem;
-  }
-
-  .viewText {
-    font-size: 1rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .footer {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .card {
-    max-width: 100%;
-  }
-
-  .viewText {
-    font-size: 1rem;
-  }
-}
-
-h4 {
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
-  color: var(--color-text);
-}
-
-h2 {
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
-  color: var(--color-text);
-}
-
-.time {
-  color: var(--color-primary);
-  font-weight: 600;
-  font-size: 2rem;
-}
-
-p {
-  font-size: 1.1rem;
-  margin: 0.5rem 0;
-  color: var(--color-text-secondary);
-}
-
-.emailLink {
-  color: var(--color-primary);
-  text-decoration: none;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-
-.emailLink:hover {
-  text-decoration: underline;
-  color: var(--color-accent);
-}
-
-.title {
-  font-size: 1.8rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
+.downloadButton::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
   background: linear-gradient(
-    90deg,
-    var(--color-primary),
-    var(--color-accent),
-    var(--color-primary)
+    to bottom right,
+    rgba(255, 255, 255, 0) 45%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0) 55%
   );
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  transform: rotate(0deg);
+  transition: all 0.6s ease;
 }
 
-.line {
-  margin: 1rem auto;
-  width: 100%;
+.downloadButton:hover::after {
+  left: 100%;
+  transition: all 0.6s ease;
 }
-
-.certificateImage {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+.downloadButton:hover {
+  transform: translateY(3px);
 }
-
 /* Responsive styles */
 @media (max-width: 1024px) {
   .wrapper {
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 3rem;
+    padding: 3rem;
   }
 
-  .container,
-  .cardWrapper {
-    max-width: 600px;
+  .infoContainer {
+    max-width: 100%;
+    text-align: center;
+    align-items: center;
+  }
+
+  .infoSubtitle,
+  .infoTitle,
+  .infoText {
+    justify-content: center;
+    text-align: center;
   }
 }
 
 @media (max-width: 768px) {
-  .container,
+  .wrapper {
+    padding: 2rem;
+  }
+
+  .infoTitle {
+    font-size: 2rem;
+  }
+
   .card {
-    padding: 1.5rem;
-  }
-
-  h2 {
-    font-size: 1.3rem;
-  }
-
-  .title {
-    font-size: 1.5rem;
+    width: 280px;
   }
 }
 
 @media (max-width: 480px) {
   .wrapper {
-    padding: 1rem;
+    padding: 1.5rem;
   }
 
-  .container {
-    padding: 1rem;
+  .infoTitle {
+    font-size: 1.5rem;
   }
 
-  h4 {
+  .certificate {
+    padding: 1.5rem;
+  }
+
+  .certificateTitle {
+    font-size: 1.2rem;
+  }
+
+  .name {
     font-size: 1rem;
   }
 
-  h2 {
-    font-size: 1.1rem;
-  }
-
-  .title {
-    font-size: 1.3rem;
+  .details {
+    grid-template-columns: 1fr;
   }
 }

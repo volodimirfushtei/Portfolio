@@ -75,7 +75,60 @@ const Header = () => {
 
         <motion.div whileHover={{ scale: 1.05 }}>
           <Link to="/" className={styles.logo}>
-            <i className={`ri-code-s-slash-line ${styles.logoIcon}`}></i>
+            <svg
+              width="60"
+              height="60"
+              viewBox="0 0 200 200"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                <linearGradient id="gradF" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#4b6cb7" />
+                  <stop offset="100%" stopColor="#182848" />
+                </linearGradient>
+                <linearGradient id="gradV" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#56ccf2" />
+                  <stop offset="100%" stopColor="#2f80ed" />
+                </linearGradient>
+                <filterstopColor
+                  id="shadow"
+                  x="-50%"
+                  y="-50%"
+                  width="200%"
+                  height="200%"
+                >
+                  <feOffset result="offOut" in="SourceAlpha" dx="4" dy="4" />
+                  <feGaussianBlur
+                    result="blurOut"
+                    in="offOut"
+                    stdDeviation="4"
+                  />
+                  <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+                </filterstopColor>
+              </defs>
+
+              <g filter="url(#shadow)">
+                <text
+                  x="30"
+                  y="120"
+                  fontFamily="Arial Black, sans-serif"
+                  fontSize="80"
+                  fill="url(#gradF)"
+                >
+                  F
+                </text>
+                <text
+                  x="90"
+                  y="120"
+                  fontFamily="Arial Black, sans-serif"
+                  fontSize="80"
+                  fill="url(#gradV)"
+                >
+                  V
+                </text>
+              </g>
+            </svg>
+
             <span>MyPortfolio</span>
           </Link>
         </motion.div>
@@ -116,6 +169,7 @@ const Header = () => {
             <motion.div whileHover={{ scale: 1.05 }}>
               <Link to="/contacts" className={styles.contactButton}>
                 Contact Me
+                <span className={styles.buttonArrow}>→</span>
               </Link>
             </motion.div>
           </nav>
@@ -181,6 +235,7 @@ const Header = () => {
                   onClick={toggleMobileMenu}
                 >
                   Contact Me
+                  <span className={styles.buttonArrow}>→</span>
                 </Link>
               </motion.div>
             </motion.nav>

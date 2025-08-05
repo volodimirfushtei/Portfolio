@@ -4,15 +4,6 @@
 @import "slick-carousel/slick/slick.css";
 @import "slick-carousel/slick/slick-theme.css";
 
-html[data-theme="dark-theme"] body {
-  background-color: #111;
-  color: #eee;
-}
-html[light-theme="light-theme"] body {
-  background-color: #fff;
-  color: #111;
-}
-
 @keyframes moveGlow {
   0% {
     transform: translate(0, 0);
@@ -99,7 +90,7 @@ html[light-theme="light-theme"] body {
 
   /* === Text === */
   --text-color: #121212;
-  --color-text: #7a5e00; /* Темно-золотий */
+  --color-text: #af8808; /* Темно-золотий */
   --color-secondary: #46402d; /* Світле золото для підзаголовків */
   --color-title: #403100; /* Максимальний контраст */
 
@@ -148,6 +139,7 @@ html[light-theme="light-theme"] body {
       transparent 1px,
       transparent 40px
     );
+  --scroll-progress: #dcaa09;
 }
 
 .dark-theme {
@@ -178,18 +170,18 @@ html[light-theme="light-theme"] body {
   --color-footer: var(--color-surface);
 
   /* === Text === */
-  /* Золотий основний */
-  --color-text: #90d81b; /* Трохи м’якіший золотий */
-  --color-secondary: #d5ff91; /* Трохи м’якіший золотий */ /* Світло-золотистий */
-  --color-title: #f4eeeb; /* Контрастний кремовий для заголовків */
+
+  --color-text: #fbfbfb;
+  --color-secondary: #ebecea;
+  --color-title: #f4eeeb;
 
   /* === Accent === */
   --color-accent: #aa1e58;
   --color-accent-hover: #aa1e60;
 
   /* === Buttons === */
-  --color-button-bg: #4f701a;
-  --color-button-bg-hover: #31470d;
+  --color-button-bg: linear-gradient(135deg, #ff5252, #d32f2f);
+  --color-button-bg-hover: linear-gradient(135deg, #ef2626, #941c1c);
   --color-button-text: #121212;
 
   /* === Gradients === */
@@ -228,4 +220,5 @@ html[light-theme="light-theme"] body {
       transparent 1px,
       transparent 40px
     );
+  --scroll-progress: #f6c009;
 }

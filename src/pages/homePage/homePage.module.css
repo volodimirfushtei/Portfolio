@@ -1,6 +1,6 @@
 .section {
   /* top-bottom 80px, left-right 32px */
-  margin-bottom: 4rem;
+  margin-bottom: 0;
 
   /* gap between sections */
 }
@@ -22,54 +22,7 @@
     margin-bottom: 1rem;
   }
 }
-.scrollContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 
-  will-change: transform, opacity;
-}
-.scrollContainer:hover {
-  opacity: 1;
-  background: rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.scrollArrow {
-  width: 24px;
-  height: 24px;
-  border-left: 2px solid whitesmoke;
-  border-bottom: 2px solid whitesmoke;
-  transform: rotate(135deg);
-  transition: all 0.3s ease;
-  margin-top: 0.5rem;
-  opacity: 0.8;
-}
-
-.scrollArrow:hover {
-  opacity: 1;
-  scroll-behavior: smooth;
-}
-
-.scrollText {
-  font-size: 0.6rem;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  opacity: 0.6;
-  animation: pulse 2s infinite;
-}
-@keyframes pulse {
-  0% {
-    opacity: 0.6;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0.6;
-  }
-}
 .container {
   background-image: var(--color-background);
   background-size: cover;
@@ -198,7 +151,21 @@
 .animate_bounce {
   animation: bounce 1s infinite;
 }
-
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-30px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
+}
 @keyframes bounce {
   0%,
   20%,
@@ -223,7 +190,15 @@
 .scrollArrow {
   color: var(--color-text);
 }
-
+.carusel {
+  background: linear-gradient(
+    135deg,
+    rgba(95, 106, 149, 0.15) 0%,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(35, 100, 253, 0.15) 100%
+  );
+  padding: 4rem 4rem;
+}
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .container {

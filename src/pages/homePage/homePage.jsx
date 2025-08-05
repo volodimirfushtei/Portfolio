@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { motion as Motion } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import styles from "./homePage.module.css";
 
 import ControllerSkills from "../../Components/ControllerSkills/ControllerSkills.jsx";
@@ -14,10 +14,30 @@ import FadeInAnimate from "../../Components/FadeInAnimate/FadeInAnimate.jsx";
 import useScrollDetection from "../../hooks/useScrollDetection";
 import ParticlesBackground from "../../Components/ParBG/ParBG.jsx";
 import Serteficate from "../../Components/Serteficate/Serteficate.jsx";
+import CtaSection from "../../Components/CtaSection/CtaSection.jsx";
+import ScrollToTopBtn from "../../Components/ScrollToTopBtn/ScrollTotopBtn.jsx";
 const HomePage = () => {
   const [hovered, setHovered] = useState(false);
   const isScrolled = useScrollDetection(1200);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
+  useEffect(() => {
+    const updateScrollProgress = () => {
+      const scrollTotal =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+      const scrollPosition = window.scrollY;
+      const progress = (scrollPosition / scrollTotal) * 100;
+      setScrollProgress(progress);
+      document.documentElement.style.setProperty(
+        "--scroll-progress",
+        `${progress}%`
+      );
+    };
+
+    window.addEventListener("scroll", updateScrollProgress);
+    return () => window.removeEventListener("scroll", updateScrollProgress);
+  }, []);
   const skills = [
     { src: "/icons/react.svg", alt: "React" },
     { src: "/icons/javascript.svg", alt: "JavaScript" },
@@ -35,7 +55,7 @@ const HomePage = () => {
     { src: "/icons/mongodb.svg", alt: "MongoDB" },
   ];
   return (
-    <Motion.div
+    <motion.div
       initial={{ opacity: 0, scale: 0.5 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5 }}
@@ -45,7 +65,8 @@ const HomePage = () => {
       }}
     >
       <HeroSection />
-      <main>
+      <main className="w-screen">
+        {/* Expertise Section */}
         <section
           id="expertise"
           className={`${styles.expertise} ${styles.section}`}
@@ -63,45 +84,28 @@ const HomePage = () => {
           <section
             id="carusel"
             className={`${styles.carusel} ${styles.section}`}
-          >
-            <Carusel />
-          </section>
+          ></section>
           <section
             id="serteficate"
             className={`${styles.serteficate} ${styles.section}`}
           >
-            <Serteficate />
+            <section id="cta " className={`${styles.cta} ${styles.section}`}>
+              <CtaSection />
+            </section>
+            <section
+              id="serteficate"
+              className={`${styles.serteficate} ${styles.section}`}
+            >
+              <Serteficate />
+            </section>
           </section>
         </section>
       </main>
       <Footer />
 
-      <div
-        id="scrollButton"
-        className={`${
-          styles.scrollContainer
-        }  fixed bottom-6  right-6 z-50 transition-all duration-300 border-2 border-secondary rounded-3 p-2 shadow-md hover:shadow-lg cursor-pointer ${
-          isScrolled
-            ? "opacity-100 visible"
-            : "opacity-0 invisible pointer-events-none  cursor-not-allowed"
-        }`}
-        onClick={() =>
-          window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-          })
-        }
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-      >
-        <div
-          className={`${styles.scrollArrow} ${
-            hovered ? "animate-flash" : ""
-          } animate-pulse `}
-        />
-        <span className={styles.scrollText}>Scroll</span>
-      </div>
-    </Motion.div>
+      {/* Scroll to Top Button */}
+      <ScrollToTopBtn />
+    </motion.div>
   );
 };
 

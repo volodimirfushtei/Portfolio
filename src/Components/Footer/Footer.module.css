@@ -1,10 +1,13 @@
 .footer {
-  background: var(--color-footer);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: url("/images/njeromin2.jpg") center/cover no-repeat;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  transition: background-position 0.3s ease;
+  will-change: background-position;
   padding: 4rem 0 2rem;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   width: 100%;
+
   color: var(--color-text);
 }
 
@@ -73,7 +76,8 @@
   height: 40px;
   border-radius: 50%;
   background: var(--color-surface);
-  color: var(--color-primary);
+  color: var(--color-secondary);
+  text-decoration: none;
   transition: all 0.3s ease;
 }
 
@@ -90,6 +94,9 @@
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   color: var(--color-secondary);
   font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .logo {
@@ -116,13 +123,24 @@
   color: var(--color-secondary);
   text-decoration: none;
   transition: color 0.3s ease;
+  text-align: left;
 }
 
 .contactInfo a:hover {
   color: var(--color-primary);
   text-decoration: underline;
 }
-
+.text {
+  margin-right: 0.5rem;
+}
+.myPhoto {
+  width: 50px;
+  height: 50px;
+  display: block;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid var(--color-text);
+}
 @media (max-width: 768px) {
   .content {
     grid-template-columns: 1fr;

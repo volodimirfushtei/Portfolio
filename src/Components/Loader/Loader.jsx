@@ -1,78 +1,73 @@
-import React, { useEffect, useState, useRef } from "react";
-import { motion, animate, useMotionValue, useTransform } from "framer-motion";
-import s from "./Loader.module.css";
+import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
+import styles from "./Loader.module.css";
 
-const Loader = ({ onComplete, showSpinner = true }) => {
-  const progress = useMotionValue(0);
-  const percent = useTransform(progress, (v) => Math.floor(v));
-  const width = useTransform(progress, (v) => `${v}%`);
-  const [done, setDone] = useState(false);
-  const [displayPercent, setDisplayPercent] = useState(0);
-  const [showSpinnerState, setShowSpinnerState] = useState(false);
-  const gridRef = useRef(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+const Loader = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 30;
-      const y = (e.clientY / window.innerHeight - 0.5) * 30;
-      setMousePos({ x, y });
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    // Імітація завантаження
+    const interval = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          return 100;
+        }
+        return prev + 10;
+      });
+    }, 200);
+
+    return () => clearInterval(interval);
   }, []);
-  // animate progress
-  useEffect(() => {
-    const controls = animate(progress, 100, {
-      duration: 2.5,
-      ease: [0.33, 1, 0.68, 1],
-      onUpdate: (latest) => {
-        setDisplayPercent(Math.floor(latest));
-        setShowSpinnerState(latest > 0 && latest < 100);
-      },
-      onComplete: () => {
-        setDone(true);
-        onComplete?.();
-      },
-    });
-    return () => controls.stop();
-  }, [progress, onComplete]);
 
-  // parallax by cursor
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      const { innerWidth, innerHeight } = window;
-      const x = (e.clientX / innerWidth - 0.5) * 30;
-      const y = (e.clientY / innerHeight - 0.5) * 30;
-      if (gridRef.current) {
-        gridRef.current.style.transform = `perspective(800px) rotateX(65deg) rotateY(${x}deg) rotateX(${y}deg)`;
-      }
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+    if (progress >= 100) {
+      setTimeout(() => setIsLoading(false), 500);
+    }
+  }, [progress]);
 
   return (
-    <motion.div
-      className={s.loader}
-      initial={{ opacity: 1 }}
-      animate={{ opacity: done ? 0 : 1 }}
-      transition={{ duration: 0.5 }}
-    >
-      <motion.div className={s.gridLines} aria-hidden="true" ref={gridRef} />
+    <AnimatePresence>
+      {isLoading && (
+        <motion.div
+          className={styles.overlay}
+          initial={{ opacity: 1 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
+        >
+          <div className={styles.content}>
+            <motion.div
+              className={styles.spinner}
+              animate={{ rotate: 360 }}
+              transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+            />
 
-      <motion.div className={s.loaderBox}>
-        {showSpinner && (
-          <motion.i
-            className={`ri-spinner-line ${s.spinner}`}
-            animate={{ opacity: showSpinnerState ? 1 : 0 }}
-            transition={{ duration: 0.3 }}
-          />
-        )}
-        <motion.div className={s.progressBar} style={{ width }} />
-        <motion.div className={s.percent}>{displayPercent}%</motion.div>
-      </motion.div>
-    </motion.div>
+            <motion.div
+              className={styles.progressContainer}
+              initial={{ width: 0 }}
+              animate={{ width: "100%" }}
+              transition={{ duration: 2, ease: "easeInOut" }}
+            >
+              <div
+                className={styles.progressBar}
+                style={{ width: `${progress}%` }}
+              />
+            </motion.div>
+
+            <motion.p
+              className={styles.text}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3 }}
+            >
+              Buffering: {progress}%
+            </motion.p>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 

@@ -9,7 +9,7 @@ const CardTech = () => {
 
   useEffect(() => {
     const checkDevice = () => {
-      setIsMobile(window.innerWidth < 640);
+      setIsMobile(window.innerWidth < 768);
     };
 
     checkDevice();
@@ -32,6 +32,15 @@ const CardTech = () => {
     setManualFlip(true);
   };
 
+  const techStack = [
+    { name: "React", icon: "ri-reactjs-line" },
+    { name: "Next.js", icon: "ri-nextjs-line" },
+    { name: "Node.js", icon: "ri-nodejs-line" },
+    { name: "JavaScript", icon: "ri-javascript-line" },
+    { name: "CSS3", icon: "ri-css3-line" },
+    { name: "HTML5", icon: "ri-html5-line" },
+  ];
+
   return (
     <div className={styles.wrapper}>
       <motion.div
@@ -39,26 +48,32 @@ const CardTech = () => {
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
       >
-        <div className={styles.card} onClick={handleFlip}>
+        <div
+          className={`${styles.card} ${isFlipped ? styles.flipped : ""}`}
+          onClick={handleFlip}
+        >
           <AnimatePresence mode="wait">
             {!isFlipped ? (
               <motion.div
                 key="front"
                 className={`${styles.side} ${styles.front}`}
-                initial={{ translateY: 0, opacity: 1 }}
-                animate={{ translateY: 0, opacity: 1 }}
-                exit={{ translateY: -100, opacity: 0 }}
+                initial={{ rotateY: 0, opacity: 1 }}
+                animate={{ rotateY: 0, opacity: 1 }}
+                exit={{ rotateY: 90, opacity: 0 }}
                 transition={{ duration: 0.6 }}
               >
                 <div className={styles.cardContent}>
-                  <motion.img
-                    src="/images/My_photo.png"
-                    alt="Volodymyr Fushtei"
-                    className={styles.avatar}
-                    initial={{ scale: 0.9 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: 0.2, duration: 0.5 }}
-                  />
+                  <div className={styles.avatarWrapper}>
+                    <motion.img
+                      src="/images/my_photo.jpg"
+                      alt="Volodymyr Fushtei"
+                      className={styles.avatar}
+                      initial={{ scale: 0.9 }}
+                      animate={{ scale: 1 }}
+                      transition={{ delay: 0.2, duration: 0.5 }}
+                    />
+                    <div className={styles.avatarGlow} />
+                  </div>
                   <div className={styles.textBlock}>
                     <motion.h2
                       className={styles.subtitle}
@@ -78,20 +93,25 @@ const CardTech = () => {
                       Fushtei
                     </motion.h1>
                   </div>
+                  <div className={styles.flipHint}>
+                    <i className="ri-arrow-left-right-line"></i>
+                    {isMobile ? "Tap to view skills" : "Click to flip"}
+                  </div>
                 </div>
               </motion.div>
             ) : (
               <motion.div
                 key="back"
                 className={`${styles.side} ${styles.back}`}
-                initial={{ translateY: -100, opacity: 0 }}
-                animate={{ translateY: 0, opacity: 1 }}
-                exit={{ translateY: -100, opacity: 0 }}
+                initial={{ rotateY: -90, opacity: 0 }}
+                animate={{ rotateY: 0, opacity: 1 }}
+                exit={{ rotateY: 90, opacity: 0 }}
                 transition={{ duration: 0.6 }}
               >
                 <div className={styles.backContent}>
-                  <span className={styles.badge}>Featured</span>
+                  <span className={styles.badge}>Tech Stack</span>
                   <motion.p
+                    className={styles.flipMessage}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.3 }}
@@ -99,8 +119,8 @@ const CardTech = () => {
                     {manualFlip
                       ? "Tap to flip back"
                       : isMobile
-                      ? "Tap to view info"
-                      : "Auto-flips every 6s. Click to pause"}
+                      ? "Tap to view profile"
+                      : "Auto-flips every 6s"}
                   </motion.p>
                   <motion.div
                     className={styles.techGrid}
@@ -108,13 +128,17 @@ const CardTech = () => {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.5 }}
                   >
-                    {/* Add your tech icons/logos here */}
-                    <div className={styles.techItem}>React</div>
-                    <div className={styles.techItem}>Node.js</div>
-                    <div className={styles.techItem}>Next.js</div>
-                    <div className={styles.techItem}>JavaScript</div>
-                    <div className={styles.techItem}>CSS</div>
-                    <div className={styles.techItem}>HTML</div>
+                    {techStack.map((tech, index) => (
+                      <motion.div
+                        key={tech.name}
+                        className={styles.techItem}
+                        whileHover={{ y: -5 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <i className={`${tech.icon} ${styles.techIcon}`}></i>
+                        {tech.name}
+                      </motion.div>
+                    ))}
                   </motion.div>
                 </div>
               </motion.div>

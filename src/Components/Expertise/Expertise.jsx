@@ -1,9 +1,9 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, transform, useScroll, useTransform } from "framer-motion";
 import React, { useRef } from "react";
 import styles from "./Expertise.module.css";
 import CardTech from "../CardTech/CardTech";
 import ExperienceTable from "../ExperienceTable/ExperienceTable";
-
+import { useSpring } from "framer-motion";
 const Expertise = () => {
   const sectionVariants = {
     hidden: { opacity: 0 },
@@ -37,9 +37,15 @@ const Expertise = () => {
   });
 
   const yBg = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.2]);
-
-  const opacity = useTransform(scrollYProgress, [0.8, 1], [1, 0]);
+  const rawScale = useTransform(scrollYProgress, [0, 1], [1, 1.2]);
+  const scale = useSpring(rawScale, { stiffness: 50, damping: 20 });
+  const scrollY = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  const scaleBox = useTransform(scrollYProgress, [0, 1], [1, 1.1], {
+    clamp: true,
+  });
+  const rotateX = useTransform(scrollYProgress, [0, 1], [0, 5]);
+  const rotateY = useTransform(scrollYProgress, [0, 1], [0, 5]);
+  const opacity = useTransform(scrollYProgress, [0.5, 1], [1, 0]);
 
   return (
     <section
@@ -55,7 +61,6 @@ const Expertise = () => {
           opacity,
         }}
       />
-
       <motion.div
         className={`${styles.container} `}
         initial="hidden"
@@ -63,11 +68,30 @@ const Expertise = () => {
         viewport={{ once: true, margin: "-100px" }}
         variants={sectionVariants}
       >
-        <motion.div className={styles.section} variants={itemVariants}>
+        <motion.div
+          className={styles.section}
+          variants={itemVariants}
+          style={{
+            y: scrollY,
+            opacity,
+            scale: scaleBox,
+            rotateX,
+            rotateY,
+          }}
+        >
           <CardTech />
         </motion.div>
 
-        <motion.div className={styles.section} variants={itemVariants}>
+        <motion.div
+          className={styles.section}
+          variants={itemVariants}
+          style={{
+            y: scrollY,
+            opacity,
+            scale: scaleBox,
+            rotateX,
+          }}
+        >
           <ExperienceTable />
         </motion.div>
       </motion.div>

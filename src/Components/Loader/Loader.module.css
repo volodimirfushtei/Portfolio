@@ -1,146 +1,50 @@
-.loader {
-  inset: 0;
+.overlay {
   position: fixed;
-  z-index: 9999;
-  background: radial-gradient(circle at center, #171717 0%, #0c0c0c 100%);
-  display: grid;
-  place-items: center;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-@keyframes pulseBorder {
-  0%,
-  100% {
-    opacity: 0.4;
-  }
-  50% {
-    opacity: 1;
-  }
-}
-
-/* Сітка */
-.gridLines {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: repeating-linear-gradient(
-      to right,
-      rgba(255, 255, 150, 0.3) 0px,
-      rgba(255, 255, 150, 0.3) 1px,
-      transparent 1px,
-      transparent 20px
-    ),
-    repeating-linear-gradient(
-      to bottom,
-      rgba(255, 255, 150, 0.3) 0px,
-      rgba(255, 255, 150, 0.3) 1px,
-      transparent 1px,
-      transparent 20px
-    );
-  animation: moveGrid 8s linear infinite, glow 3s ease-in-out infinite;
-  transform: perspective(800px) rotateX(65deg);
-  transform-origin: bottom;
-  filter: drop-shadow(0 0 6px #e6d53a);
-}
-
-/* Анімація руху сітки */
-@keyframes moveGrid {
-  0% {
-    background-position: 0 0, 0 0;
-  }
-  100% {
-    background-position: 40px 40px, 40px 40px;
-  }
-}
-
-/* Пульсація світіння */
-@keyframes glow {
-  0% {
-    filter: drop-shadow(0 0 2px #ffe27a);
-    opacity: 0.15;
-  }
-  50% {
-    filter: drop-shadow(0 0 8px #ffd700);
-    opacity: 0.3;
-  }
-  100% {
-    filter: drop-shadow(0 0 2px #ffe27a);
-    opacity: 0.15;
-  }
-}
-
-/* Прогресбар-контейнер */
-.loaderBox {
-  position: relative;
-  z-index: 10;
-  width: min(90vw, 260px);
-  height: 5px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 0 20px rgba(236, 202, 5, 0.3);
-}
-
-/* Прогрес */
-.progressBar {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #f6b009 0%, #ffdd77 100%);
-  border-radius: 10px;
-  will-change: width;
-  position: relative;
-}
-
-.progressBar::after {
-  content: "";
-  position: absolute;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(
-    circle at center,
-    rgba(255, 221, 119, 0.4) 0%,
-    transparent 70%
-  );
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #0d0d1b 0%, #000000 100%);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
 }
 
-.progressBar:hover::after {
-  opacity: 1;
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  max-width: 300px;
+  width: 100%;
 }
 
-/* Відсотки */
-.percent {
-  position: absolute;
-  top: -35px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: "Inter", sans-serif;
-  font-size: clamp(1rem, 4vw, 1.2rem);
-  color: #ffd700;
-  font-weight: 700;
-  text-shadow: 0 0 10px #f6b009;
-  z-index: 11;
-}
-
-/* Спіннер */
 .spinner {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #ecc907;
-  font-size: 1.2rem;
-  animation: spin 1s linear infinite;
-  opacity: 0;
+  width: 60px;
+  height: 60px;
+  border: 5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  border-top-color: #4368ff;
 }
 
-@keyframes spin {
-  to {
-    transform: translateY(-50%) rotate(360deg);
-  }
+.progressContainer {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.progressBar {
+  height: 100%;
+  background: linear-gradient(90deg, #4368ff, #3a86ff);
+  transition: width 0.3s ease;
+}
+
+.text {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
 }

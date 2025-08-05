@@ -1,123 +1,134 @@
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import styles from "./Carusel.module.css";
 
-const slides = [
-  {
-    title: "UI/UX Design",
-    description: "Creating intuitive and beautiful user interfaces",
-    bgColor: "rgba(138, 99, 255, 0.1)",
-    imageUrl: "/images/yves.jpg",
-  },
-  {
-    title: "Phonebook",
-    description: "Building responsive web applications",
-    bgColor: "rgba(99, 179, 255, 0.1)",
-    imageUrl: "/images/Phonebook.png",
-  },
-  {
-    title: "Camper Travel",
-    description: "Creating responsive web applications",
-    bgColor: "rgba(255, 152, 0, 0.1)",
-    imageUrl: "/images/Camper.png",
-  },
-];
+const ModernCarousel = () => {
+  const carouselRef = useRef(null);
 
-const MyCarousel = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [direction, setDirection] = useState(0);
+  const { scrollYProgress } = useScroll({
+    target: carouselRef,
+    offset: ["start start", "end end"],
+  });
 
-  // Auto-advance slides
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setDirection(1);
-      setCurrentIndex((prev) => (prev + 1) % slides.length);
-    }, 6000);
-    return () => clearInterval(interval);
-  }, []);
+  // Загальні анімації
+  const yBg = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8, 1], [1, 1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.03]);
+  const xText = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
+  const rotateX = useTransform(scrollYProgress, [0, 1], [0, 5]);
 
-  const goToSlide = (index) => {
-    setDirection(index > currentIndex ? 1 : -1);
-    setCurrentIndex(index);
-  };
-
-  const variants = {
-    enter: (direction) => ({
-      x: direction > 0 ? "100%" : "-100%",
-      opacity: 0,
-    }),
-    center: {
-      x: 0,
-      opacity: 1,
+  const slides = [
+    {
+      title: "UI/UX Design",
+      descriptions: [
+        "User research & wireframing",
+        "Interactive prototypes",
+        "Usability testing",
+        "Design systems",
+      ],
+      bgColor: "linear-gradient(135deg, #8a63ff 0%, #6a3dff 100%)",
+      image: "/images/design.jpg",
     },
-    exit: (direction) => ({
-      x: direction < 0 ? "100%" : "-100%",
-      opacity: 0,
-    }),
-  };
+    {
+      title: "Web Development",
+      descriptions: [
+        "Front-end development",
+        "Back-end development",
+        "Mobile app development",
+        "E-commerce platforms",
+      ],
+      bgColor: "linear-gradient(135deg, #ff8a63 0%, #ff6a3d 100%)",
+      image: "/images/development.jpg",
+    },
+    {
+      title: "Digital Marketing",
+      descriptions: [
+        "Social media marketing",
+        "Search engine optimization",
+        "Pay-per-click advertising",
+        "Email marketing",
+      ],
+      bgColor: "linear-gradient(135deg, #63ff8a 0%, #3dff6a 100%)",
+      image: "/images/marketing.jpg",
+    },
+    // ... інші слайди
+  ];
 
   return (
-    <div className={styles.carousel}>
-      <div className={styles.slideContainer}>
-        <AnimatePresence custom={direction} initial={false}>
-          <motion.div
-            key={currentIndex}
-            custom={direction}
-            variants={variants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{
-              type: "spring",
-              stiffness: 300,
-              damping: 30,
-            }}
-            className={styles.slide}
-            style={{
-              backgroundColor: slides[currentIndex].bgColor,
-              backgroundImage: `url(${slides[currentIndex].imageUrl})`,
-            }}
-          >
-            <div className={styles.slideContent}>
-              <h3>{slides[currentIndex].title}</h3>
-              <p>{slides[currentIndex].description}</p>
-            </div>
-          </motion.div>
-        </AnimatePresence>
-      </div>
-      <div className={styles.arrows}>
-        <button
-          onClick={() => goToSlide(currentIndex - 1)}
-          disabled={currentIndex === 0}
-          aria-label="Previous slide"
-          className={styles.button}
-        >
-          &lt;
-        </button>
-        <button
-          onClick={() => goToSlide(currentIndex + 1)}
-          disabled={currentIndex === slides.length - 1}
-          aria-label="Next slide"
-          className={styles.button}
-        >
-          &gt;
-        </button>
-      </div>
+    <section
+      ref={carouselRef}
+      className={styles.carouselContainer}
+      style={{ opacity }}
+    >
+      <div className={styles.stickyContainer}>
+        {slides.map((slide, index) => {
+          // Розраховуємо прогресс для кожного слайда
+          const start = index / slides.length;
+          const end = (index + 1) / slides.length;
 
-      <div className={styles.controls}>
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            className={`${styles.dot} ${
-              currentIndex === index ? styles.active : ""
-            }`}
-            onClick={() => goToSlide(index)}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
+          const slideOpacity = useTransform(
+            scrollYProgress,
+            [start, start + 0.1, end - 0.1, end],
+            [0, 1, 1, 0]
+          );
+
+          return (
+            <motion.div
+              key={index}
+              className={styles.slide}
+              style={{
+                background: slide.bgColor,
+                scale,
+                backgroundImage: `url(${slide.image})`,
+                backgroundPosition: "center",
+                backgroundSize: "cover",
+                backgroundBlendMode: "overlay",
+                y: yBg,
+                opacity: slideOpacity,
+              }}
+            >
+              <div className={styles.contentWrapper}>
+                <motion.h3
+                  className={styles.title}
+                  style={{
+                    x: xText,
+                    rotateX,
+                    textShadow: "0 2px 10px rgba(0,0,0,0.3)",
+                  }}
+                >
+                  {slide.title}
+                </motion.h3>
+
+                <motion.div className={styles.descriptionsContainer}>
+                  {slide.descriptions.map((desc, i) => (
+                    <motion.div
+                      key={i}
+                      className={styles.descriptionCard}
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: "-20% 0px" }}
+                      transition={{
+                        delay: i * 0.15,
+                        duration: 0.6,
+                        type: "spring",
+                        damping: 10,
+                      }}
+                      whileHover={{
+                        scale: 1.05,
+                        boxShadow: "0 10px 20px rgba(0,0,0,0.2)",
+                      }}
+                    >
+                      <span>{desc}</span>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </div>
+            </motion.div>
+          );
+        })}
       </div>
-    </div>
+    </section>
   );
 };
 
-export default MyCarousel;
+export default ModernCarousel;

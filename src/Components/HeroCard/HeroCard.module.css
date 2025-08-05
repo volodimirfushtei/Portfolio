@@ -62,7 +62,7 @@ p {
 }
 
 .primary {
-  background: linear-gradient(to right, var(--color-accent), #7c3aed);
+  background: var(--color-button-bg);
   color: white;
   padding: 0.9rem 2rem;
   font-weight: 600;
@@ -76,6 +76,7 @@ p {
 .primary:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
+  background: var(--color-button-bg-hover);
 }
 
 .secondary {

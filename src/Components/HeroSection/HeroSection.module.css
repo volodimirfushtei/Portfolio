@@ -141,7 +141,7 @@
 }
 
 .titleGradient {
-  background: linear-gradient(90deg, #8a63ff 0%, #63b3ff 50%, #8a63ff 100%);
+  background: linear-gradient(90deg, #f22424 0%, #6fa2fb 50%, #d32f2f 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -171,42 +171,82 @@
 }
 
 .primaryButton {
-  background: linear-gradient(
-    135deg,
-    var(--color-primary),
-    var(--color-accent)
-  );
-
-  color: #f4e2d8;
-  border: none;
-  padding: 1rem 2rem;
-  border-radius: 12px;
+  background-color: #4368ff;
+  color: white;
+  padding: 16px 32px;
+  border-radius: 8px;
+  text-decoration: none;
   font-weight: 600;
-  cursor: pointer;
-  font-size: 1rem;
+  font-size: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   transition: all 0.3s ease;
-  will-change: transform;
-  box-shadow: 0 4px 15px rgba(138, 99, 255, 0.2);
-  /* Better button contrast */
-  --contrast-color: #ffffff;
-  border: 1px solid var(--contrast-color);
+  margin-bottom: 48px;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.primaryButton::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0) 45%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0) 55%
+  );
+  transform: rotate(30deg);
+  transition: all 0.6s ease;
 }
 
+.primaryButton:hover::after {
+  left: 100%;
+}
 .secondaryButton {
   background: transparent;
-  color: var(--color-text);
-  border: 1px solid var(--contrast-color);
-  padding: 1rem 2rem;
-  border-radius: 12px;
+  color: white;
+  padding: 16px 32px;
+  border-radius: 8px;
+  text-decoration: none;
   font-weight: 600;
-  cursor: pointer;
-  font-size: 1rem;
+  font-size: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   transition: all 0.3s ease;
-  will-change: transform;
+  margin-bottom: 48px;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
   /* Better button contrast */
   --contrast-color: #7a7a7a;
 }
-
+.secondaryButton::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0) 45%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0) 55%
+  );
+  transform: rotate(30deg);
+  transition: all 0.6s ease;
+}
+.secondaryButton:hover::after {
+  left: 100%;
+}
 .scrollIndicator {
   position: absolute;
   bottom: 1rem;
@@ -231,14 +271,14 @@
 
   border-bottom: 2px solid #f4e2d8;
   transform: rotate(-45deg);
-  opacity: 0.8;
+  opacity: 0.7;
 }
 
 .scrollText {
-  font-size: 0.8rem;
+  font-size: 0.5rem;
   letter-spacing: 2px;
   text-transform: uppercase;
-  opacity: 0.8;
+  opacity: 0.6;
   color: var(--color-secondary);
   font-weight: 600;
 }
