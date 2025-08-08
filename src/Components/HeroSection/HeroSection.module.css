@@ -45,7 +45,7 @@
   position: absolute;
 
   inset: 0;
-  background-image: var(--color-surface);
+  background-image: var(--color-hero);
 
   z-index: -1;
   will-change: background-position;
@@ -209,7 +209,7 @@
   left: 100%;
 }
 .secondaryButton {
-  background: transparent;
+  background: var(--color-button-bg);
   color: white;
   padding: 16px 32px;
   border-radius: 8px;
@@ -237,9 +237,9 @@
   height: 200%;
   background: linear-gradient(
     to bottom right,
-    rgba(255, 255, 255, 0) 45%,
+    rgba(101, 101, 101, 0) 45%,
     rgba(255, 255, 255, 0.3) 50%,
-    rgba(255, 255, 255, 0) 55%
+    rgba(108, 108, 108, 0) 55%
   );
   transform: rotate(30deg);
   transition: all 0.6s ease;

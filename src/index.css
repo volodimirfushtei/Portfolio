@@ -1,4 +1,5 @@
 @import "tailwindcss";
+
 @import "bootstrap/dist/css/bootstrap.min.css";
 @import "bootstrap-icons/font/bootstrap-icons.css";
 @import "slick-carousel/slick/slick.css";
@@ -73,16 +74,16 @@
 }
 .light-theme {
   /* === Base Colors === */
-  --color-primary: #d4af37; /* Насичене золото */
+  --color-primary: #d4af37;
   --color-info: #4cc9f0;
   --color-success: #198754;
   --color-warning: #f59e0b;
   --color-error: #d90429;
 
   /* === Backgrounds & Surfaces === */
-  --bg-color: #ffffff;
+  --bg-color: rgb(255, 255, 255);
   --color-background: #fdfdfb;
-  --color-surface: #f7f7f3;
+  --color-surface: rgb(255, 255, 255);
   --color-surface-hover: #f0f0eb;
   --color-background-scrolled: #f3f2ef;
   --color-sidebar: var(--color-surface);
@@ -90,9 +91,9 @@
 
   /* === Text === */
   --text-color: #121212;
-  --color-text: #af8808; /* Темно-золотий */
-  --color-secondary: #46402d; /* Світле золото для підзаголовків */
-  --color-title: #403100; /* Максимальний контраст */
+  --color-text: #af8808;
+  --color-secondary: #46402d;
+  --color-title: #403100;
 
   /* === Accent === */
   --color-accent: #aa1e58;
@@ -154,7 +155,7 @@
   --bg-color: #121212;
   --color-background: linear-gradient(
     145deg,
-    #101010 0%,
+    #0a0a0a 0%,
     #1b1b1b 50%,
     #0d0d0d 100%
   );

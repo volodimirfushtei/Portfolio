@@ -7,20 +7,26 @@ import {
   AnimatePresence,
 } from "framer-motion";
 
-import styles from "./Serteficate.module.css";
-import FadeInAnimate from "./../FadeInAnimate/FadeInAnimate";
+import styles from "./Sertificate.module.css";
 
-const Certeficate = () => {
+const Certificate = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [isScaled, setIsScaled] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [viewport, setViewport] = useState({ width: 0, height: 0 });
 
-  // Motion values for 3D tilt effect
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  const rotateX = useTransform(mouseY, [0, window.innerHeight], [8, -8]);
-  const rotateY = useTransform(mouseX, [0, window.innerWidth], [-8, 8]);
+  // Safe viewport dimensions for SSR
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setViewport({ width: window.innerWidth, height: window.innerHeight });
+    }
+  }, []);
+
+  const rotateX = useTransform(mouseY, [0, viewport.height], [8, -8]);
+  const rotateY = useTransform(mouseX, [0, viewport.width], [-8, 8]);
 
   const smoothX = useSpring(rotateX, { stiffness: 150, damping: 25 });
   const smoothY = useSpring(rotateY, { stiffness: 150, damping: 25 });
@@ -55,21 +61,31 @@ const Certeficate = () => {
               className={styles.flagIcon}
               animate={{ rotate: [0, 10, -10, 0] }}
               transition={{
-                duration: 1.5,
+                duration: 5,
                 repeat: Infinity,
                 repeatType: "mirror",
+                ease: "easeInOut",
               }}
             >
-              <i className="ri-flag-fill"></i>
+              <i className="">
+                <img
+                  src="https://flagcdn.com/ua.svg"
+                  alt="Ukraine Flag"
+                  width="20"
+                  height="20"
+                />
+              </i>
             </motion.span>{" "}
             with Passion
           </h4>
 
           <h2 className={styles.infoTitle}>
-            Local time -{" "}
+            Local time –{" "}
             <motion.span
               className={styles.time}
-              animate={{ color: ["#4368ff", "#ff5252", "#4368ff"] }}
+              animate={{
+                color: ["#4368ff", "#ff5252", "#4368ff"],
+              }}
               transition={{ duration: 5, repeat: Infinity }}
             >
               {currentTime.toLocaleTimeString()}
@@ -82,7 +98,7 @@ const Certeficate = () => {
           </motion.p>
 
           <motion.p className={styles.infoText}>
-            Email me at{" "}
+            Email me at:{" "}
             <motion.a
               href="mailto:fuschteyy@gmail.com"
               className={styles.emailLink}
@@ -105,28 +121,24 @@ const Certeficate = () => {
       >
         <motion.div
           className={styles.card}
-          style={{
-            rotateX: smoothX,
-            rotateY: smoothY,
-            scale,
-          }}
+          style={{ rotateX: smoothX, rotateY: smoothY, scale }}
           onClick={() => setIsScaled(!isScaled)}
           whileTap={{ scale: 0.95 }}
         >
-          {/* Glow effect */}
           <AnimatePresence>
             {isHovered && (
               <motion.div
+                key="glow"
                 className={styles.glow}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.3 }}
                 exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
               />
             )}
           </AnimatePresence>
 
           <div className={styles.certificate}>
-            {/* Decorative elements */}
             <div className={styles.corner}></div>
             <div className={`${styles.corner} ${styles.cornerRight}`}></div>
 
@@ -183,8 +195,7 @@ const Certeficate = () => {
 
           <motion.a
             href="/images/FUSHTEI_VOLODYMYR.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
+            download
             className={styles.downloadButton}
             whileHover={{
               backgroundColor: "#3a5eff",
@@ -200,4 +211,4 @@ const Certeficate = () => {
   );
 };
 
-export default Certeficate;
+export default Certificate;

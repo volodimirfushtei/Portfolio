@@ -1,134 +1,149 @@
 import React, { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import styles from "./Carusel.module.css";
+export default function Carousel() {
+  const containerRef = useRef(null);
 
-const ModernCarousel = () => {
-  const carouselRef = useRef(null);
-
-  const { scrollYProgress } = useScroll({
-    target: carouselRef,
-    offset: ["start start", "end end"],
-  });
-
-  // Загальні анімації
-  const yBg = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8, 1], [1, 1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.03]);
-  const xText = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
-  const rotateX = useTransform(scrollYProgress, [0, 1], [0, 5]);
-
+  // Дані для каруселі
   const slides = [
     {
-      title: "UI/UX Design",
-      descriptions: [
-        "User research & wireframing",
-        "Interactive prototypes",
-        "Usability testing",
-        "Design systems",
-      ],
-      bgColor: "linear-gradient(135deg, #8a63ff 0%, #6a3dff 100%)",
-      image: "/images/design.jpg",
+      id: 1,
+      image: "/images/njeromin1.jpg",
+      title: "Міський краєвид",
+      subtitle: "Архітектурна перспектива",
+      color: "from-blue-500/30 to-blue-700/30",
     },
     {
-      title: "Web Development",
-      descriptions: [
-        "Front-end development",
-        "Back-end development",
-        "Mobile app development",
-        "E-commerce platforms",
-      ],
-      bgColor: "linear-gradient(135deg, #ff8a63 0%, #ff6a3d 100%)",
-      image: "/images/development.jpg",
+      id: 2,
+      image: "/images/njeromin2.jpg",
+      title: "Урбаністичний пейзаж",
+      subtitle: "Сучасна міська структура",
+      color: "from-purple-500/30 to-purple-700/30",
     },
     {
-      title: "Digital Marketing",
-      descriptions: [
-        "Social media marketing",
-        "Search engine optimization",
-        "Pay-per-click advertising",
-        "Email marketing",
-      ],
-      bgColor: "linear-gradient(135deg, #63ff8a 0%, #3dff6a 100%)",
-      image: "/images/marketing.jpg",
+      id: 3,
+      image: "/images/njeromin3.jpg",
+      title: "Метрополіс",
+      subtitle: "Динаміка великого міста",
+      color: "from-amber-500/30 to-amber-700/30",
     },
-    // ... інші слайди
+    {
+      id: 4,
+      image: "/images/sity.jpg",
+      title: "Центр міста",
+      subtitle: "Серце урбаністичного простору",
+      color: "from-emerald-500/30 to-emerald-700/30",
+    },
   ];
 
-  return (
-    <section
-      ref={carouselRef}
-      className={styles.carouselContainer}
-      style={{ opacity }}
-    >
-      <div className={styles.stickyContainer}>
-        {slides.map((slide, index) => {
-          // Розраховуємо прогресс для кожного слайда
-          const start = index / slides.length;
-          const end = (index + 1) / slides.length;
+  // Анімаційні ефекти
+  const { scrollYProgress } = useScroll({
+    container: containerRef,
+  });
 
-          const slideOpacity = useTransform(
-            scrollYProgress,
-            [start, start + 0.1, end - 0.1, end],
-            [0, 1, 1, 0]
-          );
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 150,
+    damping: 30,
+    restDelta: 0.001,
+  });
 
-          return (
+  // Компонент слайду
+  const Slide = ({ image, title, subtitle, color }) => {
+    const ref = useRef(null);
+    const { scrollYProgress } = useScroll({
+      target: ref,
+      offset: ["start end", "end start"],
+    });
+
+    const scale = useTransform(scrollYProgress, [0, 1], [1.1, 1]);
+    const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.7, 1, 0.7]);
+    const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
+    const x = useTransform(scrollYProgress, [0, 1], [100, -100]);
+    return (
+      <section
+        ref={ref}
+        className={` ${styles.slide} relative h-[700px] w-full snap-start overflow-hidden `}
+      >
+        {/* Фонове зображення */}
+        <motion.div className="absolute inset-0 " style={{ scale }}>
+          <motion.img
+            src={image}
+            alt={title}
+            className="h-full w-full object-cover"
+            style={{ opacity }}
+            loading="lazy"
+          />
+        </motion.div>
+
+        {/* Градієнтний оверлей */}
+        <div
+          className={`absolute inset-0 bg-gradient-to-b ${color} mix-blend-multiply`}
+        />
+
+        {/* Контент слайду */}
+        <div className="container relative h-full flex items-center">
+          <motion.div className="max-w-2xl text-white" style={{ y }}>
             <motion.div
-              key={index}
-              className={styles.slide}
-              style={{
-                background: slide.bgColor,
-                scale,
-                backgroundImage: `url(${slide.image})`,
-                backgroundPosition: "center",
-                backgroundSize: "cover",
-                backgroundBlendMode: "overlay",
-                y: yBg,
-                opacity: slideOpacity,
-              }}
+              className="text-5xl md:text-7xl font-bold mb-4 leading-tight"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <div className={styles.contentWrapper}>
-                <motion.h3
-                  className={styles.title}
-                  style={{
-                    x: xText,
-                    rotateX,
-                    textShadow: "0 2px 10px rgba(0,0,0,0.3)",
-                  }}
-                >
-                  {slide.title}
-                </motion.h3>
-
-                <motion.div className={styles.descriptionsContainer}>
-                  {slide.descriptions.map((desc, i) => (
-                    <motion.div
-                      key={i}
-                      className={styles.descriptionCard}
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, margin: "-20% 0px" }}
-                      transition={{
-                        delay: i * 0.15,
-                        duration: 0.6,
-                        type: "spring",
-                        damping: 10,
-                      }}
-                      whileHover={{
-                        scale: 1.05,
-                        boxShadow: "0 10px 20px rgba(0,0,0,0.2)",
-                      }}
-                    >
-                      <span>{desc}</span>
-                    </motion.div>
-                  ))}
-                </motion.div>
+              <div className="flex items-center ">
+                <img
+                  src="/images/my_photo.jpg"
+                  alt="logo"
+                  className="logo rounded-2 "
+                  width={180}
+                  height={180}
+                  loading="lazy"
+                />
               </div>
             </motion.div>
-          );
-        })}
-      </div>
-    </section>
-  );
-};
+            <motion.p
+              className="text-xl md:text-2xl font-light opacity-90"
+              initial={{
+                opacity: 0,
+                x: 50,
+              }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              {subtitle}
+            </motion.p>
+          </motion.div>
+        </div>
 
-export default ModernCarousel;
+        {/* Індикатор прокрутки */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white text-sm">
+          <span className="animate-pulse" whileInView={{ y: [0, 20, 0] }}>
+            ↓ Scroll Down ↓
+          </span>
+        </div>
+      </section>
+    );
+  };
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative h-[700px] w-1/2 overflow-y-auto snap-y snap-mandatory scroll-smooth scrollbar-hidden "
+    >
+      {/* Прогресбар у стилі Webflow */}
+      <motion.div
+        className="sticky top-10 left-0 h-1.5 w-full origin-center -rotate-90 -translate-x-1/2 bg-white/30 z-50 backdrop-blur-sm"
+        style={{ scaleX }}
+      >
+        <motion.div
+          className="h-full bg-gradient-to-r from-blue-400 via-purple-500 to-pink-400"
+          style={{ scaleX }}
+        />
+      </motion.div>
+
+      {/* Слайди */}
+      {slides.map((slide) => (
+        <Slide key={slide.id} {...slide} />
+      ))}
+    </div>
+  );
+}

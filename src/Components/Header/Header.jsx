@@ -74,12 +74,14 @@ const Header = () => {
         {/* Logo */}
 
         <motion.div whileHover={{ scale: 1.05 }}>
-          <Link to="/" className={styles.logo}>
+          <Link to="/about" className={styles.logo}>
             <svg
-              width="60"
-              height="60"
+              width="50"
+              height="50"
               viewBox="0 0 200 200"
               xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+              style={{ border: "1px solid #4b6cb7" }}
             >
               <defs>
                 <linearGradient id="gradF" x1="0" y1="0" x2="1" y2="1">

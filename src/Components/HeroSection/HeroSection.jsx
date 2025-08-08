@@ -66,7 +66,9 @@ const HeroSection = () => {
     >
       {/* Animated gradient background */}
       <motion.div
-        className={styles.gradientBackground}
+        className={`${styles.gradientBackground} ${
+          scrolled ? styles.scrolled : ""
+        }`}
         animate={{
           backgroundPosition: ["0% 0%", "100% 100%"],
         }}
@@ -76,6 +78,7 @@ const HeroSection = () => {
           repeatType: "reverse",
           ease: "linear",
         }}
+        style={{ y: parallaxEffects.yBg, opacity: parallaxEffects.opacity }}
       />
 
       {/* Decorative floating shapes */}
@@ -109,7 +112,7 @@ const HeroSection = () => {
       <div className={styles.content}>
         <motion.div
           className={styles.textContent}
-          style={{ y: parallaxEffects.textY }}
+          style={{ y: parallaxEffects.yBg, opacity: parallaxEffects.opacity }}
         >
           <motion.h1 className={styles.title} variants={itemVariants}>
             <motion.span

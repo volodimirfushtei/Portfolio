@@ -13,9 +13,10 @@ import HeroSection from "../../Components/HeroSection/HeroSection.jsx";
 import FadeInAnimate from "../../Components/FadeInAnimate/FadeInAnimate.jsx";
 import useScrollDetection from "../../hooks/useScrollDetection";
 import ParticlesBackground from "../../Components/ParBG/ParBG.jsx";
-import Serteficate from "../../Components/Serteficate/Serteficate.jsx";
+import Sertificate from "../../Components/Sertificate/Sertificate.jsx";
 import CtaSection from "../../Components/CtaSection/CtaSection.jsx";
 import ScrollToTopBtn from "../../Components/ScrollToTopBtn/ScrollTotopBtn.jsx";
+import ScrollProgress from "../../Components/ScrollProgress/ScrollProgress.jsx";
 const HomePage = () => {
   const [hovered, setHovered] = useState(false);
   const isScrolled = useScrollDetection(1200);
@@ -84,7 +85,9 @@ const HomePage = () => {
           <section
             id="carusel"
             className={`${styles.carusel} ${styles.section}`}
-          ></section>
+          >
+            <Carusel />
+          </section>
           <section
             id="serteficate"
             className={`${styles.serteficate} ${styles.section}`}
@@ -96,7 +99,7 @@ const HomePage = () => {
               id="serteficate"
               className={`${styles.serteficate} ${styles.section}`}
             >
-              <Serteficate />
+              <Sertificate />
             </section>
           </section>
         </section>
@@ -105,6 +108,7 @@ const HomePage = () => {
 
       {/* Scroll to Top Button */}
       <ScrollToTopBtn />
+      <ScrollProgress />
     </motion.div>
   );
 };
