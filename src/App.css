@@ -5,6 +5,7 @@
   text-align: center;
 
   overflow: hidden;
-
+  font-family: "Clarkson", Helvetica, sans-serif;
   min-height: 100vh;
+  background: #0f0f0f;
 }

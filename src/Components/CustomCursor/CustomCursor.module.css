@@ -7,7 +7,7 @@
   border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
-  background-color: rgba(254, 4, 4, 0.4);
+  background-color: rgba(203, 194, 194, 0.4);
   border: 1px solid #fff;
   mix-blend-mode: difference;
   backdrop-filter: blur(2px);

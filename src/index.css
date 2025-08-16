@@ -153,12 +153,7 @@
 
   /* === Backgrounds & Surfaces === */
   --bg-color: #121212;
-  --color-background: linear-gradient(
-    145deg,
-    #0a0a0a 0%,
-    #1b1b1b 50%,
-    #0d0d0d 100%
-  );
+  --color-background: url("https://cdn.prod.website-files.com/6835b6a2066eb03b3773dbcb/68386cc9937607453f7d5ff5_bg-4.avif");
   --color-surface: linear-gradient(
     145deg,
     #0a0a0a 0%,
@@ -186,12 +181,10 @@
   --color-button-text: #121212;
 
   /* === Gradients === */
-  --color-header: linear-gradient(
-    145deg,
-    #0f0c29 0%,
-    #302b63 30%,
-    #24243e 60%,
-    #151529 90%
+  --color-header: radial-gradient(
+    circle farthest-corner at 100% 0%,
+    #1310ca 15%,
+    #00031c 100%
   );
   --color-hero: var(--color-header);
 
@@ -212,14 +205,14 @@
       rgba(255, 255, 255, 0.2) 0px,
       rgba(255, 215, 0, 0.15) 1px,
       transparent 1px,
-      transparent 40px
+      transparent 20px
     ),
     repeating-linear-gradient(
       to bottom,
       rgba(255, 255, 255, 0.2) 0px,
       rgba(255, 215, 0, 0.15) 1px,
       transparent 1px,
-      transparent 40px
+      transparent 20px
     );
   --scroll-progress: #f6c009;
 }

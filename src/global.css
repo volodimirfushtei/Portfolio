@@ -12,10 +12,11 @@ html {
 
 body {
   font-size: 16px;
-  background-color: var(--color-background);
+
   color: var(--color-text);
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none;
+  font-family: "Clarkson", Helvetica, sans-serif;
 }
 
 /* CSS variables */

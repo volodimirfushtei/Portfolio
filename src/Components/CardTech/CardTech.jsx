@@ -65,7 +65,7 @@ const CardTech = () => {
                 <div className={styles.cardContent}>
                   <div className={styles.avatarWrapper}>
                     <motion.img
-                      src="/images/my_photo.jpg"
+                      src="/images/preview.png"
                       alt="Volodymyr Fushtei"
                       className={styles.avatar}
                       initial={{ scale: 0.9 }}

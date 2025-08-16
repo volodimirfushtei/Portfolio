@@ -17,18 +17,24 @@ import Sertificate from "../../Components/Sertificate/Sertificate.jsx";
 import CtaSection from "../../Components/CtaSection/CtaSection.jsx";
 import ScrollToTopBtn from "../../Components/ScrollToTopBtn/ScrollTotopBtn.jsx";
 import ScrollProgress from "../../Components/ScrollProgress/ScrollProgress.jsx";
-const HomePage = () => {
-  const [hovered, setHovered] = useState(false);
-  const isScrolled = useScrollDetection(1200);
-  const [scrollProgress, setScrollProgress] = useState(0);
 
+import { useRef } from "react";
+import { useScroll, useTransform } from "framer-motion";
+const HomePage = () => {
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const sectionRef = useRef(null);
+
+  // Custom scroll hook
+  const isScrolled = useScrollDetection(1200);
+
+  // Scroll progress calculation
   useEffect(() => {
     const updateScrollProgress = () => {
       const scrollTotal =
         document.documentElement.scrollHeight -
         document.documentElement.clientHeight;
       const scrollPosition = window.scrollY;
-      const progress = (scrollPosition / scrollTotal) * 100;
+      const progress = Math.min(100, (scrollPosition / scrollTotal) * 100);
       setScrollProgress(progress);
       document.documentElement.style.setProperty(
         "--scroll-progress",
@@ -36,9 +42,19 @@ const HomePage = () => {
       );
     };
 
-    window.addEventListener("scroll", updateScrollProgress);
-    return () => window.removeEventListener("scroll", updateScrollProgress);
+    const throttledScroll = throttle(updateScrollProgress, 16);
+    window.addEventListener("scroll", throttledScroll);
+    return () => window.removeEventListener("scroll", throttledScroll);
   }, []);
+
+  // Scroll animation for CTA section
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["end end", "end start"],
+  });
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "0px"]);
+
+  // Skills data
   const skills = [
     { src: "/icons/react.svg", alt: "React" },
     { src: "/icons/javascript.svg", alt: "JavaScript" },
@@ -55,18 +71,17 @@ const HomePage = () => {
     { src: "/icons/expressjs.svg", alt: "Express.js" },
     { src: "/icons/mongodb.svg", alt: "MongoDB" },
   ];
+
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.5 }}
-      animate={{ opacity: 1, scale: 1 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className={`${styles.container}`}
-      style={{
-        overflowY: "auto",
-      }}
+      className={styles.container}
     >
       <HeroSection />
-      <main className="w-screen">
+
+      <main className="w-screen overflow-hidden">
         {/* Expertise Section */}
         <section
           id="expertise"
@@ -74,43 +89,59 @@ const HomePage = () => {
         >
           <Expertise />
         </section>
+
         {/* Skills Section */}
-        <section id="skills" className={`${styles.skillsSection}`}>
+        <section id="skills" className={styles.skillsSection}>
           <ControllerSkills items={skills} />
         </section>
+
+        {/* Projects Section */}
         <section
           id="projects"
           className={`${styles.projects} ${styles.section}`}
         >
-          <section
-            id="carusel"
-            className={`${styles.carusel} ${styles.section}`}
+          <div
+            ref={sectionRef}
+            className={`${styles.carusel} ${styles.section} `}
           >
             <Carusel />
-          </section>
+          </div>
+
+          <motion.section
+            id="cta"
+            className={`${styles.cta} ${styles.section} `}
+            style={{ y }}
+          >
+            <CtaSection />
+          </motion.section>
+
+          {/* Certificate Section */}
           <section
             id="serteficate"
-            className={`${styles.serteficate} ${styles.section}`}
+            className={`${styles.sertificate} ${styles.section}`}
+            style={{ y }}
           >
-            <section id="cta " className={`${styles.cta} ${styles.section}`}>
-              <CtaSection />
-            </section>
-            <section
-              id="serteficate"
-              className={`${styles.serteficate} ${styles.section}`}
-            >
-              <Sertificate />
-            </section>
+            <Sertificate />
           </section>
         </section>
       </main>
-      <Footer />
 
-      {/* Scroll to Top Button */}
+      <Footer />
       <ScrollToTopBtn />
-      <ScrollProgress />
+      <ScrollProgress progress={scrollProgress} />
     </motion.div>
   );
 };
+
+// Throttle function for scroll events
+function throttle(fn, wait) {
+  let time = Date.now();
+  return function () {
+    if (time + wait - Date.now() < 0) {
+      fn();
+      time = Date.now();
+    }
+  };
+}
 
 export default HomePage;

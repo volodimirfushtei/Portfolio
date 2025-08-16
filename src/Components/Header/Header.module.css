@@ -201,23 +201,94 @@
   font-size: 1.4rem;
 }
 
-.mobileContactButton {
-  background: linear-gradient(135deg, #8a63ff, #63b3ff);
-  color: white;
-  border: none;
-  padding: 1rem 2rem;
-  border-radius: 2rem;
-  font-size: 1.1rem;
-  font-weight: 500;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  margin-top: 1rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.button_main {
+  justify-content: center;
+  align-items: center;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 7px 80px -12px #ffffffb3;
+  grid-column-gap: 0.6rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  padding-left: 0.2rem;
+  padding-right: 1.2rem;
+  border-radius: 50rem;
+  background-color: #fffffff2;
+
+  cursor: pointer;
+
+  font-family: Arial, sans-serif;
+  transition: background-color 0.3s ease;
+}
+.button_main .first_01 {
+  grid-column-gap: 0.6rem;
+  grid-row-gap: 0.6rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  padding-left: 0.2rem;
+  transition: all 0.2s;
+}
+.button_main:hover {
+  background-color: #01329d;
+  transition: background-color 0.3s ease;
+}
+.button_main:hover .button_text_01 {
+  color: #d5d5d5;
+
+  transition: background-color 0.3s ease;
+}
+.button_flex_text {
+  display: flex;
+  flex-direction: column;
 }
 
-.mobileContactButton:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(138, 99, 255, 0.3);
+.button_text_01 {
+  font-size: 10px;
+  font-weight: bold;
+  color: #070707;
+  text-decoration: none;
+}
+
+.avaible_wrapper {
+  display: flex;
+  align-items: center;
+  margin-top: 2px;
+}
+
+.avaible_dot {
+  width: 8px;
+  height: 8px;
+  background-color: #00ff99;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+.photo_main {
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 100%;
+  width: 35px;
+  height: 35px;
+}
+.button_text_02 {
+  font-size: 10px;
+  color: #232323;
+}
+.contact_icon {
+  margin-right: 4px;
+  font-size: 1.2rem;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: whitesmoke;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
 }
 
 /* Responsive Styles */

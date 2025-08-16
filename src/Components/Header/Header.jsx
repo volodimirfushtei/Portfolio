@@ -25,12 +25,14 @@ const useScrollDirection = () => {
   return scrollDirection;
 };
 
+const url = "/images/my_photo.jpg";
+
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isHovering, setIsHovering] = useState(null);
   const [isHidden, setIsHidden] = useState(false);
 
-  const isScrolled = useScrollDetection(100); // Змінив на 100px
+  const isScrolled = useScrollDetection(100);
   const scrollDirection = useScrollDirection();
 
   useEffect(() => {
@@ -81,7 +83,8 @@ const Header = () => {
               viewBox="0 0 200 200"
               xmlns="http://www.w3.org/2000/svg"
               xmlnsXlink="http://www.w3.org/1999/xlink"
-              style={{ border: "1px solid #4b6cb7" }}
+              version="1.1"
+              xmlSpace="preserve"
             >
               <defs>
                 <linearGradient id="gradF" x1="0" y1="0" x2="1" y2="1">
@@ -169,9 +172,33 @@ const Header = () => {
             ))}
 
             <motion.div whileHover={{ scale: 1.05 }}>
-              <Link to="/contacts" className={styles.contactButton}>
-                Contact Me
-                <span className={styles.buttonArrow}>→</span>
+              <Link to="/contacts">
+                <a
+                  className={`${styles.button_main} ${styles.first_01} w-inline-block`}
+                  href="https://cal.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <div className={styles.photo}>
+                    <img
+                      src="public/images/Myphoto.jpg"
+                      alt="photo"
+                      className={styles.photo_main}
+                    />
+                  </div>
+                  <div className={`${styles.button_flex_text} flex`}>
+                    <div className={styles.button_text_01}>
+                      Grab 15 minutes with us
+                    </div>
+
+                    <div className={`${styles.avaible_wrapper} flex`}>
+                      <div className={styles.avaible_dot}></div>
+                      <div className={styles.button_text_02}>
+                        Open and ready
+                      </div>
+                    </div>
+                  </div>
+                </a>
               </Link>
             </motion.div>
           </nav>
@@ -236,6 +263,7 @@ const Header = () => {
                   className={styles.mobileContactButton}
                   onClick={toggleMobileMenu}
                 >
+                  <img src={url} alt="Contact Icon" />
                   Contact Me
                   <span className={styles.buttonArrow}>→</span>
                 </Link>

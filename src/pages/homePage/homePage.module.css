@@ -4,7 +4,9 @@
 
   /* gap between sections */
 }
-
+.section {
+  transition: background 1.5s ease-in-out;
+}
 @media (max-width: 1024px) {
   .section {
     margin-bottom: 3rem;
@@ -35,6 +37,11 @@
 
   position: relative;
   overflow: auto;
+}
+.sertificate {
+  background-color: #00031c;
+  background-image: url("https://cdn.prod.website-files.com/6835b6a2066eb03b3773dbcb/68386cc9937607453f7d5ff5_bg-4.avif");
+  background-size: cover;
 }
 
 .content {
@@ -191,14 +198,15 @@
   color: var(--color-text);
 }
 .carusel {
-  background: linear-gradient(
-    135deg,
-    rgba(95, 106, 149, 0.15) 0%,
-    rgba(0, 0, 0, 0) 50%,
-    rgba(35, 100, 253, 0.15) 100%
+  background: radial-gradient(
+    circle farthest-corner at 100% 0%,
+    #110fdf 15%,
+    #00031c 100%
   );
+  background-size: cover;
   padding: 4rem 4rem;
 }
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .container {

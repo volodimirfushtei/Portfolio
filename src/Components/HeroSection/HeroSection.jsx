@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { useScroll, useTransform, motion, useSpring } from "framer-motion";
+import { Typewriter } from "react-simple-typewriter";
 import styles from "./HeroSection.module.css";
 import HeroMedia from "../HeroMedia/HeroMedia";
 
@@ -114,7 +115,13 @@ const HeroSection = () => {
           className={styles.textContent}
           style={{ y: parallaxEffects.yBg, opacity: parallaxEffects.opacity }}
         >
-          <motion.h1 className={styles.title} variants={itemVariants}>
+          <motion.h1
+            className={`${styles.title} ${
+              scrolled ? styles.scrolledTitle : ""
+            }`}
+            variants={itemVariants}
+          >
+            {" "}
             <motion.span
               className={styles.titleGradient}
               animate={{
@@ -129,12 +136,26 @@ const HeroSection = () => {
             >
               Innovative
             </motion.span>{" "}
-            digital
-            <br /> solutions
+            digital solutions
           </motion.h1>
 
           <motion.p className={styles.subtitle} variants={itemVariants}>
-            Transforming ideas into exceptional web experiences
+            <Typewriter
+              speed="fast"
+              variance={0.8}
+              backspace="word"
+              cursorBlinkSpeed={2}
+              cursor
+              cursorStyle="|"
+              words={[
+                "Transforming ideas into exceptional web experiences",
+                "UI/UX Design",
+                "Animations",
+                "React Apps",
+              ]}
+            >
+              Transforming ideas into exceptional web experiences
+            </Typewriter>
           </motion.p>
 
           <motion.div className={styles.buttons} variants={itemVariants}>
@@ -160,6 +181,7 @@ const HeroSection = () => {
               onClick={() => window.open("https://github.com/volodimirfushtei")}
             >
               View my work
+              <span className={styles.buttonArrow}>→</span>
             </motion.button>
           </motion.div>
         </motion.div>
