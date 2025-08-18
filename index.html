@@ -2,44 +2,78 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta property="og:title" content="Volodymyr Fushtei — Tech Stack" />
+
+    <!-- SEO -->
+    <title>Volodymyr Fushtei — Tech Stack</title>
     <meta
-      property="og:image"
-      content="https://your-site.com/tech-stack-card.png "
+      name="description"
+      content="Hi, I'm Volodymyr Fushtei — Frontend Developer specializing in React, Next.js, TypeScript, Tailwind CSS. Explore my projects, skills, and experience."
     />
+    <meta
+      name="keywords"
+      content="frontend developer, React developer, Next.js, TypeScript, Tailwind CSS, web developer portfolio, Ukraine developer"
+    />
+    <meta name="author" content="Volodymyr Fushtei" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph (для соцмереж) -->
+    <meta property="og:title" content="Volodymyr Fushtei — Tech Stack" />
     <meta
       property="og:description"
       content="Frontend developer | React, Next.js, TypeScript, Tailwind CSS"
     />
-    <link rel="icon" type="image/svg+xml" href="/images/Fush-Photoroom.png" />
+    <meta
+      property="og:image"
+      content="https://portfolio-ten-kappa-67.vercel.app/images/tech-stack-card.png"
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://portfolio-ten-kappa-67.vercel.app/"
+    />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/images/icons/sprite.svg" />
+
+    <!-- Remix Icons -->
     <link
       href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"
       rel="stylesheet"
     />
-    
-   
+
+    <!-- Global CSS -->
     <link rel="stylesheet" href="/src/global.css" />
 
+    <!-- Viewport -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>V.Fushtei</title>
- <body >
-    
-    
+
+    <!-- Fonts -->
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+  </head>
+  <body>
     <div id="root"></div>
 
+    <!-- React -->
     <script type="module" src="/src/main.jsx"></script>
+
+    <!-- GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
+    <!-- SVG Sprite Loader -->
     <script>
       fetch("/icons/sprite.svg")
         .then((response) => response.text())
         .then((data) => {
           const div = document.createElement("div");
+          div.style.display = "none"; // ховаємо, щоб не заважало
           div.innerHTML = data;
           document.body.appendChild(div);
         });
     </script>
-
   </body>
 </html>

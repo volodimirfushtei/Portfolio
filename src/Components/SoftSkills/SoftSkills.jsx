@@ -53,29 +53,11 @@ export default function SoftSkills() {
   const opacity = useTransform(scrollYProgress, [0.2, 0.4, 0.8], [0.2, 0.6, 1]);
   const delay = useTransform(scrollYProgress, [0, 1], [0, 1]);
   // Варіанти для контейнера
-  const containerVariants = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.3, // затримка між елементами
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, x: -100 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: { duration: 0.6, ease: "easeOut" },
-    },
-  };
 
   return (
     <motion.section
       ref={ref}
-      className="relative w-full max-w-3xl mx-auto p-10 text-white overflow-hidden"
-      variants={containerVariants}
+      className="relative w-full max-w-3xl mx-auto p-10 text-white overflow-hidden "
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true }}
@@ -87,9 +69,11 @@ export default function SoftSkills() {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           style={{ x, opacity, delay }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ staggerChildren: 0.1 }}
         >
           <motion.h3
-            className={`text-2xl font-semibold flex items-center gap-2 mb-4 border-b pb-2 border-gray-400 ${styles.skillTitle}`}
+            className={`text-2xl font-semibold flex items-center gap-2 mb-2 border-b pb-2 border-gray-400 ${styles.skillTitle}`}
             style={{ x, opacity, delay }}
           >
             <i
@@ -104,7 +88,10 @@ export default function SoftSkills() {
                 key={idx}
                 custom={idx}
                 className="mb-1"
-                style={{ x: itemX, opacity, delay }}
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: idx * 0.2 }}
               >
                 {item}
               </li>

@@ -20,6 +20,7 @@ import ScrollProgress from "../../Components/ScrollProgress/ScrollProgress.jsx";
 
 import { useRef } from "react";
 import { useScroll, useTransform } from "framer-motion";
+import StickyZoomSection from "../../Components/StickyZoomSection/StickyZoomSection.jsx";
 const HomePage = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const sectionRef = useRef(null);
@@ -122,6 +123,9 @@ const HomePage = () => {
             style={{ y }}
           >
             <Sertificate />
+          </section>
+          <section className={`${styles.sticky} ${styles.section}`}>
+            <StickyZoomSection />
           </section>
         </section>
       </main>

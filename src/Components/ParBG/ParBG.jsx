@@ -1,10 +1,10 @@
 import { useCallback } from "react";
-import Particles from "react-tsparticles";
-import { loadFull } from "tsparticles";
+import { Particles } from "@tsparticles/react";
+import { loadSlim } from "@tsparticles/slim";
 
-const ParticlesBackground = () => {
+const ParBG = () => {
   const particlesInit = useCallback(async (engine) => {
-    await loadFull(engine);
+    await loadSlim(engine);
   }, []);
 
   return (
@@ -13,22 +13,41 @@ const ParticlesBackground = () => {
       init={particlesInit}
       options={{
         background: {
-          color: {
-            value: "#0d0d0d",
-          },
+          color: "#000000", // Чорний фон
         },
         fpsLimit: 60,
         interactivity: {
           events: {
-            onClick: {
-              enable: true,
-              mode: "push",
-            },
             onHover: {
               enable: true,
-              mode: "repulse",
+              mode: "grab", // Ефект при наведенні
             },
-            resize: true,
+          },
+        },
+        particles: {
+          color: {
+            value: "#ffffff", // Білі частинки
+          },
+          links: {
+            color: "#ffffff",
+            distance: 150,
+            enable: true,
+          },
+          move: {
+            enable: true,
+            speed: 2,
+          },
+          number: {
+            density: {
+              enable: true,
+            },
+            value: 500, // Кількість частинок
+          },
+          opacity: {
+            value: 0.5,
+          },
+          size: {
+            value: { min: 1, max: 3 },
           },
         },
       }}
@@ -36,4 +55,4 @@ const ParticlesBackground = () => {
   );
 };
 
-export default ParticlesBackground;
+export default ParBG;

@@ -18,6 +18,13 @@ body {
   -ms-overflow-style: none;
   font-family: "Clarkson", Helvetica, sans-serif;
 }
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 
 /* CSS variables */
 :root {

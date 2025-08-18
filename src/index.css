@@ -31,6 +31,26 @@
   display: none;
 }
 
+.animate-border {
+  border: 4px solid transparent;
+  border-radius: 16px;
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  background-image: linear-gradient(white, white),
+    linear-gradient(90deg, #4368ff, #ff5252, #4368ff);
+  animation: border-glow 4s linear infinite;
+}
+
+@keyframes border-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(255, 193, 7, 0.7), 0 0 20px rgba(255, 193, 7, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 193, 7, 1), 0 0 40px rgba(255, 193, 7, 0.8);
+  }
+}
+
 .light-theme .glass-effect {
   background: linear-gradient(
     135deg,

@@ -30,7 +30,17 @@
   background-clip: text;
   color: transparent;
 }
-
+.heading::after {
+  content: "";
+  position: absolute;
+  bottom: -1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  border-radius: 2px;
+}
 .heading span {
   display: inline-block;
 }

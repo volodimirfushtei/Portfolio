@@ -200,11 +200,11 @@
 .carusel {
   background: radial-gradient(
     circle farthest-corner at 100% 0%,
-    #110fdf 15%,
+    #0300b4 15%,
     #00031c 100%
   );
   background-size: cover;
-  padding: 4rem 4rem;
+  padding: 0rem 2rem;
 }
 
 /* Responsive adjustments */

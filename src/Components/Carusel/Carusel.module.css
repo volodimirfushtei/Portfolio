@@ -5,7 +5,7 @@
   justify-content: center;
   align-items: center;
 
-  padding: 1rem 1rem;
+  padding: 0rem 1rem;
 }
 
 .carouselContainer {
@@ -63,4 +63,42 @@
   font-size: 2rem;
   color: #8df0cc;
   text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+.title {
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: gradient-shift 5s ease infinite;
+}
+.subtitle {
+  -webkit-text-fill-color: transparent;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-clip: text;
+  animation: gradient-shift 5s ease infinite;
+}
+
+.icon {
+  background: linear-gradient(90deg, #4368ff, #ff5252, #4368ff);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-clip: text;
+  animation: gradient-shift 5s ease infinite;
+}
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }

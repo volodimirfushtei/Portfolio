@@ -17,7 +17,7 @@
 
 - **GOIT-Campers** – Booking platform for camper vans
 - **Admin Panel** – Camper management dashboard
-- **Portfolio** – [https://fushtei.dev](https://fushtei.dev)
+- **Portfolio** – [https://portfolio-ten-kappa-67.vercel.app/](https://portfolio-ten-kappa-67.vercel.app/)
 
 ---
 

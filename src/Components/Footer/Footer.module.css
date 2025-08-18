@@ -1,5 +1,8 @@
 .footer {
-  background: url("/images/njeromin2.jpg") center/cover no-repeat;
+  background-image: url("https://cdn.prod.website-files.com/682c122650e2b281410915ba/685c00a0ae55f4fb1cf34c26_Pre%20Bg.png");
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
   background-position: center bottom;
   background-repeat: no-repeat;
   transition: background-position 0.3s ease;

@@ -16,16 +16,27 @@ const ProjectPage = () => {
   const projectsPerPage = 4;
 
   useEffect(() => {
-    const unsub = onSnapshot(collection(db, "projects"), (snapshot) => {
-      const projectsData = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setProjects(projectsData);
-      setLoading(false);
-    });
-
-    return () => unsub(); // clean-up listener
+    const unsub = onSnapshot(
+      collection(db, "projects"),
+      (snapshot) => {
+        try {
+          const projectsData = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          setProjects(projectsData);
+        } catch (error) {
+          console.error("Error fetching projects:", error);
+        } finally {
+          setLoading(false);
+        }
+      },
+      (error) => {
+        console.error("Firestore error:", error);
+        setLoading(false);
+      }
+    );
+    return () => unsub();
   }, []);
 
   const filteredProjects = useMemo(() => {
