@@ -3,7 +3,6 @@
 
   inset: 0;
 
-  background-color: #00031c;
   background-image: url("https://cdn.prod.website-files.com/6835b6a2066eb03b3773dbcb/68399e9f53dcba23671a6ff9_bg.webp");
   background-size: cover;
   z-index: -1;
@@ -51,7 +50,7 @@
   display: inline-block;
   will-change: background-position;
   animation: gradientAnimation 10s ease infinite;
-  font-size: 6rem;
+  font-size: 8rem;
 }
 @keyframes gradientAnimation {
   0% {
@@ -180,7 +179,7 @@
 }
 
 .title {
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
   font-weight: 800;
   line-height: 1.1;
   margin-bottom: 1.5rem;
@@ -191,7 +190,7 @@
 }
 
 .subtitle {
-  font-size: 1.25rem;
+  font-size: 1.6rem;
   color: var(--color-title);
 
   margin-bottom: 3rem;
@@ -315,19 +314,6 @@
   align-items: center;
   gap: 0.5rem;
   will-change: transform, opacity;
-}
-
-.scrollArrow {
-  width: 24px;
-  height: 24px;
-  border-left: 2px solid #f4e2d8;
-  border-bottom: 2px solid #f4e2d8;
-  transform: rotate(45deg);
-  opacity: 0.8;
-
-  border-bottom: 2px solid #f4e2d8;
-  transform: rotate(-45deg);
-  opacity: 0.7;
 }
 
 .scrollText {

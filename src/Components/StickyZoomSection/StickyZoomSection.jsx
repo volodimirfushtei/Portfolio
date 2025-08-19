@@ -111,7 +111,7 @@ export default function StickyZoomSection() {
 
         <h2
           className="text-white/70 text-6xl md:text-6xl font-bold tracking-tight ml-2"
-          style={{ fontSize: "clamp(2.5rem, 10vw, 4rem)" }}
+          style={{ fontSize: "clamp(2.5rem, 10vw, 3.6rem)" }}
         >
           <i className="ri-copyright-line text-yellow-400 text-5xl md:text-6xl mr-4 align-middle"></i>
           2025

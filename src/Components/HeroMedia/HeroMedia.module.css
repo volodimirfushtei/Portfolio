@@ -4,7 +4,7 @@
   /* 16:9 aspect ratio */
   overflow: hidden;
   border-bottom: 6px solid var(--color-success);
-
+  border-radius: 16px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 

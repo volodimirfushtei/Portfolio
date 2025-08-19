@@ -194,21 +194,16 @@ const HeroSection = () => {
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* ✅ Scroll Indicator */}
       <motion.div
-        className={styles.scrollIndicator}
-        animate={{
-          y: [0, 15, 0],
-          opacity: [0.6, 1, 0.6],
-        }}
-        transition={{
-          duration: 2,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white flex flex-col items-center gap-2"
+        animate={{ y: [0, 10, 0], opacity: [0.6, 1, 0.6] }}
+        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
       >
-        <div className={styles.scrollArrow} />
-        <span>Scroll to explore</span>
+        <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center">
+          <div className="w-1 h-3 bg-white rounded-full animate-bounce mt-2"></div>
+        </div>
+        <span className="text-sm opacity-70">Scroll to explore</span>
       </motion.div>
     </motion.section>
   );
