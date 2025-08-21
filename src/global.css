@@ -12,11 +12,11 @@ html {
 
 body {
   font-size: 16px;
-
+  overscroll-behavior: none;
   color: var(--color-text);
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none;
-  font-family: "Clarkson", Helvetica, sans-serif;
+  font-family: "Poppins", Helvetica, sans-serif;
 }
 .scrollbar-hidden::-webkit-scrollbar {
   display: none;

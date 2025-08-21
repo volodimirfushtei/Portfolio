@@ -6,6 +6,10 @@
 }
 .section {
   transition: background 1.5s ease-in-out;
+  -webkit-transition: background 1.5s ease-in-out;
+  -moz-transition: background 1.5s ease-in-out;
+  -ms-transition: background 1.5s ease-in-out;
+  -o-transition: background 1.5s ease-in-out;
 }
 @media (max-width: 1024px) {
   .section {

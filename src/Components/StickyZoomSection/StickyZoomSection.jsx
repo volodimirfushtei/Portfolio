@@ -21,7 +21,7 @@ export default function StickyZoomSection() {
       start: "top top",
       end: "bottom top",
       pin: true,
-      scrub: 1.5,
+      scrub: 2.5,
       animation: tl
         .fromTo(
           img,
@@ -47,10 +47,10 @@ export default function StickyZoomSection() {
         .fromTo(
           a,
           {
-            width: "60%",
-            height: "60%",
+            width: "30%",
+            height: "30%",
             opacity: 0,
-            filter: "blur(0px)",
+            filter: "blur(2px)",
             borderRadius: "8px",
             ease: "power1.out",
           },
@@ -87,25 +87,27 @@ export default function StickyZoomSection() {
         className="flex flex-row justify-center gap-4 items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  hover:shadow-lg transition-transform duration-300"
       >
         <h2
-          className="text-white/70 text-9xl md:text-10xl font-bold tracking-tight "
+          className="text-white/70 text-6xl md:text-6xl font-bold tracking-tight "
           style={{ fontSize: "clamp(2.5rem, 10vw, 3.6rem)" }}
         >
-          <i className="ri-reactjs-line text-blue-400 text-5xl md:text-6xl mr-4 align-middle"></i>
-          React
+          {" "}
+          GSAP
         </h2>
         <img
           src="/images/njeromin1.jpg"
           alt="Zoom from small"
           className="object-cover rounded-xl shadow-lg border border-white/20 transition-transform duration-300"
         />
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-[27px] -translate-y-1/2 rounded-lg hover:scale-105 hover:shadow-lg ">
+
+        <div className="absolute top-1/2 left-1/2  transform -translate-x-[170px] rounded-lg hover:scale-105 hover:shadow-lg ">
           <a
             ref={aRef}
             target="_blank"
             href="https://github.com/volodimirfushtei"
-            className="text-warning text-2xl md:text-3xl font-bold tracking-tight text-decoration-none hover:text-warning hover:scale-110 transition-colors duration-300  "
+            className="flex text-warning text-4xl md:text-5xl  items-center justify-center font-bold p-2 backdrop-blur-xl  text-decoration-none hover:text-warning hover:scale-105 hover:shadow-xl transition-colors duration-300  "
           >
-            View GitHub
+            {" "}
+            View <i className="ri-github-fill"></i> GitHub
           </a>
         </div>
 

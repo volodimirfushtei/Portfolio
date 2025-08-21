@@ -185,7 +185,6 @@ const TestError = () => {
                     aria-label={`Trigger ${type} error`}
                     title={`Trigger ${type} error`}
                     type="button"
-                    variants={childVariants}
                   >
                     {type
                       .replace(/([A-Z])/g, " $1")

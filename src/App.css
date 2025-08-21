@@ -3,9 +3,8 @@
   margin: 0 auto;
   padding: 0;
   text-align: center;
-
   overflow: hidden;
-  font-family: "Clarkson", Helvetica, sans-serif;
+  font-family: "Poppins", Helvetica, sans-serif;
   min-height: 100vh;
   background: #0f0f0f;
 }

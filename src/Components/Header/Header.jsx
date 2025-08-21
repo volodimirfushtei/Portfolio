@@ -5,6 +5,7 @@ import styles from "./Header.module.css";
 import ToggleTheme from "../ToggleTheme/ToggleTheme";
 import FullscreenButton from "../FullScreenButton/FullScreenButton";
 import useScrollDetection from "../../hooks/useScrollDetection";
+import Logo from "../Logo/Logo";
 
 // Додаємо хук для визначення напрямку скролу
 const useScrollDirection = () => {
@@ -24,8 +25,6 @@ const useScrollDirection = () => {
 
   return scrollDirection;
 };
-
-const url = "/images/my_photo.jpg";
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -77,62 +76,7 @@ const Header = () => {
 
         <motion.div whileHover={{ scale: 1.05 }}>
           <Link to="/about" className={styles.logo}>
-            <svg
-              width="50"
-              height="50"
-              viewBox="0 0 200 200"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlnsXlink="http://www.w3.org/1999/xlink"
-              version="1.1"
-              xmlSpace="preserve"
-            >
-              <defs>
-                <linearGradient id="gradF" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stopColor="#4b6cb7" />
-                  <stop offset="100%" stopColor="#182848" />
-                </linearGradient>
-                <linearGradient id="gradV" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stopColor="#56ccf2" />
-                  <stop offset="100%" stopColor="#2f80ed" />
-                </linearGradient>
-                <filterstopColor
-                  id="shadow"
-                  x="-50%"
-                  y="-50%"
-                  width="200%"
-                  height="200%"
-                >
-                  <feOffset result="offOut" in="SourceAlpha" dx="4" dy="4" />
-                  <feGaussianBlur
-                    result="blurOut"
-                    in="offOut"
-                    stdDeviation="4"
-                  />
-                  <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
-                </filterstopColor>
-              </defs>
-
-              <g filter="url(#shadow)">
-                <text
-                  x="30"
-                  y="120"
-                  fontFamily="Arial Black, sans-serif"
-                  fontSize="80"
-                  fill="url(#gradF)"
-                >
-                  F
-                </text>
-                <text
-                  x="90"
-                  y="120"
-                  fontFamily="Arial Black, sans-serif"
-                  fontSize="80"
-                  fill="url(#gradV)"
-                >
-                  V
-                </text>
-              </g>
-            </svg>
+            <Logo />
 
             <span>MyPortfolio</span>
           </Link>
@@ -172,16 +116,19 @@ const Header = () => {
             ))}
 
             <motion.div whileHover={{ scale: 1.05 }}>
-              <Link to="/contacts">
-                <a
+              <a
+                href="/contacts"
+                target="_blank"
+                aria-label="Grab 15 minutes with us"
+                rel="noopener noreferrer"
+                className="w-inline-block text-decoration-none"
+              >
+                <div
                   className={`${styles.button_main} ${styles.first_01} w-inline-block`}
-                  href="https://cal.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
                 >
                   <div className={styles.photo}>
                     <img
-                      src="public/images/Myphoto.jpg"
+                      src="/images/Myphoto.jpg"
                       alt="photo"
                       className={styles.photo_main}
                     />
@@ -198,8 +145,8 @@ const Header = () => {
                       </div>
                     </div>
                   </div>
-                </a>
-              </Link>
+                </div>
+              </a>
             </motion.div>
           </nav>
 
@@ -257,17 +204,7 @@ const Header = () => {
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-              >
-                <Link
-                  to="/contacts"
-                  className={styles.mobileContactButton}
-                  onClick={toggleMobileMenu}
-                >
-                  <img src={url} alt="Contact Icon" />
-                  Contact Me
-                  <span className={styles.buttonArrow}>→</span>
-                </Link>
-              </motion.div>
+              ></motion.div>
             </motion.nav>
           </motion.div>
         )}

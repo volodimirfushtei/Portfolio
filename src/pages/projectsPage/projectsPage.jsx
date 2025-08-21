@@ -19,17 +19,12 @@ const ProjectPage = () => {
     const unsub = onSnapshot(
       collection(db, "projects"),
       (snapshot) => {
-        try {
-          const projectsData = snapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          }));
-          setProjects(projectsData);
-        } catch (error) {
-          console.error("Error fetching projects:", error);
-        } finally {
-          setLoading(false);
-        }
+        const projectsData = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setProjects(projectsData);
+        setLoading(false); // тільки тут
       },
       (error) => {
         console.error("Firestore error:", error);
@@ -59,7 +54,10 @@ const ProjectPage = () => {
     (currentPage - 1) * projectsPerPage,
     currentPage * projectsPerPage
   );
-
+  const uniqueTags = useMemo(
+    () => Array.from(new Set(projects.flatMap((p) => p.tags || []))),
+    [projects]
+  );
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -183,13 +181,11 @@ const ProjectPage = () => {
               aria-label="Filter by technology"
             >
               <option value="">All Technologies</option>
-              {Array.from(new Set(projects.flatMap((p) => p.tags || []))).map(
-                (tag) => (
-                  <option key={tag} value={tag}>
-                    {tag}
-                  </option>
-                )
-              )}
+              {uniqueTags.map((tag) => (
+                <option key={tag} value={tag}>
+                  {tag}
+                </option>
+              ))}
             </select>
           </motion.div>
         </div>
@@ -212,7 +208,7 @@ const ProjectPage = () => {
             {paginatedProjects.length > 0 ? (
               paginatedProjects.map((project) => (
                 <motion.div
-                  key={project.id}
+                  key={currentPage}
                   className={styles.projectCard}
                   layout
                   variants={cardVariants}
@@ -230,7 +226,7 @@ const ProjectPage = () => {
                   >
                     <div className={styles.imageContainer}>
                       <img
-                        src={project.imageUrl}
+                        src={project.imageUrl || "/images/business.jpg"}
                         alt={project.title}
                         className={styles.projectImage}
                         loading="lazy"
@@ -330,7 +326,7 @@ const ProjectPage = () => {
                 }`}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                disabled={currentPage === i + 1}
+                aria-current={currentPage === i + 1 ? "page" : undefined}
                 aria-label={`Go to page ${i + 1}`}
               >
                 {i + 1}
