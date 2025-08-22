@@ -11,7 +11,7 @@ const HeroMedia = () => {
           loop
           playsInline
           className={styles.video}
-          poster="/images/pexels-digi.jpg"
+          poster="/images/pexels_steve.jpg"
         >
           <source src={videoSrc} type="video/mp4" />
           Your browser does not support the video tag.

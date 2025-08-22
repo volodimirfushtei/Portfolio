@@ -8,7 +8,7 @@ import Footer from "../../Components/Footer/Footer.jsx";
 
 import Expertise from "../../Components/Expertise/Expertise";
 import Carusel from "../../Components/Carusel/Carusel.jsx";
-import ScrollBar from "../../Components/ScrollBar/ScrollBar.jsx";
+
 import HeroSection from "../../Components/HeroSection/HeroSection.jsx";
 import FadeInAnimate from "../../Components/FadeInAnimate/FadeInAnimate.jsx";
 import useScrollDetection from "../../hooks/useScrollDetection";
@@ -17,11 +17,11 @@ import Sertificate from "../../Components/Sertificate/Sertificate.jsx";
 import CtaSection from "../../Components/CtaSection/CtaSection.jsx";
 import ScrollToTopBtn from "../../Components/ScrollToTopBtn/ScrollTotopBtn.jsx";
 import ScrollProgress from "../../Components/ScrollProgress/ScrollProgress.jsx";
-import ScrollyImages from "../../Components/ScrollyImages/ScrollyImages.jsx";
+
 import { useRef } from "react";
 import { useScroll, useTransform } from "framer-motion";
 import StickyZoomSection from "../../Components/StickyZoomSection/StickyZoomSection.jsx";
-import { Scroll } from "lucide-react";
+
 const HomePage = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const sectionRef = useRef(null);
@@ -130,7 +130,6 @@ const HomePage = () => {
           </section>
         </section>
       </main>
-
       <Footer />
       <ScrollToTopBtn />
       <ScrollProgress progress={scrollProgress} />

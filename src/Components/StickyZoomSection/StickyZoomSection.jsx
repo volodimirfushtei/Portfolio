@@ -87,14 +87,16 @@ export default function StickyZoomSection() {
         className="flex flex-row justify-center gap-4 items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  hover:shadow-lg transition-transform duration-300"
       >
         <h2
-          className="text-white/70 text-6xl md:text-6xl font-bold tracking-tight "
+          className="text-white/70 text-6xl md:text-6xl font-bold tracking-tight flex items-center"
           style={{ fontSize: "clamp(2.5rem, 10vw, 3.6rem)" }}
         >
-          {" "}
           GSAP
+          <i className=" text-yellow-400 text-5xl md:text-6xl mr-4 align-middle">
+            G
+          </i>{" "}
         </h2>
         <img
-          src="/images/njeromin1.jpg"
+          src="/images/pexels_steve.jpg"
           alt="Zoom from small"
           className="object-cover rounded-xl shadow-lg border border-white/20 transition-transform duration-300"
         />
@@ -112,10 +114,10 @@ export default function StickyZoomSection() {
         </div>
 
         <h2
-          className="text-white/70 text-6xl md:text-6xl font-bold tracking-tight ml-2"
+          className="text-white/70 text-5xl md:text-5xl font-bold tracking-tight ml-2 flex items-center"
           style={{ fontSize: "clamp(2.5rem, 10vw, 3.6rem)" }}
         >
-          <i className="ri-copyright-line text-yellow-400 text-5xl md:text-6xl mr-4 align-middle"></i>
+          <i className="ri-copyright-line text-yellow-400 text-4xl md:text-5xl mr-4 align-middle"></i>
           2025
         </h2>
       </div>

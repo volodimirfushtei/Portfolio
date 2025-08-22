@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from "react";
-
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./SoftSkills.module.css";
-
+gsap.registerPlugin(ScrollTrigger);
 export default function SoftSkills() {
   const skills = [
     {
@@ -44,9 +45,7 @@ export default function SoftSkills() {
 
   const ref = useRef(null);
   useEffect(() => {
-    if (window.gsap && window.ScrollTrigger) {
-      const gsap = window.gsap;
-      gsap.registerPlugin(window.ScrollTrigger);
+    if (gsap && ScrollTrigger) {
       const blocks = gsap.utils.toArray(".skill-block");
       gsap.fromTo(
         blocks,

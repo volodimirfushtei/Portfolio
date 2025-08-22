@@ -84,7 +84,7 @@ const Footer = () => {
 
       <div className={styles.copyright}>
         <img
-          src="/images/my_photo.jpg"
+          src="/images/Myphoto.jpg"
           alt="my_photo"
           className={styles.myPhoto}
         />

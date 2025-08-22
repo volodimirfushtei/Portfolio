@@ -2,10 +2,11 @@ import React, { useEffect, useRef, useMemo } from "react";
 import SoftSkills from "../SoftSkills/SoftSkills";
 import styles from "./Carusel.module.css";
 import { MonitorSmartphone, Workflow, Clock, Users } from "lucide-react";
-
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 export default function Carousel() {
   const containerRef = useRef(null);
-
   const slides = useMemo(
     () => [
       {
@@ -53,11 +54,7 @@ export default function Carousel() {
   );
 
   useEffect(() => {
-    const gsap = window.gsap;
-    const ScrollTrigger = window.ScrollTrigger;
     if (!gsap || !ScrollTrigger || !containerRef.current) return;
-
-    gsap.registerPlugin(ScrollTrigger);
 
     // Обмежуємо селектори коренем, автоматичний cleanup
     const ctx = gsap.context(() => {
@@ -168,11 +165,7 @@ export default function Carousel() {
   return (
     <div className=" flex flex-col lg:flex-row gap-6 lg:gap-10 xl:gap-16 items-center justify-center min-h-screen p-4 md:p-6">
       {/* LEFT SLIDER */}
-      <h2
-        className={`absolute z-12 top-8 right-1/2  font-bold ${styles.main_title}`}
-      >
-        Soft Skills
-      </h2>
+      <h2 className={`font-bold ${styles.main_title}`}>Soft Skills</h2>
       <div
         ref={containerRef}
         className="relative h-[500px] md:h-[600px] lg:h-[700px] w-full lg:w-1/2 overflow-y-auto snap-y snap-mandatory scroll-smooth rounded-xl lg:rounded-2xl shadow-lg lg:shadow-2xl scrollbar-hidden"

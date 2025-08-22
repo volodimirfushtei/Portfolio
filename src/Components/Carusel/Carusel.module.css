@@ -76,6 +76,24 @@ div .m_title {
   letter-spacing: -0.5px;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+div .main_title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-size: 48px;
+  font-weight: 700;
+  color: transparent;
+  line-height: 1.2;
+  margin-bottom: 16px;
+  letter-spacing: -0.5px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 .title {
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
