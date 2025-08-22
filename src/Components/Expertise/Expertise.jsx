@@ -71,14 +71,10 @@ const Expertise = () => {
   const glowScale = useTransform(scrollYProgress, [0, 1], [1, 1.2]);
 
   return (
-    <section
-      id="expertise"
-      className={`${styles.expertise} glass-effect `}
-      ref={ref}
-    >
+    <section id="expertise" className={`${styles.expertise} `} ref={ref}>
       {/* Background with enhanced effects */}
       <motion.div
-        className={styles.background}
+        className={`${styles.background} `}
         style={{
           scale,
           y: yBg,

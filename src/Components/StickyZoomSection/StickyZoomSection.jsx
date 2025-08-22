@@ -72,8 +72,9 @@ export default function StickyZoomSection() {
 
   return (
     <section
+      style={{ overflow: "hidden" }}
       ref={sectionRef}
-      className="relative h-[100vh] w-full bg-gradient-to-br from-primary via-black/60 to-secondary overflow-hidden flex items-center justify-center bg-[url('https://cdn.prod.website-files.com/6840876d4d1ed0e8e2a330b9/68641f683476d979a209226a_Pixel%201_white.svg')] bg-center"
+      className="relative h-[100vh] w-full overflow-hidden flex items-center justify-center bg-[url('https://cdn.prod.website-files.com/6840876d4d1ed0e8e2a330b9/68641f683476d979a209226a_Pixel%201_white.svg')] bg-center "
     >
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 left-1/2 w-96 h-96 bg-secondary/20 rounded-full blur-3xl -translate-x-1/2 -z-10"></div>
@@ -96,9 +97,9 @@ export default function StickyZoomSection() {
           </i>{" "}
         </h2>
         <img
-          src="/images/pexels_steve.jpg"
+          src="https://cdn.prod.website-files.com/6846e0f69b48bd33083ccf30/6847051fca9d03f2175253ef_Grid%20(1).webp"
           alt="Zoom from small"
-          className="object-cover rounded-xl shadow-lg border border-white/20 transition-transform duration-300"
+          className="object-cover rounded-xl shadow-lg hover:shadow-xl border border-secondary transition-transform duration-300"
         />
 
         <div className="absolute top-1/2 left-1/2  transform -translate-x-[170px] rounded-lg hover:scale-105 hover:shadow-lg ">
