@@ -3,7 +3,8 @@
 
   inset: 0;
 
-  background-image: url("https://cdn.prod.website-files.com/6835b6a2066eb03b3773dbcb/68399e9f53dcba23671a6ff9_bg.webp");
+  background-image: var(--color-background);
+  background-position: center;
   background-size: cover;
   z-index: -1;
   will-change: background-position;
@@ -15,24 +16,13 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    135deg,
-    rgba(0, 0, 0, 002) 0%,
-    rgba(0, 0, 0, 0.35) 50%,
-    rgba(0, 0, 0, 01) 100%
-  );
+
   z-index: -1;
 }
 .scrolled {
   background-image: var(--color-background-scrolled);
 }
-.scrolledTitle {
-  scroll-behavior: smooth;
-  transform: scale(0.9);
-  opacity: 0.8;
-  transition: all 0.5s ease;
-  will-change: transform;
-}
+
 .scrolledMedia {
   scroll-behavior: smooth;
   transform: scale(0.9);
@@ -49,20 +39,10 @@
   color: transparent;
   display: inline-block;
   will-change: background-position;
-  animation: gradientAnimation 10s ease infinite;
+
   font-size: 8rem;
 }
-@keyframes gradientAnimation {
-  0% {
-    background-position: 0% center;
-  }
-  50% {
-    background-position: 100% center;
-  }
-  100% {
-    background-position: 0% center;
-  }
-}
+
 .hero {
   position: relative;
   width: 100%;
@@ -130,7 +110,7 @@
   will-change: transform;
 }
 
-.video {
+.image {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -179,7 +159,7 @@
 }
 
 .title {
-  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  font-size: clamp(2rem, 5vw, 5rem);
   font-weight: 800;
   line-height: 1.1;
   margin-bottom: 1.5rem;

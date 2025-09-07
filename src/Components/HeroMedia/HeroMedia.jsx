@@ -1,21 +1,17 @@
 import React from "react";
 import styles from "./HeroMedia.module.css";
-import videoSrc from "../../assets/tiny.mp4";
+import Src from "/images/preview.png";
 const HeroMedia = () => {
   return (
     <div className={styles.container}>
       <div className={styles.videoContainer}>
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className={styles.video}
-          poster="/images/pexels_steve.jpg"
-        >
-          <source src={videoSrc} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        <img
+          src={Src}
+          width={400}
+          height={300}
+          alt={"my photo"}
+          className={styles.image}
+        ></img>
 
         <div className={styles.overlay}>
           <div className={styles.badge} role="status" aria-live="polite">

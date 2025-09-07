@@ -115,8 +115,9 @@ const TestError = () => {
           padding: "40px",
           textAlign: "center",
           minHeight: "100vh",
-          backgroundImage:
-            "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)), url(https://cdn.prod.website-files.com/6835b6a2066eb03b3773dbcb/68399e9f53dcba23671a6ff9_bg.webp)",
+          background: "var(--color-background)",
+          backgroundRepeat: "no-repeat",
+
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundAttachment: "fixed",

@@ -115,29 +115,11 @@ const HeroSection = () => {
           className={styles.textContent}
           style={{ y: parallaxEffects.yBg, opacity: parallaxEffects.opacity }}
         >
-          <motion.h1
-            className={`${styles.title} ${
-              scrolled ? styles.scrolledTitle : ""
-            }`}
-            variants={itemVariants}
-          >
+          <h1 className={`${styles.title} `}>
             {" "}
-            <motion.span
-              className={styles.titleGradient}
-              animate={{
-                backgroundPosition: ["0% 50%", "100% 50%"],
-              }}
-              transition={{
-                duration: 8,
-                repeat: Infinity,
-                repeatType: "reverse",
-                ease: "linear",
-              }}
-            >
-              Innovative
-            </motion.span>{" "}
-            digital solutions
-          </motion.h1>
+            <span className={styles.titleGradient}>Innovative</span> digital
+            solutions
+          </h1>
 
           <motion.p className={styles.subtitle} variants={itemVariants}>
             <Typewriter

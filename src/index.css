@@ -173,7 +173,12 @@
 
   /* === Backgrounds & Surfaces === */
   --bg-color: #121212;
-  --color-background: url("https://cdn.prod.website-files.com/6835b6a2066eb03b3773dbcb/68386cc9937607453f7d5ff5_bg-4.avif");
+  --color-background: linear-gradient(
+    145deg,
+    #0a0a0a 0%,
+    #111148 30%,
+    #151535 90%
+  );
   --color-surface: linear-gradient(
     145deg,
     #0a0a0a 0%,

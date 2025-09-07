@@ -30,7 +30,7 @@
 }
 
 .container {
-  background-image: var(--color-background);
+  background: var(--color-background);
   background-size: cover;
   display: flex;
   flex-direction: column;
@@ -43,8 +43,7 @@
   overflow: auto;
 }
 .sertificate {
-  background-color: #00031c;
-  background-image: url("https://cdn.prod.website-files.com/6835b6a2066eb03b3773dbcb/68386cc9937607453f7d5ff5_bg-4.avif");
+  background: var(--color-background);
   background-size: cover;
 }
 
@@ -202,11 +201,7 @@
   color: var(--color-text);
 }
 .carusel {
-  background: radial-gradient(
-    circle farthest-corner at 100% 0%,
-    #0300b4 15%,
-    #00031c 100%
-  );
+  background: var(--color-background);
   background-size: cover;
   padding: 0rem 2rem;
 }

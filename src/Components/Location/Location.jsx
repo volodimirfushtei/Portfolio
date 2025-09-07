@@ -18,7 +18,7 @@ export default function LocationBadge({ location }) {
       renderer: "svg",
       loop: true,
       autoplay: false,
-      path: "/src/assets/animations/earth.json",
+      path: "/animations/earth.json",
     });
 
     const observer = new IntersectionObserver(

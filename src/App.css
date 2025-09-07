@@ -6,5 +6,5 @@
   overflow: hidden;
   font-family: "Poppins", Helvetica, sans-serif;
   min-height: 100vh;
-  background: #0f0f0f;
+  background: var(--color-background);
 }
