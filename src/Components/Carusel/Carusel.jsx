@@ -163,7 +163,7 @@ export default function Carousel() {
   }, [slides]);
 
   return (
-    <div className=" flex flex-col lg:flex-row gap-6 lg:gap-10 xl:gap-16 items-center justify-center min-h-screen p-4 md:p-6">
+    <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 xl:gap-16 items-center justify-center min-h-screen p-4 md:p-6 ">
       {/* LEFT SLIDER */}
       <h2 className={`font-bold ${styles.main_title}`}>Soft Skills</h2>
       <div
@@ -180,7 +180,7 @@ export default function Carousel() {
             key={slide.id}
             id={`slide-${slide.id}`}
             data-slide={slide.id}
-            className="slide relative h-[500px] md:h-[600px] lg:h-[700px] w-full snap-start overflow-hidden"
+            className="slide relative h-[500px] md:h-[600px] lg:h-[700px] w-full snap-start overflow-hidden glass-effect "
           >
             <div className="absolute inset-0 slide-img">
               <img
@@ -219,7 +219,7 @@ export default function Carousel() {
             <div className="absolute top-4 md:top-6 left-1/2 -translate-x-1/2 text-white text-xs md:text-sm ">
               <h2 className={` ${styles.m_title}`}>Soft Skills</h2>
             </div>
-            <div className="absolute  bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 text-white text-xs md:text-sm animate-pulse">
+            <div className="absolute  bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 text-[var(--color-text)] text-xs md:text-sm animate-pulse">
               <span>↓ Scroll Down ↓</span>
             </div>
           </section>

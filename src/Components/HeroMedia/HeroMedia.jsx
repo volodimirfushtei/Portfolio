@@ -7,8 +7,8 @@ const HeroMedia = () => {
       <div className={styles.videoContainer}>
         <img
           src={Src}
-          width={400}
-          height={300}
+          width={300}
+          height={200}
           alt={"my photo"}
           className={styles.image}
         ></img>

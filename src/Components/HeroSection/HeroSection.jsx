@@ -182,10 +182,10 @@ const HeroSection = () => {
         animate={{ y: [0, 10, 0], opacity: [0.6, 1, 0.6] }}
         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
       >
-        <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-white rounded-full animate-bounce mt-2"></div>
-        </div>
-        <span className="text-sm opacity-70">Scroll to explore</span>
+        <div className="flex justify-center"></div>
+        <span className="text-md opacity-70 text-[var(--color-text)]">
+          ↓ Scroll to explore ↓
+        </span>
       </motion.div>
     </motion.section>
   );

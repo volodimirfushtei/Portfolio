@@ -25,7 +25,10 @@ const Footer = () => {
       role="contentinfo"
       ref={footerRef}
       aria-label="Footer"
-      style={{ backgroundPositionY: bgPositionSpring }}
+      style={{
+        backgroundPositionY: bgPositionSpring,
+        backgroundImage: "url(/images/njeromin2.jpg)",
+      }}
     >
       <div className={styles.content}>
         <div className={styles.column}>

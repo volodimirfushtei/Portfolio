@@ -102,18 +102,28 @@
 
   /* === Backgrounds & Surfaces === */
   --bg-color: rgb(255, 255, 255);
-  --color-background: #fdfdfb;
-  --color-surface: rgb(255, 255, 255);
+  --color-background: linear-gradient(135deg, #fbf7ef 0%, #f7f3ed 100%);
+  --color-surface: rgb(237, 237, 237);
   --color-surface-hover: #f0f0eb;
   --color-background-scrolled: #f3f2ef;
   --color-sidebar: var(--color-surface);
-  --color-footer: var(--color-surface);
+  --color-footer: linear-gradient(
+    180deg,
+    #fdf9ef 0%,
+    #e6e0d4 50%,
+    #d6cfc2 100%
+  );
+  --color-gradient: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(255, 255, 255, 0.7) 100%
+  );
 
   /* === Text === */
   --text-color: #121212;
-  --color-text: #af8808;
-  --color-secondary: #46402d;
-  --color-title: #403100;
+  --color-text: #40403f;
+  --color-secondary: #333331;
+  --color-title: #2a2a29;
 
   /* === Accent === */
   --color-accent: #aa1e58;
@@ -127,13 +137,17 @@
   /* === Gradients === */
   --color-header: linear-gradient(
     145deg,
-    #fff8e1 0%,
-    #fff8dc 30%,
-    #efe6c1 60%,
+    #f9f5e9 0%,
+    #fffae7 30%,
+    #f8f4e6 60%,
     #fbf5e3 90%
   );
   --color-hero: var(--color-header);
-
+  --color-gradient: linear-gradient(
+    135deg,
+    rgba(239, 238, 238, 0.8) 0%,
+    rgba(236, 236, 236, 0.7) 100%
+  );
   /* === Loaders === */
   --color-loader: rgba(212, 175, 55, 0.85);
   --color-loader-bg: #f5f5f5;
@@ -189,7 +203,11 @@
   --color-background-scrolled: #141313;
   --color-sidebar: var(--color-surface);
   --color-footer: var(--color-surface);
-
+  --color-gradient: linear-gradient(
+    135deg,
+    rgba(30, 30, 30, 0.8) 0%,
+    rgba(42, 42, 42, 0.7) 100%
+  );
   /* === Text === */
 
   --color-text: #fbfbfb;

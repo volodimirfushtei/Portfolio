@@ -13,7 +13,7 @@ html {
 body {
   font-size: 16px;
   overscroll-behavior: none;
-  color: var(--color-text);
+
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none;
   font-family: "Poppins", Helvetica, sans-serif;

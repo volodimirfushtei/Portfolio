@@ -137,7 +137,8 @@ const TestError = () => {
             style={{
               marginBottom: "30px",
               color: "var(--color-text)",
-              fontSize: "clamp(24px, 3vw, 36px)",
+              fontSize: "clamp(24px, 3vw, 32px)",
+
               fontWeight: "600",
               textShadow: "0 2px 4px rgba(0,0,0,0.5)",
             }}
@@ -153,7 +154,7 @@ const TestError = () => {
               background: "transparent",
               boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
               backdropFilter: "blur(4px)",
-              padding: "20px",
+              padding: "40px",
               maxWidth: "600px",
               width: "100%",
               border: "1px solid rgba(255, 255, 255, 0.2)",
@@ -164,7 +165,12 @@ const TestError = () => {
             animate="visible"
           >
             <p
-              style={{ color: "#ddd", marginBottom: "30px", lineHeight: "1.6" }}
+              style={{
+                color: "var(--color-text)",
+                fontSize: "16px",
+                marginBottom: "30px",
+                lineHeight: "1.6",
+              }}
             >
               Click any button to trigger a specific error scenario.
             </p>

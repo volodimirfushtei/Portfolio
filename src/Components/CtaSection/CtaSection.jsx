@@ -54,7 +54,7 @@ const CtaSection = () => {
   return (
     <section className={styles.section}>
       {/* Decorative background gradient */}
-      <div className={styles.backgroundGradient}></div>
+      <div className={`${styles.backgroundGradient} glass effect`}></div>
 
       <div className={styles.container}>
         <motion.div

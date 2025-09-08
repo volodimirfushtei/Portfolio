@@ -103,7 +103,7 @@ export default function SoftSkills() {
             />
             {skill.title}
           </h3>
-          <ul className="list-disc list-inside text-gray-300 text-left text-xl">
+          <ul className="list-disc list-inside text-gray-500 text-left text-xl">
             {skill.items.map((item, idx) => (
               <li key={idx} custom={idx} className="mb-1">
                 {item}

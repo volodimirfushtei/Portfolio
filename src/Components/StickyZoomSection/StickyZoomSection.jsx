@@ -40,6 +40,7 @@ export default function StickyZoomSection() {
             opacity: 1,
 
             filter: "blur(0px)",
+
             borderRadius: "8px",
             ease: "power1.out",
           }
@@ -76,33 +77,29 @@ export default function StickyZoomSection() {
       ref={sectionRef}
       className="relative h-[100vh] w-full overflow-hidden flex items-center justify-center bg-[url('https://cdn.prod.website-files.com/6840876d4d1ed0e8e2a330b9/68641f683476d979a209226a_Pixel%201_white.svg')] bg-center "
     >
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/2 w-96 h-96 bg-secondary/20 rounded-full blur-3xl -translate-x-1/2 -z-10"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-primary/20 rounded-full blur-3xl -z-10"></div>
-      </div>
-      <p className="text-white/50  tracking-tight absolute top-10 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-pulse">
+      <p className="text-[var(--color-text)] text-md md:text-ms  text-center  tracking-tight absolute top-10 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-pulse">
         ↓ Keep Scrolling ↓
       </p>
       <div
         ref={imageRef}
-        className="flex flex-row justify-center gap-4 items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  hover:shadow-lg transition-transform duration-300"
+        className="flex flex-row justify-center gap-6 items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2   transition-transform duration-300"
       >
         <h2
           className="text-white/70 text-6xl md:text-6xl font-bold tracking-tight flex items-center"
           style={{ fontSize: "clamp(2.5rem, 10vw, 3.6rem)" }}
         >
           GSAP
-          <i className=" text-yellow-400 text-5xl md:text-6xl mr-4 align-middle">
+          <i className=" text-yellow-400 text-3xl md:text-5xl  align-middle">
             G
           </i>{" "}
         </h2>
         <img
-          src="https://cdn.prod.website-files.com/6846e0f69b48bd33083ccf30/6847051fca9d03f2175253ef_Grid%20(1).webp"
+          src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
           alt="Zoom from small"
           className="object-cover rounded-xl shadow-lg hover:shadow-xl border border-secondary transition-transform duration-300"
         />
 
-        <div className="absolute top-1/2 left-1/2  transform -translate-x-[170px] rounded-lg hover:scale-105 hover:shadow-lg ">
+        <div className="absolute top-1/2 left-1/2  transform -translate-x-[190px] rounded-lg hover:scale-105  ">
           <a
             ref={aRef}
             target="_blank"
@@ -118,7 +115,7 @@ export default function StickyZoomSection() {
           className="text-white/70 text-5xl md:text-5xl font-bold tracking-tight ml-2 flex items-center"
           style={{ fontSize: "clamp(2.5rem, 10vw, 3.6rem)" }}
         >
-          <i className="ri-copyright-line text-yellow-400 text-4xl md:text-5xl mr-4 align-middle"></i>
+          <i className="ri-copyright-line text-yellow-400 text-4xl md:text-6xl  align-middle"></i>
           2025
         </h2>
       </div>

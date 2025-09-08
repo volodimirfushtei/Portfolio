@@ -29,41 +29,7 @@
   display: flex;
   align-items: center;
 }
-.card {
-  width: 100%;
-  max-width: 800px;
-  aspect-ratio: 3/2;
-  background-color: #1a1a1a;
-  border-radius: 1rem;
-  overflow: hidden;
-  position: relative;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  transition: transform 0.3s ease;
-}
 
-.card:hover {
-  transform: scale(1.03);
-}
-
-.card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.card h2 {
-  position: absolute;
-  bottom: 1rem;
-  left: 1rem;
-  font-family: "Azeret Mono", monospace;
-  font-size: 2rem;
-  color: #8df0cc;
-  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-}
 div .m_title {
   background-size: 200% auto;
   -webkit-background-clip: text;
@@ -97,7 +63,7 @@ div .main_title {
 .title {
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
-  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  background: linear-gradient(90deg, var(--color-text), var(--color-title));
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -105,7 +71,7 @@ div .main_title {
 }
 .subtitle {
   -webkit-text-fill-color: transparent;
-  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  background: linear-gradient(90deg, var(--color-text), var(--color-secondary));
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;

@@ -19,7 +19,7 @@
 }
 .skillTitle {
   -webkit-text-fill-color: transparent;
-  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  background: linear-gradient(90deg, var(--color-text), var(--color-secondary));
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;

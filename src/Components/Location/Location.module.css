@@ -3,8 +3,8 @@
   align-items: center;
   gap: 0.4rem;
   background: transparent;
-  border: 2px solid rgba(67, 67, 67, 0.8);
-  background: rgba(100, 100, 100, 0.7);
+  border: 1px solid var(--color-border);
+  background: transparent;
   border-radius: 2rem;
   padding-right: 1rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
@@ -28,7 +28,7 @@
 .text {
   font-size: 0.8rem;
   font-weight: 600;
-  color: var(--color-title);
+  color: #a0a0a1;
   white-space: nowrap;
   transition: color 0.3s ease;
 }

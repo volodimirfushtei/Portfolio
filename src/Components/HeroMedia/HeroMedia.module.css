@@ -3,14 +3,14 @@
   width: 100%;
   /* 16:9 aspect ratio */
   overflow: hidden;
-  border-bottom: 6px solid var(--color-success);
+  border-bottom: 6px solid var(--color-secondary);
   border-radius: 16px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .videoContainer {
   position: relative;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  padding-bottom: 82.25%; /* 16:9 aspect ratio */
   height: 0;
   overflow: hidden;
 }
@@ -21,7 +21,6 @@
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
   object-fit: cover;
 }
 

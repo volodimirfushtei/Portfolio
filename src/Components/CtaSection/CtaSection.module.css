@@ -6,7 +6,7 @@
     rgba(0, 0, 0, 0) 50%,
     rgba(239, 61, 61, 0.15) 100%
   );
-  color: white;
+
   text-align: center;
 
   padding: 6rem 2rem;
@@ -18,9 +18,9 @@
 .backgroundGradient {
   position: absolute;
   width: 100%;
-  inset: 0;
+  inset: -2;
 
-  z-index: -1;
+  z-index: 0;
 }
 
 .container {
@@ -51,7 +51,7 @@
 .heading {
   font-size: 48px;
   font-weight: 700;
-  color: white;
+  color: var(--color-title);
   line-height: 1.2;
   margin-bottom: 16px;
   letter-spacing: -0.5px;
@@ -59,8 +59,9 @@
 }
 
 .subheading {
-  font-size: 20px;
-  color: rgba(255, 255, 255, 0.8);
+  font-size: 22px;
+  color: var(--color-title);
+  font-weight: 400;
   margin-bottom: 40px;
   line-height: 1.5;
   max-width: 600px;
@@ -69,7 +70,7 @@
 .highlightText {
   background: linear-gradient(90deg, #4368ff, #ff5252, #4368ff);
   background-size: 200% auto;
-  color: white;
+  color: var(--color-text);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -138,6 +139,7 @@
 
 .listItem {
   background-color: rgba(255, 255, 255, 0.1);
+  color: var(--color-secondary);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
