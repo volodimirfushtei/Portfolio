@@ -49,18 +49,19 @@ const HeroMedia = () => {
   return (
     <div
       ref={containerRef}
-      className="w-full max-w-2xl mx-auto p-6 border border-border rounded-2xl overflow-hidden"
+      className="w-full sm:w-3/4 sm:max-w-2xl mx-auto p-6 border border-border rounded-2xl overflow-hidden"
     >
       <div className="relative group">
         {/* Image Container */}
         <div
           ref={imageRef}
-          className="relative rounded-2xl mb-4 overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-[1.02]"
+          className="relative rounded-xl mb-4 overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-[1.02]"
         >
           <img
             src="/images/preview.png"
+            height={200}
             width={300}
-            height={250}
+            ref={imageRef}
             alt="Profile photo"
             className="profile-image object-cover "
           />

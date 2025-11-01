@@ -21,7 +21,7 @@ const CircularText = () => {
   }, []);
 
   return (
-    <div className="relative w-60 h-60 flex items-center justify-center">
+    <div className="relative  sm:w-40 sm:h-40 xl:w-50 xl:h-50 flex items-center justify-center">
       {/* SVG-текст по колу */}
       <svg
         ref={circleRef}
