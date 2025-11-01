@@ -38,13 +38,13 @@
 }
 
 .front {
-  background: var(--color-surface);
+  background: var(--color-background);
   color: var(--colot-text);
   border-radius: 16px;
 }
 
 .back {
-  background: var(--color-surface);
+  background: var(--color-background);
   transform: rotateY(180deg);
   border-radius: 16px;
 }

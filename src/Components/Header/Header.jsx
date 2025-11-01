@@ -74,13 +74,13 @@ const Header = () => {
       <div className={styles.container}>
         {/* Logo */}
 
-        <motion.div whileHover={{ scale: 1.05 }}>
+        <div>
           <Link to="/about" className={styles.logo}>
             <Logo />
 
-            <span>MyPortfolio</span>
+            <span>Portfolio</span>
           </Link>
-        </motion.div>
+        </div>
 
         <div className={styles.rightSection}>
           <ToggleTheme />

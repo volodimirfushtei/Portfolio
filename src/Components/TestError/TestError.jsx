@@ -1,76 +1,39 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
-import ScrollProgress from "./../ScrollProgress/ScrollProgress";
 
-const buttonStyle = {
-  padding: "12px 20px",
-  background: "#ff4444",
-  color: "white",
-  border: "none",
-  borderRadius: "8px",
-  cursor: "pointer",
-  fontSize: "14px",
-  fontWeight: "500",
-  transition: "all 0.3s ease",
-};
-
-const getButtonColor = (type) => {
-  const colors = {
-    nullReference: "#ff4444",
-    undefinedFunction: "#ff9933",
-    syntax: "#9933ff",
-    range: "#33cc33",
-  };
-  return colors[type];
+const errorColors = {
+  nullReference: "bg-red-500",
+  undefinedFunction: "bg-orange-500",
+  runtimeError: "bg-purple-500",
+  range: "bg-green-500",
 };
 
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      duration: 0.6,
-      when: "beforeChildren",
-      staggerChildren: 0.2,
-    },
+    transition: { duration: 0.6, staggerChildren: 0.2 },
   },
 };
 
 const childVariants = {
   hidden: { y: 30, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      duration: 0.8,
-      ease: [0.16, 0.77, 0.47, 0.97],
-    },
-  },
+  visible: { y: 0, opacity: 1, transition: { duration: 0.8 } },
 };
 
 const TestError = () => {
   const bgRef = useRef(null);
   const containerRef = useRef(null);
   const [errorType, setErrorType] = useState(null);
-  const [showSafeContent, setShowSafeContent] = useState(true);
 
-  const triggerError = (type) => {
-    setShowSafeContent(false);
-    setErrorType(type);
-  };
-
-  const reset = () => {
-    setShowSafeContent(true);
-    setErrorType(null);
-  };
+  const triggerError = (type) => setErrorType(type);
+  const reset = () => setErrorType(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.to(bgRef.current, {
         y: -50,
-        repeat: 0,
-        yoyo: true,
         duration: 5,
         ease: "sine.inOut",
       });
@@ -78,148 +41,85 @@ const TestError = () => {
     return () => ctx.revert();
   }, []);
 
-  if (errorType === "nullReference") {
-    const obj = null;
-    return <div>{obj.someProperty}</div>;
-  }
-  if (errorType === "undefinedFunction") {
-    const obj = {};
-    return <div>{obj.nonExistentFunction()}</div>;
-  }
-  if (errorType === "syntax") {
-    throw new Error("Simulated syntax error (runtime)");
-  }
-  if (errorType === "range") {
-    const arr = [1, 2, 3];
-    return <div>{arr[10].toString()}</div>;
-  }
-  if (!showSafeContent) {
-    return null;
+  // --- Симуляція помилок ---
+  if (errorType) {
+    switch (errorType) {
+      case "nullReference":
+        return <div>{null.someProperty}</div>;
+      case "undefinedFunction":
+        return <div>{{}.nonExistentFunction()}</div>;
+      case "runtimeError":
+        throw new Error("Simulated runtime error");
+      case "range":
+        return <div>{[1, 2, 3][10].toString()}</div>;
+      default:
+        return null;
+    }
   }
 
   return (
     <motion.section
       ref={containerRef}
-      className="relative"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
+      className="relative flex items-center justify-center min-h-screen bg-[var(--color-beckground)]"
     >
       <motion.div
-        className="absolute top-0 inset-0 test-error"
         ref={bgRef}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
-        style={{
-          padding: "40px",
-          textAlign: "center",
-          minHeight: "100vh",
-          background: "var(--color-background)",
-          backgroundRepeat: "no-repeat",
-
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundAttachment: "fixed",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
+        className="flex flex-col items-center justify-center p-8 w-full max-w-3xl max-h-2xl rounded-lg border border-white/20 bg-white/8 backdrop-blur-md shadow-lg"
       >
-        <motion.div
-          className="container"
+        <motion.h2
           variants={childVariants}
-          initial="hidden"
-          animate="visible"
+          className="mb-6 text-[clamp(24px,3vw,32px)] font-semibold text-warning text-center drop-shadow-md"
+          whileHover={{ scale: 1.05 }}
         >
-          <motion.h2
-            style={{
-              marginBottom: "30px",
-              color: "var(--color-text)",
-              fontSize: "clamp(24px, 3vw, 32px)",
+          Error Boundary Testing Interface
+        </motion.h2>
 
-              fontWeight: "600",
-              textShadow: "0 2px 4px rgba(0,0,0,0.5)",
-            }}
-            whileHover={{ scale: 1.05 }}
-          >
-            Error Boundary Testing Interface
-          </motion.h2>
-          <motion.div
-            style={{
-              position: "relative",
-              top: "0%",
-              left: "25%",
-              background: "transparent",
-              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-              backdropFilter: "blur(4px)",
-              padding: "40px",
-              maxWidth: "600px",
-              width: "100%",
-              border: "1px solid rgba(255, 255, 255, 0.2)",
-              borderRadius: "8px",
-            }}
-            variants={childVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            <p
-              style={{
-                color: "var(--color-text)",
-                fontSize: "16px",
-                marginBottom: "30px",
-                lineHeight: "1.6",
-              }}
-            >
-              Click any button to trigger a specific error scenario.
-            </p>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
-                gap: "15px",
-              }}
-            >
-              {["nullReference", "undefinedFunction", "syntax", "range"].map(
-                (type) => (
-                  <motion.button
-                    key={type}
-                    onClick={() => triggerError(type)}
-                    style={{ ...buttonStyle, background: getButtonColor(type) }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    aria-label={`Trigger ${type} error`}
-                    title={`Trigger ${type} error`}
-                    type="button"
-                  >
-                    {type
-                      .replace(/([A-Z])/g, " $1")
-                      .replace(/^./, (str) => str.toUpperCase())}
-                  </motion.button>
-                )
-              )}
-            </div>
+        <motion.p
+          variants={childVariants}
+          className="text-[var(--color-text)] text-base mb-6 leading-relaxed text-center"
+        >
+          Click any button to trigger a specific error scenario.
+        </motion.p>
+
+        <motion.div
+          variants={childVariants}
+          className="grid grid-cols-2 sm:grid-cols-4 gap-8 rounded-lg p-4 w-full h-full"
+        >
+          {Object.keys(errorColors).map((type) => (
             <motion.button
-              onClick={reset}
-              style={{
-                ...buttonStyle,
-                background: "#3399ff",
-                marginTop: "20px",
-              }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              key={type}
+              onClick={() => triggerError(type)}
+              className={`px-4 py-2 rounded-lg text-[var(--color-error)]   font-medium text-sm shadow-xl transition-transform ${errorColors[type]} hover:scale-105 active:scale-95`}
+              aria-label={`Trigger ${type} error`}
+              title={`Trigger ${type} error`}
+              type="button"
             >
-              Reset
+              {type
+                .replace(/([A-Z])/g, " $1")
+                .replace(/^./, (s) => s.toUpperCase())}
             </motion.button>
-            <motion.div
-              style={{ marginTop: "30px", color: "#ff9999", fontSize: "14px" }}
-              animate={{ opacity: [0.6, 1, 0.6] }}
-              transition={{ repeat: Infinity, duration: 2 }}
-            >
-              Warning: Clicking these buttons will crash the component!
-            </motion.div>
-          </motion.div>
+          ))}
+        </motion.div>
+
+        <motion.button
+          onClick={reset}
+          className="mt-10 px-4 py-6 rounded-lg bg-blue-400 text-[var(--color-text)] font-medium text-sm shadow-xl hover:scale-105 active:scale-95 transition-transform"
+        >
+          Reset
+        </motion.button>
+
+        <motion.div
+          className="mt-8 text-pink-400 text-sm"
+          animate={{ opacity: [0.6, 1, 0.6] }}
+          transition={{ repeat: Infinity, duration: 2 }}
+        >
+          ⚠ Warning: Clicking these buttons will crash the component!
         </motion.div>
       </motion.div>
     </motion.section>

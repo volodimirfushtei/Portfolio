@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { IconButton, Tooltip, useTheme } from "@mui/material";
 import { DarkMode, LightMode, BrightnessAuto } from "@mui/icons-material";
 import { styled } from "@mui/material/styles";
+import gsap from "gsap";
 
 const StyledIconButton = styled(IconButton)(({ theme }) => ({
   padding: 8,
@@ -53,7 +54,15 @@ const ToggleTheme = () => {
   }, []);
 
   const applyTheme = (themeMode) => {
+    // Анімація плавного затемнення при зміні теми
+    gsap.fromTo(
+      document.body,
+      { opacity: 0 },
+      { opacity: 1, duration: 0.6, ease: "power2.inOut" }
+    );
+
     document.documentElement.setAttribute("data-theme", themeMode);
+
     if (themeMode === "system") {
       const systemMode = window.matchMedia("(prefers-color-scheme: dark)")
         .matches

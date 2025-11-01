@@ -1,8 +1,6 @@
 .gradientBackground {
   position: absolute;
-
   inset: 0;
-
   background-image: var(--color-background);
   background-position: center;
   background-size: cover;
@@ -39,8 +37,6 @@
   color: transparent;
   display: inline-block;
   will-change: background-position;
-
-  font-size: 8rem;
 }
 
 .hero {

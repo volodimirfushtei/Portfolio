@@ -117,8 +117,12 @@ const HeroSection = () => {
         >
           <h1 className={`${styles.title} `}>
             {" "}
-            <span className={styles.titleGradient}>Innovative</span> digital
-            solutions
+            <span
+              className={`${styles.titleGradient} text-2xl sm:text-3xl xl:text-8xl`}
+            >
+              Innovative
+            </span>{" "}
+            digital solutions
           </h1>
 
           <motion.p className={styles.subtitle} variants={itemVariants}>

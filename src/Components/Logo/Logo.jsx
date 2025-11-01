@@ -2,7 +2,7 @@ import React from "react";
 import s from "./Logo.module.css";
 const Logo = () => {
   return (
-    <div className="relative w-[50px] h-[50px] rounded-full border-4 border-[#ffb74d]">
+    <div className="relative w-6 h-6  md:w-8 md:h-8 xl:w-10 xl:h-10 rounded-full border-4 border-[#ffb74d]">
       <svg
         width="50"
         height="50"
