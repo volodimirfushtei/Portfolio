@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 
+import DotGrid from "./../DotGrid/DotGrid";
 const errorColors = {
   nullReference: "bg-red-500",
   undefinedFunction: "bg-orange-500",
@@ -65,16 +66,29 @@ const TestError = () => {
       animate="visible"
       className="relative flex items-center justify-center min-h-screen bg-[var(--color-beckground)]"
     >
+      <div style={{ width: "100%", height: "100%", position: "fixed" }}>
+        <DotGrid
+          dotSize={2}
+          gap={10}
+          baseColor="#5227FF"
+          activeColor="#5227FF"
+          proximity={120}
+          shockRadius={250}
+          shockStrength={5}
+          resistance={750}
+          returnDuration={1.5}
+        />
+      </div>
       <motion.div
         ref={bgRef}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="flex flex-col items-center justify-center p-8 w-full max-w-3xl max-h-2xl rounded-lg border border-white/20 bg-white/8 backdrop-blur-md shadow-lg"
+        className="flex flex-col items-center justify-center p-8 w-full max-w-3xl max-h-2xl rounded-lg border border-white/20 bg-blue-0/80 backdrop-blur-md shadow-lg"
       >
         <motion.h2
           variants={childVariants}
-          className="mb-6 text-[clamp(24px,3vw,32px)] font-semibold text-warning text-center drop-shadow-md"
+          className="mb-6 text-[clamp(24px,3vw,32px)] font-semibold text-secondary text-center drop-shadow-md"
           whileHover={{ scale: 1.05 }}
         >
           Error Boundary Testing Interface
@@ -82,7 +96,7 @@ const TestError = () => {
 
         <motion.p
           variants={childVariants}
-          className="text-[var(--color-text)] text-base mb-6 leading-relaxed text-center"
+          className="text-secondary text-base mb-6 leading-relaxed text-center"
         >
           Click any button to trigger a specific error scenario.
         </motion.p>
@@ -95,7 +109,7 @@ const TestError = () => {
             <motion.button
               key={type}
               onClick={() => triggerError(type)}
-              className={`px-4 py-2 rounded-lg text-[var(--color-error)]   font-medium text-sm shadow-xl transition-transform ${errorColors[type]} hover:scale-105 active:scale-95`}
+              className={`px-4 py-2 rounded-lg text-red-700   font-medium text-sm shadow-xl transition-transform ${errorColors[type]} hover:scale-105 active:scale-95`}
               aria-label={`Trigger ${type} error`}
               title={`Trigger ${type} error`}
               type="button"
@@ -109,13 +123,13 @@ const TestError = () => {
 
         <motion.button
           onClick={reset}
-          className="mt-10 px-4 py-6 rounded-lg bg-blue-400 text-[var(--color-text)] font-medium text-sm shadow-xl hover:scale-105 active:scale-95 transition-transform"
+          className="mt-10 px-4 py-6 rounded-lg bg-blue-400 text-secondary font-medium text-sm shadow-xl hover:scale-105 active:scale-95 transition-transform"
         >
           Reset
         </motion.button>
 
         <motion.div
-          className="mt-8 text-pink-400 text-sm"
+          className="mt-8 text-red-600 text-sm"
           animate={{ opacity: [0.6, 1, 0.6] }}
           transition={{ repeat: Infinity, duration: 2 }}
         >

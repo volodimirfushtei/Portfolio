@@ -102,7 +102,7 @@
 
   /* === Backgrounds & Surfaces === */
   --bg-color: rgb(255, 255, 255);
-  --color-background: linear-gradient(135deg, #93b7f6 0%, #f7f3ed 100%);
+  --color-background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
   --color-surface: #f7f7f7;
   --color-surface-hover: #f0f0eb;
   --color-background-scrolled: #f3f2ef;
@@ -149,7 +149,7 @@
   --color-loader-bar: linear-gradient(90deg, #d4af37, #fff176);
 
   /* === Overlays & Borders === */
-  --color-overlay: rgba(252, 248, 227, 0.95);
+  --color-overlay: rgba(252, 252, 252, 0.75);
   --color-border: #cac2ad;
 
   /* === Shadow === */
@@ -181,17 +181,11 @@
 
   /* === Backgrounds & Surfaces === */
   --bg-color: #121212;
-  --color-background: linear-gradient(
-    145deg,
-    #0a0a0a 0%,
-    #111148 30%,
-    #151535 90%
-  );
-  --color-surface: linear-gradient(
-    145deg,
-    #0a0a0a 0%,
-    #1c1c2b 30%,
-    #0f0f1a 90%
+  --color-background: linear-gradient(135deg, #0a0a14 0%, #171333 100%);
+  --color-surface: radial-gradient(
+    circle farthest-corner at 100% 0%,
+    #161534 15%,
+    #191c3f 100%
   );
   --color-surface-hover: #2b2b2b;
   --color-background-scrolled: #141313;
@@ -220,8 +214,8 @@
   /* === Gradients === */
   --color-header: radial-gradient(
     circle farthest-corner at 100% 0%,
-    #1310ca 15%,
-    #00031c 100%
+    #201e59 15%,
+    #0d1031 100%
   );
   --color-hero: var(--color-header);
 
