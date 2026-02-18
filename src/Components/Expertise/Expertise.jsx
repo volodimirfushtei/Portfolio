@@ -44,7 +44,7 @@ const Expertise = () => {
 
   const scrollY = useSpring(
     useTransform(scrollYProgress, [0, 1], ["0%", "15%"]),
-    { stiffness: 100, damping: 30 }
+    { stiffness: 100, damping: 30 },
   );
 
   const scaleBox = useSpring(useTransform(scrollYProgress, [0, 1], [1, 1.05]), {
@@ -98,7 +98,20 @@ const Expertise = () => {
         viewport={{ once: true, margin: "-100px" }}
         variants={sectionVariants}
       >
-        <motion.div variants={itemVariants} className="absolute top-2 left-2">
+        <motion.div
+          variants={itemVariants}
+          className={`${styles.locationBadge} absolute top-2 left-2 sm:top-6 sm:left-6 text-sm text-gray-500`}
+          style={{
+            y: scrollY,
+            opacity,
+            scale: scaleBox,
+            rotateX,
+          }}
+          whileHover={{
+            y: -10,
+            transition: { duration: 0.3, ease: "easeOut" },
+          }}
+        >
           <LocationBadge location="Located in Ivano-Frankivsk" />
         </motion.div>
         {/* Tech Card with enhanced effects */}

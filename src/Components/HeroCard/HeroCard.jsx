@@ -35,11 +35,11 @@ export default function HeroCard() {
           Web Developer
         </motion.span>
 
-        <motion.h1 variants={itemVariants}>
+        <motion.h1 className={s.heading} variants={itemVariants}>
           Build <span className={styles.highlight}>Web Apps</span> People Love
         </motion.h1>
 
-        <motion.p variants={itemVariants}>
+        <motion.p className={s.description} variants={itemVariants}>
           I'm a junior freelance developer from Ukraine. I help you craft
           modern, fast, and user-friendly websites and interfaces.
         </motion.p>

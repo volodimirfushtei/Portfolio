@@ -22,24 +22,24 @@
 }
 
 .spinner {
-  width: 60px;
-  height: 60px;
-  border: 5px solid rgba(255, 255, 255, 0.1);
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
   border-radius: 50%;
-  border-top-color: #4368ff;
+  border-top-color: #f6a225;
 }
 
 .progressContainer {
-  height: 6px;
+  height: 1px;
   background: rgba(255, 255, 255, 0.1);
-  border-radius: 3px;
+  border-radius: 1px;
   overflow: hidden;
   width: 100%;
 }
 
 .progressBar {
   height: 100%;
-  background: linear-gradient(90deg, #4368ff, #3a86ff);
+  background: linear-gradient(90deg, #f6a225, #f5bd07);
   transition: width 0.3s ease;
 }
 

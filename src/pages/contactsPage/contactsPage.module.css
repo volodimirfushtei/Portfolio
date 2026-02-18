@@ -1,17 +1,16 @@
 /* contactsPage.module.css */
 .contactsPage {
   min-height: 100vh;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   color: var(--color-text);
   position: relative;
-  padding: 2rem 0rem;
+  padding: 1rem 1.5rem;
   overflow: hidden;
-  position: relative;
   isolation: isolate;
 }
+
 .bg {
   position: absolute;
   inset: 0;
@@ -20,12 +19,12 @@
   will-change: transform;
   pointer-events: none;
 }
+
 .bg::before {
   content: "";
   position: absolute;
   inset: 0;
   background: var(--color-gradient);
-
   opacity: 0.9;
   z-index: 0;
 }
@@ -36,16 +35,20 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 4rem;
+  margin-top: 3rem;
+  padding-bottom: 3.5rem; /* місце для footer */
   position: relative;
   z-index: 1;
 }
 
+/* ── Title ── */
 .pageTitle {
-  font-size: clamp(1.5rem, 6vw, 2.5rem);
+  display: inline-block;
+  font-size: clamp(1.4rem, 5vw, 2.2rem);
   font-weight: 700;
-  margin-bottom: 2rem;
-  color: var(--color-title);
+  margin-bottom: 1.25rem;
+  line-height: 1.2;
+  margin-top: 2rem;
   text-align: center;
   position: relative;
   background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
@@ -57,76 +60,80 @@
 .pageTitle::after {
   content: "";
   position: absolute;
-  bottom: -1rem;
+  bottom: -0.6rem;
   left: 50%;
   transform: translateX(-50%);
-  width: 80px;
-  height: 4px;
+  width: 60px;
+  height: 3px;
   background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
   border-radius: 2px;
 }
 
+/* ── Two-column layout ── */
 .formsContainer {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 3rem;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
   align-items: start;
-  margin-bottom: 4rem;
+  margin-bottom: 1.5rem;
 }
 
+/* ── Info column ── */
 .textSection {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 0;
 }
 
 .glassBox {
   border-radius: 16px;
-  padding: 2.5rem;
+  padding: 1.75rem;
 }
 
 .title {
-  font-size: 1.4rem;
+  font-size: 1.15rem;
   font-weight: 600;
-  margin-bottom: 1rem;
-
+  margin-bottom: 0.4rem;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.6rem;
   color: var(--color-text);
 }
 
 .title i {
-  font-size: 1.6rem;
-  color: var(--color-);
+  font-size: 1.3rem;
+  color: var(--color-primary);
 }
 
 .description {
-  font-size: 1.1rem;
-  line-height: 1.6;
+  font-size: 0.95rem;
+  line-height: 1.55;
   opacity: 0.9;
-  margin-bottom: 2rem;
+  margin-bottom: 1.25rem;
   color: var(--color-text);
 }
 
+/* ── Socials ── */
 .socials {
   display: flex;
-  gap: 1.5rem;
-  margin-top: 2rem;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
 }
 
 .socialLink {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.1);
   color: var(--color-text);
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   transition: all 0.3s ease;
+  flex-shrink: 0;
 }
 
 .socialLink i {
@@ -138,79 +145,171 @@
   color: white;
 }
 
+/* ── Footer ── */
 .infoContainer {
   position: absolute;
-  bottom: 0;
-  left: 30%;
-  transform: translateX(-50%);
-  width: 100%;
+  bottom: 0.75rem;
+  left: 0;
+  right: 0;
   display: flex;
   flex-direction: row;
+  justify-content: center;
   align-items: center;
+  gap: 1.5rem;
+  padding: 0 1rem;
+  flex-wrap: wrap;
 }
 
 .copyright {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   opacity: 0.8;
   display: flex;
   align-items: center;
-
   color: var(--color-text);
+  white-space: nowrap;
 }
 
 .copyright i {
   color: var(--color-primary);
-  margin: 0 0.5rem;
+  margin: 0 0.35rem;
 }
 
-/* Responsive Styles */
+/* ── Tablet: 769px – 1024px ── */
 @media (max-width: 1024px) {
   .contactsPage {
-    padding: 2rem 1.5rem;
+    padding: 1rem 1.25rem;
+  }
+
+  .container {
+    margin-top: 2.5rem;
   }
 
   .formsContainer {
-    gap: 2rem;
+    gap: 1.5rem;
+  }
+
+  .glassBox {
+    padding: 1.5rem;
   }
 }
 
+/* ── Tablet portrait: 481px – 768px ── */
 @media (max-width: 768px) {
+  .contactsPage {
+    padding: 1rem 1rem 4rem; /* bottom для footer */
+  }
+
   .container {
-    margin-top: 3rem;
+    margin-top: 2rem;
+    padding-bottom: 4rem;
+  }
+
+  .pageTitle {
+    margin-bottom: 1.25rem;
   }
 
   .formsContainer {
     grid-template-columns: 1fr;
+    gap: 1.25rem;
   }
 
   .glassBox {
-    padding: 2rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .contactsPage {
-    padding: 2rem 1rem;
-  }
-
-  .pageTitle {
-    font-size: 2.2rem;
-    margin-bottom: 2rem;
-  }
-
-  .title {
-    font-size: 1.3rem;
+    padding: 1.25rem;
   }
 
   .description {
+    margin-bottom: 1rem;
+  }
+
+  .infoContainer {
+    gap: 0.75rem;
+    bottom: 0.5rem;
+  }
+}
+
+/* ── Mobile: ≤ 480px ── */
+@media (max-width: 480px) {
+  .contactsPage {
+    padding: 0.75rem 0.75rem 4rem;
+  }
+
+  .container {
+    margin-top: 1.5rem;
+    padding-bottom: 4rem;
+  }
+
+  .pageTitle {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .pageTitle::after {
+    width: 48px;
+    height: 3px;
+    bottom: -0.5rem;
+  }
+
+  .formsContainer {
+    gap: 1rem;
+  }
+
+  .glassBox {
+    padding: 1rem;
+  }
+
+  .title {
     font-size: 1rem;
+  }
+
+  .description {
+    font-size: 0.88rem;
+    margin-bottom: 0.75rem;
   }
 
   .socials {
     justify-content: center;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+
+  .socialLink {
+    width: 38px;
+    height: 38px;
+    font-size: 1.2rem;
   }
 
   .infoContainer {
-    text-align: center;
+    flex-direction: column;
+    gap: 0.25rem;
+    bottom: 0.5rem;
+  }
+
+  .copyright {
+    font-size: 0.78rem;
+  }
+}
+
+/* ── Small mobile: ≤ 360px ── */
+@media (max-width: 360px) {
+  .pageTitle {
+    font-size: 1.35rem;
+  }
+
+  .glassBox {
+    padding: 0.85rem;
+  }
+
+  .title {
+    font-size: 0.95rem;
+  }
+
+  .description {
+    font-size: 0.82rem;
+  }
+
+  .socialLink {
+    width: 34px;
+    height: 34px;
+    font-size: 1.1rem;
   }
 }

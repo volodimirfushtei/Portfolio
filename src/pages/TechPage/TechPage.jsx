@@ -12,6 +12,14 @@ const techStack = [
     link: "https://react.dev/ ",
   },
   {
+    name: "React Native",
+    description: "Будуємо мобільні додатки з React.",
+    icon: "ri-reactjs-line",
+    color: "#61DAFB",
+    link: "https://reactnative.dev/ ",
+  },
+
+  {
     name: "Node.js",
     description: "Серверна логіка на потужному JS-рунтаймі.",
     icon: "ri-nodejs-line",

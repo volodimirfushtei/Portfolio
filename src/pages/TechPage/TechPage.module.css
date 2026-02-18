@@ -14,26 +14,29 @@
   padding: 0 2rem;
 }
 
+/* ── Header ── */
 .header {
   text-align: center;
   margin-bottom: 3rem;
 }
 
 .heading {
-  font-size: clamp(1, 5rem, 6vw, 2rem);
+  font-size: clamp(1.4rem, 5vw, 2.2rem); /* виправлено: 4 аргументи → 3 */
   font-weight: 700;
-  color: var(--color-title);
   line-height: 1.2;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1.5rem; /* місце для ::after */
   background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  position: relative; /* потрібно для ::after */
+  display: inline-block;
 }
+
 .heading::after {
   content: "";
-  position: absolute;
-  bottom: -1rem;
+  position: absolute; /* вже є, але тепер працює бо є position: relative на батьку */
+  bottom: -0.75rem;
   left: 50%;
   transform: translateX(-50%);
   width: 80px;
@@ -41,18 +44,20 @@
   background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
   border-radius: 2px;
 }
+
 .heading span {
   display: inline-block;
 }
 
 .subheading {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: var(--color-secondary);
   max-width: 600px;
   margin: 0 auto;
   opacity: 0.8;
 }
 
+/* ── Grid ── */
 .grid {
   display: grid;
   gap: 1.5rem;
@@ -65,6 +70,7 @@
   color: inherit;
 }
 
+/* ── Card ── */
 .card {
   background: var(--color-surface);
   border-radius: 16px;
@@ -95,31 +101,38 @@
   background: rgba(0, 0, 0, 0.03);
   border-radius: 16px;
   transition: all 0.3s ease;
+  flex-shrink: 0;
 }
 
 .title {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 600;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
   color: var(--color-title);
 }
 
 .description {
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: var(--color-secondary);
   line-height: 1.6;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
   flex-grow: 1;
+  /* обрізаємо якщо не влізає у фіксовану висоту картки */
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
 .readMore {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: var(--color-primary);
   font-weight: 500;
   transition: all 0.3s ease;
+  flex-shrink: 0;
 }
 
 .readMore i {
@@ -130,6 +143,7 @@
   transform: translateX(3px);
 }
 
+/* ── Pagination ── */
 .pagination {
   display: flex;
   justify-content: center;
@@ -154,9 +168,14 @@
   transition: all 0.3s ease;
 }
 
-.pageButton:hover {
+.pageButton:hover:not(:disabled) {
   background: var(--color-primary);
   color: white;
+}
+
+.pageButton:disabled {
+  opacity: 0.7;
+  cursor: default;
 }
 
 .activePage {
@@ -164,33 +183,136 @@
   color: white;
 }
 
-/* Responsive styles */
-@media (max-width: 768px) {
+/* ── Tablet: 769px – 1024px ── */
+@media (max-width: 1024px) {
   .wrapper {
-    padding: 4rem 0;
+    padding: 5rem 0 3rem;
   }
 
   .grid {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+}
+
+/* ── Tablet portrait: 481px – 768px ── */
+@media (max-width: 768px) {
+  .wrapper {
+    padding: 4rem 0 2.5rem;
+  }
+
+  .header {
+    margin-bottom: 2rem;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 1rem;
   }
 
   .card {
-    height: 240px;
+    height: auto; /* на планшеті знімаємо фіксовану висоту */
+    min-height: 220px;
     padding: 1.5rem;
+  }
+
+  .card:hover {
+    transform: none; /* прибираємо підйом на touch */
+  }
+
+  .description {
+    -webkit-line-clamp: 4;
+  }
+
+  .pagination {
+    margin-top: 2.5rem;
   }
 }
 
+/* ── Mobile: ≤ 480px ── */
 @media (max-width: 480px) {
+  .wrapper {
+    padding: 3.5rem 0 2rem;
+  }
+
   .container {
-    padding: 0 1rem;
+    padding: 0 0.75rem;
   }
 
   .heading {
-    font-size: 2.2rem;
+    font-size: 1.8rem;
+  }
+
+  .subheading {
+    font-size: 0.95rem;
   }
 
   .grid {
     grid-template-columns: 1fr;
+    gap: 0.875rem;
+  }
+
+  .card {
+    height: auto;
+    min-height: 0;
+    padding: 1.25rem;
+  }
+
+  .iconWrapper {
+    width: 48px;
+    height: 48px;
+    font-size: 2rem;
+    border-radius: 12px;
+  }
+
+  .title {
+    font-size: 1.1rem;
+  }
+
+  .description {
+    font-size: 0.88rem;
+    -webkit-line-clamp: 3;
+  }
+
+  .readMore {
+    font-size: 0.88rem;
+  }
+
+  .pagination {
+    gap: 0.5rem;
+    margin-top: 2rem;
+  }
+
+  .pageButton {
+    width: 36px;
+    height: 36px;
+    font-size: 0.85rem;
+    border-radius: 8px;
+  }
+}
+
+/* ── Small mobile: ≤ 360px ── */
+@media (max-width: 360px) {
+  .container {
+    padding: 0 0.5rem;
+  }
+
+  .heading {
+    font-size: 1.5rem;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+
+  .iconWrapper {
+    width: 42px;
+    height: 42px;
+    font-size: 1.7rem;
+  }
+
+  .pageButton {
+    width: 32px;
+    height: 32px;
+    font-size: 0.8rem;
   }
 }

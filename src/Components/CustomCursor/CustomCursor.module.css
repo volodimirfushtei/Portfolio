@@ -2,12 +2,12 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 26px;
-  height: 26px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
-  background-color: rgba(203, 194, 194, 0.4);
+  background-color: rgba(203, 194, 194, 0.7);
   border: 1px solid #fff;
   mix-blend-mode: difference;
   backdrop-filter: blur(2px);

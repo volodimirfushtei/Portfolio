@@ -1,4 +1,5 @@
 /* Expertise.module.css */
+
 .expertise {
   position: relative;
   width: 100%;
@@ -11,6 +12,7 @@
   isolation: isolate;
 }
 
+/* ── Background ── */
 .background {
   position: absolute;
   top: 0;
@@ -32,9 +34,12 @@
   height: 100%;
   background: var(--color-gradient);
   backdrop-filter: blur(0px);
-  z-index: -2;
+  /* виправлено: було z-index: -2 — ::before позиціонується відносно .background
+     який вже z-index: -1, тому -2 виштовхувало оверлей під фонове зображення */
+  z-index: 1;
 }
 
+/* ── Glow ── */
 .glow {
   position: absolute;
   top: 50%;
@@ -51,6 +56,7 @@
   pointer-events: none;
 }
 
+/* ── Container ── */
 .container {
   width: 100%;
   max-width: 1400px;
@@ -62,6 +68,7 @@
   padding: 0 2rem;
 }
 
+/* ── Section ── */
 .section {
   flex: 1;
   min-width: 400px;
@@ -73,43 +80,63 @@
   perspective: 1000px;
 }
 
-/* Tablet Adaptation */
+/* ── Tablet: 769px – 1024px ── */
 @media (max-width: 1024px) {
   .container {
     flex-direction: column;
-    gap: 4rem;
+    gap: 3rem;
     padding: 2rem;
   }
 
   .section {
     width: 100%;
     max-width: 700px;
+    /* виправлено: min-width: 400px тут не скидався — дві секції по 400px
+       = 800px на екрані 768px, що спричиняло горизонтальний скрол */
+    min-width: unset;
   }
 }
 
-/* Mobile Adaptation */
+/* ── Mobile: ≤ 768px ── */
 @media (max-width: 768px) {
   .expertise {
-    padding: 6rem 1rem;
+    padding: 4rem 1rem;
   }
 
   .container {
-    gap: 3rem;
-    padding: 0;
+    gap: 2rem;
+    padding: 0 1rem;
   }
 
   .background {
     height: 100%;
   }
-}
-
-/* Small Mobile Screens */
-@media (max-width: 480px) {
-  .expertise {
-    padding: 4rem 1rem;
-  }
 
   .section {
-    min-width: unset;
+    max-width: 100%;
+  }
+}
+
+/* ── Small mobile: ≤ 480px ── */
+@media (max-width: 480px) {
+  .expertise {
+    padding: 3rem 0.75rem;
+  }
+
+  .container {
+    gap: 1.5rem;
+    padding: 0 0.75rem;
+  }
+}
+
+/* ── Very small: ≤ 360px ── */
+@media (max-width: 360px) {
+  .expertise {
+    padding: 2.5rem 0.5rem;
+  }
+
+  .container {
+    gap: 1.25rem;
+    padding: 0 0.5rem;
   }
 }

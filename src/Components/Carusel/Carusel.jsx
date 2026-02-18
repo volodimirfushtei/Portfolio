@@ -50,7 +50,7 @@ export default function Carousel() {
         ),
       },
     ],
-    []
+    [],
   );
 
   useEffect(() => {
@@ -70,7 +70,7 @@ export default function Carousel() {
             end: "bottom bottom",
             scrub: true,
           },
-        }
+        },
       );
 
       // Анімації для кожного слайду
@@ -95,7 +95,7 @@ export default function Carousel() {
                 start: "top 80%",
                 toggleActions: "play none none reverse",
               },
-            }
+            },
           );
         }
 
@@ -115,7 +115,7 @@ export default function Carousel() {
                 start: "top 70%",
                 toggleActions: "play none none reverse",
               },
-            }
+            },
           );
         }
 
@@ -134,7 +134,7 @@ export default function Carousel() {
                 start: "top 65%",
                 toggleActions: "play none none reverse",
               },
-            }
+            },
           );
         }
 
@@ -153,7 +153,7 @@ export default function Carousel() {
                 start: "top 60%",
                 toggleActions: "play none none reverse",
               },
-            }
+            },
           );
         }
       });
@@ -165,7 +165,7 @@ export default function Carousel() {
   return (
     <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 xl:gap-16 items-center justify-center min-h-screen p-4 md:p-6 ">
       {/* LEFT SLIDER */}
-      <h2 className={`font-bold ${styles.main_title}`}>Soft Skills</h2>
+
       <div
         ref={containerRef}
         className="relative h-[500px] md:h-[600px] lg:h-[700px] w-full lg:w-1/2 overflow-y-auto snap-y snap-mandatory scroll-smooth rounded-xl lg:rounded-2xl shadow-lg lg:shadow-2xl scrollbar-hidden"
@@ -202,14 +202,14 @@ export default function Carousel() {
                 </div>
 
                 <div
-                  className={`${styles.title} slide-title w-[600px] h-[60px] text-2xl md:text-3xl lg:text-4xl font-bold leading-tight bg-blue/10 p-2 md:p-3 backdrop-blur-xl border-b-2 border-white/90 rounded-t-xl`}
+                  className={`${styles.title} slide-title w-full max-w-[600px]  h-[60px] text-2xl md:text-3xl lg:text-4xl font-bold leading-tight bg-blue/10 p-2 md:p-3 backdrop-blur-xl border-b-2 border-white/90 rounded-t-xl`}
                   data-slide={slide.id}
                 >
                   {slide.title}
                 </div>
 
                 <p
-                  className={`${styles.subtitle} slide-subtitle w-[600px] h-[60px] text-lg md:text-xl lg:text-2xl font-light opacity-90 bg-yellow/10 p-2 md:p-3 backdrop-blur-xl rounded-b-xl`}
+                  className={`${styles.subtitle} slide-subtitle w-full max-w-[600px]  h-[60px] text-lg md:text-xl lg:text-2xl font-light opacity-90 bg-yellow/10 p-2 md:p-3 backdrop-blur-xl rounded-b-xl`}
                   data-slide={slide.id}
                 >
                   {slide.subtitle}

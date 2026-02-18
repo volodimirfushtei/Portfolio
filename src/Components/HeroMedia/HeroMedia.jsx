@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import CircularText from "../CircularText/CircularText";
 const HeroMedia = () => {
@@ -20,14 +20,14 @@ const HeroMedia = () => {
       tl.from(
         imageRef.current,
         { opacity: 0, scale: 1.1, duration: 1 },
-        "-=0.4"
+        "-=0.4",
       );
 
       // Бейдж з bounce-ефектом
       tl.from(
         badgeRef.current,
         { opacity: 0, y: 20, scale: 0.9, duration: 0.6, ease: "back.out(1.7)" },
-        "-=0.3"
+        "-=0.3",
       );
 
       // Текстова секція
@@ -39,7 +39,7 @@ const HeroMedia = () => {
           stagger: 0.2,
           duration: 0.6,
         },
-        "-=0.2"
+        "-=0.2",
       );
     });
 
@@ -49,7 +49,7 @@ const HeroMedia = () => {
   return (
     <div
       ref={containerRef}
-      className="w-full sm:w-3/4 sm:max-w-2xl mx-auto p-6 border border-border rounded-2xl overflow-hidden"
+      className="w-full sm:w-3/4 sm:max-w-2xl mx-auto p-6 border border-border rounded-2xl overflow-hidden glass-effect"
     >
       <div className="relative group">
         {/* Image Container */}
@@ -63,7 +63,7 @@ const HeroMedia = () => {
             width={300}
             ref={imageRef}
             alt="Profile photo"
-            className="profile-image object-cover "
+            className="profile-image sm:w-80 mx-auto object-cover "
           />
           <div className="position-absolute top-8 right-10">
             <CircularText />

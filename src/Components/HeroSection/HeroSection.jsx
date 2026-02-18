@@ -31,6 +31,7 @@ const HeroSection = () => {
     opacity: useTransform(smoothScrollY, [0, 0.8], [1, 0]),
     scale: useTransform(smoothScrollY, [0, 1], [1, 1.1]),
     textY: useTransform(smoothScrollY, [0, 1], ["0%", "40%"]),
+    mediaY: useTransform(smoothScrollY, [0, 1], ["0%", "15%"]), // Slightly different for media
   };
 
   // Animation variants
@@ -113,35 +114,32 @@ const HeroSection = () => {
       <div className={styles.content}>
         <motion.div
           className={styles.textContent}
-          style={{ y: parallaxEffects.yBg, opacity: parallaxEffects.opacity }}
+          variants={itemVariants}
+          style={{
+            y: parallaxEffects.textY,
+            opacity: parallaxEffects.opacity,
+          }}
         >
-          <h1 className={`${styles.title} `}>
-            {" "}
-            <span
-              className={`${styles.titleGradient} text-2xl sm:text-3xl xl:text-8xl`}
-            >
-              Innovative
-            </span>{" "}
-            digital solutions
+          <h1 className={styles.title}>
+            <span className={styles.titleGradient}>Innovative</span> digital
+            solutions
           </h1>
 
           <motion.p className={styles.subtitle} variants={itemVariants}>
             <Typewriter
-              speed="fast"
-              variance={0.8}
-              backspace="word"
-              cursorBlinkSpeed={2}
-              cursor
-              cursorStyle="|"
               words={[
                 "Transforming ideas into exceptional web experiences",
                 "UI/UX Design",
                 "Animations",
                 "React Apps",
               ]}
-            >
-              Transforming ideas into exceptional web experiences
-            </Typewriter>
+              loop={0}
+              cursor
+              cursorStyle="|"
+              typeSpeed={70}
+              deleteSpeed={50}
+              delaySpeed={2000}
+            />
           </motion.p>
 
           <motion.div className={styles.buttons} variants={itemVariants}>
@@ -174,22 +172,24 @@ const HeroSection = () => {
 
         <motion.div
           className={styles.mediaContainer}
-          style={{ y: parallaxEffects.yBg, opacity: parallaxEffects.opacity }}
+          variants={itemVariants}
+          style={{
+            y: parallaxEffects.mediaY,
+            opacity: parallaxEffects.opacity,
+            scale: parallaxEffects.scale,
+          }}
         >
           <HeroMedia />
         </motion.div>
       </div>
 
-      {/* ✅ Scroll Indicator */}
+      {/* Scroll Indicator */}
       <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white flex flex-col items-center gap-2"
+        className={styles.scrollIndicator}
         animate={{ y: [0, 10, 0], opacity: [0.6, 1, 0.6] }}
         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
       >
-        <div className="flex justify-center"></div>
-        <span className="text-md opacity-70 text-[var(--color-text)]">
-          ↓ Scroll to explore ↓
-        </span>
+        <span>↓ Scroll to explore ↓</span>
       </motion.div>
     </motion.section>
   );

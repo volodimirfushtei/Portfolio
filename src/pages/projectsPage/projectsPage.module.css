@@ -32,26 +32,29 @@
   font-weight: 500;
 }
 
+/* ── Header ── */
 .header {
   text-align: center;
   margin-bottom: 3rem;
 }
 
 .heading {
-  font-size: clamp(1, 5rem, 6vw, 2rem);
+  font-size: clamp(1.4rem, 5vw, 2.2rem); /* виправлено: 4 аргументи → 3 */
   font-weight: 700;
   line-height: 1.2;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1.5rem; /* місце для ::after */
   background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  position: relative; /* потрібно для ::after */
+  display: inline-block;
 }
 
 .heading::after {
   content: "";
-  position: absolute;
-  bottom: -1rem;
+  position: absolute; /* виправлено: було відсутнє */
+  bottom: -0.75rem;
   left: 50%;
   transform: translateX(-50%);
   width: 80px;
@@ -65,13 +68,14 @@
 }
 
 .subheading {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: var(--color-secondary);
   max-width: 600px;
   margin: 0 auto;
   opacity: 0.8;
 }
 
+/* ── Controls ── */
 .controls {
   display: flex;
   gap: 1.5rem;
@@ -88,7 +92,7 @@
   display: flex;
   align-items: center;
   background: var(--color-surface);
-  padding: 0.8rem 1.5rem;
+  padding: 0.8rem 1.25rem;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   border: 1px solid var(--color-border);
@@ -103,10 +107,11 @@
 
 .searchContainer i,
 .filterContainer i {
-  margin-right: 1rem;
+  margin-right: 0.75rem;
   color: var(--color-icon);
   font-size: 1.2rem;
   opacity: 0.7;
+  flex-shrink: 0;
 }
 
 .searchContainer input,
@@ -118,6 +123,7 @@
   color: var(--color-text);
   font-size: 1rem;
   padding: 0.2rem 0;
+  min-width: 0; /* запобігає переповненню */
 }
 
 .filterContainer select {
@@ -125,13 +131,15 @@
   cursor: pointer;
 }
 
+/* ── Grid ── */
 .projectsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 2rem;
   margin-bottom: 3rem;
 }
 
+/* ── Card ── */
 .projectCard {
   background: var(--color-surface);
   border-radius: 16px;
@@ -146,7 +154,7 @@
 
 .cardHeader {
   border-top: 4px solid;
-  height: 220px;
+  height: 200px;
   position: relative;
   overflow: hidden;
 }
@@ -173,38 +181,38 @@
 }
 
 .cardContent {
-  padding: 1.8rem;
+  padding: 1.5rem;
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
 .projectTitle {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 600;
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.6rem;
   color: var(--color-title);
 }
 
 .projectDescription {
   color: var(--color-secondary);
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   line-height: 1.6;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
   flex: 1;
 }
 
 .tagsContainer {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
-  margin-bottom: 1.8rem;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
 }
 
 .tag {
-  padding: 0.4rem 0.9rem;
+  padding: 0.35rem 0.8rem;
   border-radius: 20px;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 500;
   transition: all 0.3s ease;
 }
@@ -226,11 +234,12 @@
   transition: transform 0.3s ease;
 }
 
+/* ── Pagination ── */
 .pagination {
   display: flex;
   justify-content: center;
   gap: 0.8rem;
-  margin-top: 3rem;
+  margin-top: 2rem;
   flex-wrap: wrap;
 }
 
@@ -265,6 +274,7 @@
   color: white;
 }
 
+/* ── No results ── */
 .noResults {
   grid-column: 1 / -1;
   text-align: center;
@@ -300,6 +310,7 @@
   transform: translateY(-2px);
 }
 
+/* ── Tablet: 769px – 1024px ── */
 @media (max-width: 1024px) {
   .projectsPage {
     padding: 5rem 1.5rem 3rem;
@@ -310,9 +321,10 @@
   }
 }
 
+/* ── Tablet portrait: 481px – 768px ── */
 @media (max-width: 768px) {
   .projectsPage {
-    padding: 4rem 1rem 2rem;
+    padding: 4rem 1rem 2.5rem;
   }
 
   .header {
@@ -322,8 +334,8 @@
   .controls {
     flex-direction: column;
     align-items: stretch;
-    gap: 1rem;
-    margin-bottom: 2rem;
+    gap: 0.75rem;
+    margin-bottom: 1.75rem;
   }
 
   .searchContainer,
@@ -333,43 +345,98 @@
   }
 
   .projectsGrid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .cardHeader {
+    height: 180px;
   }
 }
 
+/* ── Mobile: ≤ 480px ── */
 @media (max-width: 480px) {
   .projectsPage {
-    padding: 3.5rem 1rem 2rem;
+    padding: 3.5rem 0.75rem 2rem;
   }
 
   .heading {
-    font-size: 2.2rem;
+    font-size: 1.8rem;
   }
 
   .subheading {
-    font-size: 1rem;
+    font-size: 0.95rem;
+  }
+
+  .projectsGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .cardHeader {
+    height: 160px;
   }
 
   .cardContent {
-    padding: 1.5rem;
+    padding: 1.1rem;
   }
 
   .projectTitle {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
 
   .projectDescription {
-    font-size: 0.9rem;
+    font-size: 0.88rem;
   }
 
   .pagination {
     gap: 0.5rem;
+    margin-top: 1.5rem;
   }
 
   .pageButton {
     width: 36px;
     height: 36px;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    border-radius: 8px;
+  }
+
+  .controls {
+    margin-bottom: 1.25rem;
+  }
+
+  .searchContainer,
+  .filterContainer {
+    padding: 0.65rem 1rem;
+  }
+
+  .searchContainer input,
+  .filterContainer select {
+    font-size: 16px; /* запобігає авто-зуму в iOS Safari */
+  }
+}
+
+/* ── Small mobile: ≤ 360px ── */
+@media (max-width: 360px) {
+  .projectsPage {
+    padding: 3rem 0.5rem 1.5rem;
+  }
+
+  .heading {
+    font-size: 1.5rem;
+  }
+
+  .cardHeader {
+    height: 140px;
+  }
+
+  .cardContent {
+    padding: 0.9rem;
+  }
+
+  .pageButton {
+    width: 32px;
+    height: 32px;
+    font-size: 0.8rem;
   }
 }

@@ -40,7 +40,7 @@ const HomePage = () => {
       setScrollProgress(progress);
       document.documentElement.style.setProperty(
         "--scroll-progress",
-        `${progress}%`
+        `${progress}%`,
       );
     };
 
@@ -81,7 +81,10 @@ const HomePage = () => {
       transition={{ duration: 0.5 }}
       className={styles.container}
     >
-      <HeroSection />
+      <ScrollProgress scrollProgress={scrollProgress} />
+      <section className={styles.section}>
+        <HeroSection />
+      </section>
 
       <main className="w-screen overflow-hidden">
         {/* Expertise Section */}

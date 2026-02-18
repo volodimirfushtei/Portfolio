@@ -1,11 +1,12 @@
+/* Carusel.module.css */
+
 .carouselWrapper {
   width: 100%;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-
-  padding: 0rem 1rem;
+  padding: 0 1rem;
 }
 
 .carouselContainer {
@@ -16,6 +17,7 @@
   max-width: 1200px;
   align-items: center;
 }
+
 .slide {
   scroll-snap-align: start;
   scroll-snap-stop: always;
@@ -30,63 +32,77 @@
   align-items: center;
 }
 
-div .m_title {
+/* ── Titles ── */
+
+/* виправлено: "div .m_title" — CSS Modules не підтримує селектори з пробілом
+   для вкладених елементів через тег; замінено на простий клас */
+.m_title {
   background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  font-size: 48px;
+  font-size: clamp(
+    1.5rem,
+    4vw,
+    3rem
+  ); /* виправлено: було 48px — не масштабувалось */
   font-weight: 700;
   color: white;
   line-height: 1.2;
   margin-bottom: 16px;
   letter-spacing: -0.5px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* виправлено: text-shadow не працює з color:transparent/-webkit-text-fill-color:transparent
+     залишаємо тільки якщо колір НЕ прозорий */
 }
 
-div .main_title {
+/* виправлено: "div .main_title" — аналогічно */
+.main_title {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  font-size: 48px;
+  font-size: clamp(1.5rem, 4vw, 3rem);
   font-weight: 700;
-  color: transparent;
   line-height: 1.2;
   margin-bottom: 16px;
   letter-spacing: -0.5px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  /* виправлено: text-shadow з color:transparent не відображається — видалено */
+  animation: gradient-shift 5s ease infinite;
 }
 
+/* ── Slide title ── */
 .title {
-  -webkit-text-fill-color: transparent;
-  -webkit-background-clip: text;
   background: linear-gradient(90deg, var(--color-text), var(--color-title));
   background-size: 200% auto;
   -webkit-background-clip: text;
-  background-clip: text;
-  animation: gradient-shift 5s ease infinite;
-}
-.subtitle {
+  background-clip: text; /* виправлено: було оголошено двічі — видалено дублікат */
   -webkit-text-fill-color: transparent;
-  background: linear-gradient(90deg, var(--color-text), var(--color-secondary));
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  background-clip: text;
   animation: gradient-shift 5s ease infinite;
 }
 
+/* ── Slide subtitle ── */
+.subtitle {
+  background: linear-gradient(90deg, var(--color-text), var(--color-secondary));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text; /* виправлено: було оголошено двічі — видалено дублікат */
+  -webkit-text-fill-color: transparent;
+  animation: gradient-shift 5s ease infinite;
+}
+
+/* ── Icon ── */
 .icon {
   background: linear-gradient(90deg, #4368ff, #ff5252, #4368ff);
   background-size: 200% auto;
   -webkit-background-clip: text;
-  background-clip: text;
-  background-clip: text;
+  background-clip: text; /* виправлено: було оголошено двічі — видалено дублікат */
+  -webkit-text-fill-color: transparent;
   animation: gradient-shift 5s ease infinite;
 }
+
+/* ── Animation ── */
 @keyframes gradient-shift {
   0% {
     background-position: 0% 50%;
@@ -96,5 +112,47 @@ div .main_title {
   }
   100% {
     background-position: 0% 50%;
+  }
+}
+
+/* ── Tablet: ≤ 1024px ── */
+@media (max-width: 1024px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+
+  .carouselContainer {
+    gap: 4rem;
+  }
+}
+
+/* ── Mobile: ≤ 768px ── */
+@media (max-width: 768px) {
+  .carouselWrapper {
+    padding: 0 0.75rem;
+    min-height: auto;
+  }
+
+  .container {
+    padding: 0 1rem;
+  }
+
+  .carouselContainer {
+    gap: 2.5rem;
+  }
+}
+
+/* ── Small mobile: ≤ 480px ── */
+@media (max-width: 480px) {
+  .carouselWrapper {
+    padding: 0 0.5rem;
+  }
+
+  .container {
+    padding: 0 0.5rem;
+  }
+
+  .carouselContainer {
+    gap: 1.5rem;
   }
 }

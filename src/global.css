@@ -60,6 +60,6 @@ button {
 
 /* Custom selection */
 ::selection {
-  background-color: var(--color-primary);
-  color: #000;
+  background-color: #3e2f5e;
+  color: #e94560;
 }
