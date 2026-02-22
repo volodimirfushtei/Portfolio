@@ -16,7 +16,7 @@ body {
 
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none;
-  font-family: "Poppins", Helvetica, sans-serif;
+  font-family: "Bebas Neue", sans-serif;
 }
 .scrollbar-hidden::-webkit-scrollbar {
   display: none;

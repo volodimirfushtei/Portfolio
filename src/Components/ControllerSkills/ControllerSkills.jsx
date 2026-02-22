@@ -1,5 +1,5 @@
-import React from "react";
-import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
 import styles from "./ControllerSkills.module.css";
 
 const techItems = [
@@ -47,46 +47,57 @@ const techItems = [
   },
 ];
 
-const ControllerSkills = () => {
+/* Дублюємо для безкінечного loop */
+const items = [...techItems, ...techItems];
+
+export default function ControllerSkills() {
+  const trackRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.to(trackRef.current, {
+        x: "-50%",
+        duration: 22,
+        ease: "none",
+        repeat: -1,
+      });
+    });
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className={styles.container} aria-label="Technologies I use">
+    <section className={styles.section} aria-label="Technologies I use">
+      {/* Header */}
       <div className={styles.header}>
-        <h3>Coding process and tools at:</h3>
+        <span className={styles.eyebrowLine} aria-hidden="true" />
+        <h3 className={styles.heading}>Coding process and tools</h3>
       </div>
 
-      <div className={styles.sliderContainer}>
-        <motion.div
-          className={styles.sliderTrack}
-          animate={{ x: ["0%", "-100%"] }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-        >
-          {[...techItems, ...techItems].map((tech, index) => (
-            <div key={`${tech.name}-${index}`} className={styles.flipCard}>
-              <div className={styles.flipInner}>
+      {/* Marquee */}
+      <div className={styles.track} aria-hidden="true">
+        <div ref={trackRef} className={styles.inner}>
+          {items.map((tech, i) => (
+            <div key={`${tech.name}-${i}`} className={styles.card}>
+              <div className={styles.cardInner}>
                 {/* Front */}
-                <div className={styles.flipFront}>
+                <div className={styles.front}>
                   <i
-                    className={`${tech.icon} ${styles.icon}`}
+                    className={tech.icon}
                     style={{ color: tech.color }}
                     aria-hidden="true"
-                  ></i>
-                  <span>{tech.name}</span>
+                  />
+                  <span className={styles.name}>{tech.name}</span>
                 </div>
+
                 {/* Back */}
-                <div className={styles.flipBack}>
+                <div className={styles.back}>
                   <p style={{ color: tech.color }}>{tech.description}</p>
                 </div>
               </div>
             </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
-};
-
-export default ControllerSkills;
+}

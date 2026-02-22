@@ -104,11 +104,11 @@ const ContactsPage = () => {
           variants={childVariants}
           id="page-title"
         >
-          Let's Connect
+          Let's<span className={s.pageTitleAccent}> Connect</span>
         </motion.h1>
 
         <div className={s.formsContainer}>
-          <motion.section
+          <motion.div
             className={s.textSection}
             variants={containerVariants}
             aria-labelledby="contact-info"
@@ -168,7 +168,7 @@ const ContactsPage = () => {
                 ))}
               </motion.div>
             </div>
-          </motion.section>
+          </motion.div>
 
           <motion.div
             variants={childVariants}

@@ -32,10 +32,9 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: var(--color-gradient);
+  background: var(--color-overlay);
   backdrop-filter: blur(0px);
-  /* виправлено: було z-index: -2 — ::before позиціонується відносно .background
-     який вже z-index: -1, тому -2 виштовхувало оверлей під фонове зображення */
+
   z-index: 1;
 }
 

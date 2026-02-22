@@ -1,184 +1,289 @@
-/* CardTech.module.css */
+/* CardTech.module.css — Awwwards editorial dark */
+
 .wrapper {
-  perspective: 1000px;
+  perspective: 1200px;
   display: flex;
   justify-content: center;
   align-items: center;
-
-  margin: 0;
-  padding: 0rem;
 }
 
+/* ── Card — CSS 3D flip ── */
 .card {
   width: 400px;
-  height: 380px;
+  height: 400px;
   position: relative;
   cursor: pointer;
   transform-style: preserve-3d;
-  transition: transform 0.8s cubic-bezier(0.75, 0, 0.85, 1);
-
-  border-radius: 16px;
+  /* виправлено: .flipped клас був у JSX але відсутній у CSS */
+  transition: transform 0.75s cubic-bezier(0.76, 0, 0.24, 1);
+  outline: none;
 }
 
+.flipped {
+  transform: rotateY(180deg);
+}
+
+/* ── Sides ── */
 .side {
   position: absolute;
-  width: 100%;
-  height: 100%;
-
+  inset: 0;
   backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 2rem;
+  background: #0d0d0d;
+  border: 1px solid rgba(232, 243, 60, 0.1);
+}
 
-  box-sizing: border-box;
-  box-shadow: 5px 10px 30px rgba(50, 50, 50, 0.3);
+/* Accent corner TL */
+.side::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  border-top: 2px solid #e8f53c;
+  border-left: 2px solid #e8f53c;
+  pointer-events: none;
+}
+
+/* Accent corner BR */
+.side::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 24px;
+  height: 24px;
+  border-bottom: 2px solid rgba(232, 243, 60, 0.35);
+  border-right: 2px solid rgba(232, 243, 60, 0.35);
+  pointer-events: none;
 }
 
 .front {
-  background: var(--color-background);
-  color: var(--colot-text);
-  border-radius: 16px;
+  /* front — default */
 }
 
 .back {
-  background: var(--color-background);
   transform: rotateY(180deg);
-  border-radius: 16px;
 }
 
-.cardContent {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
+/* ── Front ── */
+.avatarWrap {
+  position: relative;
+  margin-bottom: 1.5rem;
 }
 
 .avatar {
-  width: 160px;
-  height: 160px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid rgba(123, 123, 122, 0.8);
-  box-shadow: 0 10px 30px rgba(192, 191, 189, 0.3);
-  margin-bottom: 1.5rem;
+  object-position: top;
+  display: block;
+  border: 1px solid rgba(232, 243, 60, 0.25);
+  position: relative;
+  z-index: 1;
 }
-.avatar:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(81, 94, 238, 0.4);
+
+/* Pulsing ring */
+.avatarRing {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1px solid rgba(232, 243, 60, 0.2);
+  animation: ringPulse 3s ease-in-out infinite;
 }
+
+@keyframes ringPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 0.15;
+  }
+}
+
 .textBlock {
   text-align: center;
 }
 
-.title {
-  font-size: 2rem;
-  font-weight: 700;
-  margin: 0.5rem 0;
-  color: var(--color-text);
-  line-height: 1.2;
+/* виправлено: було .title і .subtitle — потенційно глобальний конфлікт якщо імпортувати без styles. */
+.subtitle {
+  font-family: "DM Mono", monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(245, 245, 240, 0.35);
+  margin-bottom: 0.4rem;
 }
 
-.subtitle {
-  font-size: 1.1rem;
+.title {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 2.4rem;
   font-weight: 400;
-  color: var(--color-secondary);
-  margin-bottom: 0.5rem;
+  letter-spacing: 0.04em;
+  color: #f5f5f0;
+  line-height: 1;
+  margin: 0;
 }
 
 .highlight {
-  color: #908f8f;
-  font-weight: 700;
-  margin-bottom: 1rem;
+  color: #e8f53c;
 }
+
 .flipHint {
-  font-size: 0.6rem;
-  font-weight: 500;
-  color: var(--color-secondary);
-  margin-top: 1rem;
-  text-align: center;
+  position: absolute;
+  bottom: 1rem;
+  font-family: "DM Mono", monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(245, 245, 240, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
 }
+
+/* ── Back ── */
 .backContent {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  height: 100%;
   width: 100%;
-  text-align: center;
+  gap: 0;
 }
 
 .badge {
-  background: var(--color-surface);
-  color: var(--color-title);
-  padding: 0.5rem 1.2rem;
-  border-radius: 50px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: "DM Mono", monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  box-shadow: 0 4px 15px rgba(180, 179, 177, 0.3);
+  color: #e8f53c;
+  margin-bottom: 0.5rem;
 }
 
+.badgeLine {
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: #e8f53c;
+  flex-shrink: 0;
+}
+
+.flipMessage {
+  font-family: "DM Mono", monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.15em;
+  color: rgba(245, 245, 240, 0.2);
+  text-align: center;
+  margin-bottom: 1.25rem;
+}
+
+/* ── Tech grid ── */
 .techGrid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  margin-top: 1.5rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
   width: 100%;
 }
-.flipMessage {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--color-secondary);
-  margin-top: 1rem;
-  text-align: center;
-}
-.techItem {
-  background: rgba(174, 174, 174, 0.1);
-  border: 1px solid rgba(110, 110, 110, 0.1);
-  padding: 0.8rem;
 
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--color-text);
+.techItem {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  border-radius: 16px;
-  transition: all 0.3s ease;
+  gap: 0.35rem;
+  padding: 0.75rem 0.5rem;
+  border: 1px solid rgba(245, 245, 240, 0.06);
+  background: rgba(255, 255, 255, 0.02);
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease;
+  cursor: default;
 }
 
 .techItem:hover {
-  background: rgba(234, 234, 234, 0.2);
-  transform: translateY(-3px);
+  border-color: rgba(232, 243, 60, 0.25);
+  background: rgba(232, 243, 60, 0.03);
 }
 
-/* Mobile styles */
+.techIcon {
+  font-size: 1.4rem;
+  color: rgba(245, 245, 240, 0.55);
+  transition: color 0.25s ease;
+}
+
+.techItem:hover .techIcon {
+  color: #e8f53c;
+}
+
+.techItem span {
+  font-family: "DM Mono", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  color: rgba(245, 245, 240, 0.35);
+  text-align: center;
+}
+
+/* ── Mobile: ≤ 640px ── */
 @media (max-width: 640px) {
-  .wrapper {
-    padding: 1rem;
-  }
-
   .card {
-    height: 320px;
-  }
-
-  .title {
-    font-size: 1.7rem;
-  }
-
-  .subtitle {
-    font-size: 1rem;
+    width: 320px;
+    height: 360px;
   }
 
   .avatar {
-    width: 120px;
-    height: 120px;
+    width: 96px;
+    height: 96px;
+  }
+
+  .title {
+    font-size: 1.9rem;
+  }
+
+  .techGrid {
+    gap: 0.5rem;
+  }
+
+  .techItem {
+    padding: 0.6rem 0.4rem;
+  }
+
+  .techIcon {
+    font-size: 1.2rem;
+  }
+}
+
+/* ── Small mobile: ≤ 360px ── */
+@media (max-width: 360px) {
+  .card {
+    width: 280px;
+    height: 320px;
+  }
+
+  .avatar {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+/* ── Reduced motion — вимикаємо 3D flip ── */
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
+  .avatarRing {
+    animation: none;
   }
 }

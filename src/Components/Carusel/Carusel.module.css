@@ -1,158 +1,276 @@
-/* Carusel.module.css */
+/* Carusel.module.css — Awwwards editorial dark */
 
-.carouselWrapper {
+/* ── Layout ── */
+.wrapper {
   width: 100%;
   min-height: 100vh;
   display: flex;
+  flex-direction: row;
+  gap: 4rem;
+  align-items: center;
   justify-content: center;
-  align-items: center;
-  padding: 0 1rem;
+  padding: 4rem 2rem;
+  background: #080808;
 }
 
-.carouselContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 6rem;
+/* ── Left slider ── */
+.slider {
+  position: relative;
+  width: 50%;
+  max-width: 600px;
+  height: 640px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  border: 1px solid rgba(232, 243, 60, 0.1);
+}
+
+.slider::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Progress bar ── */
+.progressTrack {
+  position: sticky;
+  top: 50%;
+  right: 0;
+  width: 2px;
+  height: 80px;
+  background: rgba(245, 245, 240, 0.08);
+  z-index: 10;
+  margin-left: auto;
+  margin-right: 12px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.progressFill {
   width: 100%;
-  max-width: 1200px;
-  align-items: center;
+  height: 100%;
+  background: #e8f53c;
+  transform: scaleY(0);
+  transform-origin: top;
 }
 
+/* ── Slide ── */
 .slide {
+  position: relative;
+  width: 100%;
+  height: 640px;
   scroll-snap-align: start;
   scroll-snap-stop: always;
-}
-
-.container {
-  margin: 0 auto;
-  max-width: 1200px;
-  padding: 0 2rem;
-  height: 100%;
+  overflow: hidden;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
-/* ── Titles ── */
-
-/* виправлено: "div .m_title" — CSS Modules не підтримує селектори з пробілом
-   для вкладених елементів через тег; замінено на простий клас */
-.m_title {
-  background-size: 200% auto;
-  font-size: clamp(
-    1.5rem,
-    4vw,
-    3rem
-  ); /* виправлено: було 48px — не масштабувалось */
-  font-weight: 700;
-  color: white;
-  line-height: 1.2;
-  margin-bottom: 16px;
-  letter-spacing: -0.5px;
-  /* виправлено: text-shadow не працює з color:transparent/-webkit-text-fill-color:transparent
-     залишаємо тільки якщо колір НЕ прозорий */
-}
-
-/* виправлено: "div .main_title" — аналогічно */
-.main_title {
+/* ── Slide image ── */
+.slideImgWrap {
   position: absolute;
-  top: 50%;
+  inset: 0;
+  z-index: 0;
+}
+
+.slideImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  will-change: transform;
+}
+
+/* ── Gradient overlay ── */
+.slideOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(8, 8, 8, 0.3) 0%,
+    rgba(8, 8, 8, 0.7) 60%,
+    rgba(8, 8, 8, 0.92) 100%
+  );
+  z-index: 1;
+}
+
+/* ── Top eyebrow label ── */
+.slideTopLabel {
+  position: absolute;
+  top: 1.5rem;
   left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: clamp(1.5rem, 4vw, 3rem);
-  font-weight: 700;
-  line-height: 1.2;
-  margin-bottom: 16px;
-  letter-spacing: -0.5px;
-  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  /* виправлено: text-shadow з color:transparent не відображається — видалено */
-  animation: gradient-shift 5s ease infinite;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  white-space: nowrap;
 }
 
-/* ── Slide title ── */
-.title {
-  background: linear-gradient(90deg, var(--color-text), var(--color-title));
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text; /* виправлено: було оголошено двічі — видалено дублікат */
-  -webkit-text-fill-color: transparent;
-  animation: gradient-shift 5s ease infinite;
+.eyebrowLine {
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: #e8f53c;
+  flex-shrink: 0;
 }
 
-/* ── Slide subtitle ── */
-.subtitle {
-  background: linear-gradient(90deg, var(--color-text), var(--color-secondary));
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text; /* виправлено: було оголошено двічі — видалено дублікат */
-  -webkit-text-fill-color: transparent;
-  animation: gradient-shift 5s ease infinite;
+.eyebrowText {
+  font-family: "DM Mono", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #e8f53c;
+}
+
+/* ── Center content ── */
+.slideContent {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  padding: 0 2rem;
+  max-width: 480px;
 }
 
 /* ── Icon ── */
-.icon {
-  background: linear-gradient(90deg, #4368ff, #ff5252, #4368ff);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text; /* виправлено: було оголошено двічі — видалено дублікат */
-  -webkit-text-fill-color: transparent;
-  animation: gradient-shift 5s ease infinite;
+.slideIcon {
+  color: #e8f53c;
+  opacity: 0.9;
+  margin-bottom: 0.5rem;
+  will-change: transform;
 }
 
-/* ── Animation ── */
-@keyframes gradient-shift {
-  0% {
-    background-position: 0% 50%;
+/* ── Title ── */
+.slideTitle {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: #f5f5f0;
+  line-height: 1;
+  margin: 0;
+  will-change: transform;
+  border-bottom: 1px solid rgba(245, 245, 240, 0.15);
+  padding-bottom: 0.75rem;
+  width: 100%;
+}
+
+/* ── Subtitle ── */
+.slideSubtitle {
+  font-family: "DM Mono", monospace;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  color: rgba(245, 245, 240, 0.45);
+  line-height: 1.7;
+  margin: 0;
+  will-change: transform;
+}
+
+/* ── Scroll hint ── */
+.scrollHint {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  font-family: "DM Mono", monospace;
+  font-size: 0.75rem;
+  color: rgba(245, 245, 240, 0.25);
+  animation: bounceDown 2s ease-in-out infinite;
+}
+
+@keyframes bounceDown {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 0.4;
   }
   50% {
-    background-position: 100% 50%;
+    transform: translateX(-50%) translateY(5px);
+    opacity: 0.9;
   }
-  100% {
-    background-position: 0% 50%;
-  }
+}
+
+/* ── Right panel ── */
+.panel {
+  width: 50%;
+  max-width: 600px;
 }
 
 /* ── Tablet: ≤ 1024px ── */
 @media (max-width: 1024px) {
-  .container {
-    padding: 0 1.5rem;
+  .wrapper {
+    gap: 2.5rem;
+    padding: 3rem 1.5rem;
   }
 
-  .carouselContainer {
-    gap: 4rem;
+  .slider {
+    height: 560px;
+  }
+
+  .slide {
+    height: 560px;
   }
 }
 
 /* ── Mobile: ≤ 768px ── */
 @media (max-width: 768px) {
-  .carouselWrapper {
-    padding: 0 0.75rem;
+  .wrapper {
+    flex-direction: column;
+    padding: 2rem 1rem;
+    gap: 2rem;
     min-height: auto;
   }
 
-  .container {
-    padding: 0 1rem;
+  .slider {
+    width: 100%;
+    max-width: 100%;
+    height: 480px;
   }
 
-  .carouselContainer {
-    gap: 2.5rem;
+  .slide {
+    height: 480px;
+  }
+
+  .panel {
+    width: 100%;
+    max-width: 100%;
   }
 }
 
-/* ── Small mobile: ≤ 480px ── */
+/* ── Mobile: ≤ 480px ── */
 @media (max-width: 480px) {
-  .carouselWrapper {
-    padding: 0 0.5rem;
+  .wrapper {
+    padding: 1.5rem 0.75rem;
   }
 
-  .container {
-    padding: 0 0.5rem;
+  .slider {
+    height: 420px;
   }
 
-  .carouselContainer {
-    gap: 1.5rem;
+  .slide {
+    height: 420px;
+  }
+
+  .slideTitle {
+    font-size: 1.8rem;
+  }
+
+  .slideSubtitle {
+    font-size: 0.75rem;
+  }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .scrollHint {
+    animation: none;
   }
 }

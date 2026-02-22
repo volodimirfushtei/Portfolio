@@ -1,197 +1,183 @@
-import { useRef, useState, useEffect } from "react";
-import { useScroll, useTransform, motion, useSpring } from "framer-motion";
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Typewriter } from "react-simple-typewriter";
 import styles from "./HeroSection.module.css";
 import HeroMedia from "../HeroMedia/HeroMedia";
 
+gsap.registerPlugin(ScrollTrigger);
+
 const HeroSection = () => {
   const sectionRef = useRef(null);
-  const [scrolled, setScrolled] = useState(false);
+  const bgRef = useRef(null);
+  const textRef = useRef(null);
+  const eyebrowRef = useRef(null);
+  const titleRef = useRef(null);
+  const subtitleRef = useRef(null);
+  const buttonsRef = useRef(null);
+  const mediaRef = useRef(null);
+  const indicatorRef = useRef(null);
+  const cornerRef = useRef(null);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const ctx = gsap.context(() => {
+      /* Initial staggered reveal */
+      const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
+
+      tl.from(eyebrowRef.current, { opacity: 0, x: -20, duration: 0.7 })
+        .from(
+          titleRef.current.children,
+          {
+            opacity: 0,
+            y: 60,
+            duration: 0.9,
+            stagger: 0.1,
+            ease: "power3.out",
+          },
+          "-=0.3",
+        )
+        .from(
+          subtitleRef.current,
+          { opacity: 0, y: 20, duration: 0.7 },
+          "-=0.4",
+        )
+        .from(
+          buttonsRef.current.children,
+          {
+            opacity: 0,
+            y: 15,
+            duration: 0.5,
+            stagger: 0.1,
+          },
+          "-=0.3",
+        )
+        .from(mediaRef.current, { opacity: 0, x: 40, duration: 1 }, "-=0.8")
+        .from(cornerRef.current, { opacity: 0, duration: 0.6 }, "-=0.5")
+        .from(indicatorRef.current, { opacity: 0, duration: 0.5 }, "-=0.3");
+
+      /* Scroll parallax */
+      gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: 1,
+          },
+        })
+        .to(bgRef.current, { yPercent: 20, opacity: 0, ease: "none" })
+        .to(textRef.current, { yPercent: 30, opacity: 0, ease: "none" }, 0)
+        .to(
+          mediaRef.current,
+          { yPercent: 10, scale: 1.05, opacity: 0, ease: "none" },
+          0,
+        );
+
+      /* Scroll indicator fade */
+      gsap.to(indicatorRef.current, {
+        opacity: 0,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top+=100 top",
+          end: "top+=300 top",
+          scrub: true,
+        },
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
   }, []);
 
-  // Scroll progress with spring smoothing
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"],
-  });
-
-  const smoothScrollY = useSpring(scrollYProgress, {
-    damping: 30,
-    stiffness: 100,
-  });
-
-  // Parallax effects
-  const parallaxEffects = {
-    yBg: useTransform(smoothScrollY, [0, 1], ["0%", "20%"]),
-    opacity: useTransform(smoothScrollY, [0, 0.8], [1, 0]),
-    scale: useTransform(smoothScrollY, [0, 1], [1, 1.1]),
-    textY: useTransform(smoothScrollY, [0, 1], ["0%", "40%"]),
-    mediaY: useTransform(smoothScrollY, [0, 1], ["0%", "15%"]), // Slightly different for media
-  };
-
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        when: "beforeChildren",
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.16, 1, 0.3, 1],
-      },
-    },
-  };
-
   return (
-    <motion.section
-      ref={sectionRef}
-      className={styles.hero}
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-    >
-      {/* Animated gradient background */}
-      <motion.div
-        className={`${styles.gradientBackground} ${
-          scrolled ? styles.scrolled : ""
-        }`}
-        animate={{
-          backgroundPosition: ["0% 0%", "100% 100%"],
-        }}
-        transition={{
-          duration: 15,
-          repeat: Infinity,
-          repeatType: "reverse",
-          ease: "linear",
-        }}
-        style={{ y: parallaxEffects.yBg, opacity: parallaxEffects.opacity }}
+    <section ref={sectionRef} className={styles.hero}>
+      {/* Background */}
+      <div
+        ref={bgRef}
+        className={styles.gradientBackground}
+        aria-hidden="true"
       />
 
-      {/* Decorative floating shapes */}
-      <div className={styles.floatingShapes}>
-        <motion.div
-          className={styles.shapeCircle}
-          animate={{
-            y: [0, 30, 0],
-            x: [0, 20, 0],
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-        <motion.div
-          className={styles.shapeTriangle}
-          animate={{
-            rotate: [0, 360],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-        />
+      {/* Grid overlay */}
+      <div className={styles.gridOverlay} aria-hidden="true" />
+
+      {/* Corner badge */}
+      <div ref={cornerRef} className={styles.cornerBadge} aria-hidden="true">
+        <span className={styles.cornerBadgeNum}>01</span>
+        <span className={styles.cornerBadgeLabel}>Hero</span>
       </div>
 
       {/* Main content */}
       <div className={styles.content}>
-        <motion.div
-          className={styles.textContent}
-          variants={itemVariants}
-          style={{
-            y: parallaxEffects.textY,
-            opacity: parallaxEffects.opacity,
-          }}
-        >
-          <h1 className={styles.title}>
-            <span className={styles.titleGradient}>Innovative</span> digital
-            solutions
+        {/* Text block */}
+        <div ref={textRef} className={styles.textContent}>
+          <div ref={eyebrowRef} className={styles.eyebrow}>
+            <span className={styles.eyebrowLine} />
+            <span className={styles.eyebrowText}>
+              Frontend Developer · 2025
+            </span>
+          </div>
+
+          <h1 ref={titleRef} className={styles.title}>
+            <span className={styles.titleGradient}>Innovative</span>
+            <span className={styles.titleSecond}>Digital</span>
+            <span className={styles.titleSecond}>Solutions</span>
           </h1>
 
-          <motion.p className={styles.subtitle} variants={itemVariants}>
+          <div className={styles.divider} />
+
+          <p ref={subtitleRef} className={styles.subtitle}>
             <Typewriter
               words={[
                 "Transforming ideas into exceptional web experiences",
-                "UI/UX Design",
-                "Animations",
-                "React Apps",
+                "UI / UX Design",
+                "Motion & Animations",
+                "React Applications",
               ]}
               loop={0}
               cursor
               cursorStyle="|"
-              typeSpeed={70}
-              deleteSpeed={50}
-              delaySpeed={2000}
+              typeSpeed={65}
+              deleteSpeed={40}
+              delaySpeed={2200}
             />
-          </motion.p>
+          </p>
 
-          <motion.div className={styles.buttons} variants={itemVariants}>
-            <motion.button
-              className={styles.primaryButton}
-              whileHover={{
-                scale: 1.05,
-                boxShadow: "0 8px 24px rgba(67, 104, 255, 0.3)",
-              }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Start a project
+          <div ref={buttonsRef} className={styles.buttons}>
+            <button className={styles.primaryButton}>
+              <span>Start a project</span>
               <span className={styles.buttonArrow}>→</span>
-            </motion.button>
-
-            <motion.button
+            </button>
+            <button
               className={styles.secondaryButton}
-              whileHover={{
-                scale: 1.05,
-                boxShadow: "0 8px 24px rgba(255, 255, 255, 0.1)",
-              }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => window.open("https://github.com/volodimirfushtei")}
+              onClick={() =>
+                window.open(
+                  "https://github.com/volodimirfushtei",
+                  "_blank",
+                  "noopener",
+                )
+              }
             >
-              View my work
+              <span>View my work</span>
               <span className={styles.buttonArrow}>→</span>
-            </motion.button>
-          </motion.div>
-        </motion.div>
+            </button>
+          </div>
+        </div>
 
-        <motion.div
-          className={styles.mediaContainer}
-          variants={itemVariants}
-          style={{
-            y: parallaxEffects.mediaY,
-            opacity: parallaxEffects.opacity,
-            scale: parallaxEffects.scale,
-          }}
-        >
+        {/* Media */}
+        <div ref={mediaRef} className={styles.mediaContainer}>
           <HeroMedia />
-        </motion.div>
+        </div>
       </div>
 
-      {/* Scroll Indicator */}
-      <motion.div
+      {/* Scroll indicator */}
+      <div
+        ref={indicatorRef}
         className={styles.scrollIndicator}
-        animate={{ y: [0, 10, 0], opacity: [0.6, 1, 0.6] }}
-        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        aria-hidden="true"
       >
-        <span>↓ Scroll to explore ↓</span>
-      </motion.div>
-    </motion.section>
+        <span>Scroll to explore</span>
+      </div>
+    </section>
   );
 };
 

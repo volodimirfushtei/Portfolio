@@ -1,23 +1,38 @@
-import React from "react";
-import s from "./ContactForm.module.css";
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { motion } from "framer-motion";
+import s from "./ContactForm.module.css";
 
 const ContactForm = () => {
+  const formRef = useRef(null);
+
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm({
-    mode: "onBlur",
-  });
+  } = useForm({ mode: "onBlur" });
+
+  /* ── Reveal animation ── */
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from(formRef.current.children, {
+        opacity: 0,
+        y: 24,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "power3.out",
+        delay: 0.1,
+      });
+    }, formRef);
+    return () => ctx.revert();
+  }, []);
 
   const onSubmit = async (data) => {
     try {
       if (data.subscribe) {
-        const response = await fetch("/api/subscribe", {
+        const res = await fetch("/api/subscribe", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -26,213 +41,172 @@ const ContactForm = () => {
             lastName: data.lastName,
           }),
         });
-
-        if (!response.ok) {
-          const errorText = await response.text();
-          console.error("❌ Subscribe error:", response.status, errorText);
+        if (!res.ok) {
           toast.error("Subscription failed");
           throw new Error("Subscription failed");
         }
-
         toast.success("Subscribed successfully!");
       }
 
-      const telegramResponse = await fetch("/api/telegram", {
+      const tgRes = await fetch("/api/telegram", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-
-      if (!telegramResponse.ok) {
-        const errorText = await telegramResponse.text();
-        console.error("❌ Telegram error:", telegramResponse.status, errorText);
+      if (!tgRes.ok) {
         toast.error("Message sending failed");
         throw new Error("Message sending failed");
       }
 
       toast.success("Message sent successfully!");
       reset();
-    } catch (error) {
-      console.error("❌ Error sending form:", error);
+    } catch (err) {
+      console.error("Form error:", err);
     }
   };
 
-  const containerVariants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: "easeOut", staggerChildren: 0.1 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 10 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.3, ease: "easeOut" },
-    },
-  };
-
   return (
-    <motion.div
-      className={s.formContainer}
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants}
-    >
-      <div className={s.card}>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className={s.form}
-          style={{
-            pointerEvents: isSubmitting ? "none" : "auto",
-            opacity: isSubmitting ? 0.6 : 1,
-          }}
-        >
-          <motion.div className={s.cardHeader} variants={itemVariants}>
-            <h2 className={s.cardTitle}>Get in Touch</h2>
-            <p className={s.cardSubtitle}>We'll respond within 24 hours</p>
-          </motion.div>
+    <div className={s.wrap}>
+      <form
+        ref={formRef}
+        onSubmit={handleSubmit(onSubmit)}
+        className={s.form}
+        style={{
+          pointerEvents: isSubmitting ? "none" : "auto",
+          opacity: isSubmitting ? 0.6 : 1,
+        }}
+        noValidate
+      >
+        {/* Header */}
+        <div className={s.header}>
+          <div className={s.eyebrow}>
+            <span className={s.eyebrowLine} />
+            <span className={s.eyebrowText}>Let's talk</span>
+          </div>
+          <h2 className={s.title}>Get in Touch</h2>
+          <p className={s.subtitle}>I'll respond within 24 hours</p>
+        </div>
 
-          <div className={s.cardBody}>
-            <motion.div className={s.nameFields} variants={itemVariants}>
-              <div className={s.formGroup}>
-                <input
-                  className={`${s.formControl} ${
-                    errors.firstName ? s.error : ""
-                  }`}
-                  type="text"
-                  id="firstName"
-                  {...register("firstName", {
-                    required: "First name is required",
-                    minLength: {
-                      value: 2,
-                      message: "Minimum 2 characters",
-                    },
-                  })}
-                  placeholder=" "
-                />
-                <label htmlFor="firstName">First name</label>
-                {errors.firstName && (
-                  <span
-                    className={s.errorMessage}
-                    role="alert"
-                    aria-live="polite"
-                  >
-                    {errors.firstName.message}
-                  </span>
-                )}
-              </div>
-
-              <div className={s.formGroup}>
-                <input
-                  className={`${s.formControl} ${
-                    errors.lastName ? s.error : ""
-                  }`}
-                  type="text"
-                  id="lastName"
-                  {...register("lastName", {
-                    required: "Last name is required",
-                  })}
-                  placeholder=" "
-                />
-                <label htmlFor="lastName">Last name</label>
-                {errors.lastName && (
-                  <span
-                    className={s.errorMessage}
-                    role="alert"
-                    aria-live="polite"
-                  >
-                    {errors.lastName.message}
-                  </span>
-                )}
-              </div>
-            </motion.div>
-
-            <motion.div className={s.formGroup} variants={itemVariants}>
-              <input
-                className={`${s.formControl} ${errors.email ? s.error : ""}`}
-                type="email"
-                id="email"
-                {...register("email", {
-                  required: "Email is required",
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: "Invalid email address",
-                  },
-                })}
-                placeholder=" "
-              />
-              <label htmlFor="email">Email address</label>
-              {errors.email && (
-                <span
-                  className={s.errorMessage}
-                  role="alert"
-                  aria-live="polite"
-                >
-                  {errors.email.message}
-                </span>
-              )}
-            </motion.div>
-
-            <motion.div className={s.formGroup} variants={itemVariants}>
-              <textarea
-                id="message"
-                className={`${s.formControl} ${errors.message ? s.error : ""}`}
-                rows="5"
-                {...register("message", {
-                  required: "Message is required",
-                  minLength: {
-                    value: 10,
-                    message: "Minimum 10 characters",
-                  },
-                })}
-                placeholder=" "
-              ></textarea>
-              <label htmlFor="message">Your Message</label>
-              {errors.message && (
-                <span
-                  className={s.errorMessage}
-                  role="alert"
-                  aria-live="polite"
-                >
-                  {errors.message.message}
-                </span>
-              )}
-            </motion.div>
+        {/* Name row */}
+        <div className={s.row}>
+          <div className={s.group}>
+            <input
+              id="firstName"
+              type="text"
+              placeholder=" "
+              className={`${s.input} ${errors.firstName ? s.inputError : ""}`}
+              {...register("firstName", {
+                required: "First name is required",
+                minLength: { value: 2, message: "Minimum 2 characters" },
+              })}
+            />
+            <label htmlFor="firstName" className={s.label}>
+              First name
+            </label>
+            {errors.firstName && (
+              <span className={s.error} role="alert" aria-live="polite">
+                {errors.firstName.message}
+              </span>
+            )}
           </div>
 
-          <motion.div className={s.cardFooter} variants={itemVariants}>
-            <label className={s.checkboxContainer}>
-              <input
-                type="checkbox"
-                id="subscribe"
-                {...register("subscribe")}
-                className={s.checkboxInput}
-              />
-              <span className={s.checkboxCustom}></span>
-              Subscribe to newsletter
+          <div className={s.group}>
+            <input
+              id="lastName"
+              type="text"
+              placeholder=" "
+              className={`${s.input} ${errors.lastName ? s.inputError : ""}`}
+              {...register("lastName", { required: "Last name is required" })}
+            />
+            <label htmlFor="lastName" className={s.label}>
+              Last name
             </label>
+            {errors.lastName && (
+              <span className={s.error} role="alert" aria-live="polite">
+                {errors.lastName.message}
+              </span>
+            )}
+          </div>
+        </div>
 
-            <motion.button
-              type="submit"
-              className={s.submitButton}
-              disabled={isSubmitting}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              {isSubmitting ? (
-                <span className={s.spinner}></span>
-              ) : (
-                "Send Message"
-              )}
-            </motion.button>
-          </motion.div>
-        </form>
-      </div>
-    </motion.div>
+        {/* Email */}
+        <div className={s.group}>
+          <input
+            id="email"
+            type="email"
+            placeholder=" "
+            className={`${s.input} ${errors.email ? s.inputError : ""}`}
+            {...register("email", {
+              required: "Email is required",
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: "Invalid email address",
+              },
+            })}
+          />
+          <label htmlFor="email" className={s.label}>
+            Email address
+          </label>
+          {errors.email && (
+            <span className={s.error} role="alert" aria-live="polite">
+              {errors.email.message}
+            </span>
+          )}
+        </div>
+
+        {/* Message */}
+        <div className={s.group}>
+          <textarea
+            id="message"
+            rows="5"
+            placeholder=" "
+            className={`${s.input} ${s.textarea} ${errors.message ? s.inputError : ""}`}
+            {...register("message", {
+              required: "Message is required",
+              minLength: { value: 10, message: "Minimum 10 characters" },
+            })}
+          />
+          <label htmlFor="message" className={s.label}>
+            Your Message
+          </label>
+          {errors.message && (
+            <span className={s.error} role="alert" aria-live="polite">
+              {errors.message.message}
+            </span>
+          )}
+        </div>
+
+        {/* Footer */}
+        <div className={s.footer}>
+          <label className={s.checkbox}>
+            <input
+              type="checkbox"
+              id="subscribe"
+              className={s.checkboxInput}
+              {...register("subscribe")}
+            />
+            <span className={s.checkboxBox} aria-hidden="true" />
+            Subscribe to newsletter
+          </label>
+
+          <button
+            type="submit"
+            className={s.btn}
+            disabled={isSubmitting}
+            aria-label="Send message"
+          >
+            {isSubmitting ? (
+              <span className={s.spinner} aria-hidden="true" />
+            ) : (
+              <>
+                <span>Send Message</span>
+                <span className={s.btnArrow}>→</span>
+              </>
+            )}
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 

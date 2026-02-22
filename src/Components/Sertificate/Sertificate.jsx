@@ -25,8 +25,9 @@ const Certificate = () => {
     }
   }, []);
 
-  const rotateX = useTransform(mouseY, [0, viewport.height], [8, -8]);
-  const rotateY = useTransform(mouseX, [0, viewport.width], [-8, 8]);
+  // tilt math
+  const rotateX = useTransform(mouseY, [0, 300], [8, -8]);
+  const rotateY = useTransform(mouseX, [0, 300], [-8, 8]);
 
   const smoothX = useSpring(rotateX, { stiffness: 150, damping: 25 });
   const smoothY = useSpring(rotateY, { stiffness: 150, damping: 25 });
@@ -37,8 +38,10 @@ const Certificate = () => {
   });
 
   const handleMouseMove = (e) => {
-    mouseX.set(e.clientX);
-    mouseY.set(e.clientY);
+    const rect = e.currentTarget.getBoundingClientRect();
+
+    mouseX.set(e.clientX - rect.left);
+    mouseY.set(e.clientY - rect.top);
   };
 
   useEffect(() => {
@@ -84,7 +87,7 @@ const Certificate = () => {
             <motion.span
               className={styles.time}
               animate={{
-                color: ["#4368ff", "#ff5252", "#4368ff"],
+                color: ["#e8f53c", "#ff5252", "#e8f53c"],
               }}
               transition={{ duration: 5, repeat: Infinity }}
             >
@@ -104,7 +107,7 @@ const Certificate = () => {
               className={styles.emailLink}
               whileHover={{
                 scale: 1.05,
-                boxShadow: "0 2px 8px rgba(67, 104, 255, 0.3)",
+                boxShadow: "0 2px 8px rgba(255, 82, 82, 0.5)",
               }}
             >
               fuschteyy@gmail.com
@@ -132,7 +135,7 @@ const Certificate = () => {
                 className={styles.glow}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.3 }}
-                exit={{ opacity: 0 }}
+                exit={{ opacity: 0.3 }}
                 transition={{ duration: 0.3 }}
               />
             )}
@@ -186,6 +189,7 @@ const Certificate = () => {
                 <div className={styles.signatureDetails}>
                   <div className={styles.ceo}>CEO of GoIT</div>
                   <div className={styles.ceoName}>Anton Chornyi</div>
+                  <div className={styles.signatureLine}></div>
                 </div>
               </div>
             </div>
@@ -197,13 +201,12 @@ const Certificate = () => {
             href="/images/FUSHTEI_VOLODYMYR.pdf"
             download
             className={styles.downloadButton}
-            whileHover={{
-              backgroundColor: "#3a5eff",
-              boxShadow: "0 4px 12px rgba(58, 94, 255, 0.3)",
-            }}
+            initial={{ opacity: 0, y: 40 }}
+            animate={isHovered ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
           >
             Download Certificate
-            <i className="ri-download-line"></i>
+            <i className="ri-download-line" />
           </motion.a>
         </motion.div>
       </div>

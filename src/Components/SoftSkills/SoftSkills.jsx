@@ -44,9 +44,10 @@ export default function SoftSkills() {
   ];
 
   const ref = useRef(null);
+  const blocksRef = useRef([]);
   useEffect(() => {
     if (gsap && ScrollTrigger) {
-      const blocks = gsap.utils.toArray(".skill-block");
+      const blocks = gsap.utils.toArray(".block", ref.current);
       gsap.fromTo(
         blocks,
         { opacity: 0, y: 50 },
@@ -61,7 +62,7 @@ export default function SoftSkills() {
             start: "top 80%",
             toggleActions: "play none none reverse",
           },
-        }
+        },
       );
 
       // Анімація пунктів списку всередині кожного блоку
@@ -81,37 +82,41 @@ export default function SoftSkills() {
               start: "top 85%",
               toggleActions: "play none none reverse",
             },
-          }
+          },
         );
       });
     }
   }, []);
 
   return (
-    <section
-      className="relative w-full max-w-3xl mx-auto p-10 text-white overflow-hidden "
-      ref={ref}
-    >
-      {skills.map((skill, index) => (
-        <div key={index} className="skill-block mb-8 w-100 mx-auto text-center">
-          <h3
-            className={`text-2xl font-semibold flex items-center gap-2 mb-2 border-b pb-2 border-gray-400 ${styles.skillTitle}`}
+    <section ref={ref} className={styles.section}>
+      <div className={styles.grid}>
+        {skills.map((skill, i) => (
+          <div
+            key={skill.title}
+            className={styles.block}
+            ref={(el) => (blocksRef.current[i] = el)}
           >
-            <i
-              className={`${skill.icon} p-2 text-secondary rounded-2`}
-              aria-hidden="true"
-            />
-            {skill.title}
-          </h3>
-          <ul className="list-disc list-inside text-gray-500 text-left text-xl">
-            {skill.items.map((item, idx) => (
-              <li key={idx} custom={idx} className="mb-1">
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+            <span className={styles.num}>{String(i + 1).padStart(2, "0")}</span>
+
+            <div className={styles.blockHeader}>
+              <i className={skill.icon} aria-hidden="true" />
+              <h3 className={styles.title}>{skill.title}</h3>
+            </div>
+
+            <ul className={styles.list}>
+              {skill.items.map((item) => (
+                <li key={item} className={styles.item}>
+                  <span className={styles.bullet} aria-hidden="true">
+                    ▸
+                  </span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
     </section>
   );
 }

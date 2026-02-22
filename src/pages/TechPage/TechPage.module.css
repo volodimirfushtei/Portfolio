@@ -1,10 +1,11 @@
-/* TechPage.module.css */
+/* TechPage.module.css — Awwwards editorial dark */
+
 .wrapper {
   width: 100%;
-  min-height: 100vh;
-  background: var(--color-background);
-  color: var(--color-text);
-  padding: 6rem 0 4rem;
+  max-height: 100vh;
+  background: #080808;
+  color: #f5f5f0;
+  padding: 6rem 0 5rem;
 }
 
 .container {
@@ -16,303 +17,291 @@
 
 /* ── Header ── */
 .header {
-  text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.eyebrowLine {
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: #e8f53c;
+  flex-shrink: 0;
+}
+
+.eyebrowText {
+  font-family: "DM Mono", monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #e8f53c;
 }
 
 .heading {
-  font-size: clamp(1.4rem, 5vw, 2.2rem); /* виправлено: 4 аргументи → 3 */
-  font-weight: 700;
-  line-height: 1.2;
-  margin-bottom: 1.5rem; /* місце для ::after */
-  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(1.6rem, 10vw, 3rem);
+  font-weight: 400;
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+  color: #f5f5f0;
+  margin: 0 0 1rem;
+}
+
+.headingAccent {
+  background: linear-gradient(90deg, #f8a12f 0%, #f53c03 50%, #f8ab04 100%);
+  background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  position: relative; /* потрібно для ::after */
-  display: inline-block;
+  animation: shimmer 4s linear infinite;
 }
 
-.heading::after {
-  content: "";
-  position: absolute; /* вже є, але тепер працює бо є position: relative на батьку */
-  bottom: -0.75rem;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80px;
-  height: 4px;
-  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
-  border-radius: 2px;
-}
-
-.heading span {
-  display: inline-block;
+@keyframes shimmer {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
 }
 
 .subheading {
-  font-size: 1.1rem;
-  color: var(--color-secondary);
-  max-width: 600px;
-  margin: 0 auto;
-  opacity: 0.8;
+  font-family: "DM Mono", monospace;
+  font-size: 0.85rem;
+  color: rgba(245, 245, 240, 0.35);
+  letter-spacing: 0.05em;
+  margin: 0;
+  max-width: 480px;
 }
 
 /* ── Grid ── */
 .grid {
   display: grid;
-  gap: 1.5rem;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  padding: 1rem 0;
-}
-
-.cardLink {
-  text-decoration: none;
-  color: inherit;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: rgba(245, 245, 240, 0.05); /* лінії сітки */
+  border: 1px solid rgba(245, 245, 240, 0.05);
+  margin-bottom: 3rem;
 }
 
 /* ── Card ── */
 .card {
-  background: var(--color-surface);
-  border-radius: 16px;
-  padding: 2rem;
-  height: 260px;
+  background: #080808;
+  padding: 2rem 1.75rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  transition: all 0.3s ease;
-  border: 1px solid var(--color-border);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  gap: 0.75rem;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  transition: background 0.3s ease;
+  cursor: pointer;
+  min-height: 240px;
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #e8f53c;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
 }
 
 .card:hover {
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
-  transform: translateY(-5px);
-  border-color: var(--color-primary);
+  background: #1c1c1c;
 }
 
-.iconWrapper {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 60px;
-  height: 60px;
-  background: rgba(0, 0, 0, 0.03);
-  border-radius: 16px;
-  transition: all 0.3s ease;
-  flex-shrink: 0;
+.card:hover::after {
+  transform: scaleX(1);
 }
 
-.title {
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: var(--color-title);
+/* Card number */
+.cardNum {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 0.9rem;
+  color: rgba(245, 245, 240, 0.12);
+  letter-spacing: 0.08em;
+  line-height: 1;
 }
 
-.description {
-  font-size: 0.95rem;
-  color: var(--color-secondary);
-  line-height: 1.6;
-  margin-bottom: 0.75rem;
+/* Icon */
+.iconWrap {
+  font-size: 2rem;
+  line-height: 1;
+  transition: transform 0.3s ease;
+}
+
+.card:hover .iconWrap {
+  transform: scale(1.15);
+}
+
+.cardTitle {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: #f5f5f0;
+  margin: 0;
+  line-height: 1;
+}
+
+.cardDesc {
+  font-family: "DM Mono", monospace;
+  font-size: 0.7rem;
+  color: rgba(245, 245, 240, 0.3);
+  line-height: 1.7;
+  letter-spacing: 0.02em;
+  margin: 0;
   flex-grow: 1;
-  /* обрізаємо якщо не влізає у фіксовану висоту картки */
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
 
-.readMore {
+.cardLink {
   display: inline-flex;
   align-items: center;
+  gap: 0.25rem;
+  font-family: "DM Mono", monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #e8f53c;
+  margin-top: auto;
+  transition: gap 0.3s ease;
+}
+
+.card:hover .cardLink {
   gap: 0.5rem;
-  font-size: 0.95rem;
-  color: var(--color-primary);
-  font-weight: 500;
-  transition: all 0.3s ease;
-  flex-shrink: 0;
-}
-
-.readMore i {
-  transition: transform 0.3s ease;
-}
-
-.card:hover .readMore i {
-  transform: translateX(3px);
 }
 
 /* ── Pagination ── */
 .pagination {
   display: flex;
   justify-content: center;
-  gap: 0.8rem;
-  margin-top: 4rem;
-  flex-wrap: wrap;
+  gap: 1px;
+  background: rgba(245, 245, 240, 0.05);
+  width: fit-content;
+  margin: 0 auto;
+  border: 1px solid rgba(245, 245, 240, 0.05);
 }
 
-.pageButton {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.pageBtn {
+  width: 52px;
+  height: 48px;
+  background: #080808;
   border: none;
-  background: var(--color-surface);
-  color: var(--color-text);
+  color: rgba(245, 245, 240, 0.3);
+  font-family: "DM Mono", monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
   cursor: pointer;
-  font-weight: 600;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease;
 }
 
-.pageButton:hover:not(:disabled) {
-  background: var(--color-primary);
-  color: white;
+.pageBtn:hover {
+  background: #0d0d0d;
+  color: #f5f5f0;
 }
 
-.pageButton:disabled {
-  opacity: 0.7;
-  cursor: default;
+.active {
+  background: #e8f53c !important;
+  color: #080808 !important;
 }
 
-.activePage {
-  background: var(--color-primary);
-  color: white;
-}
-
-/* ── Tablet: 769px – 1024px ── */
+/* ── Tablet: ≤ 1024px ── */
 @media (max-width: 1024px) {
-  .wrapper {
-    padding: 5rem 0 3rem;
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 
-  .grid {
-    gap: 1.25rem;
+  .container {
+    padding: 0 2rem;
   }
 }
 
-/* ── Tablet portrait: 481px – 768px ── */
+/* ── Tablet portrait: ≤ 768px ── */
 @media (max-width: 768px) {
   .wrapper {
-    padding: 4rem 0 2.5rem;
-  }
-
-  .header {
-    margin-bottom: 2rem;
+    padding: 4rem 0 3rem;
   }
 
   .grid {
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .card {
-    height: auto; /* на планшеті знімаємо фіксовану висоту */
-    min-height: 220px;
+    min-height: 200px;
     padding: 1.5rem;
   }
 
   .card:hover {
-    transform: none; /* прибираємо підйом на touch */
-  }
-
-  .description {
-    -webkit-line-clamp: 4;
-  }
-
-  .pagination {
-    margin-top: 2.5rem;
+    background: #080808; /* no hover bg on touch */
   }
 }
 
 /* ── Mobile: ≤ 480px ── */
 @media (max-width: 480px) {
   .wrapper {
-    padding: 3.5rem 0 2rem;
+    padding: 3rem 0 2.5rem;
   }
 
   .container {
-    padding: 0 0.75rem;
-  }
-
-  .heading {
-    font-size: 1.8rem;
-  }
-
-  .subheading {
-    font-size: 0.95rem;
+    padding: 0 1rem;
   }
 
   .grid {
-    grid-template-columns: 1fr;
-    gap: 0.875rem;
+    grid-template-columns: 1fr 1fr;
   }
 
   .card {
-    height: auto;
-    min-height: 0;
-    padding: 1.25rem;
-  }
-
-  .iconWrapper {
-    width: 48px;
-    height: 48px;
-    font-size: 2rem;
-    border-radius: 12px;
-  }
-
-  .title {
-    font-size: 1.1rem;
-  }
-
-  .description {
-    font-size: 0.88rem;
-    -webkit-line-clamp: 3;
-  }
-
-  .readMore {
-    font-size: 0.88rem;
-  }
-
-  .pagination {
+    padding: 1.25rem 1rem;
+    min-height: 180px;
     gap: 0.5rem;
-    margin-top: 2rem;
   }
 
-  .pageButton {
-    width: 36px;
-    height: 36px;
-    font-size: 0.85rem;
-    border-radius: 8px;
+  .cardTitle {
+    font-size: 1.2rem;
+  }
+
+  .pageBtn {
+    width: 42px;
+    height: 40px;
+    font-size: 0.6rem;
   }
 }
 
 /* ── Small mobile: ≤ 360px ── */
 @media (max-width: 360px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
   .container {
-    padding: 0 0.5rem;
+    padding: 0 0.75rem;
   }
+}
 
-  .heading {
-    font-size: 1.5rem;
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .card::after {
+    transition: none;
   }
-
-  .card {
-    padding: 1rem;
-  }
-
-  .iconWrapper {
-    width: 42px;
-    height: 42px;
-    font-size: 1.7rem;
-  }
-
-  .pageButton {
-    width: 32px;
-    height: 32px;
-    font-size: 0.8rem;
+  .headingAccent {
+    animation: none;
   }
 }

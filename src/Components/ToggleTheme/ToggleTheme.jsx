@@ -1,159 +1,56 @@
 import { useEffect, useState } from "react";
-import { IconButton, Tooltip, useTheme } from "@mui/material";
-import { DarkMode, LightMode, BrightnessAuto } from "@mui/icons-material";
-import { styled } from "@mui/material/styles";
-import gsap from "gsap";
+import { Sun, Moon, SunMoon } from "lucide-react";
+import styles from "./ToggleTheme.module.css";
 
-const StyledIconButton = styled(IconButton)(({ theme }) => ({
-  padding: 8,
-  borderRadius: "50%",
-  transition: "all 0.3s ease",
-  "&:hover": {
-    backgroundColor:
-      theme.palette.mode === "dark"
-        ? "rgba(255, 255, 255, 0.08)"
-        : "rgba(0, 0, 0, 0.04)",
-    transform: "scale(1.1)",
-  },
-  "&:active": {
-    transform: "scale(0.95)",
-  },
-  "& .MuiSvgIcon-root": {
-    fontSize: "1.5rem",
-  },
-}));
+const THEMES = ["light-theme", "dark-theme", "auto-theme"];
 
 const ToggleTheme = () => {
-  const [mode, setMode] = useState(null);
-  const theme = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const getSystemTheme = () =>
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark-theme"
+      : "light-theme";
 
-  // Initialize theme
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem("theme") || "dark-theme";
+  });
+
   useEffect(() => {
-    setMounted(true);
-    const savedTheme = localStorage.getItem("theme");
-    const prefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
+    const root = document.documentElement;
+    const applied = theme === "auto-theme" ? getSystemTheme() : theme;
+    THEMES.forEach((t) => root.classList.remove(t));
+    root.classList.add(applied);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
 
-    const initialMode = savedTheme || (prefersDark ? "dark" : "light");
-    setMode(initialMode);
-    applyTheme(initialMode);
-
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    const handler = (e) => {
-      if (!localStorage.getItem("theme")) {
-        const newMode = e.matches ? "dark" : "light";
-        setMode(newMode);
-        applyTheme(newMode);
-      }
-    };
-    mediaQuery.addEventListener("change", handler);
-
-    return () => mediaQuery.removeEventListener("change", handler);
-  }, []);
-
-  const applyTheme = (themeMode) => {
-    // Анімація плавного затемнення при зміні теми
-    gsap.fromTo(
-      document.body,
-      { opacity: 0 },
-
-      { opacity: 1, duration: 0.6, ease: "power2.inOut" }
-    );
-
-    document.documentElement.setAttribute("data-theme", themeMode);
-
-    if (themeMode === "system") {
-      const systemMode = window.matchMedia("(prefers-color-scheme: dark)")
-        .matches
-        ? "dark"
-        : "light";
-      document.documentElement.classList.toggle(
-        "dark-theme",
-        systemMode === "dark"
-      );
-      document.documentElement.classList.toggle(
-        "light-theme",
-        systemMode === "light"
-      );
-    } else {
-      document.documentElement.classList.toggle(
-        "dark-theme",
-        themeMode === "dark"
-      );
-      document.documentElement.classList.toggle(
-        "light-theme",
-        themeMode === "light"
-      );
-    }
+  const cycle = () => {
+    setTheme((prev) => {
+      const idx = THEMES.indexOf(prev);
+      return THEMES[(idx + 1) % THEMES.length];
+    });
   };
 
-  const toggleTheme = () => {
-    const newMode =
-      mode === "dark" ? "light" : mode === "light" ? "system" : "dark";
-    setMode(newMode);
-
-    if (newMode === "system") {
-      localStorage.removeItem("theme");
-      const systemMode = window.matchMedia("(prefers-color-scheme: dark)")
-        .matches
-        ? "dark"
-        : "light";
-      applyTheme(systemMode);
-    } else {
-      localStorage.setItem("theme", newMode);
-      applyTheme(newMode);
-    }
+  const icons = {
+    "light-theme": <Sun size={16} strokeWidth={1.5} />,
+    "dark-theme": <Moon size={16} strokeWidth={1.5} />,
+    "auto-theme": <SunMoon size={16} strokeWidth={1.5} />,
   };
 
-  const getTooltipTitle = () => {
-    if (!mounted) return "Loading theme...";
-    switch (mode) {
-      case "dark":
-        return "Switch to Light Mode";
-      case "light":
-        return "Switch to System Preference";
-      default:
-        return "Switch to Dark Mode";
-    }
+  const labels = {
+    "light-theme": "Light",
+    "dark-theme": "Dark",
+    "auto-theme": "Auto",
   };
-
-  const getIcon = () => {
-    if (!mounted) return <BrightnessAuto fontSize="medium" />;
-    switch (mode) {
-      case "dark":
-        return <DarkMode />;
-      case "light":
-        return <LightMode />;
-      default:
-        return <BrightnessAuto />;
-    }
-  };
-
-  if (!mounted) {
-    return (
-      <StyledIconButton disabled>
-        <BrightnessAuto />
-      </StyledIconButton>
-    );
-  }
 
   return (
-    <Tooltip title={getTooltipTitle()} arrow>
-      <StyledIconButton
-        color="info"
-        size="large"
-        onClick={toggleTheme}
-        aria-label="Toggle theme"
-        aria-expanded={mode === "dark"}
-        aria-controls="toggle-theme"
-        aria-haspopup="true"
-        aria-owns="toggle-theme"
-      >
-        {getIcon()}
-      </StyledIconButton>
-    </Tooltip>
+    <button
+      className={styles.toggle}
+      onClick={cycle}
+      aria-label={`Switch theme, current: ${labels[theme]}`}
+      title={labels[theme]}
+    >
+      <span className={styles.icon}>{icons[theme]}</span>
+      <span className={styles.label}>{labels[theme]}</span>
+    </button>
   );
 };
 

@@ -5,6 +5,7 @@
 @import "slick-carousel/slick/slick.css";
 @import "slick-carousel/slick/slick-theme.css";
 
+/* ── Keyframes ── */
 @keyframes moveGlow {
   0% {
     transform: translate(0, 0);
@@ -14,15 +15,39 @@
   }
 }
 
+@keyframes border-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 10px rgba(232, 243, 60, 0.4),
+      0 0 20px rgba(232, 243, 60, 0.2);
+  }
+  50% {
+    box-shadow:
+      0 0 24px rgba(232, 243, 60, 0.8),
+      0 0 48px rgba(232, 243, 60, 0.4);
+  }
+}
+
+/* ── Root (базові змінні що не залежать від теми) ── */
 :root {
-  /* Базові налаштування */
   --blur-amount: 8px;
   --glass-opacity: 0.85;
   --border-radius: 12px;
+
+  /* Loader palette — єдине джерело акцентного кольору */
+  --loader-bg: #080808;
+  --loader-fg: #ffffff;
+  --loader-accent: #e8f53c;
+  --loader-muted: rgba(255, 255, 255, 0.25);
+  --loader-font: "DM Mono", monospace;
 }
+
+/* ── Utilities ── */
 .backface-hidden {
   backface-visibility: hidden;
 }
+
 .scrollbar-hidden {
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -31,26 +56,19 @@
   display: none;
 }
 
+/* ── Animated border ── */
 .animate-border {
   border: 4px solid transparent;
   border-radius: 16px;
   background-origin: border-box;
   background-clip: padding-box, border-box;
-  background-image: linear-gradient(white, white),
-    linear-gradient(90deg, #4368ff, #ff5252, #4368ff);
+  background-image:
+    linear-gradient(white, white),
+    linear-gradient(90deg, var(--loader-accent), #fff, var(--loader-accent));
   animation: border-glow 4s linear infinite;
 }
 
-@keyframes border-glow {
-  0%,
-  100% {
-    box-shadow: 0 0 10px rgba(255, 193, 7, 0.7), 0 0 20px rgba(255, 193, 7, 0.5);
-  }
-  50% {
-    box-shadow: 0 0 20px rgba(255, 193, 7, 1), 0 0 40px rgba(255, 193, 7, 0.8);
-  }
-}
-
+/* ── Glass effect ── */
 .light-theme .glass-effect {
   background: linear-gradient(
     135deg,
@@ -60,190 +78,182 @@
   border: 1px solid rgba(0, 0, 0, 0.1);
   color: rgba(0, 0, 0, 0.6);
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
   border-radius: 1rem;
 }
 
-/* 🌑 Темна тема */
+/* виправлено: було оголошено двічі — другий блок перезаписував перший */
 .dark-theme .glass-effect {
   background: linear-gradient(
     135deg,
-    rgba(17, 17, 17, 0.5) 0%,
-    rgba(17, 17, 17, 0.6) 100%
+    rgba(8, 8, 8, 0.1) 0%,
+    /* loader bg з прозорістю */ rgba(8, 8, 8, 0.25) 100%
   );
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #e6e5e2; /* Оранжевий замість золотистого */
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
-  box-shadow: 0 4px 24px rgba(255, 123, 37, 0.15); /* Оранжевий */
-  border-radius: 1rem;
-}
-
-/* 🌑 Темна тема */
-.dark-theme .glass-effect {
-  background: linear-gradient(
-    135deg,
-    rgba(17, 17, 17, 0.4) 0%,
-    rgba(17, 17, 17, 0.5) 100%
-  );
-
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(232, 243, 60, 0.12); /* loader accent */
   color: var(--color-secondary);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
-  box-shadow: 0 4px 24px rgba(212, 175, 55, 0.15);
+  box-shadow: 0 4px 24px rgba(232, 243, 60, 0.08);
   border-radius: 1rem;
 }
+
+/* ══════════════════════════════════════
+   LIGHT THEME
+══════════════════════════════════════ */
 .light-theme {
-  /* === Base Colors === */
-  --color-primary: #d4af37;
+  /* === Base colors === */
+  --color-primary: #1a1a1a; /* loader fg — чорний як основний */
   --color-info: #4cc9f0;
   --color-success: #198754;
-  --color-warning: #f59e0b;
+  --color-warning: #e8f53c; /* loader accent */
   --color-error: #d90429;
 
-  /* === Backgrounds & Surfaces === */
-  --bg-color: rgb(255, 255, 255);
-  --color-background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-  --color-surface: #f7f7f7;
-  --color-surface-hover: #f0f0eb;
-  --color-background-scrolled: #f3f2ef;
+  /* === Backgrounds === */
+  --bg-color: #f5f5f0;
+  --color-background: linear-gradient(135deg, #f5f5f0 0%, #e8e8e0 100%);
+  --color-surface: #efefea;
+  --color-surface-hover: #e5e5de;
+  --color-background-scrolled: #eeede8;
   --color-sidebar: var(--color-surface);
   --color-footer: linear-gradient(
     180deg,
-    #fdf9ef 0%,
-    #e6e0d4 50%,
-    #d6cfc2 100%
+    #f5f5f0 0%,
+    #e0dfd8 50%,
+    #d4d3ca 100%
   );
   --color-gradient: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.8) 0%,
-    rgba(255, 255, 255, 0.7) 100%
+    rgba(245, 245, 240, 0.85) 0%,
+    rgba(232, 232, 224, 0.75) 100%
   );
 
   /* === Text === */
-  --text-color: #121212;
-  --color-text: #40403f;
-  --color-secondary: #333331;
-  --color-title: #2a2a29;
+  --text-color: #080808; /* loader bg як основний текст */
+  --color-text: #1a1a18;
+  --color-secondary: #3a3a38;
+  --color-title: #080808;
 
-  /* === Accent === */
-  --color-accent: #aa1e58;
-  --color-accent-hover: #8e1546;
+  /* === Accent (loader palette) === */
+  --color-accent: #080808; /* чорний як акцент у світлій темі */
+  --color-accent-hover: #2a2a28;
 
   /* === Buttons === */
-  --color-button-bg: var(--color-primary);
-  --color-button-bg-hover: #e0c148;
-  --color-button-text: #ffffff;
+  --color-button-bg: #080808;
+  --color-button-bg-hover: #1a1a18;
+  --color-button-text: #e8f53c; /* loader accent на кнопці */
 
-  /* === Gradients === */
-  --color-header: linear-gradient(145deg, #fdfbfb 0%, #ebedee 100%);
+  /* === Headers / Hero === */
+  --color-header: linear-gradient(145deg, #f5f5f0 0%, #e5e5de 100%);
   --color-hero: var(--color-header);
-  --color-gradient: linear-gradient(
-    135deg,
-    rgba(239, 238, 238, 0.8) 0%,
-    rgba(236, 236, 236, 0.7) 100%
-  );
+
   /* === Loaders === */
-  --color-loader: rgba(212, 175, 55, 0.85);
-  --color-loader-bg: #f5f5f5;
-  --color-loader-background: linear-gradient(135deg, #fafafa, #dddddd);
-  --color-loader-bar: linear-gradient(90deg, #d4af37, #fff176);
+  --color-loader: rgba(8, 8, 8, 0.85);
+  --color-loader-bg: #f5f5f0;
+  --color-loader-background: linear-gradient(135deg, #f0f0eb, #e0e0d8);
+  --color-loader-bar: linear-gradient(90deg, #080808, #3a3a38);
 
   /* === Overlays & Borders === */
-  --color-overlay: rgba(252, 252, 252, 0.75);
-  --color-border: #cac2ad;
+  --color-overlay: rgba(245, 245, 240, 0.75);
+  --color-border: rgba(8, 8, 8, 0.15);
 
   /* === Shadow === */
-  --color-shadow: 0 8px 25px rgba(212, 175, 55, 0.2);
-  --color-grid: repeating-linear-gradient(
+  --color-shadow: 0 8px 25px rgba(8, 8, 8, 0.12);
+
+  /* === Grid === */
+  --color-grid:
+    repeating-linear-gradient(
       to right,
-      rgba(41, 40, 40, 0.8) 0px,
-      rgba(255, 215, 0, 0.6) 1px,
+      rgba(8, 8, 8, 0.06) 0px,
+      rgba(8, 8, 8, 0.08) 1px,
       transparent 1px,
       transparent 40px
     ),
     repeating-linear-gradient(
       to bottom,
-      rgba(41, 40, 40, 0.8) 0px,
-      rgba(255, 215, 0, 0.6) 1px,
+      rgba(8, 8, 8, 0.06) 0px,
+      rgba(8, 8, 8, 0.08) 1px,
       transparent 1px,
       transparent 40px
     );
-  --scroll-progress: #dcaa09;
+
+  --scroll-progress: #080808;
 }
 
+/* ══════════════════════════════════════
+   DARK THEME
+══════════════════════════════════════ */
 .dark-theme {
-  /* === Base Colors === */
-  --color-primary: #f6c009; /* Золотий */
+  /* === Base colors === */
+  --color-primary: blue; /* loader accent як основний */
   --color-info: #4cc9f0;
-  --color-success: #4cc9f0;
-  --color-warning: #f8961e;
+  --color-success: #198754;
+  --color-warning: #e8f53c;
   --color-error: #f72585;
 
-  /* === Backgrounds & Surfaces === */
-  --bg-color: #121212;
-  --color-background: linear-gradient(135deg, #0a0a14 0%, #171333 100%);
+  /* === Backgrounds (loader palette) === */
+  --bg-color: #080808; /* loader bg */
+  --color-background: linear-gradient(135deg, #0b0b0b 0%, #101010 100%);
   --color-surface: radial-gradient(
     circle farthest-corner at 100% 0%,
-    #161534 15%,
-    #191c3f 100%
+    #232323 15%,
+    #0d0d0d 100%
   );
-  --color-surface-hover: #2b2b2b;
-  --color-background-scrolled: #141313;
+  --color-surface-hover: #1a1a1a;
+  --color-background-scrolled: #0a0a0a;
   --color-sidebar: var(--color-surface);
   --color-footer: var(--color-surface);
   --color-gradient: linear-gradient(
     135deg,
-    rgba(30, 30, 30, 0.8) 0%,
-    rgba(42, 42, 42, 0.7) 100%
+    rgba(8, 8, 8, 0.85) 0%,
+    rgba(15, 15, 15, 0.75) 100%
   );
-  /* === Text === */
 
-  --color-text: #fbfbfb;
-  --color-secondary: #ebecea;
-  --color-title: #f4eeeb;
+  /* === Text === */
+  --color-text: #f5f5f0; /* близько до loader fg */
+  --color-secondary: #d0d0c8;
+  --color-title: #ffffff; /* loader fg */
 
   /* === Accent === */
-  --color-accent: #aa1e58;
-  --color-accent-hover: #aa1e60;
+  --color-accent: blue; /* loader accent */
+  --color-accent-hover: #d4df28;
 
   /* === Buttons === */
-  --color-button-bg: linear-gradient(135deg, #ff5252, #d32f2f);
-  --color-button-bg-hover: linear-gradient(135deg, #ef2626, #941c1c);
-  --color-button-text: #121212;
+  --color-button-bg: linear-gradient(135deg, #e8f53c, #d4df28);
+  --color-button-bg-hover: linear-gradient(135deg, #d4df28, #c0cb18);
+  --color-button-text: #080808; /* loader bg на кнопці */
 
-  /* === Gradients === */
-  --color-header: radial-gradient(
-    circle farthest-corner at 100% 0%,
-    #201e59 15%,
-    #0d1031 100%
-  );
+  /* === Headers / Hero === */
+  --color-header: linear-gradient(145deg, #1e1e1e 0%, #161616 100%);
   --color-hero: var(--color-header);
 
   /* === Loaders === */
-  --color-loader: #90d81b; /* Золотий з прозорістю */
-  --color-loader-bg: #1f1f1f;
-  --color-loader-background: linear-gradient(135deg, #1f1f1f, #333);
-  --color-loader-bar: linear-gradient(90deg, #f6c009, #ffe066);
+  --color-loader: rgba(232, 243, 60, 0.9);
+  --color-loader-bg: #0f0f0f;
+  --color-loader-background: linear-gradient(135deg, #111111, #1a1a1a);
+  --color-loader-bar: linear-gradient(90deg, #e8f53c, #f5ff80);
 
   /* === Overlays & Borders === */
-  --color-overlay: rgba(2, 0, 31, 0.95);
-  --color-border: #383737;
+  --color-overlay: rgba(8, 8, 8, 0.95);
+  --color-border: rgba(232, 243, 60, 0.15); /* loader accent з прозорістю */
 
   /* === Shadow === */
-  --color-shadow: 0 8px 25px rgba(246, 176, 9, 0.4); /* Золотий світло */
-  --color-grid: repeating-linear-gradient(
+  --color-shadow: 0 8px 25px rgba(232, 243, 60, 0.15);
+
+  /* === Grid === */
+  --color-grid:
+    repeating-linear-gradient(
       to right,
-      rgba(255, 255, 255, 0.2) 0px,
-      rgba(255, 215, 0, 0.15) 1px,
+      rgba(255, 255, 255, 0.04) 0px,
+      rgba(232, 243, 60, 0.08) 1px,
       transparent 1px,
       transparent 20px
     ),
     repeating-linear-gradient(
       to bottom,
-      rgba(255, 255, 255, 0.2) 0px,
-      rgba(255, 215, 0, 0.15) 1px,
+      rgba(255, 255, 255, 0.04) 0px,
+      rgba(232, 243, 60, 0.08) 1px,
       transparent 1px,
       transparent 20px
     );
-  --scroll-progress: #f6c009;
+
+  --scroll-progress: #e8f53c;
 }

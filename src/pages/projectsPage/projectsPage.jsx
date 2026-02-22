@@ -1,340 +1,280 @@
-import React, { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useRef, useMemo } from "react";
+import { gsap } from "gsap";
 import styles from "./projectsPage.module.css";
 import { db } from "../../firebase";
-import { onSnapshot } from "firebase/firestore";
-import { collection } from "firebase/firestore";
+import { onSnapshot, collection } from "firebase/firestore";
 import AnimatedPage from "../../Components/AnimatedPage/AnimatedPage";
-import { useMemo } from "react";
+
 const ProjectPage = () => {
-  const containerRef = useRef(null);
+  const pageRef = useRef(null);
+  const headerRef = useRef(null);
+  const gridRef = useRef(null);
+
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterTag, setFilterTag] = useState("");
-  const projectsPerPage = 4;
+  const PER_PAGE = 4;
 
+  /* ── Firestore ── */
   useEffect(() => {
     const unsub = onSnapshot(
       collection(db, "projects"),
-      (snapshot) => {
-        const projectsData = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setProjects(projectsData);
-        setLoading(false); // тільки тут
-      },
-      (error) => {
-        console.error("Firestore error:", error);
+      (snap) => {
+        setProjects(
+          snap.docs.map((d) => {
+            const data = d.data();
+            // tags може прийти як рядок, масив або undefined
+            const tags = Array.isArray(data.tags)
+              ? data.tags
+              : typeof data.tags === "string"
+                ? data.tags
+                    .split(",")
+                    .map((t) => t.trim())
+                    .filter(Boolean)
+                : [];
+            return { id: d.id, ...data, tags };
+          }),
+        );
         setLoading(false);
-      }
+      },
+      (err) => {
+        console.error("Firestore:", err);
+        setLoading(false);
+      },
     );
     return () => unsub();
   }, []);
 
-  const filteredProjects = useMemo(() => {
-    return projects.filter((project) => {
-      const matchesSearch = project.title
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase());
-      const matchesTag =
-        filterTag === "" ||
-        (project.tags &&
-          project.tags.some((tag) =>
-            tag.toLowerCase().includes(filterTag.toLowerCase())
-          ));
-      return matchesSearch && matchesTag;
-    });
-  }, [projects, searchTerm, filterTag]);
+  /* ── Filter ── */
+  const filtered = useMemo(
+    () =>
+      projects.filter((p) => {
+        const matchSearch = p.title
+          ?.toLowerCase()
+          .includes(searchTerm.toLowerCase());
+        const matchTag =
+          !filterTag ||
+          p.tags?.some((t) =>
+            t.toLowerCase().includes(filterTag.toLowerCase()),
+          );
+        return matchSearch && matchTag;
+      }),
+    [projects, searchTerm, filterTag],
+  );
 
-  const totalPages = Math.ceil(filteredProjects.length / projectsPerPage);
-  const paginatedProjects = filteredProjects.slice(
-    (currentPage - 1) * projectsPerPage,
-    currentPage * projectsPerPage
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, filterTag]);
+
+  const totalPages = Math.ceil(filtered.length / PER_PAGE);
+  const paginated = filtered.slice(
+    (currentPage - 1) * PER_PAGE,
+    currentPage * PER_PAGE,
   );
   const uniqueTags = useMemo(
     () => Array.from(new Set(projects.flatMap((p) => p.tags || []))),
-    [projects]
+    [projects],
   );
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        when: "beforeChildren",
-      },
-    },
+
+  /* ── Header reveal ── */
+  useEffect(() => {
+    if (!headerRef.current) return;
+    const ctx = gsap.context(() => {
+      gsap.from(headerRef.current.children, {
+        opacity: 0,
+        y: 40,
+        duration: 0.8,
+        stagger: 0.12,
+        ease: "power3.out",
+        delay: 0.1,
+      });
+    }, pageRef);
+    return () => ctx.revert();
+  }, [loading]);
+
+  /* ── Grid reveal on page change ── */
+  useEffect(() => {
+    if (!gridRef.current) return;
+    const cards = gridRef.current.querySelectorAll(`.${styles.card}`);
+    if (!cards.length) return;
+    gsap.fromTo(
+      cards,
+      { opacity: 0, y: 32 },
+      { opacity: 1, y: 0, duration: 0.5, stagger: 0.08, ease: "power3.out" },
+    );
+  }, [paginated.length, currentPage]);
+
+  const handlePage = (p) => {
+    setCurrentPage(p);
+    pageRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  const cardVariants = {
-    hidden: { opacity: 0, y: 50, scale: 0.95 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: 0.6,
-        ease: [0.16, 0.77, 0.47, 0.97],
-      },
-    },
-    hover: {
-      y: -5,
-      scale: 1.02,
-      boxShadow: "0 15px 30px rgba(0, 0, 0, 0.2)",
-      transition: {
-        type: "spring",
-        stiffness: 400,
-        damping: 10,
-      },
-    },
-  };
-
+  /* ── Loading state ── */
   if (loading) {
     return (
-      <motion.div
-        className={styles.loadingContainer}
-        initial={{ x: 50, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{
-          duration: 0.8,
-          ease: [0.16, 0.77, 0.47, 0.97],
-        }}
-      >
-        <div className={styles.loading}>
-          <motion.i
-            className="ri-loader-4-line"
-            animate={{ rotate: 360 }}
-            transition={{
-              repeat: Infinity,
-              duration: 1,
-              ease: "linear",
-            }}
+      <div className={styles.loadingWrap}>
+        <div className={styles.loadingInner}>
+          <i
+            className={`ri-loader-4-line ${styles.spinner}`}
+            aria-hidden="true"
           />
-          <p className="text-2xl animate-pulse">Loading projects...</p>
+          <span>Loading projects...</span>
         </div>
-      </motion.div>
+      </div>
     );
   }
 
   return (
     <AnimatedPage>
-      <motion.div
-        className={styles.projectsPage}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        variants={containerVariants}
-      >
-        <motion.header
-          className={styles.header}
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{
-            duration: 0.8,
-            ease: [0.16, 0.77, 0.47, 0.97],
-          }}
-        >
-          <h2 className={styles.heading}>
-            My <span>Projects</span>
-          </h2>
-          <p className={styles.subheading}>
-            A collection of my recent work and experiments
-          </p>
-        </motion.header>
+      <div ref={pageRef} className={styles.page}>
+        <div className={styles.container}>
+          {/* Header */}
+          <header ref={headerRef} className={styles.header}>
+            <div className={styles.eyebrow}>
+              <span className={styles.eyebrowLine} />
+              <span className={styles.eyebrowText}>Selected Work</span>
+            </div>
+            <h1 className={styles.heading}>
+              My <span className={styles.headingAccent}>Projects</span>
+            </h1>
+            <p className={styles.subheading}>
+              A collection of my recent work and experiments
+            </p>
+          </header>
 
-        <div className={styles.controls}>
-          <motion.div
-            className={styles.searchContainer}
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
-          >
-            <i className="ri-search-line"></i>
-            <input
-              type="text"
-              placeholder="Search projects..."
-              value={searchTerm}
-              onChange={(e) => {
-                setSearchTerm(e.target.value);
-                setCurrentPage(1);
-              }}
-              aria-label="Search projects"
-            />
-          </motion.div>
+          {/* Controls */}
+          <div className={styles.controls}>
+            <label className={styles.field}>
+              <i className="ri-search-line" aria-hidden="true" />
+              <input
+                type="text"
+                placeholder="Search projects..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                aria-label="Search projects"
+              />
+            </label>
 
-          <motion.div
-            className={styles.filterContainer}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
-          >
-            <i className="ri-filter-line"></i>
-            <select
-              value={filterTag}
-              onChange={(e) => {
-                setFilterTag(e.target.value);
-                setCurrentPage(1);
-              }}
-              aria-label="Filter by technology"
-            >
-              <option value="">All Technologies</option>
-              {uniqueTags.map((tag) => (
-                <option key={tag} value={tag}>
-                  {tag}
-                </option>
-              ))}
-            </select>
-          </motion.div>
-        </div>
+            <label className={styles.field}>
+              <i className="ri-filter-line" aria-hidden="true" />
+              <select
+                value={filterTag}
+                onChange={(e) => setFilterTag(e.target.value)}
+                aria-label="Filter by technology"
+              >
+                <option value="">All Technologies</option>
+                {uniqueTags.map((t) => (
+                  <option key={t} value={t}>
+                    {t}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
 
-        <motion.div
-          ref={containerRef}
-          className={styles.projectsGrid}
-          initial="hidden"
-          animate="visible"
-          variants={{
-            visible: {
-              transition: {
-                staggerChildren: 0.1,
-                delayChildren: 0.3,
-              },
-            },
-          }}
-        >
-          <AnimatePresence mode="wait">
-            {paginatedProjects.length > 0 ? (
-              paginatedProjects.map((project) => (
-                <motion.div
-                  key={currentPage}
-                  className={styles.projectCard}
-                  layout
-                  variants={cardVariants}
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{
-                    delay: 0.2,
-                    duration: 0.8,
-                    ease: [0.16, 0.77, 0.47, 0.97],
-                  }}
-                >
+          {/* Grid */}
+          <div ref={gridRef} className={styles.grid}>
+            {paginated.length > 0 ? (
+              paginated.map((project, i) => (
+                <div key={project.id} className={styles.card}>
+                  {/* Image */}
+                  <div className={styles.imageWrap}>
+                    <img
+                      src={project.imageUrl || "/images/business.jpg"}
+                      alt={project.title}
+                      className={styles.image}
+                      loading="lazy"
+                    />
+                    <div
+                      className={styles.imageOverlay}
+                      style={{
+                        background: `${project.accentColor || "#e8f53c"}30`,
+                      }}
+                    />
+                    {/* Card number */}
+                    <span className={styles.cardNum}>
+                      {String((currentPage - 1) * PER_PAGE + i + 1).padStart(
+                        2,
+                        "0",
+                      )}
+                    </span>
+                  </div>
+
+                  {/* Content */}
+                  <div className={styles.cardBody}>
+                    <h3 className={styles.cardTitle}>{project.title}</h3>
+                    <p className={styles.cardDesc}>{project.description}</p>
+
+                    <div className={styles.tags}>
+                      {project.tags?.map((tag) => (
+                        <span
+                          key={tag}
+                          className={styles.tag}
+                          style={{
+                            borderColor: `${project.accentColor || "#e8f53c"}40`,
+                          }}
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    <a
+                      href={project.urlVercel?.trim() || "#"}
+                      className={styles.cardLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: project.accentColor || "#e8f53c" }}
+                    >
+                      <span>View Project</span>
+                      <i className="ri-arrow-right-line" aria-hidden="true" />
+                    </a>
+                  </div>
+
+                  {/* Accent bottom line */}
                   <div
-                    className={styles.cardHeader}
-                    style={{ borderColor: project.accentColor || "#6366f1" }}
-                  >
-                    <div className={styles.imageContainer}>
-                      <img
-                        src={project.imageUrl || "/images/business.jpg"}
-                        alt={project.title}
-                        className={styles.projectImage}
-                        loading="lazy"
-                      />
-                      <motion.div
-                        className={styles.overlay}
-                        initial={{ opacity: 0 }}
-                        whileHover={{ opacity: 0.85 }}
-                        style={{
-                          backgroundColor: `${
-                            project.accentColor || "#6366f1"
-                          }80`,
-                        }}
-                      />
-                    </div>
-                  </div>
-
-                  <div className={styles.cardContent}>
-                    <h3 className={styles.projectTitle}>{project.title}</h3>
-                    <p className={styles.projectDescription}>
-                      {project.description}
-                    </p>
-
-                    <div className={styles.tagsContainer}>
-                      {Array.isArray(project.tags) &&
-                        (project.tags ?? []).map((tag) => (
-                          <span
-                            key={tag}
-                            className={styles.tag}
-                            style={{
-                              backgroundColor: `${project.accentColor}15`,
-                              color: project.accentColor,
-                            }}
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                    </div>
-
-                    <div className={styles.cardFooter}>
-                      <motion.a
-                        href={project.urlVercel?.trim() || "#"}
-                        className={styles.projectLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        whileHover={{ x: 5 }}
-                        style={{
-                          color: project.accentColor || "#6366f1",
-                        }}
-                      >
-                        View Project
-                        <i className="ri-arrow-right-line"></i>
-                      </motion.a>
-                    </div>
-                  </div>
-                </motion.div>
+                    className={styles.cardAccent}
+                    style={{ background: project.accentColor || "#e8f53c" }}
+                  />
+                </div>
               ))
             ) : (
-              <motion.div
-                className={styles.noResults}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.4 }}
-              >
-                <i className="ri-emotion-sad-line"></i>
-                <p>No projects found matching your criteria</p>
-                <motion.button
-                  className={styles.resetButton}
+              <div className={styles.noResults}>
+                <i className="ri-emotion-sad-line" aria-hidden="true" />
+                <p>No projects found</p>
+                <button
+                  className={styles.resetBtn}
                   onClick={() => {
                     setSearchTerm("");
                     setFilterTag("");
                   }}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
                 >
-                  Reset filters
-                </motion.button>
-              </motion.div>
+                  <span>Reset filters</span>
+                  <i className="ri-refresh-line" />
+                </button>
+              </div>
             )}
-          </AnimatePresence>
-        </motion.div>
+          </div>
 
-        {totalPages > 1 && (
-          <motion.div
-            className={styles.pagination}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-          >
-            {Array.from({ length: totalPages }, (_, i) => (
-              <motion.button
-                key={i + 1}
-                onClick={() => setCurrentPage(i + 1)}
-                className={`${styles.pageButton} ${
-                  currentPage === i + 1 ? styles.activePage : ""
-                }`}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                aria-current={currentPage === i + 1 ? "page" : undefined}
-                aria-label={`Go to page ${i + 1}`}
-              >
-                {i + 1}
-              </motion.button>
-            ))}
-          </motion.div>
-        )}
-      </motion.div>
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className={styles.pagination}>
+              {Array.from({ length: totalPages }, (_, i) => (
+                <button
+                  key={i + 1}
+                  onClick={() => handlePage(i + 1)}
+                  className={`${styles.pageBtn} ${currentPage === i + 1 ? styles.active : ""}`}
+                  aria-current={currentPage === i + 1 ? "page" : undefined}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
     </AnimatedPage>
   );
 };

@@ -1,0 +1,325 @@
+/* TestError.module.css — Awwwards editorial dark */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* ── Section ── */
+.section {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #080808;
+  padding: 3rem 1.5rem;
+  overflow: hidden;
+}
+
+/* Top accent line */
+.section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(232, 243, 60, 0.5) 40%,
+    rgba(232, 243, 60, 0.5) 60%,
+    transparent 100%
+  );
+  z-index: 2;
+}
+
+/* ── DotGrid ── */
+.dotGridWrap {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.25;
+}
+
+/* ── Card ── */
+.card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 640px;
+  background: rgba(10, 10, 10, 0.9);
+  border: 1px solid rgba(245, 245, 240, 0.07);
+  padding: 3rem;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Corner TL */
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  border-top: 2px solid #e8f53c;
+  border-left: 2px solid #e8f53c;
+  pointer-events: none;
+}
+
+/* Corner BR */
+.card::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 24px;
+  height: 24px;
+  border-bottom: 2px solid rgba(232, 243, 60, 0.3);
+  border-right: 2px solid rgba(232, 243, 60, 0.3);
+  pointer-events: none;
+}
+
+/* ── Eyebrow ── */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.eyebrowLine {
+  display: block;
+  width: 28px;
+  height: 1px;
+  background: #e8f53c;
+}
+
+.eyebrowText {
+  font-family: "DM Mono", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #e8f53c;
+}
+
+/* ── Title ── */
+.title {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+  color: #f5f5f0;
+  margin: 0 0 1.25rem;
+}
+
+.titleAccent {
+  background: linear-gradient(90deg, #f8a12f 0%, #f53c03 50%, #f8ab04 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/* ── Desc ── */
+.desc {
+  font-family: "DM Mono", monospace;
+  font-size: 0.75rem;
+  color: rgba(245, 245, 240, 0.3);
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+  margin: 0 0 2rem;
+}
+
+/* ── Error buttons grid ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: rgba(245, 245, 240, 0.05);
+  border: 1px solid rgba(245, 245, 240, 0.05);
+  margin-bottom: 1px; /* flush with reset btn */
+}
+
+.errorBtn {
+  background: #0a0a0a;
+  border: none;
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: "DM Mono", monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(245, 245, 240, 0.4);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition:
+    color 0.3s ease,
+    background 0.3s ease;
+  text-align: left;
+}
+
+.errorBtn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(245, 56, 56, 0.08);
+  transform: translateX(-101%);
+  transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.errorBtn:hover::before {
+  transform: translateX(0);
+}
+.errorBtn:hover {
+  color: rgba(245, 100, 100, 0.85);
+}
+
+.errorBtnDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(245, 56, 56, 0.5);
+  flex-shrink: 0;
+  transition: background 0.3s ease;
+}
+
+.errorBtn:hover .errorBtnDot {
+  background: rgb(245, 56, 56);
+}
+
+/* ── Reset button ── */
+.resetBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.9rem 1.5rem;
+  background: #e8f53c;
+  color: #080808;
+  border: none;
+  cursor: pointer;
+  font-family: "DM Mono", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.35s ease;
+  margin-bottom: 1.5rem;
+}
+
+.resetBtn > * {
+  position: relative;
+  z-index: 1;
+}
+
+.resetBtn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #080808;
+  transform: translateX(-101%);
+  transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.resetBtn:hover::before {
+  transform: translateX(0);
+}
+.resetBtn:hover {
+  color: #e8f53c;
+}
+
+.resetArrow {
+  font-size: 1rem;
+  transition: transform 0.4s ease;
+}
+
+.resetBtn:hover .resetArrow {
+  transform: rotate(-180deg);
+}
+
+/* ── Warning ── */
+.warning {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: "DM Mono", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(245, 56, 56, 0.4);
+  margin: 0;
+  animation: blink 3s ease-in-out infinite;
+}
+
+.warningIcon {
+  flex-shrink: 0;
+}
+
+/* ── Mobile: ≤ 480px ── */
+@media (max-width: 480px) {
+  .card {
+    padding: 2rem 1.5rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Small mobile: ≤ 360px ── */
+@media (max-width: 360px) {
+  .card {
+    padding: 1.5rem 1rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .titleAccent,
+  .warning {
+    animation: none;
+  }
+  .resetBtn::before,
+  .errorBtn::before {
+    transition: none;
+  }
+}

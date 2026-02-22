@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import useWindowSize from "../../hooks/useWindowSize";
 import Header from "../Header/Header";
-import SidebarMenu from "../SidebarMenu/SidebarMenu";
+
 import Overlay from "../Overlay/Overlay";
-import ToggleTheme from "../ToggleTheme/ToggleTheme";
+
 import s from "./Layout.module.css";
 
 const menuItems = [

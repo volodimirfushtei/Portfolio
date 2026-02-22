@@ -1,144 +1,170 @@
-.container {
-  width: 100%;
+/* ControllerSkills.module.css — Awwwards editorial dark */
 
-  transform-style: preserve-3d;
-
-  overflow: hidden;
-  padding: 2rem;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+.section {
+  background: var(--color-background);
+  padding: 3rem 0;
 }
 
-.header h3 {
-  font-size: 1.6rem;
-  margin-bottom: 0.5rem;
-  margin-left: 60px;
-
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: var(--color-text);
-  text-align: left;
-}
-
-.sliderContainer {
-  position: relative;
-  overflow: hidden;
-  padding: 0.5rem 0;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-.sliderContainer::-webkit-scrollbar {
-  display: none;
-  width: 100%;
-}
-
-.sliderTrack {
+/* ── Header ── */
+.header {
   display: flex;
-  gap: 1.5rem;
-  width: fit-content;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 2.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.eyebrowLine {
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: #e8f53c;
+  flex-shrink: 0;
+}
+
+.heading {
+  font-family: "DM Mono", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(245, 245, 240, 0.3);
+  margin: 0;
+  font-weight: 400;
+}
+
+/* ── Track ── */
+.track {
+  overflow: hidden;
+  width: 100%;
+}
+
+.inner {
+  display: flex;
+  gap: 1px;
+  width: 100%;
+  background: rgba(245, 245, 240, 0.04); /* gap lines */
   will-change: transform;
 }
 
-/* Flip Card Styles */
-.flipCard {
-  background: transparent;
+/* ── Card ── */
+.card {
   width: 140px;
-  height: 100px;
-  perspective: 1000px;
+  height: 88px;
+  perspective: 800px;
+  flex-shrink: 0;
+  background: var(--color-background);
 }
 
-.flipInner {
+.cardInner {
   position: relative;
   width: 100%;
   height: 100%;
-  transition: transform 0.7s;
   transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
 }
 
-.flipCard:hover .flipInner {
+.card:hover .cardInner {
   transform: rotateY(180deg);
 }
 
-.flipFront,
-.flipBack {
+/* Front & Back shared */
+.front,
+.back {
   position: absolute;
-  width: 100%;
-  height: 100%;
-
+  inset: 0;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 0.4rem;
   backface-visibility: hidden;
-  background: "transparent";
-  gap: 0.5rem;
-  backdrop-filter: blur(6px);
-
-  text-align: center;
-  padding: 0.5rem;
+  -webkit-backface-visibility: hidden;
+  padding: 0.75rem;
+  background: #080808;
 }
 
-.flipFront i {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
+/* Front */
+.front i {
+  line-height: 1;
+  font-size: 1.5rem;
 }
 
-.flipFront span {
-  font-weight: 600;
+.name {
+  font-family: "DM Mono", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(245, 245, 240, 0.45);
+  line-height: 1;
 }
 
-.flipBack {
+/* Back */
+.back {
   transform: rotateY(180deg);
+  background: #0d0d0d;
 }
 
-.flipBack p {
+.back p {
+  font-family: "Bebas Neue", sans-serif;
   font-size: 1rem;
-  margin-bottom: 0.5rem;
-  color: var(--color-secondary);
+  letter-spacing: 0.05em;
+  line-height: 1;
+  margin: 0;
+  text-align: center;
 }
 
-.tech .more {
-  font-size: 0.8rem;
-  color: #63b3ff;
-}
+/* ── Mobile: ≤ 768px ── */
 @media (max-width: 768px) {
-  .container {
-    padding: 1rem;
+  .section {
+    padding: 2rem 0;
   }
-  .flipCard {
-    width: 100px;
-    height: 80px;
-  }
-
-  .flipFront span {
-    font-size: 0.8rem;
+  .header {
+    padding: 0 1.5rem;
   }
 
-  .flipBack p {
-    font-size: 0.8rem;
+  .card {
+    width: 110px;
+    height: 72px;
   }
-  .header h3 {
+
+  .front i {
     font-size: 1.2rem;
   }
 }
+
+/* ── Mobile: ≤ 480px ── */
 @media (max-width: 480px) {
-  .container {
-    padding: 0.5rem;
-  }
-
-  .flipCard {
+  .section::before,
+  .section::after {
     width: 60px;
-    height: 40px;
   }
 
-  .flipFront span {
-    font-size: 0.6rem;
+  .header {
+    padding: 0 1rem;
   }
 
-  .flipBack p {
-    font-size: 0.6rem;
+  .card {
+    width: 88px;
+    height: 60px;
   }
 
-  .header h3 {
-    font-size: 0.8rem;
+  .front i {
+    font-size: 1rem;
+  }
+  .back p {
+    font-size: 0.85rem;
+  }
+  .name {
+    font-size: 0.55rem;
+  }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .cardInner {
+    transition: none;
+  }
+  .inner {
+    will-change: auto;
   }
 }

@@ -1,76 +1,128 @@
-import React from "react";
-import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
 import styles from "./HeroCard.module.css";
 
 export default function HeroCard() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        when: "beforeChildren",
-      },
-    },
-  };
+  const sectionRef = useRef(null);
+  const tagRef = useRef(null);
+  const headingRef = useRef(null);
+  const descRef = useRef(null);
+  const actionsRef = useRef(null);
+  const trustedRef = useRef(null);
+  const imageRef = useRef(null);
+  const badgeRef = useRef(null);
+  const statRef = useRef(null);
 
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.6, ease: "easeOut" },
-    },
-  };
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+      tl.from(tagRef.current, { opacity: 0, x: -16, duration: 0.6 })
+        .from(
+          headingRef.current.children,
+          {
+            opacity: 0,
+            y: 50,
+            duration: 0.8,
+            stagger: 0.12,
+            ease: "power3.out",
+          },
+          "-=0.2",
+        )
+        .from(descRef.current, { opacity: 0, y: 20, duration: 0.6 }, "-=0.3")
+        .from(
+          actionsRef.current.children,
+          {
+            opacity: 0,
+            y: 12,
+            duration: 0.5,
+            stagger: 0.1,
+          },
+          "-=0.2",
+        )
+        .from(trustedRef.current, { opacity: 0, y: 10, duration: 0.5 }, "-=0.2")
+        .from(imageRef.current, { opacity: 0, x: 40, duration: 0.9 }, "-=0.8")
+        .from(
+          [badgeRef.current, statRef.current],
+          {
+            opacity: 0,
+            y: 10,
+            scale: 0.94,
+            duration: 0.5,
+            stagger: 0.1,
+            ease: "back.out(1.5)",
+          },
+          "-=0.4",
+        );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <motion.section
-      className={styles.hero}
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants}
-    >
+    <section ref={sectionRef} className={styles.hero}>
       <div className={styles.content}>
-        <motion.span className={styles.tag} variants={itemVariants}>
-          Web Developer
-        </motion.span>
+        {/* Eyebrow tag */}
+        <div ref={tagRef} className={styles.tag}>
+          <span className={styles.tagLine} />
+          <span>Web Developer</span>
+        </div>
 
-        <motion.h1 className={s.heading} variants={itemVariants}>
-          Build <span className={styles.highlight}>Web Apps</span> People Love
-        </motion.h1>
+        {/* Heading — кожен рядок окремий span для stagger */}
+        <h1 ref={headingRef} className={styles.heading}>
+          <span>Build</span>
+          <span className={styles.highlight}> Web Apps</span>
+          <span> People Love</span>
+        </h1>
 
-        <motion.p className={s.description} variants={itemVariants}>
+        {/* Description */}
+        <p ref={descRef} className={styles.description}>
           I'm a junior freelance developer from Ukraine. I help you craft
           modern, fast, and user-friendly websites and interfaces.
-        </motion.p>
+        </p>
 
-        <motion.div className={styles.actions} variants={itemVariants}>
-          <button className={styles.primary}>View Portfolio</button>
-          <button className={styles.secondary}>Contact Me</button>
-        </motion.div>
+        {/* Actions */}
+        <div ref={actionsRef} className={styles.actions}>
+          <button className={styles.primary}>
+            <span>View Portfolio</span>
+            <span className={styles.btnArrow}>→</span>
+          </button>
+          <button className={styles.secondary}>
+            <span>Contact Me</span>
+            <span className={styles.btnArrow}>→</span>
+          </button>
+        </div>
 
-        <motion.div className={styles.trustedBy} variants={itemVariants}>
-          <span>You may have seen me in:</span>
+        {/* Trusted by */}
+        <div ref={trustedRef} className={styles.trustedBy}>
+          <span className={styles.trustedLabel}>You may have seen me in:</span>
           <div className={styles.logos}>
             <img src="/logos/notion.svg" alt="Notion" />
             <img src="/logos/airtable.svg" alt="Airtable" />
             <img src="/logos/mailchimp.svg" alt="Mailchimp" />
             <img src="/logos/gumroad.svg" alt="Gumroad" />
           </div>
-        </motion.div>
+        </div>
       </div>
 
-      <motion.div className={styles.imageBlock} variants={itemVariants}>
+      {/* Image block */}
+      <div className={styles.imageBlock}>
         <img
+          ref={imageRef}
           src="/images/My_photo.png"
           alt="Volodymyr Fushtei"
           className={styles.portrait}
+          loading="eager"
         />
-        <div className={styles.badge}>10+ Projects Completed</div>
-        <div className={styles.stat}>
-          90% of clients recommend after the first delivery
+        <div ref={badgeRef} className={styles.badge}>
+          <span className={styles.badgeNum}>10+</span>
+          <span className={styles.badgeText}>Projects Completed</span>
         </div>
-      </motion.div>
-    </motion.section>
+        <div ref={statRef} className={styles.stat}>
+          <span className={styles.statNum}>90%</span>
+          <span className={styles.statText}>clients recommend</span>
+        </div>
+      </div>
+    </section>
   );
 }

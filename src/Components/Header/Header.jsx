@@ -1,98 +1,116 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { gsap } from "gsap";
 import styles from "./Header.module.css";
 import ToggleTheme from "../ToggleTheme/ToggleTheme";
 import FullscreenButton from "../FullScreenButton/FullScreenButton";
 import useScrollDetection from "../../hooks/useScrollDetection";
 import Logo from "../Logo/Logo";
 
-// Додаємо хук для визначення напрямку скролу
 const useScrollDirection = () => {
-  const [scrollDirection, setScrollDirection] = useState(null);
-  const [prevOffset, setPrevOffset] = useState(0);
+  const [direction, setDirection] = useState(null);
+  const prev = useRef(0);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const currentOffset = window.pageYOffset;
-      setScrollDirection(prevOffset > currentOffset ? "up" : "down");
-      setPrevOffset(currentOffset);
+    const onScroll = () => {
+      const cur = window.scrollY;
+      setDirection(prev.current > cur ? "up" : "down");
+      prev.current = cur;
     };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [prevOffset]);
-
-  return scrollDirection;
+  return direction;
 };
 
+const navItems = [
+  { path: "/", icon: "ri-home-line", label: "Home" },
+  { path: "/projects", icon: "ri-briefcase-line", label: "Projects" },
+  { path: "/tech", icon: "ri-code-line", label: "Tech" },
+  { path: "/contacts", icon: "ri-contacts-line", label: "Contacts" },
+  { path: "/error", icon: "ri-error-warning-line", label: "Test Error" },
+];
+
 const Header = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isHovering, setIsHovering] = useState(null);
-  const [isHidden, setIsHidden] = useState(false);
+  const headerRef = useRef(null);
+  const mobileMenuRef = useRef(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [hovering, setHovering] = useState(null);
+  const [hidden, setHidden] = useState(false);
 
   const isScrolled = useScrollDetection(100);
   const scrollDirection = useScrollDirection();
 
+  /* ── Hide/show on scroll ── */
   useEffect(() => {
-    if (isScrolled && scrollDirection === "down") {
-      setIsHidden(true);
-    } else if (scrollDirection === "up" || !isScrolled) {
-      setIsHidden(false);
-    }
+    if (isScrolled && scrollDirection === "down") setHidden(true);
+    else if (scrollDirection === "up" || !isScrolled) setHidden(false);
   }, [isScrolled, scrollDirection]);
 
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
-    document.body.style.overflow = mobileMenuOpen ? "auto" : "hidden";
+  useEffect(() => {
+    gsap.to(headerRef.current, {
+      y: hidden ? -100 : 0,
+      opacity: hidden ? 0 : 1,
+      duration: 0.45,
+      ease: "power3.out",
+    });
+  }, [hidden]);
+
+  /* ── Mobile menu open/close ── */
+  const toggleMenu = () => {
+    const next = !menuOpen;
+    setMenuOpen(next);
+    document.body.style.overflow = next ? "hidden" : "";
+
+    if (next) {
+      gsap.fromTo(
+        mobileMenuRef.current,
+        { opacity: 0, y: -20 },
+        { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" },
+      );
+    } else {
+      gsap.to(mobileMenuRef.current, {
+        opacity: 0,
+        y: -10,
+        duration: 0.25,
+        ease: "power3.in",
+      });
+    }
   };
 
-  const navItems = [
-    { path: "/", icon: "ri-home-line", label: "Home" },
-    { path: "/projects", icon: "ri-briefcase-line", label: "Projects" },
-    { path: "/tech", icon: "ri-code-line", label: "Tech" },
-    { path: "/contacts", icon: "ri-contacts-line", label: "Contacts" },
-    {
-      path: "/error",
-      icon: "ri-error-warning-line",
-      label: "Test Error",
+  /* cleanup overflow on unmount */
+  useEffect(
+    () => () => {
+      document.body.style.overflow = "";
     },
-  ];
+    [],
+  );
 
   return (
-    <motion.header
-      className={`${styles.header} ${isScrolled ? styles.scrolled : ""} ${
-        mobileMenuOpen ? styles.mobileMenuOpen : ""
-      }`}
-      initial={{ y: 0 }}
-      animate={{
-        y: isHidden ? -100 : 0,
-        opacity: isHidden ? 0 : 1,
-      }}
-      transition={{ type: "spring", damping: 15, stiffness: 100 }}
+    <header
+      ref={headerRef}
+      className={`${styles.header} ${isScrolled ? styles.scrolled : ""}`}
     >
       <div className={styles.container}>
         {/* Logo */}
-
-        <div>
-          <Link to="/about" className={styles.logo}>
-            <Logo />
-
-            <span>Portfolio</span>
-          </Link>
-        </div>
+        <Link to="/about" className={styles.logo}>
+          <Logo />
+          <span className={styles.logoText}>Portfolio</span>
+        </Link>
 
         <div className={styles.rightSection}>
           <ToggleTheme />
           <FullscreenButton />
 
-          {/* Desktop Navigation */}
-          <nav className={styles.desktopNav}>
+          {/* Desktop nav */}
+          <nav className={styles.desktopNav} aria-label="Main navigation">
             {navItems.map((item) => (
               <div
                 key={item.path}
-                onMouseEnter={() => setIsHovering(item.path)}
-                onMouseLeave={() => setIsHovering(null)}
+                className={styles.navItem}
+                onMouseEnter={() => setHovering(item.path)}
+                onMouseLeave={() => setHovering(null)}
               >
                 <NavLink
                   to={item.path}
@@ -100,116 +118,93 @@ const Header = () => {
                     `${styles.navLink} ${isActive ? styles.active : ""}`
                   }
                 >
-                  <i className={item.icon}></i>
-                  {isHovering === item.path && (
-                    <motion.span
-                      className={styles.navLabel}
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                    >
-                      {item.label}
-                    </motion.span>
+                  <i className={item.icon} aria-hidden="true" />
+                  {hovering === item.path && (
+                    <span className={styles.navLabel}>{item.label}</span>
                   )}
                 </NavLink>
               </div>
             ))}
 
-            <motion.div whileHover={{ scale: 1.05 }}>
-              <a
-                href="/contacts"
-                target="_blank"
-                aria-label="Grab 15 minutes with us"
-                rel="noopener noreferrer"
-                className="w-inline-block text-decoration-none"
-              >
-                <div
-                  className={`${styles.button_main} ${styles.first_01} w-inline-block`}
-                >
-                  <div className={styles.photo}>
-                    <img
-                      src="/images/Myphoto.jpg"
-                      alt="photo"
-                      className={styles.photo_main}
-                    />
-                  </div>
-                  <div className={`${styles.button_flex_text} flex`}>
-                    <div className={styles.button_text_01}>
-                      Grab 15 minutes with us
-                    </div>
-
-                    <div className={`${styles.avaible_wrapper} flex`}>
-                      <div className={styles.avaible_dot}></div>
-                      <div className={styles.button_text_02}>
-                        Open and ready
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </motion.div>
+            {/* CTA button */}
+            <a
+              href="/contacts"
+              className={styles.ctaBtn}
+              aria-label="Grab 15 minutes with us"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="/images/Myphoto.jpg"
+                alt=""
+                className={styles.ctaPhoto}
+                aria-hidden="true"
+              />
+              <div className={styles.ctaText}>
+                <span className={styles.ctaMain}>Grab 15 minutes</span>
+                <span className={styles.ctaSub}>
+                  <span className={styles.ctaDot} aria-hidden="true" />
+                  Open and ready
+                </span>
+              </div>
+            </a>
           </nav>
 
-          {/* Mobile Menu Button */}
-          <motion.button
-            className={styles.mobileMenuButton}
-            onClick={toggleMobileMenu}
-            aria-label="Toggle navigation"
-            whileTap={{ scale: 0.9 }}
+          {/* Mobile burger */}
+          <button
+            className={styles.burger}
+            onClick={toggleMenu}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
           >
-            {mobileMenuOpen ? (
-              <i className="ri-close-line"></i>
-            ) : (
-              <i className="ri-menu-line"></i>
-            )}
-          </motion.button>
+            <span
+              className={`${styles.burgerLine} ${menuOpen ? styles.burgerOpen : ""}`}
+            />
+            <span
+              className={`${styles.burgerLine} ${menuOpen ? styles.burgerOpen : ""}`}
+            />
+          </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            className={styles.mobileMenu}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <motion.nav
-              className={styles.mobileNav}
-              initial={{ y: 50 }}
-              animate={{ y: 0 }}
-              exit={{ y: 50 }}
+      {/* Mobile menu */}
+      {menuOpen && (
+        <div
+          ref={mobileMenuRef}
+          className={styles.mobileMenu}
+          role="dialog"
+          aria-label="Navigation"
+        >
+          {/* Top bar with counter */}
+          <div className={styles.mobileTop}>
+            <span className={styles.mobileLabel}>Navigation</span>
+            <button
+              className={styles.mobileClose}
+              onClick={toggleMenu}
+              aria-label="Close"
             >
-              {navItems.map((item) => (
-                <motion.div
-                  key={item.path}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <NavLink
-                    to={item.path}
-                    className={({ isActive }) =>
-                      `${styles.mobileNavLink} ${isActive ? styles.active : ""}`
-                    }
-                    onClick={toggleMobileMenu}
-                  >
-                    <i className={item.icon}></i>
-                    <span>{item.label}</span>
-                  </NavLink>
-                </motion.div>
-              ))}
+              ✕
+            </button>
+          </div>
 
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              ></motion.div>
-            </motion.nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.header>
+          <nav className={styles.mobileNav}>
+            {navItems.map((item, i) => (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                className={({ isActive }) =>
+                  `${styles.mobileNavLink} ${isActive ? styles.active : ""}`
+                }
+                onClick={toggleMenu}
+              >
+                <span className={styles.mobileNum}>0{i + 1}</span>
+                <span className={styles.mobileNavLabel}>{item.label}</span>
+                <i className={item.icon} aria-hidden="true" />
+              </NavLink>
+            ))}
+          </nav>
+        </div>
+      )}
+    </header>
   );
 };
 

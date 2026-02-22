@@ -1,76 +1,111 @@
-/* HeroSection.module.css */
+/* HeroSection.module.css — Editorial Dark / Awwwards */
 
-/* ── Gradient background ── */
+/* ── Grain texture ── */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  height: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.035;
+  pointer-events: none;
+  z-index: 6;
+  animation: grainShift 0.2s steps(2) infinite;
+}
+
+@keyframes grainShift {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-1%, -1%);
+  }
+  50% {
+    transform: translate(1%, 2%);
+  }
+  75% {
+    transform: translate(-1%, 1%);
+  }
+  100% {
+    transform: translate(2%, -1%);
+  }
+}
+
+/* ── Background ── */
 .gradientBackground {
   position: absolute;
   inset: 0;
-  background-image: var(--color-background);
+  background-image: url("/public/images/jamie-quirke-EpSA7WgRNYQ-unsplash.jpg");
   background-position: center;
   background-size: cover;
-  z-index: -1;
-  will-change: background-position;
+  background-repeat: no-repeat;
+  opacity: 0.18;
+  z-index: -10;
+  will-change: transform;
 }
 
 .gradientBackground::before {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: -1;
+  background: linear-gradient(
+    160deg,
+    #080808 0%,
+    rgba(8, 8, 8, 0.22) 50%,
+    rgba(8, 8, 8, 0.25) 100%
+  );
+  z-index: 1;
 }
 
-/* виправлено: .scrolled оголошено двічі — видалено дублікат */
 .scrolled {
-  background-image: var(--color-background-scrolled);
+  opacity: 0.08;
 }
 
-.scrolledMedia {
-  scroll-behavior: smooth;
-  transform: scale(0.9);
-  opacity: 0.8;
-  transition: all 0.5s ease;
-  will-change: transform;
-}
-
-/* ── Title gradient ── */
-.titleGradient {
-  background: linear-gradient(90deg, #f8a12f 0%, #f53c03 50%, #f8ab04 100%);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  display: inline-block;
-  will-change: background-position;
-}
-
-/* ── Hero section ── */
+/* ── Hero ── */
 .hero {
   position: relative;
   width: 100%;
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
   overflow: hidden;
   isolation: isolate;
-  color-scheme: dark;
-  will-change: transform;
+  background: var(--color-background);
 }
 
+/* Accent top line */
 .hero::before {
   content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(232, 243, 60, 0.7) 30%,
+    rgba(232, 243, 60, 0.7) 70%,
+    transparent 100%
+  );
+  z-index: 5;
+}
+
+/* ── Grid overlay ── */
+.gridOverlay {
   position: absolute;
   inset: 0;
   background: var(--color-grid);
   animation:
-    gridMove 8s linear infinite,
-    gridGlow 3s ease-in-out infinite;
+    gridMove 10s linear infinite,
+    gridGlow 4s ease-in-out infinite;
   pointer-events: none;
   z-index: 1;
-  /* виправлено: було два конфліктуючих transform — лишаємо translateZ(0) */
   transform: translateZ(0);
-  backface-visibility: hidden;
-  perspective: 1000px; /* виправлено: було "1000" без одиниць */
-  will-change: transform;
+  will-change: opacity;
 }
 
 @keyframes gridMove {
@@ -81,349 +116,407 @@
   }
   100% {
     background-position:
-      100px 100px,
-      100px 100px;
+      80px 80px,
+      80px 80px;
   }
 }
 
 @keyframes gridGlow {
   0%,
   100% {
-    opacity: 0.1;
-    filter: drop-shadow(0 0 1px #f3e17d);
+    opacity: 0.06;
   }
   50% {
-    opacity: 0.25;
-    filter: drop-shadow(0 0 6px #fcf68c);
+    opacity: 0.13;
   }
 }
 
-/* ── Video ── */
-.videoContainer {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
-  overflow: hidden;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  perspective: 1000px;
-  will-change: transform;
-}
-
-.image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block; /* прибирає inline-відступ знизу */
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  will-change: transform;
-}
-
-.videoOverlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(98, 80, 255, 0.7) 0%,
-    rgba(137, 129, 214, 0.3) 100%
-  );
-  z-index: 3;
-}
-
-/* ── Content grid ── */
+/* ── Content ── */
 .content {
   position: relative;
   z-index: 4;
   width: 100%;
-  max-width: 100%;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 2rem 4rem;
+  padding: 0 4rem;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center; /* виправлено: було "left" — не валідне значення для align-items */
-  will-change: transform;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 6rem;
+  align-items: center;
+  min-height: 100vh;
+  min-height: 100dvh;
 }
 
-/* ── Text content ── */
+/* ── Text block ── */
 .textContent {
-  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  padding: 4rem 0;
   will-change: transform;
-  text-align: left;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
 }
 
+/* Eyebrow label */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.eyebrowLine {
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: #e8f53c;
+  flex-shrink: 0;
+}
+
+.eyebrowText {
+  font-family: "DM Mono", monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #e8f53c;
+}
+
+/* ── Title ── */
 .title {
-  font-size: clamp(2rem, 5vw, 5rem);
-  font-weight: 800;
-  line-height: 1.1;
-  margin-bottom: 1.5rem;
-  color: #f4e2d8;
-  text-shadow: 0 2px 10px rgba(0, 5, 61, 0.5);
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(4rem, 12vw, 10rem);
+  font-weight: 400;
+  line-height: 0.88;
+  letter-spacing: -0.01em;
+  color: #f5f5f0;
+  margin: 0 0 1.5rem;
+  margin-right: -2rem; /* grid-breaking */
 }
 
+.titleGradient {
+  background: linear-gradient(90deg, #f8a12f 0%, #f53c03 50%, #f8ab04 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: block;
+  animation: shimmer 4s linear infinite;
+  will-change: background-position;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.titleSecond {
+  display: block;
+  color: #f5f5f0;
+}
+
+/* Divider */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 1.5rem 0;
+}
+
+/* ── Subtitle ── */
 .subtitle {
-  font-size: 1.4rem;
-  color: var(--color-title);
-  line-height: 1.6;
+  font-family: "DM Mono", monospace;
+  font-size: 0.92rem;
+  color: rgba(245, 245, 240, 0.4);
+  line-height: 1.75;
   font-weight: 300;
-  max-width: 80%;
-  hyphens: auto;
-  font-family: "Courier New", Courier, monospace;
+  max-width: 400px;
+  letter-spacing: 0.02em;
+  margin-bottom: 3rem;
+  min-height: 2.5em;
 }
 
 /* ── Buttons ── */
 .buttons {
   display: flex;
-  gap: 1.5rem;
-  margin-top: 3rem; /* виправлено: було 8rem — кнопки зїжджали за межі на малих екранах */
+  align-items: center;
+  gap: 1rem;
   flex-wrap: wrap;
 }
 
 .primaryButton {
-  background-color: #4368ff;
-  color: white;
-  padding: 14px 28px;
-  border-radius: 50rem;
-  font-weight: 600;
-  font-size: 1rem; /* виправлено: було 18px — краще rem для масштабування */
+  background: #e8f53c;
+  color: #080808;
+  padding: 0.95rem 1.75rem;
+  border-radius: 0;
+  font-family: "DM Mono", monospace;
+  font-weight: 500;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  transition: all 0.3s ease;
-  margin-bottom: 0; /* виправлено: було 48px — зайвий відступ всередині flex */
+  gap: 0.75rem;
   border: none;
   cursor: pointer;
   position: relative;
   overflow: hidden;
+  transition: color 0.35s ease;
   white-space: nowrap;
 }
 
-.primaryButton::after {
+/* Wipe hover effect */
+.primaryButton::before {
   content: "";
   position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    to bottom right,
-    rgba(255, 255, 255, 0) 45%,
-    rgba(255, 255, 255, 0.3) 50%,
-    rgba(255, 255, 255, 0) 55%
-  );
-  transform: rotate(30deg);
-  transition: all 0.6s ease;
+  inset: 0;
+  background: #080808;
+  transform: translateX(-101%);
+  transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
 }
 
-.primaryButton:hover::after {
-  left: 100%;
+.primaryButton:hover::before {
+  transform: translateX(0);
 }
 
-.primaryButton:hover .buttonArrow {
-  transform: translateX(5px);
+.primaryButton:hover {
+  color: #e8f53c;
 }
 
 .secondaryButton {
   background: transparent;
-  color: var(--color-text);
-  border: 2px solid #676767;
-  padding: 14px 28px;
-  border-radius: 50rem;
-  font-weight: 600;
-  font-size: 1rem;
+  color: rgba(245, 245, 240, 0.55);
+  border: 1px solid rgba(245, 245, 240, 0.15);
+  padding: 0.95rem 1.75rem;
+  border-radius: 0;
+  font-family: "DM Mono", monospace;
+  font-weight: 500;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  transition: all 0.3s ease;
-  margin-bottom: 0; /* виправлено: було 48px */
+  gap: 0.75rem;
   cursor: pointer;
   position: relative;
   overflow: hidden;
+  transition:
+    color 0.35s ease,
+    border-color 0.35s ease;
   white-space: nowrap;
 }
 
-.secondaryButton::after {
+.secondaryButton::before {
   content: "";
   position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    to bottom right,
-    rgba(101, 101, 101, 0) 45%,
-    rgba(255, 255, 255, 0.3) 50%,
-    rgba(108, 108, 108, 0) 55%
-  );
-  transform: rotate(30deg);
-  transition: all 0.6s ease;
+  inset: 0;
+  background: rgba(245, 245, 240, 0.05);
+  transform: translateX(-101%);
+  transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
 }
 
-.secondaryButton:hover::after {
-  left: 100%;
+.secondaryButton:hover::before {
+  transform: translateX(0);
 }
 
+.secondaryButton:hover {
+  color: #f5f5f0;
+  border-color: rgba(245, 245, 240, 0.3);
+}
+
+/* Button content above ::before */
+.primaryButton > *,
+.secondaryButton > * {
+  position: relative;
+  z-index: 1;
+}
+
+.buttonArrow {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.primaryButton:hover .buttonArrow,
 .secondaryButton:hover .buttonArrow {
   transform: translateX(5px);
 }
 
-.buttonText {
+/* ── Media ── */
+.mediaContainer {
   position: relative;
-  z-index: 5;
+  will-change: transform;
 }
 
-.buttonArrow {
-  width: 20px;
-  height: 20px;
-  transition: transform 0.3s ease;
-}
-
-/* ── Floating shapes ── */
-.floatingShapes {
+/* Offset accent frame */
+.mediaContainer::before {
+  content: "";
   position: absolute;
-  inset: 0;
+  top: 2rem;
+  left: -1.5rem;
+  right: 1.5rem;
+  bottom: -1.5rem;
+  border: 1px solid rgba(232, 243, 60, 0.12);
   pointer-events: none;
-  z-index: 2;
-  overflow: hidden;
+  z-index: 0;
 }
 
-.shapeCircle {
+/* ── Corner badge ── */
+.cornerBadge {
   position: absolute;
-  top: 15%;
-  right: 10%;
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(67, 104, 255, 0.15), transparent);
+  top: 4rem;
+  right: 2rem;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2rem;
+  pointer-events: none;
 }
 
-.shapeTriangle {
-  position: absolute;
-  bottom: 20%;
-  left: 8%;
-  width: 60px;
-  height: 60px;
-  border-left: 30px solid transparent;
-  border-right: 30px solid transparent;
-  border-bottom: 52px solid rgba(248, 161, 47, 0.1);
+.cornerBadgeNum {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 4rem;
+  line-height: 1;
+  color: rgba(245, 245, 240, 0.05);
+  letter-spacing: -0.02em;
+}
+
+.cornerBadgeLabel {
+  font-family: "DM Mono", monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(245, 245, 240, 0.18);
 }
 
 /* ── Scroll indicator ── */
 .scrollIndicator {
   position: absolute;
-  bottom: 1.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 5;
-  color: var(--color-secondary);
+  bottom: 2rem;
+  left: 0;
+  right: 0;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: 0.5rem;
-  will-change: transform, opacity;
-  white-space: nowrap;
+  gap: 0.75rem;
+  z-index: 5;
+  pointer-events: none;
 }
 
-.scrollText {
-  font-size: 0.7rem;
-  letter-spacing: 2px;
+.scrollIndicator span {
+  font-family: "DM Mono", monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
-  opacity: 0.6;
-  color: var(--color-secondary);
-  font-weight: 600;
+  color: rgba(245, 245, 240, 0.25);
+}
+
+.scrollIndicator::after {
+  content: "↓";
+  font-size: 0.7rem;
+  color: #e8f53c;
+  animation: bounceDown 2s ease-in-out infinite;
+}
+
+@keyframes bounceDown {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(5px);
+    opacity: 1;
+  }
 }
 
 /* ── Tablet: 769px – 1024px ── */
 @media (max-width: 1024px) {
   .content {
     grid-template-columns: 1fr;
-    padding: 6rem 2rem 2rem;
-    gap: 2.5rem;
+    padding: 0 2rem;
+    gap: 3rem;
+    min-height: unset;
+    padding-top: 8rem;
+    padding-bottom: 6rem;
   }
 
   .textContent {
-    max-width: 100%;
+    padding: 0;
+    align-items: center;
+    text-align: center;
+  }
+
+  .eyebrow {
+    justify-content: center;
+  }
+
+  .title {
+    margin-right: 0;
     text-align: center;
   }
 
   .subtitle {
     max-width: 100%;
+    text-align: center;
   }
 
   .buttons {
     justify-content: center;
-    margin-top: 2.5rem;
   }
 
-  .shapeCircle {
-    width: 80px;
-    height: 80px;
+  .mediaContainer::before {
+    display: none;
+  }
+
+  .cornerBadge {
+    right: 2rem;
   }
 }
 
 /* ── Mobile: ≤ 768px ── */
 @media (max-width: 768px) {
   .content {
-    padding: 5rem 1.5rem 2rem;
-    gap: 2rem;
+    padding: 7rem 1.5rem 5rem;
+    gap: 2.5rem;
+  }
+
+  .title {
+    font-size: clamp(4rem, 18vw, 7rem);
   }
 
   .buttons {
     flex-direction: column;
-    gap: 0.875rem;
-    align-items: center;
-    margin-top: 2rem;
+    align-items: stretch;
+    gap: 0.75rem;
+    width: 100%;
   }
 
   .primaryButton,
   .secondaryButton {
     width: 100%;
     justify-content: center;
-    font-size: 0.95rem;
-    padding: 13px 24px;
+    padding: 0.9rem 1.25rem;
   }
 
-  .subtitle {
-    font-size: 1.1rem;
-  }
-
-  .floatingShapes {
-    display: none; /* на мобільному shapes захаращують контент */
+  .cornerBadge {
+    display: none;
   }
 }
 
 /* ── Mobile: ≤ 480px ── */
 @media (max-width: 480px) {
   .content {
-    padding: 4.5rem 1rem 1.5rem;
-    gap: 1.5rem;
-  }
-
-  /* виправлено: було font-size: 4rem — це більше за clamp на title, виглядало неузгоджено */
-  .titleGradient {
-    font-size: inherit;
+    padding: 6rem 1rem 4rem;
   }
 
   .subtitle {
-    font-size: 0.95rem;
+    font-size: 0.82rem;
   }
 
-  .buttons {
-    margin-top: 1.75rem;
-    gap: 0.75rem;
-  }
-
-  .primaryButton,
-  .secondaryButton {
-    padding: 12px 20px;
-    font-size: 0.9rem;
+  .eyebrowLine {
+    width: 24px;
   }
 
   .scrollIndicator {
@@ -434,13 +527,13 @@
 /* ── Small mobile: ≤ 360px ── */
 @media (max-width: 360px) {
   .content {
-    padding: 4rem 0.75rem 1rem;
+    padding: 5rem 0.75rem 3.5rem;
   }
 
   .primaryButton,
   .secondaryButton {
-    padding: 11px 16px;
-    font-size: 0.85rem;
+    padding: 0.8rem 1rem;
+    font-size: 0.7rem;
   }
 }
 
@@ -452,6 +545,5 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
   }
 }
