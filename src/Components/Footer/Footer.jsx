@@ -27,7 +27,11 @@ const Footer = () => {
       aria-label="Footer"
       style={{
         backgroundPositionY: bgPositionSpring,
+
         backgroundImage: "url(/images/njeromin2.jpg)",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        width: "100%",
       }}
     >
       <div className={styles.content}>
@@ -37,7 +41,9 @@ const Footer = () => {
               Portfolio
             </h4>
             <h2 className={styles.getStarted}>GET STARTED</h2>
-            <p>Modern web development solutions tailored to your needs</p>
+            <p className={styles.description}>
+              Modern web development solutions tailored to your needs
+            </p>
           </div>
           <div className={styles.socialLinks}>
             {socialLinks.map((social, index) => (

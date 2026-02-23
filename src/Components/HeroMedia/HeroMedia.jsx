@@ -52,7 +52,8 @@ const HeroMedia = () => {
           src="/images/preview.png"
           alt="Profile photo"
           className={styles.image}
-          loading="eager"
+          fetchpriority="high" // ← LCP fix
+          decoding="async"
           width={400}
           height={500}
         />

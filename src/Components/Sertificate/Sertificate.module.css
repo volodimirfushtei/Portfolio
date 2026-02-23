@@ -40,7 +40,7 @@
 
 .infoTitle {
   font-family: "Bebas Neue", sans-serif;
-  font-size: clamp(3rem, 5vw, 5rem);
+  font-size: clamp(2rem, 5vw, 4rem);
   letter-spacing: 0.03em;
   line-height: 0.92;
   color: #f5f5f0;
@@ -90,12 +90,14 @@
 
 .card {
   width: 360px;
-  background: #f0f0f0;
+  background: linear-gradient(135deg, #f1f88e, #f47c58, #f7fe92);
+  backdrop-filter: blur(16px);
   position: relative;
   z-index: 1;
   box-shadow: 0 40px 120px rgba(0, 0, 0, 0.6);
   transform-style: preserve-3d;
   cursor: pointer;
+
   transition: transform 0.3s ease;
 }
 

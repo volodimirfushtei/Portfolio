@@ -1,36 +1,41 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { useCallback } from "react";
 import { gsap } from "gsap";
 import styles from "./Header.module.css";
 import ToggleTheme from "../ToggleTheme/ToggleTheme";
 import FullscreenButton from "../FullScreenButton/FullScreenButton";
 import useScrollDetection from "../../hooks/useScrollDetection";
 import Logo from "../Logo/Logo";
-
+import { NAV_ITEMS } from "../../constants/navigations";
 const useScrollDirection = () => {
   const [direction, setDirection] = useState(null);
-  const prev = useRef(0);
+  const prevRef = useRef(0);
+  const rafRef = useRef(null);
 
   useEffect(() => {
     const onScroll = () => {
-      const cur = window.scrollY;
-      setDirection(prev.current > cur ? "up" : "down");
-      prev.current = cur;
+      if (rafRef.current) return;
+
+      rafRef.current = requestAnimationFrame(() => {
+        const cur = window.scrollY;
+        setDirection(prevRef.current > cur ? "up" : "down");
+        prevRef.current = cur;
+        rafRef.current = null;
+      });
     };
+
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
+    };
   }, []);
 
   return direction;
 };
-
-const navItems = [
-  { path: "/", icon: "ri-home-line", label: "Home" },
-  { path: "/projects", icon: "ri-briefcase-line", label: "Projects" },
-  { path: "/tech", icon: "ri-code-line", label: "Tech" },
-  { path: "/contacts", icon: "ri-contacts-line", label: "Contacts" },
-  { path: "/error", icon: "ri-error-warning-line", label: "Test Error" },
-];
 
 const Header = () => {
   const headerRef = useRef(null);
@@ -42,6 +47,12 @@ const Header = () => {
   const isScrolled = useScrollDetection(100);
   const scrollDirection = useScrollDirection();
 
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   /* ── Hide/show on scroll ── */
   useEffect(() => {
     if (isScrolled && scrollDirection === "down") setHidden(true);
@@ -49,27 +60,39 @@ const Header = () => {
   }, [isScrolled, scrollDirection]);
 
   useEffect(() => {
-    gsap.to(headerRef.current, {
-      y: hidden ? -100 : 0,
-      opacity: hidden ? 0 : 1,
-      duration: 0.45,
-      ease: "power3.out",
-    });
+    const ctx = gsap.context(() => {
+      gsap.to(headerRef.current, {
+        y: hidden ? -100 : 0,
+        opacity: hidden ? 0 : 1,
+        duration: 0.45,
+        ease: "power3.out",
+      });
+    }, headerRef);
+
+    return () => ctx.revert(); // Clean up GSAP animations
   }, [hidden]);
 
-  /* ── Mobile menu open/close ── */
-  const toggleMenu = () => {
+  // Similarly for mobile menu animations
+  const toggleMenu = useCallback(() => {
     const next = !menuOpen;
     setMenuOpen(next);
     document.body.style.overflow = next ? "hidden" : "";
 
-    if (next) {
+    if (next && mobileMenuRef.current) {
       gsap.fromTo(
         mobileMenuRef.current,
         { opacity: 0, y: -20 },
-        { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.35,
+          ease: "power3.out",
+          onReverseComplete: () => {
+            // Cleanup if needed
+          },
+        },
       );
-    } else {
+    } else if (mobileMenuRef.current) {
       gsap.to(mobileMenuRef.current, {
         opacity: 0,
         y: -10,
@@ -77,8 +100,18 @@ const Header = () => {
         ease: "power3.in",
       });
     }
-  };
-
+  }, [menuOpen]);
+  // Focus trap (optional but recommended)
+  useEffect(() => {
+    if (menuOpen) {
+      const focusableElements = mobileMenuRef.current?.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+      );
+      if (focusableElements?.length) {
+        focusableElements[0].focus();
+      }
+    }
+  }, [menuOpen]);
   /* cleanup overflow on unmount */
   useEffect(
     () => () => {
@@ -105,7 +138,7 @@ const Header = () => {
 
           {/* Desktop nav */}
           <nav className={styles.desktopNav} aria-label="Main navigation">
-            {navItems.map((item) => (
+            {NAV_ITEMS.map((item) => (
               <div
                 key={item.path}
                 className={styles.navItem}
@@ -127,8 +160,8 @@ const Header = () => {
             ))}
 
             {/* CTA button */}
-            <a
-              href="/contacts"
+            <Link
+              to="/contacts"
               className={styles.ctaBtn}
               aria-label="Grab 15 minutes with us"
               rel="noopener noreferrer"
@@ -146,7 +179,7 @@ const Header = () => {
                   Open and ready
                 </span>
               </div>
-            </a>
+            </Link>
           </nav>
 
           {/* Mobile burger */}
@@ -167,43 +200,45 @@ const Header = () => {
       </div>
 
       {/* Mobile menu */}
-      {menuOpen && (
-        <div
-          ref={mobileMenuRef}
-          className={styles.mobileMenu}
-          role="dialog"
-          aria-label="Navigation"
-        >
-          {/* Top bar with counter */}
-          <div className={styles.mobileTop}>
-            <span className={styles.mobileLabel}>Navigation</span>
-            <button
-              className={styles.mobileClose}
-              onClick={toggleMenu}
-              aria-label="Close"
-            >
-              ✕
-            </button>
-          </div>
-
-          <nav className={styles.mobileNav}>
-            {navItems.map((item, i) => (
-              <NavLink
-                key={item.path}
-                to={item.path}
-                className={({ isActive }) =>
-                  `${styles.mobileNavLink} ${isActive ? styles.active : ""}`
-                }
-                onClick={toggleMenu}
-              >
-                <span className={styles.mobileNum}>0{i + 1}</span>
-                <span className={styles.mobileNavLabel}>{item.label}</span>
-                <i className={item.icon} aria-hidden="true" />
-              </NavLink>
-            ))}
-          </nav>
+      <div
+        ref={mobileMenuRef}
+        className={`${styles.mobileMenu} ${menuOpen ? styles.mobileMenuVisible : ""}`}
+        role="dialog"
+        aria-hidden={!menuOpen}
+      >
+        {/* Top bar with counter */}
+        <div className={styles.mobileTop}>
+          <span className={styles.mobileLabel}>Navigation</span>
+          <button
+            className={styles.mobileClose}
+            onClick={toggleMenu}
+            aria-label="Close"
+          >
+            ✕
+          </button>
         </div>
-      )}
+
+        <nav className={styles.mobileNav}>
+          {NAV_ITEMS.map((item, i) => (
+            <NavLink
+              key={item.path}
+              to={item.path}
+              className={({ isActive }) =>
+                `${styles.mobileNavLink} ${isActive ? styles.active : ""}`
+              }
+              onClick={toggleMenu}
+            >
+              <span className={styles.mobileNum}>0{i + 1}</span>
+              <span className={styles.mobileNavLabel}>{item.label}</span>
+              <i
+                className={item.icon}
+                aria-hidden="true"
+                aria-label={item.label}
+              />
+            </NavLink>
+          ))}
+        </nav>
+      </div>
     </header>
   );
 };

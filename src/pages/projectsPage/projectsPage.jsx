@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useMemo } from "react";
-import { gsap } from "gsap";
+import gsap from "gsap/dist/gsap";
 import styles from "./projectsPage.module.css";
 import { db } from "../../firebase";
 import { onSnapshot, collection } from "firebase/firestore";

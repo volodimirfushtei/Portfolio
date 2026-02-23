@@ -10,7 +10,7 @@ import Overlay from "./Components/Overlay/Overlay.jsx";
 import { Toaster } from "react-hot-toast";
 import ScrollToTop from "./Components/ScrollToTop/ScrollToTop.jsx";
 import CustomCursor from "./Components/CustomCursor/CustomCursor.jsx";
-// Preload компонентів
+
 const preloadComponents = () => {
   const components = [
     import("./pages/homePage/homePage.jsx"),

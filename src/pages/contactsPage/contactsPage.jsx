@@ -2,8 +2,8 @@ import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import s from "./contactsPage.module.css";
 import ContactForm from "../../Components/ContactForm/ContactForm";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import gsap from "gsap/dist/gsap";
+import ScrollTrigger from "gsap/dist/ScrollTrigger";
 
 // Реєстрація плагіна GSAP
 if (typeof window !== "undefined") {

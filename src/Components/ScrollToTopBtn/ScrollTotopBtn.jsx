@@ -39,7 +39,7 @@ const ScrollToTopBtn = () => {
       aria-label="Scroll to top"
     >
       {/* Круговий прогрес */}
-      <div className="relative w-18 h-18">
+      <div className="relative w-16 h-16">
         {/* Фонове кільце */}
         <svg className="w-full h-full" viewBox="0 0 36 36">
           <path
@@ -53,7 +53,7 @@ const ScrollToTopBtn = () => {
           <motion.path
             d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
             fill="none"
-            stroke="#ff0000"
+            stroke="#ff0"
             strokeWidth="1"
             strokeDasharray="100"
             strokeDashoffset={100 - scrollProgress}

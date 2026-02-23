@@ -113,7 +113,7 @@ const HeroSection = () => {
           <div ref={eyebrowRef} className={styles.eyebrow}>
             <span className={styles.eyebrowLine} />
             <span className={styles.eyebrowText}>
-              Frontend Developer · 2025
+              Fullstack Developer · 2025
             </span>
           </div>
 

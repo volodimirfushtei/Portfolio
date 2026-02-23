@@ -1,182 +1,114 @@
-/* StickyZoomSection.module.css — Awwwards editorial dark */
-
 .section {
   position: relative;
   height: 100vh;
-  width: 100%;
+  background: var(--color-background);
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #080808;
-  background-image: url("https://cdn.prod.website-files.com/6840876d4d1ed0e8e2a330b9/68641f683476d979a209226a_Pixel%201_white.svg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 }
 
-/* Overlay to darken background */
-.section::before {
-  content: "";
+/* Центр сцени */
+.stage {
   position: absolute;
   inset: 0;
-  background: rgba(8, 8, 8, 0.6);
-  z-index: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
 }
 
-/* Top accent line */
-.section::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(232, 243, 60, 0.5) 40%,
-    rgba(232, 243, 60, 0.5) 60%,
-    transparent 100%
-  );
-  z-index: 2;
-}
-
-/* ── Scroll hint ── */
-.scrollHint {
-  position: absolute;
-  top: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 3;
-  font-family: "DM Mono", monospace;
-  font-size: 0.58rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: rgba(245, 245, 240, 0.3);
-  animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 0.3;
-  }
-  50% {
-    opacity: 0.7;
-  }
-}
-
-/* ── Inner zoom block ── */
-.inner {
-  position: relative;
-  z-index: 1;
-  display: flex;
+/* Zoom-група */
+.zoom {
+  display: grid;
+  grid-auto-flow: column;
   align-items: center;
   gap: 3rem;
   will-change: transform;
+  transform-origin: center center;
 }
 
-/* ── Labels ── */
+/* Тексти */
 .label {
   font-family: "Bebas Neue", sans-serif;
-  font-size: clamp(2.5rem, 8vw, 5rem);
-  font-weight: 400;
-  color: rgba(245, 245, 240, 0.65);
-  letter-spacing: 0.04em;
-  line-height: 1;
+  font-size: clamp(2.5rem, 7vw, 4.8rem);
+  letter-spacing: 0.08em;
+  color: rgba(245, 245, 240, 0.7);
   white-space: nowrap;
 }
 
-.accent {
-  color: #e8f53c;
-}
+/* Image */
+.imageWrap {
+  width: 380px;
+  height: 240px;
 
-/* ── Image ── */
-.image {
-  width: 300px;
-  height: 200px;
+  overflow: hidden;
+}
+.imageWrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #080808;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+
+  opacity: 0.75;
+}
+.imageWrap img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   display: block;
-  flex-shrink: 0;
-  filter: grayscale(0.2) brightness(0.85);
-  border: 1px solid rgba(232, 243, 60, 0.15);
+  will-change: transform;
+  transform-origin: center center;
 }
 
-/* ── CTA ── */
+/* CTA */
 .cta {
   position: absolute;
-  bottom: -5rem;
   left: 50%;
   transform: translateX(-50%);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.9rem 1.75rem;
+  pointer-events: auto;
+  z-index: 20;
+
+  padding: 0.9rem 1.8rem;
   background: #e8f53c;
   color: #080808;
+
   font-family: "DM Mono", monospace;
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.12em;
+  font-size: 1rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   text-decoration: none;
-  white-space: nowrap;
-  opacity: 0; /* GSAP анімує до 1 */
-  position: relative;
+
   overflow: hidden;
+  cursor: pointer;
+  border: none;
+}
+
+/* ТЕКСТ — ЗАВЖДИ ЗВЕРХУ */
+.ctaText {
+  position: relative;
+  z-index: 2;
   transition: color 0.35s ease;
 }
 
+/* WIPE */
 .cta::before {
   content: "";
   position: absolute;
   inset: 0;
   background: #080808;
+
   transform: translateX(-101%);
-  transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
+  transition: transform 0.45s cubic-bezier(0.76, 0, 0.24, 1);
+  z-index: 1;
 }
 
 .cta:hover::before {
   transform: translateX(0);
+  transition: transform 0.45s cubic-bezier(0.76, 0, 0.24, 1);
 }
-.cta:hover {
+
+.cta:hover .ctaText {
   color: #e8f53c;
-}
-
-.cta > * {
-  position: relative;
-  z-index: 1;
-}
-
-.ctaArrow {
-  transition: transform 0.3s ease;
-}
-
-.cta:hover .ctaArrow {
-  transform: translateX(5px);
-}
-
-/* ── Mobile ── */
-@media (max-width: 768px) {
-  .inner {
-    gap: 1.5rem;
-    flex-direction: column;
-  }
-
-  .image {
-    width: 220px;
-    height: 150px;
-  }
-
-  .label {
-    font-size: clamp(1.8rem, 8vw, 3rem);
-  }
-}
-
-/* ── Reduced motion ── */
-@media (prefers-reduced-motion: reduce) {
-  .scrollHint {
-    animation: none;
-  }
 }

@@ -135,13 +135,13 @@ const Expertise = () => {
 
         {/* Experience Table with enhanced effects */}
         <motion.div
-          className={styles.section}
           variants={itemVariants}
           style={{
             y: scrollY,
             opacity,
             scale: scaleBox,
             rotateX,
+            rotateY,
           }}
           whileHover={{
             y: -10,
