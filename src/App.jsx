@@ -1,27 +1,16 @@
 import "./App.css";
-import React, { useState, useEffect, lazy, Suspense } from "react";
-import { AnimatePresence } from "framer-motion";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
+import { OverlayProvider } from "./Components/OverlayProvider/OverlayProvider";
+import ErrorBoundary from "./Components/ErrorBoundary/ErrorBoundary.jsx";
 import Loader from "./Components/Loader/Loader.jsx";
 import Layout from "./Components/Layout/Layout.jsx";
-import ErrorBoundary from "./Components/ErrorBoundary/ErrorBoundary.jsx";
-import { OverlayProvider } from "./Components/OverlayProvider/OverlayProvider";
 import Overlay from "./Components/Overlay/Overlay.jsx";
-import { Toaster } from "react-hot-toast";
 import ScrollToTop from "./Components/ScrollToTop/ScrollToTop.jsx";
 import CustomCursor from "./Components/CustomCursor/CustomCursor.jsx";
 
-const preloadComponents = () => {
-  const components = [
-    import("./pages/homePage/homePage.jsx"),
-    import("./pages/contactsPage/contactsPage.jsx"),
-    import("./pages/projectsPage/projectsPage.jsx"),
-    import("./pages/TechPage/TechPage.jsx"),
-  ];
-  return Promise.all(components);
-};
-
-// Lazy-loaded з попереднім завантаженням
+/* ── Lazy pages ── */
 const Home = lazy(() => import("./pages/homePage/homePage.jsx"));
 const Contacts = lazy(() => import("./pages/contactsPage/contactsPage.jsx"));
 const Projects = lazy(() => import("./pages/projectsPage/projectsPage.jsx"));
@@ -29,106 +18,92 @@ const Tech = lazy(() => import("./pages/TechPage/TechPage.jsx"));
 const NotFound = lazy(() => import("./pages/NotFoundPage/NotFoundPage.jsx"));
 const TestError = lazy(() => import("./Components/TestError/TestError.jsx"));
 
+/* ── Preload критичних сторінок після першого рендеру ── */
+const preload = () =>
+  Promise.all([
+    import("./pages/homePage/homePage.jsx"),
+    import("./pages/contactsPage/contactsPage.jsx"),
+    import("./pages/projectsPage/projectsPage.jsx"),
+    import("./pages/TechPage/TechPage.jsx"),
+  ]);
+
+/* ── Toast styles ── */
+const toastStyle = {
+  base: {
+    borderRadius: "0", // відповідає прямим кутам проекту
+    background: "#0d0d0d",
+    color: "#f5f5f0",
+    fontSize: "0.78rem",
+    fontFamily: '"DM Mono", monospace',
+    letterSpacing: "0.06em",
+    padding: "0.85rem 1.25rem",
+    border: "1px solid rgba(245,245,240,0.08)",
+    boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
+  },
+  success: {
+    background: "#0d0d0d",
+    border: "1px solid #e8f53c",
+    color: "#e8f53c",
+  },
+  error: {
+    background: "#0d0d0d",
+    border: "1px solid #f53c3c",
+    color: "#f53c3c",
+  },
+  loading: { background: "#0d0d0d", border: "1px solid rgba(245,245,240,0.2)" },
+};
+
 function App() {
   const location = useLocation();
   const [loading, setLoading] = useState(true);
-  const [routeLoading, setRouteLoading] = useState(false);
-  const [prevLocation, setPrevLocation] = useState(location);
 
   useEffect(() => {
-    if (location !== prevLocation) {
-      setRouteLoading(true);
-      setPrevLocation(location);
-
-      // Simulate route loading delay
-      const timer = setTimeout(() => {
-        setRouteLoading(false);
-      }, 500); // Adjust this time as needed
-
-      return () => clearTimeout(timer);
-    }
-  }, [location, prevLocation]);
-
-  useEffect(() => {
-    // Попереднє завантаження компонентів
-    preloadComponents().then(() => {
-      const timer = setTimeout(() => setLoading(false), 2000);
-      return () => clearTimeout(timer);
+    preload().then(() => {
+      // Loader показується мінімум 2s (щоб анімація встигла відпрацювати)
+      const id = setTimeout(() => setLoading(false), 2000);
+      return () => clearTimeout(id);
     });
   }, []);
+
+  if (loading) return <Loader />;
 
   return (
     <OverlayProvider>
       <ErrorBoundary>
-        <AnimatePresence mode="wait">
-          {loading ? (
-            <Loader />
-          ) : (
-            <Suspense>
-              <CustomCursor />
-              <ScrollToTop />
-              <Overlay />
-              <Routes location={location}>
-                <Route path="/" element={<Layout />}>
-                  <Route index element={<Home />} />
-                  <Route path="contacts" element={<Contacts />} />
-                  <Route path="projects" element={<Projects />} />
-                  <Route path="tech" element={<Tech />} />
-                  <Route path="*" element={<NotFound />} />
-                  <Route path="error" element={<TestError />} />
-                </Route>
-              </Routes>
+        <CustomCursor />
+        <ScrollToTop />
+        <Overlay />
 
-              <Toaster
-                position="top-right"
-                reverseOrder={false}
-                gutter={8}
-                toastOptions={{
-                  style: {
-                    borderRadius: "8px",
-                    background: "#333",
-                    color: "#fff",
-                    fontSize: "16px",
-                    padding: "16px",
-                    border: "1px solid #ccc",
-                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-                  },
-                  success: {
-                    style: {
-                      background: "#4CAF50",
-                      color: "#fff",
-                      icon: "✅",
-                    },
-                  },
-                  error: {
-                    style: {
-                      background: "#f44336",
-                      color: "#fff",
-                      icon: "❌",
-                    },
-                  },
-                  loading: {
-                    style: {
-                      background: "#2196F3",
-                      color: "#fff",
-                      icon: "⌛",
-                    },
-                  },
-                  complete: {
-                    style: {
-                      background: "#4CAF59",
-                      color: "#fff",
-                      icon: "✅",
-                    },
-                  },
-                }}
-              />
-            </Suspense>
-          )}
-        </AnimatePresence>
+        <Suspense
+          fallback={
+            <div style={{ background: "#080808", minHeight: "100vh" }} />
+          }
+        >
+          <Routes location={location}>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="contacts" element={<Contacts />} />
+              <Route path="projects" element={<Projects />} />
+              <Route path="tech" element={<Tech />} />
+              <Route path="error" element={<TestError />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          </Routes>
+        </Suspense>
+
+        <Toaster
+          position="top-right"
+          gutter={8}
+          toastOptions={{
+            style: toastStyle.base,
+            success: { style: { ...toastStyle.base, ...toastStyle.success } },
+            error: { style: { ...toastStyle.base, ...toastStyle.error } },
+            loading: { style: { ...toastStyle.base, ...toastStyle.loading } },
+          }}
+        />
       </ErrorBoundary>
     </OverlayProvider>
   );
 }
 
-export default React.memo(App);
+export default App;
