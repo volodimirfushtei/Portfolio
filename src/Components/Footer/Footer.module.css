@@ -14,7 +14,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(8, 8, 8, 0.88);
+  background: rgba(8, 8, 8, 0.94);
   z-index: 0;
 } /* Background image parallax overlay */
 

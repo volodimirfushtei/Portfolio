@@ -191,10 +191,10 @@
 
   /* === Backgrounds (loader palette) === */
   --bg-color: #080808; /* loader bg */
-  --color-background: linear-gradient(135deg, #0b0b0b 0%, #101010 100%);
+  --color-background: linear-gradient(135deg, #060606 0%, #121212 100%);
   --color-surface: radial-gradient(
     circle farthest-corner at 100% 0%,
-    #232323 15%,
+    #0f0f0f 15%,
     #0d0d0d 100%
   );
   --color-surface-hover: #1a1a1a;
@@ -222,7 +222,7 @@
   --color-button-text: #080808; /* loader bg на кнопці */
 
   /* === Headers / Hero === */
-  --color-header: linear-gradient(145deg, #1e1e1e 0%, #161616 100%);
+  --color-header: linear-gradient(145deg, #131313 0%, #161616 100%);
   --color-hero: var(--color-header);
 
   /* === Loaders === */

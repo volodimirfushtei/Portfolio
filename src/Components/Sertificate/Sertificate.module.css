@@ -83,7 +83,7 @@
   justify-content: center;
   align-items: center;
   perspective: 1200px;
-  background: rgba(13, 13, 13, 0.6);
+  background: rgba(13, 13, 13, 0.9);
   border: 1px solid rgba(245, 245, 240, 0.05);
   padding: 2rem;
 }
@@ -91,7 +91,7 @@
 .card {
   width: 360px;
   background: linear-gradient(135deg, #f1f88e, #f47c58, #f7fe92);
-  backdrop-filter: blur(16px);
+  backdrop-filter: blur(32px);
   position: relative;
   z-index: 1;
   box-shadow: 0 40px 120px rgba(0, 0, 0, 0.6);
@@ -385,8 +385,11 @@
 
 /* ── Small mobile: ≤ 360px ── */
 @media (max-width: 360px) {
+  .certificate {
+    padding: 1rem 0.5rem;
+  }
   .certificateTitle {
-    font-size: 0.7rem;
+    font-size: 0.6rem;
   }
   .achievement {
     font-size: 0.45rem;

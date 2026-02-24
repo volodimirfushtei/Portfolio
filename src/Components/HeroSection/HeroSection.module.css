@@ -1,61 +1,15 @@
 /* HeroSection.module.css — Editorial Dark / Awwwards */
 
-/* ── Grain texture ── */
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-
-  height: 200%;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  opacity: 0.035;
-  pointer-events: none;
-  z-index: 6;
-  animation: grainShift 0.2s steps(2) infinite;
-}
-
-@keyframes grainShift {
-  0% {
-    transform: translate(0, 0);
-  }
-  25% {
-    transform: translate(-1%, -1%);
-  }
-  50% {
-    transform: translate(1%, 2%);
-  }
-  75% {
-    transform: translate(-1%, 1%);
-  }
-  100% {
-    transform: translate(2%, -1%);
-  }
-}
-
 /* ── Background ── */
 .gradientBackground {
   position: absolute;
-  inset: 0;
-  background-image: url("/public/images/jamie-quirke-EpSA7WgRNYQ-unsplash.jpg");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  opacity: 0.18;
-  z-index: -10;
-  will-change: transform;
-}
-
-.gradientBackground::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    160deg,
-    #080808 0%,
-    rgba(8, 8, 8, 0.22) 50%,
-    rgba(8, 8, 8, 0.25) 100%
-  );
-  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-background-scrolled);
+  opacity: 0.08;
+  pointer-events: none;
 }
 
 .scrolled {
@@ -67,68 +21,12 @@
   position: relative;
   width: 100%;
   min-height: 100vh;
-  min-height: 100dvh;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   overflow: hidden;
   isolation: isolate;
-  background: var(--color-background);
-}
-
-/* Accent top line */
-.hero::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(232, 243, 60, 0.7) 30%,
-    rgba(232, 243, 60, 0.7) 70%,
-    transparent 100%
-  );
-  z-index: 5;
-}
-
-/* ── Grid overlay ── */
-.gridOverlay {
-  position: absolute;
-  inset: 0;
-  background: var(--color-grid);
-  animation:
-    gridMove 10s linear infinite,
-    gridGlow 4s ease-in-out infinite;
-  pointer-events: none;
-  z-index: 1;
-  transform: translateZ(0);
-  will-change: opacity;
-}
-
-@keyframes gridMove {
-  0% {
-    background-position:
-      0 0,
-      0 0;
-  }
-  100% {
-    background-position:
-      80px 80px,
-      80px 80px;
-  }
-}
-
-@keyframes gridGlow {
-  0%,
-  100% {
-    opacity: 0.06;
-  }
-  50% {
-    opacity: 0.13;
-  }
 }
 
 /* ── Content ── */
@@ -138,13 +36,10 @@
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 4rem;
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   gap: 6rem;
   align-items: center;
-  min-height: 100vh;
-  min-height: 100dvh;
 }
 
 /* ── Text block ── */
@@ -192,7 +87,7 @@
 }
 
 .titleGradient {
-  background: linear-gradient(90deg, #f8a12f 0%, #f53c03 50%, #f8ab04 100%);
+  background: linear-gradient(90deg, #f8a12f 0%, #f6fa0d 50%, #f8ab04 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -365,18 +260,18 @@
 .cornerBadge {
   position: absolute;
   top: 4rem;
-  right: 2rem;
+  right: 0;
   z-index: 5;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
   gap: 0.2rem;
   pointer-events: none;
 }
 
 .cornerBadgeNum {
   font-family: "Bebas Neue", sans-serif;
-  font-size: 4rem;
+  font-size: 2.6rem;
   line-height: 1;
   color: rgba(245, 245, 240, 0.05);
   letter-spacing: -0.02em;

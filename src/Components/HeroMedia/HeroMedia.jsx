@@ -54,8 +54,8 @@ const HeroMedia = () => {
           className={styles.image}
           fetchpriority="high" // ← LCP fix
           decoding="async"
-          width={400}
-          height={500}
+          width={300}
+          height={400}
         />
 
         {/* Circular text */}
