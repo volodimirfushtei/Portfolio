@@ -39,39 +39,23 @@ const CustomCursor = () => {
 
   // Hover-ефекти для інтерактивних елементів
   useEffect(() => {
-    const hoverEls = document.querySelectorAll("a, button, .interactive");
-
-    const onHover = () => {
-      gsap.to(".cursor", {
-        scale: 3,
-        backgroundColor: "rgba(255,0,255,0.7)",
-        borderColor: "#ff00ff",
-        boxShadow: "0 0 20px #ff00ff66",
-        duration: 0.3,
+    const hoverElements = document.querySelectorAll("[data-cursor='hover']");
+    hoverElements.forEach((el) => {
+      el.addEventListener("mouseenter", () => {
+        gsap.to(".cursor", {
+          scale: 1.5,
+          backgroundColor: "rgba(255, 255, 255, 0.8)",
+          duration: 0.3,
+        });
       });
-    };
-
-    const onLeave = () => {
-      gsap.to(".cursor", {
-        scale: 1,
-        backgroundColor: "rgba(203,194,194,0.7)",
-        borderColor: "#fff",
-        boxShadow: "0 0 0px transparent",
-        duration: 0.3,
+      el.addEventListener("mouseleave", () => {
+        gsap.to(".cursor", {
+          scale: 1,
+          backgroundColor: "rgba(255, 255, 255, 0.4)",
+          duration: 0.3,
+        });
       });
-    };
-
-    hoverEls.forEach((el) => {
-      el.addEventListener("mouseenter", onHover);
-      el.addEventListener("mouseleave", onLeave);
     });
-
-    return () => {
-      hoverEls.forEach((el) => {
-        el.removeEventListener("mouseenter", onHover);
-        el.removeEventListener("mouseleave", onLeave);
-      });
-    };
   }, []);
 
   return (

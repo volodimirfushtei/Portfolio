@@ -72,7 +72,7 @@
   font-family: "Bebas Neue", sans-serif;
   font-size: 2.5rem;
   line-height: 1;
-  color: rgba(245, 245, 240, 0.06);
+  color: rgba(255, 255, 191, 0.06);
 }
 
 .cornerBadgeLabel {
@@ -119,7 +119,7 @@
   font-size: 0.6rem;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: rgba(245, 245, 240, 0.2);
+  color: var(--color-surface);
 }
 /* ===============================
    Tablet ≤ 1024px

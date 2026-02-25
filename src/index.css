@@ -109,7 +109,7 @@
 
   /* === Backgrounds === */
   --bg-color: #f5f5f0;
-  --color-background: linear-gradient(135deg, #f5f5f0 0%, #e8e8e0 100%);
+  --color-background: linear-gradient(135deg, #f6f6ee 0%, #e8e8e0 100%);
   --color-surface: #efefea;
   --color-surface-hover: #e5e5de;
   --color-background-scrolled: #eeede8;
@@ -129,7 +129,7 @@
   /* === Text === */
   --text-color: #080808; /* loader bg як основний текст */
   --color-text: #1a1a18;
-  --color-secondary: #3a3a38;
+  --color-secondary: #373734;
   --color-title: #080808;
 
   /* === Accent (loader palette) === */
@@ -142,7 +142,7 @@
   --color-button-text: #e8f53c; /* loader accent на кнопці */
 
   /* === Headers / Hero === */
-  --color-header: linear-gradient(145deg, #f5f5f0 0%, #e5e5de 100%);
+  --color-header: linear-gradient(145deg, #f0f0df 0%, #e5e5de 100%);
   --color-hero: var(--color-header);
 
   /* === Loaders === */
@@ -152,7 +152,7 @@
   --color-loader-bar: linear-gradient(90deg, #080808, #3a3a38);
 
   /* === Overlays & Borders === */
-  --color-overlay: rgba(245, 245, 240, 0.75);
+  --color-overlay: rgba(245, 245, 240, 0.6);
   --color-border: rgba(8, 8, 8, 0.15);
 
   /* === Shadow === */
@@ -183,7 +183,7 @@
 ══════════════════════════════════════ */
 .dark-theme {
   /* === Base colors === */
-  --color-primary: blue; /* loader accent як основний */
+  --color-primary: #f0f878; /* loader accent як основний */
   --color-info: #4cc9f0;
   --color-success: #198754;
   --color-warning: #e8f53c;
@@ -213,7 +213,7 @@
   --color-title: #ffffff; /* loader fg */
 
   /* === Accent === */
-  --color-accent: blue; /* loader accent */
+  --color-accent: #eefa45; /* loader accent */
   --color-accent-hover: #d4df28;
 
   /* === Buttons === */
@@ -232,7 +232,7 @@
   --color-loader-bar: linear-gradient(90deg, #e8f53c, #f5ff80);
 
   /* === Overlays & Borders === */
-  --color-overlay: rgba(8, 8, 8, 0.95);
+  --color-overlay: rgba(8, 8, 8, 0.75);
   --color-border: rgba(232, 243, 60, 0.15); /* loader accent з прозорістю */
 
   /* === Shadow === */

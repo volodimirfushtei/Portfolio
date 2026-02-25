@@ -40,59 +40,18 @@ const menuItems = [
 ];
 
 const Layout = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { width } = useWindowSize();
-  const isMobile = width < 768;
-
-  useEffect(() => {
-    if (!isMobile && isMobileMenuOpen) {
-      setIsMobileMenuOpen(false);
-    }
-  }, [isMobile, isMobileMenuOpen]);
-
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-
-  useEffect(() => {
-    document.body.style.overflow = isMobileMenuOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isMobileMenuOpen]);
-
   return (
     <div className={s.layoutContainer}>
-      {isMobile && (
-        <button
-          onClick={toggleMobileMenu}
-          className={s.mobileMenuButton}
-          aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={isMobileMenuOpen}
-          aria-controls="sidebar-menu"
-        >
-          {isMobileMenuOpen ? (
-            <i className="ri-close-line"></i>
-          ) : (
-            <i className="ri-menu-line"></i>
-          )}
-        </button>
-      )}
-
-      <Header isMobile={isMobile} isMobileMenuOpen={isMobileMenuOpen} />
-
-      <AnimatePresence>
-        {isMobile && isMobileMenuOpen && <Overlay onClick={toggleMobileMenu} />}
-      </AnimatePresence>
+      <Header />
 
       <motion.main
-        className={`${s.mainContent} ${isMobileMenuOpen ? s.blurContent : ""}`}
+        className={`${s.mainContent} `}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
       >
         <AnimatePresence mode="wait">
-          <Outlet context={{ isMobile }} />
+          <Outlet key={location.pathname} />
         </AnimatePresence>
       </motion.main>
     </div>

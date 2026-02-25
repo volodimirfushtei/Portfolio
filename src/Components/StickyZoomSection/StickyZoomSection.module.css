@@ -29,7 +29,7 @@
   font-family: "Bebas Neue", sans-serif;
   font-size: clamp(2.5rem, 7vw, 4.8rem);
   letter-spacing: 0.08em;
-  color: rgba(245, 245, 240, 0.7);
+  color: var(--color-secondary);
   white-space: nowrap;
 }
 
@@ -39,12 +39,13 @@
   height: 240px;
 
   overflow: hidden;
+  box-shadow: 0 20px 40px rgba(8, 8, 8, 0.3);
 }
 .imageWrap::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: #080808;
+  background: var(--color-background);
   mix-blend-mode: multiply;
   pointer-events: none;
 
@@ -97,7 +98,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: #080808;
+  background: var(--color-background);
 
   transform: translateX(-101%);
   transition: transform 0.45s cubic-bezier(0.76, 0, 0.24, 1);

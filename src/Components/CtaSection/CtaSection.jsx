@@ -24,36 +24,40 @@ const images = [
   "images/my_photo.jpg",
 ];
 
-/* Дублюємо зображення для безкінечного marquee */
+// duplicated for seamless marquee
 const marqueeImages = [...images, ...images];
 
 const CtaSection = () => {
   const sectionRef = useRef(null);
+
   const headingRef = useRef(null);
   const subRef = useRef(null);
   const btnRef = useRef(null);
   const listRef = useRef(null);
+
   const row1Ref = useRef(null);
   const row2Ref = useRef(null);
 
+  const hoverTargetsRef = useRef([]);
+
   useEffect(() => {
     const ctx = gsap.context(() => {
-      /* ── Content reveal ── */
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 75%",
-          once: true,
-        },
-        defaults: { ease: "power3.out" },
-      });
-
-      tl.from(headingRef.current.children, {
-        opacity: 0,
-        y: 50,
-        duration: 0.9,
-        stagger: 0.08,
-      })
+      /* ───────────────── Reveal content ───────────────── */
+      gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 75%",
+            once: true,
+          },
+          defaults: { ease: "power3.out" },
+        })
+        .from(headingRef.current.children, {
+          opacity: 0,
+          y: 48,
+          duration: 0.9,
+          stagger: 0.08,
+        })
         .from(subRef.current, { opacity: 0, y: 20, duration: 0.6 }, "-=0.4")
         .from(btnRef.current, { opacity: 0, y: 16, duration: 0.5 }, "-=0.3")
         .from(
@@ -64,10 +68,10 @@ const CtaSection = () => {
             duration: 0.45,
             stagger: 0.08,
           },
-          "-=0.2",
+          "-=0.25",
         );
 
-      /* ── Marquee row 1 — left → ── */
+      /* ───────────────── Marquee ───────────────── */
       gsap.to(row1Ref.current, {
         x: "-50%",
         duration: 28,
@@ -75,12 +79,41 @@ const CtaSection = () => {
         repeat: -1,
       });
 
-      /* ── Marquee row 2 — ← right (reverse) ── */
       gsap.fromTo(
         row2Ref.current,
         { x: "-50%" },
-        { x: "0%", duration: 32, ease: "none", repeat: -1 },
+        {
+          x: "0%",
+          duration: 32,
+          ease: "none",
+          repeat: -1,
+        },
       );
+
+      /* ───────────────── Hover interactions (GSAP) ───────────────── */
+      hoverTargetsRef.current.forEach((el) => {
+        if (!el) return;
+
+        const hoverTl = gsap.timeline({ paused: true });
+
+        hoverTl.to(el, {
+          scale: 1.06,
+          y: -4,
+          duration: 0.35,
+          ease: "power3.out",
+        });
+
+        const onEnter = () => hoverTl.play();
+        const onLeave = () => hoverTl.reverse();
+
+        el.addEventListener("mouseenter", onEnter);
+        el.addEventListener("mouseleave", onLeave);
+
+        ScrollTrigger.addEventListener("refreshInit", () => {
+          el.removeEventListener("mouseenter", onEnter);
+          el.removeEventListener("mouseleave", onLeave);
+        });
+      });
     }, sectionRef);
 
     return () => ctx.revert();
@@ -88,12 +121,12 @@ const CtaSection = () => {
 
   return (
     <section ref={sectionRef} className={styles.section}>
-      {/* Marquee background */}
+      {/* ───────── Marquee background ───────── */}
       <div className={styles.marqueeWrap} aria-hidden="true">
         <div ref={row1Ref} className={styles.row}>
           {marqueeImages.map((src, i) => (
             <img
-              key={`r1-${i}`}
+              key={`row1-${i}`}
               src={src}
               alt=""
               loading="lazy"
@@ -101,10 +134,11 @@ const CtaSection = () => {
             />
           ))}
         </div>
+
         <div ref={row2Ref} className={styles.row}>
           {marqueeImages.map((src, i) => (
             <img
-              key={`r2-${i}`}
+              key={`row2-${i}`}
               src={src}
               alt=""
               loading="lazy"
@@ -112,10 +146,11 @@ const CtaSection = () => {
             />
           ))}
         </div>
+
         <div className={styles.marqueeOverlay} />
       </div>
 
-      {/* Content */}
+      {/* ───────── Content ───────── */}
       <div className={styles.container}>
         <div className={styles.content}>
           {/* Eyebrow */}
@@ -124,7 +159,7 @@ const CtaSection = () => {
             <span className={styles.eyebrowText}>Ready to start?</span>
           </div>
 
-          {/* Heading — кожне слово окремий span для stagger */}
+          {/* Heading */}
           <h2 ref={headingRef} className={styles.heading}>
             <span>Take Your Website</span>
             <span className={styles.headingAccent}> to the Next Level</span>
@@ -135,8 +170,12 @@ const CtaSection = () => {
             <span className={styles.highlight}>modern businesses</span>
           </p>
 
+          {/* CTA Button */}
           <a
-            ref={btnRef}
+            ref={(el) => {
+              btnRef.current = el;
+              hoverTargetsRef.current[0] = el;
+            }}
             href="https://webflow.com/templates/designers/brandbes"
             target="_blank"
             rel="noopener noreferrer"
@@ -146,9 +185,14 @@ const CtaSection = () => {
             <span className={styles.buttonArrow}>→</span>
           </a>
 
+          {/* List */}
           <ul ref={listRef} className={styles.list}>
-            {listItems.map((text) => (
-              <li key={text} className={styles.listItem}>
+            {listItems.map((text, i) => (
+              <li
+                key={text}
+                ref={(el) => (hoverTargetsRef.current[i + 1] = el)}
+                className={styles.listItem}
+              >
                 <i className="ri-checkbox-circle-line" aria-hidden="true" />
                 <span>{text}</span>
               </li>

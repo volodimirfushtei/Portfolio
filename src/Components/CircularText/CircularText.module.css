@@ -23,7 +23,7 @@
   font-family: "DM Mono", monospace;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  fill: rgba(245, 245, 240, 0.45);
+  fill: var(--color-secondary);
 }
 
 /* Center dot */
@@ -32,9 +32,10 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #e8f53c 0%, rgba(232, 243, 60, 0.4) 100%);
+  background: linear-gradient(135deg, #e7f70b 0%, rgba(232, 243, 60, 0.4) 100%);
   box-shadow: 0 0 20px rgba(232, 243, 60, 0.25);
   pointer-events: none;
+  will-change: transform;
 }
 
 /* ── Mobile ── */

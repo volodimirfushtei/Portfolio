@@ -10,6 +10,7 @@ gsap.registerPlugin(ScrollTrigger);
 const HeroSection = () => {
   const sectionRef = useRef(null);
   const bgRef = useRef(null);
+  const gridRef = useRef(null);
   const textRef = useRef(null);
   const eyebrowRef = useRef(null);
   const titleRef = useRef(null);
@@ -90,20 +91,27 @@ const HeroSection = () => {
 
   return (
     <section ref={sectionRef} className={styles.hero}>
-      {/* Corner badge */}
-      <div ref={cornerRef} className={styles.cornerBadge} aria-hidden>
+      {/* Background layer (z-index: 1) */}
+      <div
+        ref={bgRef}
+        className={styles.gradientBackground}
+        aria-hidden="true"
+      />
+
+      {/* Grid overlay (z-index: 2) */}
+      <div ref={gridRef} className={styles.gridOverlay} aria-hidden="true" />
+
+      {/* Corner badge (z-index: 100) */}
+      <div ref={cornerRef} className={styles.cornerBadge} aria-hidden="true">
         <span className={styles.cornerBadgeNum}>01</span>
         <span className={styles.cornerBadgeLabel}>Hero</span>
       </div>
-      {/* Background */}
-      <div ref={bgRef} className={styles.gradientBackground} aria-hidden />
 
-      <div className={styles.gridOverlay} aria-hidden />
-
+      {/* Hero inner wrapper (z-index: 10) */}
       <div className={styles.heroInner}>
-        {/* Main content */}
+        {/* Main content container (z-index: 10) */}
         <div className={styles.content}>
-          {/* Text */}
+          {/* Text content (z-index: 10) */}
           <div ref={textRef} className={styles.textContent}>
             <div ref={eyebrowRef} className={styles.eyebrow}>
               <span className={styles.eyebrowLine} />
@@ -138,12 +146,17 @@ const HeroSection = () => {
             </p>
 
             <div ref={buttonsRef} className={styles.buttons}>
-              <button className={styles.primaryButton}>
+              <button
+                data-cursor="hover"
+                className={styles.primaryButton}
+                aria-label="Start a project"
+              >
                 <span>Start a project</span>
                 <span className={styles.buttonArrow}>→</span>
               </button>
 
               <button
+                data-cursor="hover"
                 className={styles.secondaryButton}
                 onClick={() =>
                   window.open(
@@ -152,6 +165,7 @@ const HeroSection = () => {
                     "noopener",
                   )
                 }
+                aria-label="View my work on GitHub"
               >
                 <span>View my work</span>
                 <span className={styles.buttonArrow}>→</span>
@@ -159,15 +173,19 @@ const HeroSection = () => {
             </div>
           </div>
 
-          {/* Media */}
+          {/* Media container (z-index: 8) */}
           <div ref={mediaRef} className={styles.mediaContainer}>
             <HeroMedia />
           </div>
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div ref={indicatorRef} className={styles.scrollIndicator} aria-hidden>
+      {/* Scroll indicator (z-index: 50) */}
+      <div
+        ref={indicatorRef}
+        className={styles.scrollIndicator}
+        aria-hidden="true"
+      >
         <span>Scroll to explore</span>
       </div>
     </section>

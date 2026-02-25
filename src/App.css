@@ -1,10 +1,10 @@
-#root {
-  width: 100%;
-  margin: 0 auto;
-  padding: 0;
-  text-align: center;
-  overflow: hidden;
-  font-family: "Bebas Neue", sans-serif;
-  min-height: 100vh;
-  background: var(--color-background);
+:root {
+  --badge-bg: transparent;
+  --badge-border: transparent;
+  --badge-text: inherit;
+
+  --corner-accent: transparent;
+  --overlay-strength: 0.6;
+
+  --image-hover-scale: 1.03;
 }
