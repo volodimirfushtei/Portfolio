@@ -2,7 +2,7 @@
 
 .section {
   background: var(--color-background);
-  padding: 3rem 0;
+  padding: 2rem 0;
 }
 
 /* ── Header ── */
@@ -48,7 +48,7 @@
 
 /* ── Card ── */
 .card {
-  width: 140px;
+  width: 88px;
   height: 88px;
   perspective: 800px;
   flex-shrink: 0;
@@ -86,7 +86,7 @@
 /* Front */
 .front i {
   line-height: 1;
-  font-size: 1.5rem;
+  font-size: 1.1rem;
 }
 
 .name {
@@ -102,11 +102,13 @@
 .back {
   transform: rotateY(180deg);
   background: #0d0d0d;
+  border: 1px solid rgba(245, 245, 240, 0.05);
+  font-size: 1rem;
 }
 
 .back p {
   font-family: "Bebas Neue", sans-serif;
-  font-size: 1rem;
+  font-size: 0.6rem;
   letter-spacing: 0.05em;
   line-height: 1;
   margin: 0;

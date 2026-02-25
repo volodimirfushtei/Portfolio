@@ -1,153 +1,69 @@
-import { motion, transform, useScroll, useTransform } from "framer-motion";
-import React, { useRef } from "react";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { useRef } from "react";
 import styles from "./Expertise.module.css";
+
 import CardTech from "../CardTech/CardTech";
 import ExperienceTable from "../ExperienceTable/ExperienceTable";
 import LocationBadge from "../Location/Location";
-import { useSpring } from "framer-motion";
+
 const Expertise = () => {
-  const sectionVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut",
-        staggerChildren: 0.3,
-        when: "beforeChildren",
-      },
-    },
-  };
+  const sectionRef = useRef(null);
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.16, 0.77, 0.47, 0.97],
-      },
-    },
-  };
-
-  const ref = useRef(null);
   const { scrollYProgress } = useScroll({
-    target: ref,
+    target: sectionRef,
     offset: ["start start", "end start"],
   });
 
-  // Enhanced scroll-based animations
-  const yBg = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const rawScale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
-  const scale = useSpring(rawScale, { stiffness: 100, damping: 30, mass: 0.5 });
+  /* ── Scroll motion ── */
+  const bgY = useSpring(useTransform(scrollYProgress, [0, 1], ["0%", "18%"]), {
+    stiffness: 80,
+    damping: 30,
+  });
 
-  const scrollY = useSpring(
-    useTransform(scrollYProgress, [0, 1], ["0%", "15%"]),
-    { stiffness: 100, damping: 30 },
+  const contentY = useSpring(
+    useTransform(scrollYProgress, [0, 1], ["0%", "10%"]),
+    { stiffness: 120, damping: 26 },
   );
 
-  const scaleBox = useSpring(useTransform(scrollYProgress, [0, 1], [1, 1.05]), {
-    stiffness: 150,
-    damping: 20,
-  });
-
-  const rotateX = useSpring(useTransform(scrollYProgress, [0, 1], [0, 3]), {
-    stiffness: 100,
-    damping: 20,
-  });
-
-  const rotateY = useSpring(useTransform(scrollYProgress, [0, 1], [0, 2]), {
-    stiffness: 100,
-    damping: 20,
-  });
-
-  const opacity = useTransform(scrollYProgress, [0.6, 0.9], [1, 0.7]);
-  const blur = useTransform(scrollYProgress, [0.7, 1], ["0px", "2px"]);
-  const hueRotate = useTransform(scrollYProgress, [0, 1], ["0deg", "5deg"]);
-
-  // Glow effect for cards
-  const glowOpacity = useTransform(scrollYProgress, [0, 0.5], [0.3, 0.1]);
-  const glowScale = useTransform(scrollYProgress, [0, 1], [1, 1.2]);
+  const opacity = useTransform(scrollYProgress, [0.7, 1], [1, 0.85]);
 
   return (
-    <section id="expertise" className={`${styles.expertise} `} ref={ref}>
-      {/* Background with enhanced effects */}
+    <section ref={sectionRef} id="expertise" className={styles.expertise}>
+      {/* Corner badge */}
+      <div className={styles.cornerBadge} aria-hidden>
+        <span className={styles.cornerBadgeNum}>02</span>
+        <span className={styles.cornerBadgeLabel}>Expertise</span>
+      </div>
+
+      {/* Background */}
+      <motion.div className={styles.background} style={{ y: bgY, opacity }} />
+
       <motion.div
-        className={`${styles.background} `}
-        style={{
-          scale,
-          y: yBg,
-          opacity,
-          filter: blur,
-          rotate: hueRotate,
-        }}
-      />
-      {/* Glow effect */}
-      <motion.div
-        className={styles.glow}
-        style={{
-          opacity: glowOpacity,
-          scale: glowScale,
-        }}
-      />
-      <motion.div
-        className={`${styles.container} `}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={sectionVariants}
+        className={styles.container}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true, margin: "-120px" }}
       >
+        {/* Location */}
         <motion.div
-          variants={itemVariants}
-          className={`${styles.locationBadge} absolute top-2 left-2 sm:top-6 sm:left-6 text-sm text-gray-500`}
-          style={{
-            y: scrollY,
-            opacity,
-            scale: scaleBox,
-            rotateX,
-          }}
-          whileHover={{
-            y: -10,
-            transition: { duration: 0.3, ease: "easeOut" },
-          }}
+          className={styles.locationBadge}
+          style={{ y: contentY }}
+          whileHover={{ scale: 1.04 }}
         >
           <LocationBadge location="Located in Ivano-Frankivsk" />
         </motion.div>
-        {/* Tech Card with enhanced effects */}
+
+        {/* Tech card */}
         <motion.div
           className={styles.section}
-          variants={itemVariants}
-          style={{
-            y: scrollY,
-            opacity,
-            scale: scaleBox,
-            rotateX,
-            rotateY,
-          }}
-          whileHover={{
-            y: -10,
-            transition: { duration: 0.3, ease: "easeOut" },
-          }}
+          style={{ y: contentY }}
+          whileHover={{ scale: 1.03 }}
         >
           <CardTech />
         </motion.div>
 
-        {/* Experience Table with enhanced effects */}
-        <motion.div
-          variants={itemVariants}
-          style={{
-            y: scrollY,
-            opacity,
-            scale: scaleBox,
-            rotateX,
-            rotateY,
-          }}
-          whileHover={{
-            y: -10,
-            transition: { duration: 0.3, ease: "easeOut" },
-          }}
-        >
+        {/* Experience */}
+        <motion.div style={{ y: contentY }} whileHover={{ scale: 1.03 }}>
           <ExperienceTable />
         </motion.div>
       </motion.div>

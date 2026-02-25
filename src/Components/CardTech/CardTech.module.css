@@ -1,21 +1,22 @@
-/* CardTech.module.css — Awwwards editorial dark */
+/* ===============================
+   CardTech — Editorial Dark UI
+   =============================== */
 
 .wrapper {
-  perspective: 1200px;
   display: flex;
   justify-content: center;
   align-items: center;
+  perspective: 1200px;
 }
 
-/* ── Card — CSS 3D flip ── */
+/* ───────────────── Card ───────────────── */
 .card {
+  position: relative;
   width: 400px;
   height: 400px;
-  position: relative;
-  cursor: pointer;
   transform-style: preserve-3d;
-  /* виправлено: .flipped клас був у JSX але відсутній у CSS */
   transition: transform 0.75s cubic-bezier(0.76, 0, 0.24, 1);
+  cursor: pointer;
   outline: none;
 }
 
@@ -23,13 +24,10 @@
   transform: rotateY(180deg);
 }
 
-/* ── Sides ── */
+/* ───────────────── Sides ───────────────── */
 .side {
   position: absolute;
   inset: 0;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -37,43 +35,40 @@
   padding: 2rem;
   background: #0d0d0d;
   border: 1px solid rgba(232, 243, 60, 0.1);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
 }
 
-/* Accent corner TL */
-.side::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 24px;
-  height: 24px;
-  border-top: 2px solid #e8f53c;
-  border-left: 2px solid #e8f53c;
-  pointer-events: none;
-}
-
-/* Accent corner BR */
+/* Accent corners */
+.side::before,
 .side::after {
   content: "";
   position: absolute;
-  bottom: 0;
-  right: 0;
   width: 24px;
   height: 24px;
-  border-bottom: 2px solid rgba(232, 243, 60, 0.35);
-  border-right: 2px solid rgba(232, 243, 60, 0.35);
   pointer-events: none;
 }
 
-.front {
-  /* front — default */
+.side::before {
+  top: 0;
+  left: 0;
+  border-top: 2px solid #e8f53c;
+  border-left: 2px solid #e8f53c;
+}
+
+.side::after {
+  right: 0;
+  bottom: 0;
+  border-bottom: 2px solid rgba(232, 243, 60, 0.35);
+  border-right: 2px solid rgba(232, 243, 60, 0.35);
 }
 
 .back {
   transform: rotateY(180deg);
 }
 
-/* ── Front ── */
+/* ───────────────── Front ───────────────── */
 .avatarWrap {
   position: relative;
   margin-bottom: 1.5rem;
@@ -85,10 +80,9 @@
   border-radius: 50%;
   object-fit: cover;
   object-position: top;
-  display: block;
   border: 1px solid rgba(232, 243, 60, 0.25);
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 /* Pulsing ring */
@@ -98,6 +92,7 @@
   border-radius: 50%;
   border: 1px solid rgba(232, 243, 60, 0.2);
   animation: ringPulse 3s ease-in-out infinite;
+  z-index: 1;
 }
 
 @keyframes ringPulse {
@@ -116,7 +111,6 @@
   text-align: center;
 }
 
-/* виправлено: було .title і .subtitle — потенційно глобальний конфлікт якщо імпортувати без styles. */
 .subtitle {
   font-family: "DM Mono", monospace;
   font-size: 0.65rem;
@@ -133,7 +127,6 @@
   letter-spacing: 0.04em;
   color: #f5f5f0;
   line-height: 1;
-  margin: 0;
 }
 
 .highlight {
@@ -143,23 +136,22 @@
 .flipHint {
   position: absolute;
   bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
   font-family: "DM Mono", monospace;
   font-size: 0.58rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: rgba(245, 245, 240, 0.2);
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
 }
 
-/* ── Back ── */
+/* ───────────────── Back ───────────────── */
 .backContent {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
-  gap: 0;
 }
 
 .badge {
@@ -171,15 +163,13 @@
   letter-spacing: 0.3em;
   text-transform: uppercase;
   color: #e8f53c;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.6rem;
 }
 
 .badgeLine {
-  display: block;
   width: 24px;
   height: 1px;
   background: #e8f53c;
-  flex-shrink: 0;
 }
 
 .flipMessage {
@@ -191,12 +181,12 @@
   margin-bottom: 1.25rem;
 }
 
-/* ── Tech grid ── */
+/* ───────────────── Tech Grid ───────────────── */
 .techGrid {
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.6rem;
-  width: 100%;
 }
 
 .techItem {
@@ -210,7 +200,6 @@
   transition:
     border-color 0.25s ease,
     background 0.25s ease;
-  cursor: default;
 }
 
 .techItem:hover {
@@ -236,7 +225,7 @@
   text-align: center;
 }
 
-/* ── Mobile: ≤ 640px ── */
+/* ───────────────── Responsive ───────────────── */
 @media (max-width: 640px) {
   .card {
     width: 320px;
@@ -251,21 +240,8 @@
   .title {
     font-size: 1.9rem;
   }
-
-  .techGrid {
-    gap: 0.5rem;
-  }
-
-  .techItem {
-    padding: 0.6rem 0.4rem;
-  }
-
-  .techIcon {
-    font-size: 1.2rem;
-  }
 }
 
-/* ── Small mobile: ≤ 360px ── */
 @media (max-width: 360px) {
   .card {
     width: 280px;
@@ -278,7 +254,7 @@
   }
 }
 
-/* ── Reduced motion — вимикаємо 3D flip ── */
+/* ───────────────── Reduced Motion ───────────────── */
 @media (prefers-reduced-motion: reduce) {
   .card {
     transition: none;

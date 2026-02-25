@@ -20,8 +20,10 @@ const ExperienceTable = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      /* ── Staggered card reveal ── */
-      gsap.from(itemsRef.current, {
+      const items = itemsRef.current;
+
+      /* ── Reveal animation ── */
+      gsap.from(items, {
         opacity: 0,
         y: 24,
         duration: 0.6,
@@ -34,25 +36,26 @@ const ExperienceTable = () => {
         },
       });
 
-      /* ── Counter animation per stat ── */
-      itemsRef.current.forEach((el, i) => {
-        if (!el) return;
-        const numEl = el.querySelector("[data-num]");
-        if (!numEl) return;
+      /* ── Counters ── */
+      items.forEach((item) => {
+        const numEl = item.querySelector("[data-num]");
+        const target = Number(item.dataset.value);
 
-        const obj = { val: 0 };
-        gsap.to(obj, {
-          val: stats[i].value,
+        if (!numEl || isNaN(target)) return;
+
+        const counter = { value: 0 };
+
+        gsap.to(counter, {
+          value: target,
           duration: 1.6,
           ease: "power2.out",
-          delay: i * 0.08,
           scrollTrigger: {
             trigger: cardRef.current,
             start: "top 80%",
             once: true,
           },
-          onUpdate() {
-            numEl.textContent = Math.round(obj.val);
+          onUpdate: () => {
+            numEl.textContent = Math.round(counter.value);
           },
         });
       });
@@ -70,6 +73,7 @@ const ExperienceTable = () => {
               key={stat.label}
               ref={(el) => (itemsRef.current[i] = el)}
               className={styles.statItem}
+              data-value={stat.value}
             >
               <div className={styles.value}>
                 <span className={styles.counter}>

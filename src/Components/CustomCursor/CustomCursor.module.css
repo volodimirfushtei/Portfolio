@@ -2,8 +2,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
@@ -12,9 +12,14 @@
   mix-blend-mode: difference;
   backdrop-filter: blur(2px);
   transform-origin: center;
+  transition:
+    background-color 0.3s,
+    border-color 0.3s,
+    box-shadow 0.3s,
+    transform 0.3s;
 }
 
-/* Ripple ефект: кольорова хвиля + розмиття */
+/* Ripple ефект */
 .ripple {
   position: fixed;
   width: 80px;
@@ -23,9 +28,8 @@
   pointer-events: none;
   z-index: 9998;
   transform: translate(-50%, -50%);
-  background: radial-gradient(circle, #00ffff44, #ff00ff33, transparent);
+  background: radial-gradient(circle, #00ffff44, #f3ef0733, transparent);
   filter: blur(10px);
-  animation: rippleGlow 1s ease-out;
 }
 
 /* Додаткове світіння (опціонально) */

@@ -54,7 +54,7 @@
 }
 
 .headingAccent {
-  background: linear-gradient(90deg, #f8a12f 0%, #f53c03 50%, #f8ab04 100%);
+  background: linear-gradient(90deg, #f8a12f 0%, #f6fa0d 50%, #f8ab04 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;

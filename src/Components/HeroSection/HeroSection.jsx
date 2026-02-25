@@ -90,18 +90,17 @@ const HeroSection = () => {
 
   return (
     <section ref={sectionRef} className={styles.hero}>
+      {/* Corner badge */}
+      <div ref={cornerRef} className={styles.cornerBadge} aria-hidden>
+        <span className={styles.cornerBadgeNum}>01</span>
+        <span className={styles.cornerBadgeLabel}>Hero</span>
+      </div>
       {/* Background */}
       <div ref={bgRef} className={styles.gradientBackground} aria-hidden />
 
       <div className={styles.gridOverlay} aria-hidden />
 
       <div className={styles.heroInner}>
-        {/* Corner badge */}
-        <div ref={cornerRef} className={styles.cornerBadge} aria-hidden>
-          <span className={styles.cornerBadgeNum}>01</span>
-          <span className={styles.cornerBadgeLabel}>Hero</span>
-        </div>
-
         {/* Main content */}
         <div className={styles.content}>
           {/* Text */}

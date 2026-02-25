@@ -1,26 +1,29 @@
-/* Expertise.module.css */
+/* ===============================
+   Expertise section
+================================ */
 
 .expertise {
   position: relative;
   width: 100%;
   min-height: 100vh;
+  padding: clamp(3rem, 6vw, 5rem) 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4rem 0;
   overflow: hidden;
   isolation: isolate;
 }
 
-/* ── Background ── */
+/* ===============================
+   Background
+================================ */
+
 .background {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
+  inset: 0;
   height: 120%;
-  background: url("/images/scott_webb.jpg") center/cover no-repeat;
-  z-index: -1;
+  background: url("/images/scott_webb.jpg") center / cover no-repeat;
+  z-index: -2;
   will-change: transform;
   transform-origin: center;
 }
@@ -28,24 +31,18 @@
 .background::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background: var(--color-overlay);
-  backdrop-filter: blur(0px);
-
   z-index: 1;
 }
 
-/* ── Glow ── */
+/* ===============================
+   Glow
+================================ */
+
 .glow {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 120%;
-  height: 120%;
+  inset: -10%;
   background: radial-gradient(
     circle at center,
     rgba(var(--color-primary-rgb), 0.15) 0%,
@@ -55,51 +52,111 @@
   pointer-events: none;
 }
 
-/* ── Container ── */
+/* ===============================
+   Corner badge
+================================ */
+
+.cornerBadge {
+  position: absolute;
+  top: 3rem;
+  right: 2rem;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  pointer-events: none;
+}
+
+.cornerBadgeNum {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 2.5rem;
+  line-height: 1;
+  color: rgba(245, 245, 240, 0.06);
+}
+
+.cornerBadgeLabel {
+  font-family: "DM Mono", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(245, 245, 240, 0.2);
+}
+
+/* ===============================
+   Container
+================================ */
+
 .container {
+  z-index: 1;
   width: 100%;
   max-width: 1400px;
+  padding: 0 clamp(1rem, 4vw, 2rem);
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 2rem;
-  z-index: 1;
-  padding: 0 2rem;
+  justify-content: space-between;
+  gap: clamp(1.5rem, 4vw, 3rem);
 }
 
-/* ── Section ── */
+/* ===============================
+   Content blocks
+================================ */
+
 .section {
   flex: 1;
-  min-width: 400px;
+  min-width: 0; /* 🔑 важливо — прибирає overflow */
   display: flex;
   justify-content: center;
-  transform-origin: center;
+  align-items: center;
   will-change: transform;
-  transition: transform 0.3s ease-out;
-  perspective: 1000px;
+  transform-origin: center;
 }
+.locationBadge {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-family: "DM Mono", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(245, 245, 240, 0.2);
+}
+/* ===============================
+   Tablet ≤ 1024px
+================================ */
 
-/* ── Tablet: 769px – 1024px ── */
 @media (max-width: 1024px) {
   .container {
     flex-direction: column;
-    gap: 3rem;
-    padding: 2rem;
+    align-items: center;
+  }
+
+  .cornerBadge {
+    top: 2rem;
+    right: 1.5rem;
   }
 
   .section {
     width: 100%;
-    max-width: 700px;
-    /* виправлено: min-width: 400px тут не скидався — дві секції по 400px
-       = 800px на екрані 768px, що спричиняло горизонтальний скрол */
-    min-width: unset;
+    max-width: 720px;
+  }
+
+  .background {
+    height: 110%;
+  }
+  locationBadge {
+    top: 15px;
+    left: 15px;
   }
 }
 
-/* ── Mobile: ≤ 768px ── */
+/* ===============================
+   Mobile ≤ 768px
+================================ */
+
 @media (max-width: 768px) {
   .expertise {
-    padding: 4rem 1rem;
+    padding: 3rem 0;
   }
 
   .container {
@@ -107,35 +164,43 @@
     padding: 0 1rem;
   }
 
+  .cornerBadge {
+    top: 1.5rem;
+    right: 1rem;
+  }
+
   .background {
     height: 100%;
   }
-
-  .section {
-    max-width: 100%;
-  }
 }
 
-/* ── Small mobile: ≤ 480px ── */
-@media (max-width: 480px) {
+/* ===============================
+   Small mobile ≤ 480px
+================================ */
+
+@media (max-width: 375px) {
   .expertise {
-    padding: 3rem 0.75rem;
+    padding: 2.5rem 0;
   }
 
   .container {
     gap: 1.5rem;
     padding: 0 0.75rem;
   }
-}
 
-/* ── Very small: ≤ 360px ── */
-@media (max-width: 360px) {
-  .expertise {
-    padding: 2.5rem 0.5rem;
+  .cornerBadgeNum {
+    font-size: 2.2rem;
+  }
+  .cornerBadgeLabel {
+    font-size: 0.5rem;
+  }
+  .background {
+    display: none;
   }
 
-  .container {
-    gap: 1.25rem;
-    padding: 0 0.5rem;
+  .locationBadge {
+    font-size: 0.25rem;
+    top: 10px;
+    left: 10px;
   }
 }

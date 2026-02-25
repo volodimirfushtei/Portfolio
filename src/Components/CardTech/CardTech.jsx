@@ -22,7 +22,6 @@ const CardTech = () => {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  /* Auto-flip кожні 6s якщо не мобільний і не було ручного flip */
   useEffect(() => {
     if (manualFlip || isMobile) return;
     const id = setInterval(() => setIsFlipped((p) => !p), 6000);
@@ -35,7 +34,7 @@ const CardTech = () => {
   };
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.cardTech}>
       <div
         className={`${styles.card} ${isFlipped ? styles.flipped : ""}`}
         onClick={handleFlip}
@@ -53,7 +52,7 @@ const CardTech = () => {
               className={styles.avatar}
               loading="eager"
             />
-            <div className={styles.avatarRing} aria-hidden="true" />
+            <div className={styles.avatarRing} aria-hidden />
           </div>
 
           <div className={styles.textBlock}>
@@ -63,7 +62,7 @@ const CardTech = () => {
             </h2>
           </div>
 
-          <div className={styles.flipHint} aria-hidden="true">
+          <div className={styles.flipHint} aria-hidden>
             <i className="ri-arrow-left-right-line" />
             {isMobile ? " Tap to view skills" : " Click to flip"}
           </div>
@@ -90,7 +89,7 @@ const CardTech = () => {
                 <div key={tech.name} className={styles.techItem}>
                   <i
                     className={`${tech.icon} ${styles.techIcon}`}
-                    aria-hidden="true"
+                    aria-hidden
                   />
                   <span>{tech.name}</span>
                 </div>
