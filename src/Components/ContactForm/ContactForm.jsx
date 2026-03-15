@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import s from "./ContactForm.module.css";
+import styles from "./ContactForm.module.css";
 
 const ContactForm = () => {
   const formRef = useRef(null);
@@ -14,16 +14,15 @@ const ContactForm = () => {
     reset,
   } = useForm({ mode: "onBlur" });
 
-  /* ── Reveal animation ── */
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from(formRef.current.children, {
         opacity: 0,
-        y: 24,
-        duration: 0.6,
+        y: 20,
+        duration: 0.8,
         stagger: 0.1,
         ease: "power3.out",
-        delay: 0.1,
+        delay: 0.2,
       });
     }, formRef);
     return () => ctx.revert();
@@ -31,21 +30,10 @@ const ContactForm = () => {
 
   const onSubmit = async (data) => {
     try {
+      // Logic for subscription if needed
       if (data.subscribe) {
-        const res = await fetch("/api/subscribe", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: data.email,
-            firstName: data.firstName,
-            lastName: data.lastName,
-          }),
-        });
-        if (!res.ok) {
-          toast.error("Subscription failed");
-          throw new Error("Subscription failed");
-        }
-        toast.success("Subscribed successfully!");
+        // Mocking subscription call
+        console.log("Subscribing:", data.email);
       }
 
       const tgRes = await fetch("/api/telegram", {
@@ -53,154 +41,129 @@ const ContactForm = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
+
       if (!tgRes.ok) {
-        toast.error("Message sending failed");
         throw new Error("Message sending failed");
       }
 
-      toast.success("Message sent successfully!");
+      toast.success("Message transmitted successfully", {
+        style: {
+          background: "var(--color-surface)",
+          color: "var(--color-text)",
+          border: "1px solid var(--color-border)",
+          fontFamily: "var(--font-mono)",
+          fontSize: "0.8rem",
+          textTransform: "uppercase"
+        }
+      });
       reset();
     } catch (err) {
       console.error("Form error:", err);
+      toast.error("Transmission failed. Please retry.");
     }
   };
 
   return (
-    <div className={s.wrap}>
+    <div className={styles.wrap}>
       <form
         ref={formRef}
         onSubmit={handleSubmit(onSubmit)}
-        className={s.form}
-        style={{
-          pointerEvents: isSubmitting ? "none" : "auto",
-          opacity: isSubmitting ? 0.6 : 1,
-        }}
+        className={styles.form}
         noValidate
       >
-        {/* Header */}
-        <div className={s.header}>
-          <div className={s.eyebrow}>
-            <span className={s.eyebrowLine} />
-            <span className={s.eyebrowText}>Let's talk</span>
+        <div className={styles.header}>
+          <div className={styles.eyebrow}>
+            <span className={styles.eyebrowLine} />
+            <span className={styles.eyebrowText}>Direct Communication</span>
           </div>
-          <h2 className={s.title}>Get in Touch</h2>
-          <p className={s.subtitle}>I'll respond within 24 hours</p>
+          <h2 className={styles.title}>Send a Message</h2>
+          <p className={styles.subtitle}>Response time typically within 24h</p>
         </div>
 
-        {/* Name row */}
-        <div className={s.row}>
-          <div className={s.group}>
+        <div className={styles.row}>
+          <div className={styles.group}>
             <input
               id="firstName"
               type="text"
               placeholder=" "
-              className={`${s.input} ${errors.firstName ? s.inputError : ""}`}
+              className={`${styles.input} ${errors.firstName ? styles.inputError : ""}`}
               {...register("firstName", {
-                required: "First name is required",
-                minLength: { value: 2, message: "Minimum 2 characters" },
+                required: "Required",
+                minLength: { value: 2, message: "Too short" },
               })}
             />
-            <label htmlFor="firstName" className={s.label}>
-              First name
-            </label>
-            {errors.firstName && (
-              <span className={s.error} role="alert" aria-live="polite">
-                {errors.firstName.message}
-              </span>
-            )}
+            <label htmlFor="firstName" className={styles.label}>First name</label>
+            {errors.firstName && <span className={styles.error}>{errors.firstName.message}</span>}
           </div>
 
-          <div className={s.group}>
+          <div className={styles.group}>
             <input
               id="lastName"
               type="text"
               placeholder=" "
-              className={`${s.input} ${errors.lastName ? s.inputError : ""}`}
-              {...register("lastName", { required: "Last name is required" })}
+              className={`${styles.input} ${errors.lastName ? styles.inputError : ""}`}
+              {...register("lastName", { required: "Required" })}
             />
-            <label htmlFor="lastName" className={s.label}>
-              Last name
-            </label>
-            {errors.lastName && (
-              <span className={s.error} role="alert" aria-live="polite">
-                {errors.lastName.message}
-              </span>
-            )}
+            <label htmlFor="lastName" className={styles.label}>Last name</label>
+            {errors.lastName && <span className={styles.error}>{errors.lastName.message}</span>}
           </div>
         </div>
 
-        {/* Email */}
-        <div className={s.group}>
+        <div className={styles.group}>
           <input
             id="email"
             type="email"
             placeholder=" "
-            className={`${s.input} ${errors.email ? s.inputError : ""}`}
+            className={`${styles.input} ${errors.email ? styles.inputError : ""}`}
             {...register("email", {
-              required: "Email is required",
+              required: "Required",
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: "Invalid email address",
+                message: "Invalid address",
               },
             })}
           />
-          <label htmlFor="email" className={s.label}>
-            Email address
-          </label>
-          {errors.email && (
-            <span className={s.error} role="alert" aria-live="polite">
-              {errors.email.message}
-            </span>
-          )}
+          <label htmlFor="email" className={styles.label}>Email address</label>
+          {errors.email && <span className={styles.error}>{errors.email.message}</span>}
         </div>
 
-        {/* Message */}
-        <div className={s.group}>
+        <div className={styles.group}>
           <textarea
             id="message"
-            rows="5"
             placeholder=" "
-            className={`${s.input} ${s.textarea} ${errors.message ? s.inputError : ""}`}
+            className={`${styles.input} ${styles.textarea} ${errors.message ? styles.inputError : ""}`}
             {...register("message", {
-              required: "Message is required",
-              minLength: { value: 10, message: "Minimum 10 characters" },
+              required: "Message required",
+              minLength: { value: 10, message: "Detail your request" },
             })}
           />
-          <label htmlFor="message" className={s.label}>
-            Your Message
-          </label>
-          {errors.message && (
-            <span className={s.error} role="alert" aria-live="polite">
-              {errors.message.message}
-            </span>
-          )}
+          <label htmlFor="message" className={styles.label}>Your inquiry</label>
+          {errors.message && <span className={styles.error}>{errors.message.message}</span>}
         </div>
 
-        {/* Footer */}
-        <div className={s.footer}>
-          <label className={s.checkbox}>
+        <div className={styles.footer}>
+          <label className={styles.checkbox}>
             <input
               type="checkbox"
               id="subscribe"
-              className={s.checkboxInput}
+              className={styles.checkboxInput}
               {...register("subscribe")}
             />
-            <span className={s.checkboxBox} aria-hidden="true" />
-            Subscribe to newsletter
+            <span className={styles.checkboxBox} />
+            Newsletter Opt-in
           </label>
 
           <button
             type="submit"
-            className={s.btn}
+            className={styles.btn}
             disabled={isSubmitting}
-            aria-label="Send message"
           >
             {isSubmitting ? (
-              <span className={s.spinner} aria-hidden="true" />
+              <span className={styles.spinner} />
             ) : (
               <>
-                <span>Send Message</span>
-                <span className={s.btnArrow}>→</span>
+                <span>Engage</span>
+                <i className="ri-arrow-right-line btnArrow" />
               </>
             )}
           </button>

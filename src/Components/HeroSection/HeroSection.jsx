@@ -173,7 +173,11 @@ const HeroSection = () => {
         <span className={styles.scrollText}>Scroll</span>
         <div className={styles.scrollLineContainer}>
           <div ref={scrollLineRef} className={styles.scrollLine} />
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M2 12L12 2M12 2H4M12 2V10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
         </div>
+
       </div>
 
       {/* ── Main content ── */}

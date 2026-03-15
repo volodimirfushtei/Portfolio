@@ -127,17 +127,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   border: 1px solid var(--color-border);
   color: var(--color-secondary);
   text-decoration: none;
-  font-size: 1rem;
-  margin-right: -1px; /* merged borders */
+  font-size: 1.1rem;
+  margin-right: -1px;
   position: relative;
-  transition:
-    color 0.25s ease,
-    background 0.25s ease;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   overflow: hidden;
 }
 
@@ -146,18 +144,21 @@
   position: absolute;
   inset: 0;
   background: var(--color-accent);
-  transform: translateY(101%);
-  transition: transform 0.35s cubic-bezier(0.76, 0, 0.24, 1);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 0;
 }
 
 .socialLink:hover {
   color: var(--bg-color);
   border-color: var(--color-accent);
-  z-index: 1;
+  z-index: 10;
+  transform: translateY(-2px);
 }
 
 .socialLink:hover::before {
-  transform: translateY(0);
+  transform: scaleY(1);
 }
 
 .socialLink i {
@@ -182,33 +183,30 @@
 .navLink {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 0;
-  font-family: "DM Mono", monospace;
+  gap: 0.6rem;
+  padding: 0.85rem 0;
+  font-family: var(--font-mono);
   font-size: 0.72rem;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: var(--color-secondary);
   text-decoration: none;
-  transition:
-    color 0.2s ease,
-    padding-left 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
 }
 
 .navLink::before {
   content: "→";
-  font-size: 0.65rem;
+  font-size: 0.7rem;
   color: var(--color-accent);
   opacity: 0;
-  transform: translateX(-6px);
-  transition:
-    opacity 0.25s ease,
-    transform 0.25s ease;
+  transform: translateX(-10px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .navLink:hover {
   color: var(--color-text);
-  padding-left: 0.5rem;
+  padding-left: 0.75rem;
 }
 
 .navLink:hover::before {

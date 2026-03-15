@@ -1,25 +1,5 @@
-/* TestError.module.css — Awwwards editorial dark */
+/* TestError.module.css — Awwwards editorial premium sync */
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes blink {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.3;
-  }
-}
-
-/* ── Section ── */
 .section {
   position: relative;
   min-height: 100vh;
@@ -28,94 +8,87 @@
   align-items: center;
   justify-content: center;
   background: var(--bg-color);
-  padding: 3rem 1.5rem;
+  padding: clamp(2rem, 5vw, 4rem);
   overflow: hidden;
+  isolation: isolate;
 }
 
-/* Top accent line */
-.section::before {
-  content: "";
+/* ── Noise layer ── */
+.noise {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--color-accent) 40%,
-    var(--color-accent) 60%,
-    transparent 100%
-  );
-  z-index: 2;
+  inset: -60%;
+  width: 220%;
+  height: 220%;
+  z-index: 1;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 220px 220px;
+  opacity: 0.025;
 }
 
-/* ── DotGrid ── */
+/* ── Scanlines layer ── */
+.scanlines {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 2px,
+    var(--color-border) 2px,
+    var(--color-border) 3px
+  );
+  background-size: 100% 6px;
+  opacity: 0.12;
+  animation: scanlineScroll 24s linear infinite;
+}
+
+@keyframes scanlineScroll {
+  from { background-position: 0 0; }
+  to   { background-position: 0 100%; }
+}
+
 .dotGridWrap {
   position: fixed;
   inset: 0;
-  z-index: 0;
+  z-index: 3;
   pointer-events: none;
-  opacity: 0.25;
+  opacity: 0.15;
 }
 
 /* ── Card ── */
 .card {
   position: relative;
-  z-index: 1;
+  z-index: 100;
   width: 100%;
-  max-width: 640px;
+  max-width: 700px;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  padding: 3rem;
+  padding: clamp(2rem, 5vw, 4rem);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-}
-
-/* Corner TL */
-.card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 24px;
-  height: 24px;
-  border-top: 2px solid var(--color-accent);
-  border-left: 2px solid var(--color-accent);
-  pointer-events: none;
-}
-
-/* Corner BR */
-.card::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 24px;
-  height: 24px;
-  border-bottom: 2px solid var(--color-border);
-  border-right: 2px solid var(--color-border);
-  pointer-events: none;
+  box-shadow: 0 40px 100px -20px rgba(0,0,0,0.5);
 }
 
 /* ── Eyebrow ── */
 .eyebrow {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1.5rem;
+  gap: 1rem;
+  margin-bottom: 2rem;
 }
 
 .eyebrowLine {
   display: block;
-  width: 28px;
+  width: 30px;
   height: 1px;
   background: var(--color-accent);
 }
 
 .eyebrowText {
-  font-family: "DM Mono", monospace;
-  font-size: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
   color: var(--color-accent);
@@ -123,73 +96,59 @@
 
 /* ── Title ── */
 .title {
-  font-family: "Bebas Neue", sans-serif;
-  font-size: clamp(2.5rem, 6vw, 4rem);
-  font-weight: 400;
-  line-height: 0.92;
-  letter-spacing: -0.01em;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 6rem);
+  line-height: 0.85;
+  text-transform: uppercase;
   color: var(--color-text);
-  margin: 0 0 1.25rem;
+  margin: 0 0 1.5rem;
+}
+
+.headingLine {
+  display: block;
+  overflow: hidden;
+  position: relative;
 }
 
 .titleAccent {
-  background: linear-gradient(90deg, #f8a12f 0%, #f53c03 50%, #f8ab04 100%);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: shimmer 4s linear infinite;
+  color: var(--color-accent);
 }
 
-@keyframes shimmer {
-  0% {
-    background-position: 0% center;
-  }
-  100% {
-    background-position: 200% center;
-  }
-}
-
-/* ── Desc ── */
 .desc {
-  font-family: "DM Mono", monospace;
-  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
   color: var(--color-secondary);
   line-height: 1.8;
-  letter-spacing: 0.02em;
-  margin: 0 0 2rem;
+  max-width: 500px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 2.5rem;
 }
 
-/* ── Error buttons grid ── */
+/* ── Grid ── */
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1px;
-  background: var(--color-border);
-  border: 1px solid var(--color-border);
-  margin-bottom: 1px; /* flush with reset btn */
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .errorBtn {
-  background: #0a0a0a;
-  border: none;
-  padding: 1rem 1.25rem;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  padding: 1.25rem;
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  font-family: "DM Mono", monospace;
-  font-size: 0.68rem;
+  gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--color-secondary);
+  color: var(--color-text);
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  transition:
-    color 0.3s ease,
-    background 0.3s ease;
-  background: var(--color-surface);
-  text-align: left;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .errorBtn::before {
@@ -197,20 +156,25 @@
   position: absolute;
   inset: 0;
   background: var(--color-error);
-  transform: translateX(-101%);
-  transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: -1;
 }
 
 .errorBtn:hover::before {
-  transform: translateX(0);
+  transform: scaleX(1);
+  transform-origin: left;
 }
+
 .errorBtn:hover {
-  color: var(--color-button-text);
+  color: white;
+  border-color: var(--color-error);
 }
 
 .errorBtnDot {
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: var(--color-error);
   flex-shrink: 0;
@@ -218,55 +182,60 @@
 }
 
 .errorBtn:hover .errorBtnDot {
-  background: var(--color-button-text);
+  background: white;
 }
 
-/* ── Reset button ── */
+/* ── Reset ── */
 .resetBtn {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
-  padding: 0.9rem 1.5rem;
-  background: var(--color-button-bg);
-  color: var(--color-button-text);
-  border: none;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
   cursor: pointer;
-  font-family: "DM Mono", monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.15em;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   position: relative;
   overflow: hidden;
-  transition: color 0.35s ease;
-  margin-bottom: 1.5rem;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  margin-bottom: 2rem;
 }
 
-.resetBtn > * {
+.resetBtn span {
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 .resetBtn::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: var(--color-button-text);
-  transform: translateX(-101%);
-  transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1;
 }
 
 .resetBtn:hover::before {
-  transform: translateX(0);
+  transform: scaleX(1);
+  transform-origin: left;
 }
+
 .resetBtn:hover {
-  color: var(--color-button-bg);
+  color: var(--color-background);
+  border-color: var(--color-accent);
 }
 
 .resetArrow {
   font-size: 1rem;
-  transition: transform 0.4s ease;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .resetBtn:hover .resetArrow {
@@ -277,50 +246,28 @@
 .warning {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-family: "DM Mono", monospace;
-  font-size: 0.6rem;
-  letter-spacing: 0.12em;
+  gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--color-error);
   margin: 0;
   animation: blink 3s ease-in-out infinite;
 }
 
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
 .warningIcon {
   flex-shrink: 0;
 }
 
-/* ── Mobile: ≤ 480px ── */
-@media (max-width: 480px) {
-  .card {
-    padding: 2rem 1.5rem;
-  }
-
+/* ── Mobile ── */
+@media (max-width: 640px) {
   .grid {
     grid-template-columns: 1fr;
-  }
-}
-
-/* ── Small mobile: ≤ 360px ── */
-@media (max-width: 360px) {
-  .card {
-    padding: 1.5rem 1rem;
-  }
-
-  .title {
-    font-size: 2rem;
-  }
-}
-
-/* ── Reduced motion ── */
-@media (prefers-reduced-motion: reduce) {
-  .titleAccent,
-  .warning {
-    animation: none;
-  }
-  .resetBtn::before,
-  .errorBtn::before {
-    transition: none;
   }
 }

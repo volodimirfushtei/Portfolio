@@ -9,6 +9,7 @@ const ProjectPage = () => {
   const pageRef = useRef(null);
   const headerRef = useRef(null);
   const gridRef = useRef(null);
+  const cardRefs = useRef([]);
 
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,39 +18,38 @@ const ProjectPage = () => {
   const [filterTag, setFilterTag] = useState("");
   const PER_PAGE = 4;
 
-  /* ── Firestore з обробкою помилок ── */
+  /* ── Helper: Split Title into Lines ── */
+  const splitTitle = (text) => {
+    if (!text) return [];
+    return text.split(/(?<=[.!?])\s+|(?<=\|)\s*/).map(line => line.replace('|', '').trim());
+  };
+
+  /* ── Firestore with error handling ── */
   useEffect(() => {
     setLoading(true);
-
     const unsub = onSnapshot(
       collection(db, "projects"),
       (snap) => {
         try {
           const projectsData = snap.docs.map((d) => {
             const data = d.data();
-            // Нормалізація tags
             let tags = [];
             if (Array.isArray(data.tags)) {
               tags = data.tags.filter(Boolean);
             } else if (typeof data.tags === "string") {
-              tags = data.tags
-                .split(/[,，]/) // Підтримка різних роздільників
-                .map((t) => t.trim())
-                .filter(Boolean);
+              tags = data.tags.split(/[,，]/).map((t) => t.trim()).filter(Boolean);
             }
 
             return {
               id: d.id,
               ...data,
-              tags,
-              // Дефолтні значення
+              tags: tags.slice(0, 4), 
               title: data.title || "Untitled Project",
-              description: data.description || "No description available",
+              description: data.description || "Digital Experience",
               imageUrl: data.imageUrl || "/images/business.jpg",
               accentColor: data.accentColor || "#e8f53c",
             };
           });
-
           setProjects(projectsData);
         } catch (error) {
           console.error("Error processing projects:", error);
@@ -60,16 +60,14 @@ const ProjectPage = () => {
       (error) => {
         console.error("Firestore error:", error);
         setLoading(false);
-      },
+      }
     );
-
     return () => unsub();
   }, []);
 
-  /* ── Фільтрація з мемоізацією ── */
+  /* ── Filtering ── */
   const filtered = useMemo(() => {
     if (!projects.length) return [];
-
     return projects.filter((p) => {
       const searchLower = searchTerm.toLowerCase();
       const matchSearch =
@@ -86,12 +84,10 @@ const ProjectPage = () => {
     });
   }, [projects, searchTerm, filterTag]);
 
-  // Скидання сторінки при фільтрації
   useEffect(() => {
     setCurrentPage(1);
   }, [searchTerm, filterTag]);
 
-  // Унікальні теги для фільтра
   const uniqueTags = useMemo(() => {
     const tags = new Set();
     projects.forEach((p) => {
@@ -100,7 +96,6 @@ const ProjectPage = () => {
     return Array.from(tags).sort();
   }, [projects]);
 
-  // Пагінація
   const paginated = useMemo(() => {
     const start = (currentPage - 1) * PER_PAGE;
     return filtered.slice(start, start + PER_PAGE);
@@ -108,56 +103,84 @@ const ProjectPage = () => {
 
   const totalPages = Math.ceil(filtered.length / PER_PAGE);
 
-  /* ── Анімації GSAP ── */
+  /* ── Magnetic Tilt with Content Follow ── */
+  const handleMouseMove = useCallback((e, index) => {
+    const card = cardRefs.current[index];
+    if (!card) return;
+
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotateX = (y - centerY) / 20;
+    const rotateY = (centerX - x) / 20;
+
+    gsap.to(card, {
+      rotateX: rotateX,
+      rotateY: rotateY,
+      duration: 0.5,
+      ease: "power2.out",
+    });
+
+    const watermark = card.querySelector(`.${styles.cardWatermark}`);
+    if (watermark) {
+      gsap.to(watermark, {
+        x: (x - centerX) / 10,
+        y: (y - centerY) / 10,
+        duration: 0.8,
+        ease: "power2.out"
+      });
+    }
+  }, []);
+
+  const handleMouseLeave = useCallback((index) => {
+    const card = cardRefs.current[index];
+    if (!card) return;
+
+    gsap.to(card, { rotateX: 0, rotateY: 0, duration: 0.8, ease: "power2.out" });
+
+    const watermark = card.querySelector(`.${styles.cardWatermark}`);
+    if (watermark) {
+      gsap.to(watermark, { x: 0, y: 0, duration: 0.8, ease: "power2.out" });
+    }
+  }, []);
+
+  /* ── GSAP Entry Animations ── */
   useEffect(() => {
     if (loading || !headerRef.current) return;
-
     const ctx = gsap.context(() => {
-      gsap.from(headerRef.current.children, {
-        opacity: 0,
-        y: 40,
-        duration: 0.8,
-        stagger: 0.12,
-        ease: "power3.out",
-        delay: 0.1,
-      });
+      const tl = gsap.timeline();
+      tl.from(`.${styles.eyebrow}`, { opacity: 0, x: -20, duration: 1, ease: "power3.out" })
+        .from(`.${styles.heading} span`, { y: 100, rotateX: -90, opacity: 0, stagger: 0.1, duration: 1.2, ease: "power4.out" }, "-=0.7")
+        .from(`.${styles.subheading}`, { opacity: 0, y: 20, duration: 0.8, ease: "power3.out" }, "-=0.5");
     }, pageRef);
-
     return () => ctx.revert();
   }, [loading]);
 
   useEffect(() => {
     if (loading || !gridRef.current) return;
-
-    const cards = gridRef.current.querySelectorAll(`.${styles.card}`);
-    if (!cards.length) return;
-
-    // Спочатку ховаємо карти
-    gsap.set(cards, { opacity: 0, y: 32 });
-
-    // Потім показуємо з анімацією
+    const containers = gridRef.current.querySelectorAll(`.${styles.cardContainer}`);
+    if (!containers.length) return;
     const ctx = gsap.context(() => {
-      gsap.to(cards, {
-        opacity: 1,
-        y: 0,
-        duration: 0.5,
-        stagger: 0.08,
+      gsap.from(containers, {
+        opacity: 0,
+        y: 60,
+        scale: 0.95,
+        duration: 1,
+        stagger: 0.15,
         ease: "power3.out",
-        delay: 0.1,
+        clearProps: "all"
       });
     }, gridRef);
-
     return () => ctx.revert();
   }, [paginated, loading]);
 
-  /* ── Обробники подій ── */
   const handlePageChange = useCallback((page) => {
     setCurrentPage(page);
-    // Плавний скрол до верху сторінки
-    pageRef.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
+    pageRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   }, []);
 
   const handleResetFilters = useCallback(() => {
@@ -165,20 +188,12 @@ const ProjectPage = () => {
     setFilterTag("");
   }, []);
 
-  /* ── Стан завантаження ── */
   if (loading) {
     return (
-      <div
-        className={styles.loadingWrap}
-        role="status"
-        aria-label="Loading projects"
-      >
+      <div className={styles.loadingWrap}>
         <div className={styles.loadingInner}>
-          <i
-            className={`ri-loader-4-line ${styles.spinner}`}
-            aria-hidden="true"
-          />
-          <span>Loading projects...</span>
+          <i className={`ri-loader-4-line ${styles.spinner}`} />
+          <span className={styles.loadingText}>COLLECTING DATA</span>
         </div>
       </div>
     );
@@ -187,168 +202,114 @@ const ProjectPage = () => {
   return (
     <AnimatedPage>
       <div ref={pageRef} className={styles.page}>
+        <div className={styles.noise} aria-hidden="true" />
+        <div className={styles.scanlines} aria-hidden="true" />
+
         <div className={styles.container}>
-          {/* Header */}
           <header ref={headerRef} className={styles.header}>
             <div className={styles.eyebrow}>
-              <span className={styles.eyebrowLine} aria-hidden="true" />
-              <span className={styles.eyebrowText}>Selected Work</span>
+              <span className={styles.eyebrowLine} />
+              <span className={styles.eyebrowText}>Curated selection</span>
             </div>
             <h1 className={styles.heading}>
-              My <span className={styles.headingAccent}>Projects</span>
+              <div className={styles.headingLine}>
+                <span>My</span> <span className={styles.headingAccent}>Portfolio</span>
+              </div>
             </h1>
             <p className={styles.subheading}>
-              A collection of my recent work and experiments
+              A showcase of digital craftsmanship, focused on motion and interaction.
             </p>
           </header>
 
-          {/* Controls */}
-          <div
-            className={styles.controls}
-            role="search"
-            aria-label="Project filters"
-          >
-            <label className={styles.field}>
-              <i className="ri-search-line" aria-hidden="true" />
+          <div className={styles.controls}>
+            <div className={styles.field}>
+              <i className="ri-search-line" />
               <input
                 type="text"
-                placeholder="Search projects..."
+                placeholder="Find projects..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                aria-label="Search projects by title, description or technology"
               />
-            </label>
+            </div>
 
-            <label className={styles.field}>
-              <i className="ri-filter-line" aria-hidden="true" />
-              <select
-                value={filterTag}
-                onChange={(e) => setFilterTag(e.target.value)}
-                aria-label="Filter by technology"
-              >
-                <option value="">All Technologies</option>
+            <div className={styles.field}>
+              <i className="ri-filter-line" />
+              <select value={filterTag} onChange={(e) => setFilterTag(e.target.value)}>
+                <option value="">Sort by Tech</option>
                 {uniqueTags.map((tag) => (
-                  <option key={tag} value={tag}>
-                    {tag}
-                  </option>
+                  <option key={tag} value={tag}>{tag}</option>
                 ))}
               </select>
-            </label>
+            </div>
           </div>
 
-          {/* Grid */}
-          <div
-            ref={gridRef}
-            className={styles.grid}
-            role="list"
-            aria-label="Projects grid"
-            aria-live="polite"
-          >
+          <div ref={gridRef} className={styles.grid}>
             {paginated.length > 0 ? (
               paginated.map((project, index) => (
-                <article
-                  key={project.id}
-                  className={styles.card}
-                  role="listitem"
-                  aria-label={`Project: ${project.title}`}
-                >
-                  {/* Image */}
-                  <div className={styles.imageWrap}>
-                    <img
-                      src={project.imageUrl}
-                      alt={project.title}
-                      className={styles.image}
-                      loading="lazy"
-                      onError={(e) => {
-                        e.target.src = "/images/business.jpg";
-                      }}
-                    />
-                    <div
-                      className={styles.imageOverlay}
-                      style={{
-                        background: `${project.accentColor}20`,
-                      }}
-                      aria-hidden="true"
-                    />
-                    <span className={styles.cardNum} aria-hidden="true">
-                      {String(
-                        (currentPage - 1) * PER_PAGE + index + 1,
-                      ).padStart(2, "0")}
-                    </span>
-                  </div>
-
-                  {/* Content */}
-                  <div className={styles.cardBody}>
-                    <h3 className={styles.cardTitle}>{project.title}</h3>
-                    <p className={styles.cardDesc}>{project.description}</p>
-
-                    <div className={styles.tags} aria-label="Technologies used">
-                      {project.tags?.map((tag) => (
-                        <span
-                          key={tag}
-                          className={styles.tag}
-                          style={{
-                            borderColor: `${project.accentColor}40`,
-                          }}
-                        >
-                          {tag}
-                        </span>
-                      ))}
+                <div key={project.id} className={styles.cardContainer}>
+                  <article
+                    className={styles.card}
+                    ref={(el) => (cardRefs.current[index] = el)}
+                    onMouseMove={(e) => handleMouseMove(e, index)}
+                    onMouseLeave={() => handleMouseLeave(index)}
+                  >
+                    <div className={styles.cardWatermark}>{project.title.split(' ')[0]}</div>
+                    <div className={styles.imageWrap}>
+                      <img
+                        src={project.imageUrl}
+                        alt={project.title}
+                        className={styles.image}
+                        loading="lazy"
+                        onError={(e) => { e.target.src = "/images/business.jpg"; }}
+                      />
+                      <span className={styles.cardNum}>
+                        {String((currentPage - 1) * PER_PAGE + index + 1).padStart(2, "0")}
+                      </span>
                     </div>
 
-                    {project.urlVercel && project.urlVercel.trim() && (
+                    <div className={styles.cardBody}>
+                      <h3 className={styles.cardTitle}>{project.title}</h3>
+                      <p className={styles.cardDesc}>{project.description}</p>
+                      <div className={styles.tags}>
+                        {project.tags?.map((tag) => (
+                          <span key={tag} className={styles.tag}>{tag}</span>
+                        ))}
+                      </div>
                       <a
-                        href={project.urlVercel.trim()}
+                        href={(project.urlVercel || project.urlGitHub || "#").trim()}
                         className={styles.cardLink}
-                        target="_blank"
+                        target={project.urlVercel || project.urlGitHub ? "_blank" : "_self"}
                         rel="noopener noreferrer"
-                        style={{ color: project.accentColor }}
-                        aria-label={`View ${project.title} project (opens in new tab)`}
+                        onClick={(e) => {
+                          if (!project.urlVercel && !project.urlGitHub) {
+                            e.preventDefault();
+                            alert("This project details are private.");
+                          }
+                        }}
                       >
-                        <span>View Project</span>
-                        <i className="ri-arrow-right-line" aria-hidden="true" />
+                        <span>{project.urlVercel || project.urlGitHub ? "View Detail" : "Restricted"}</span>
+                        <i className={project.urlVercel || project.urlGitHub ? "ri-arrow-right-up-line" : "ri-lock-line"} />
                       </a>
-                    )}
-                  </div>
-
-                  {/* Accent bottom line */}
-                  <div
-                    className={styles.cardAccent}
-                    style={{ background: project.accentColor }}
-                    aria-hidden="true"
-                  />
-                </article>
+                    </div>
+                  </article>
+                </div>
               ))
             ) : (
-              <div className={styles.noResults} role="status">
-                <i className="ri-emotion-sad-line" aria-hidden="true" />
-                <p>No projects found</p>
-                <button
-                  className={styles.resetBtn}
-                  onClick={handleResetFilters}
-                  aria-label="Reset all filters"
-                >
-                  <span>Reset filters</span>
-                  <i className="ri-refresh-line" aria-hidden="true" />
-                </button>
+              <div className={styles.noResults}>
+                <i className="ri-emotion-sad-line" />
+                <p>No matches found in this category.</p>
+                <button className={styles.resetBtn} onClick={handleResetFilters}>Return to all</button>
               </div>
             )}
           </div>
 
-          {/* Pagination */}
           {totalPages > 1 && (
-            <nav
-              className={styles.pagination}
-              aria-label="Project pagination"
-              role="navigation"
-            >
+            <nav className={styles.pagination}>
               {Array.from({ length: totalPages }, (_, i) => (
                 <button
                   key={i + 1}
                   onClick={() => handlePageChange(i + 1)}
                   className={`${styles.pageBtn} ${currentPage === i + 1 ? styles.active : ""}`}
-                  aria-current={currentPage === i + 1 ? "page" : undefined}
-                  aria-label={`Page ${i + 1}`}
                 >
                   {String(i + 1).padStart(2, "0")}
                 </button>

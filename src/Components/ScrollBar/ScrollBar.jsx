@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import style from "./ScrollBar.module.css";
+import styles from "./ScrollBar.module.css";
 
 const ScrollBar = () => {
   const containerRef = useRef(null);
@@ -11,14 +11,14 @@ const ScrollBar = () => {
   const scrollProgress = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   const pages = [
-    { id: 1, bgColor: "bg-blue-100", title: "Welcome" },
-    { id: 2, bgColor: "bg-green-100", title: "Services" },
-    { id: 3, bgColor: "bg-yellow-100", title: "Portfolio" },
-    { id: 4, bgColor: "bg-red-100", title: "Contact" },
+    { id: 1, color: "var(--color-background)", title: "Welcome" },
+    { id: 2, color: "var(--color-surface)", title: "Services" },
+    { id: 3, color: "var(--color-background)", title: "Portfolio" },
+    { id: 4, color: "var(--color-surface)", title: "Contact" },
   ];
 
   const scrollToSection = (index) => {
-    const sectionHeight = window.innerHeight;
+    const sectionHeight = containerRef.current.clientHeight;
     containerRef.current.scrollTo({
       top: sectionHeight * index,
       behavior: "smooth",
@@ -26,23 +26,21 @@ const ScrollBar = () => {
   };
 
   return (
-    <div className="relative h-screen w-full overflow-hidden flex">
-      {/* Основний контент */}
-      <div
-        ref={containerRef}
-        className="flex-1 overflow-y-auto snap-y snap-mandatory h-full no-scrollbar"
-      >
+    <div className={styles.wrapper}>
+      {/* Main Content */}
+      <div ref={containerRef} className={`${styles.mainContent} ${styles.container}`}>
         {pages.map((page) => (
           <section
             key={page.id}
             id={`section-${page.id}`}
-            className={`h-screen w-full flex items-center justify-center snap-start ${page.bgColor}`}
+            className={styles.section}
+            style={{ backgroundColor: page.color }}
           >
             <motion.h2
-              className="text-5xl font-bold"
-              initial={{ opacity: 0, y: 50 }}
+              className={styles.sectionTitle}
+              initial={{ opacity: 0, y: 60 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             >
               {page.title}
             </motion.h2>
@@ -50,25 +48,25 @@ const ScrollBar = () => {
         ))}
       </div>
 
-      {/* Кастомний скроллбар */}
-      <div className="fixed right-0 top-0 h-full w-6 flex justify-center py-8">
-        <div className="h-full w-1 bg-gray-200 rounded-full relative">
-          {/* Індикатор прогресу */}
+      {/* Custom Scrollbar */}
+      <div className={styles.scrollbarTrack}>
+        <div className={styles.line}>
+          {/* Progress Indicator */}
           <motion.div
-            className="absolute top-0 left-0 w-full bg-blue-500 rounded-full"
+            className={styles.progress}
             style={{
               scaleY: scrollProgress,
-              transformOrigin: "top",
             }}
           />
 
-          {/* Навігаційні точки */}
-          <div className="absolute inset-0 flex flex-col justify-between items-center">
+          {/* Navigation Dots */}
+          <div className={styles.dotContainer}>
             {pages.map((_, index) => (
               <button
                 key={index}
-                className="w-3 h-3 rounded-full bg-white border-2 border-blue-500 focus:outline-none hover:scale-125 hover:bg-blue-500 transition-all"
+                className={styles.dot}
                 onClick={() => scrollToSection(index)}
+                aria-label={`Go to section ${index + 1}`}
               />
             ))}
           </div>

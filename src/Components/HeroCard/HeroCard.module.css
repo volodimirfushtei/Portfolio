@@ -115,77 +115,78 @@
 .primary {
   background: var(--color-button-bg);
   color: var(--color-button-text);
-  padding: 0.9rem 1.6rem;
-  border-radius: 0;
-  font-family: "DM Mono", monospace;
+  padding: 1.1rem 2rem;
+  font-family: var(--font-mono);
   font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  border: none;
+  border: 1px solid var(--color-button-bg);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 1rem;
   position: relative;
   overflow: hidden;
-  transition: color 0.35s ease;
-  white-space: nowrap;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .primary::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: var(--color-button-text);
-  transform: translateX(-101%);
-  transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1;
 }
 
 .primary:hover::before {
-  transform: translateX(0);
+  transform: scaleX(1);
+  transform-origin: left;
 }
+
 .primary:hover {
-  color: var(--color-button-bg);
+  color: var(--bg-color);
+  border-color: var(--color-accent);
 }
 
 .secondary {
   background: transparent;
-  color: var(--color-secondary);
+  color: var(--color-text);
   border: 1px solid var(--color-border);
-  padding: 0.9rem 1.6rem;
-  border-radius: 0;
-  font-family: "DM Mono", monospace;
+  padding: 1.1rem 2rem;
+  font-family: var(--font-mono);
   font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 1rem;
   position: relative;
   overflow: hidden;
-  transition:
-    color 0.35s ease,
-    border-color 0.35s ease;
-  white-space: nowrap;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .secondary::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: var(--color-overlay);
-  transform: translateX(-101%);
-  transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1;
 }
 
 .secondary:hover::before {
-  transform: translateX(0);
+  transform: scaleX(1);
+  transform-origin: left;
 }
+
 .secondary:hover {
-  color: var(--color-text);
+  color: var(--bg-color);
   border-color: var(--color-accent);
 }
 

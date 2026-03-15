@@ -98,28 +98,6 @@ const ExperienceTable = () => {
   // GSAP анімації
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Анімація noise фону
-      if (noiseRef.current) {
-        gsap.to(noiseRef.current, {
-          backgroundPosition: "100% 100%",
-          duration: 20,
-          repeat: -1,
-          ease: "none",
-          yoyo: true,
-        });
-      }
-
-      // Анімація сканлайнів
-      if (scanlinesRef.current) {
-        gsap.to(scanlinesRef.current, {
-          opacity: 0.15,
-          duration: 2,
-          yoyo: true,
-          repeat: -1,
-          ease: "sine.inOut",
-        });
-      }
-
       // ScrollTrigger для появи сітки
       const cells = gridRef.current?.querySelectorAll("[data-cell]");
       
@@ -127,28 +105,27 @@ const ExperienceTable = () => {
         // Початковий стан
         gsap.set(cells, {
           opacity: 0,
-          y: 40,
-          clipPath: "inset(100% 0 0 0)",
+          y: 60,
+          clipPath: "inset(0 0 100% 0)",
         });
 
         // Таймлайн появи
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: "top 75%",
-            end: "bottom 20%",
+            start: "top 80%",
             once: true,
             onEnter: () => setTriggered(true),
           },
-          defaults: { ease: "power3.out" },
+          defaults: { ease: "expo.out" },
         });
 
         tl.to(cells, {
           opacity: 1,
           y: 0,
-          clipPath: "inset(0% 0 0 0)",
-          stagger: 0.08,
-          duration: 0.8,
+          clipPath: "inset(0% 0 0% 0)",
+          stagger: 0.1,
+          duration: 1.2,
         });
       }
     }, sectionRef);

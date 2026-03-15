@@ -123,7 +123,7 @@
   overflow: hidden;
   cursor: pointer;
   border: none;
-  border-radius: 999px; /* Pill shape for premium feel */
+   /* Pill shape for premium feel */
   bottom: 15%; /* Float higher off bottom edge */
   box-shadow: var(--color-shadow);
   transition: all var(--transition-base) cubic-bezier(0.16, 1, 0.3, 1);

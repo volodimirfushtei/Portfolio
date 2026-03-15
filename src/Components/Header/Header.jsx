@@ -8,6 +8,7 @@ import FullscreenButton from "../FullScreenButton/FullScreenButton";
 import useScrollDetection from "../../hooks/useScrollDetection";
 import Logo from "../Logo/Logo";
 import { NAV_ITEMS } from "../../constants/navigations";
+
 const useScrollDirection = () => {
   const [direction, setDirection] = useState(null);
   const prevRef = useRef(0);
@@ -40,18 +41,12 @@ const useScrollDirection = () => {
 const Header = () => {
   const headerRef = useRef(null);
   const mobileMenuRef = useRef(null);
+  const navLinksRef = useRef([]);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [hovering, setHovering] = useState(null);
   const [hidden, setHidden] = useState(false);
 
-  const isScrolled = useScrollDetection(100);
+  const isScrolled = useScrollDetection(50);
   const scrollDirection = useScrollDirection();
-
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   /* ── Hide/show on scroll ── */
   useEffect(() => {
@@ -60,64 +55,52 @@ const Header = () => {
   }, [isScrolled, scrollDirection]);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.to(headerRef.current, {
-        y: hidden ? -100 : 0,
-        opacity: hidden ? 0 : 1,
-        duration: 0.45,
-        ease: "power3.out",
-      });
-    }, headerRef);
-
-    return () => ctx.revert(); // Clean up GSAP animations
+    gsap.to(headerRef.current, {
+      y: hidden ? -100 : 0,
+      opacity: hidden ? 0 : 1,
+      duration: 0.5,
+      ease: "power3.out",
+    });
   }, [hidden]);
 
-  // Similarly for mobile menu animations
+  /* ── Mobile menu animations ── */
+  useEffect(() => {
+    if (menuOpen) {
+      gsap.fromTo(
+        navLinksRef.current,
+        { y: 50, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.1,
+          delay: 0.3,
+          ease: "power4.out",
+        }
+      );
+    } else {
+      gsap.to(navLinksRef.current, {
+        y: 20,
+        opacity: 0,
+        duration: 0.3,
+        stagger: 0.05,
+        ease: "power2.in",
+      });
+    }
+  }, [menuOpen]);
+
   const toggleMenu = useCallback(() => {
     const next = !menuOpen;
     setMenuOpen(next);
     document.body.style.overflow = next ? "hidden" : "";
+  }, [menuOpen]);
 
-    if (next && mobileMenuRef.current) {
-      gsap.fromTo(
-        mobileMenuRef.current,
-        { opacity: 0, y: -20 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.35,
-          ease: "power3.out",
-          onReverseComplete: () => {
-            // Cleanup if needed
-          },
-        },
-      );
-    } else if (mobileMenuRef.current) {
-      gsap.to(mobileMenuRef.current, {
-        opacity: 0,
-        y: -10,
-        duration: 0.25,
-        ease: "power3.in",
-      });
-    }
-  }, [menuOpen]);
-  // Focus trap (optional but recommended)
-  useEffect(() => {
-    if (menuOpen) {
-      const focusableElements = mobileMenuRef.current?.querySelectorAll(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
-      );
-      if (focusableElements?.length) {
-        focusableElements[0].focus();
-      }
-    }
-  }, [menuOpen]);
   /* cleanup overflow on unmount */
   useEffect(
     () => () => {
       document.body.style.overflow = "";
     },
-    [],
+    []
   );
 
   return (
@@ -139,12 +122,7 @@ const Header = () => {
           {/* Desktop nav */}
           <nav className={styles.desktopNav} aria-label="Main navigation">
             {NAV_ITEMS.map((item) => (
-              <div
-                key={item.path}
-                className={styles.navItem}
-                onMouseEnter={() => setHovering(item.path)}
-                onMouseLeave={() => setHovering(null)}
-              >
+              <div key={item.path} className={styles.navItem}>
                 <NavLink
                   to={item.path}
                   className={({ isActive }) =>
@@ -152,9 +130,7 @@ const Header = () => {
                   }
                 >
                   <i className={item.icon} aria-hidden="true" />
-                  {hovering === item.path && (
-                    <span className={styles.navLabel}>{item.label}</span>
-                  )}
+                  <span className={styles.navLabel}>{item.label}</span>
                 </NavLink>
               </div>
             ))}
@@ -164,7 +140,6 @@ const Header = () => {
               to="/contacts"
               className={styles.ctaBtn}
               aria-label="Grab 15 minutes with us"
-              rel="noopener noreferrer"
             >
               <img
                 src="/images/Myphoto.jpg"
@@ -206,23 +181,12 @@ const Header = () => {
         role="dialog"
         aria-hidden={!menuOpen}
       >
-        {/* Top bar with counter */}
-        <div className={styles.mobileTop}>
-          <span className={styles.mobileLabel}>Navigation</span>
-          <button
-            className={styles.mobileClose}
-            onClick={toggleMenu}
-            aria-label="Close"
-          >
-            ✕
-          </button>
-        </div>
-
         <nav className={styles.mobileNav}>
           {NAV_ITEMS.map((item, i) => (
             <NavLink
               key={item.path}
               to={item.path}
+              ref={(el) => (navLinksRef.current[i] = el)}
               className={({ isActive }) =>
                 `${styles.mobileNavLink} ${isActive ? styles.active : ""}`
               }
@@ -230,11 +194,7 @@ const Header = () => {
             >
               <span className={styles.mobileNum}>0{i + 1}</span>
               <span className={styles.mobileNavLabel}>{item.label}</span>
-              <i
-                className={item.icon}
-                aria-hidden="true"
-                aria-label={item.label}
-              />
+              <i className={item.icon} aria-hidden="true" />
             </NavLink>
           ))}
         </nav>

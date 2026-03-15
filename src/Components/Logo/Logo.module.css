@@ -1,8 +1,16 @@
 .Logo {
-  width: 80px;
-  height: 80px;
+  width: auto;
+  height: auto;
   cursor: pointer;
-  background-color: inherit;
-  transition: transform 0.3s ease-in-out;
   background: transparent;
+  transition: all 0.5s var(--transition-smooth);
+}
+
+.Logo svg {
+  transition: all 0.5s var(--transition-smooth);
+}
+
+.Logo:hover svg {
+  transform: scale(1.1) rotate(-5deg);
+  filter: drop-shadow(0 0 8px var(--color-accent));
 }

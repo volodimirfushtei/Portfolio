@@ -1,56 +1,62 @@
-/* ── Overlay ── */
+/* Loader.module.css — Awwwards editorial premium sync */
+
 .overlay {
   position: fixed;
   inset: 0;
-  z-index: 9999;
-  background: var(--loader-bg); /* Dark premium slate */
+  z-index: 10000;
+  background: var(--bg-color);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 2rem 2.5rem;
+  padding: clamp(2rem, 5vw, 4rem);
   overflow: hidden;
-  font-family: "DM Mono", monospace;
+  isolation: isolate;
 }
 
-/* ── Grain texture ── */
-.grain {
+/* ── Noise layer ── */
+.noise {
   position: absolute;
-  inset: -50%;
-  width: 200%;
-  height: 200%;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-  opacity: 0.04;
+  inset: -60%;
+  width: 220%;
+  height: 220%;
+  z-index: 1;
   pointer-events: none;
-  z-index: 0;
-  animation: grainShift 0.15s steps(2) infinite;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 220px 220px;
+  opacity: 0.025;
 }
 
-@keyframes grainShift {
-  0% {
-    transform: translate(0, 0);
-  }
-  25% {
-    transform: translate(-2%, -1%);
-  }
-  50% {
-    transform: translate(1%, 2%);
-  }
-  75% {
-    transform: translate(-1%, 1%);
-  }
-  100% {
-    transform: translate(2%, -2%);
-  }
+/* ── Scanlines layer ── */
+.scanlines {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 2px,
+    var(--color-border) 2px,
+    var(--color-border) 3px
+  );
+  background-size: 100% 6px;
+  opacity: 0.12;
+  animation: scanlineScroll 24s linear infinite;
+}
+
+@keyframes scanlineScroll {
+  from { background-position: 0 0; }
+  to   { background-position: 0 100%; }
 }
 
 /* ── Curtain panels ── */
 .curtain {
   position: absolute;
   top: 0;
-  width: 20.5%; /* tiny overlap to avoid gaps */
+  width: 20.2%; /* Tiny overlap to prevent gaps */
   height: 100%;
-  background: var(--loader-bg);
-  z-index: 1;
+  background: var(--bg-color);
+  z-index: 10;
   will-change: transform;
 }
 
@@ -59,85 +65,83 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 2;
-  border-bottom: 1px solid var(--loader-muted);
-  padding-bottom: 1.25rem;
+  position: relative;
+  z-index: 5;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 1.5rem;
 }
 
 .brandName {
-  font-size: 0.7rem;
-  letter-spacing: 0.25em;
-  color: var(--loader-muted);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: var(--color-secondary);
   text-transform: uppercase;
 }
 
 .year {
-  font-size: 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
   letter-spacing: 0.2em;
-  color: var(--loader-muted);
+  color: var(--color-secondary);
 }
 
-/* ── Center ── */
+/* ── Center Content ── */
 .center {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  z-index: 2;
-  padding: 0 0.5rem;
+  position: relative;
+  z-index: 5;
 }
 
-/* ── Counter ── */
 .counterWrap {
   display: flex;
   align-items: baseline;
-  gap: 0.05em;
+  gap: 0.1em;
   overflow: hidden;
   line-height: 1;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .digit {
-  font-family: "Bebas Neue", sans-serif;
-  font-size: clamp(6rem, 25vw, 20rem); /* Scaled massively */
-  color: var(--loader-fg);
+  font-family: var(--font-display);
+  font-size: clamp(6rem, 20vw, 15rem);
+  color: var(--color-text);
+  line-height: 0.8;
   display: inline-block;
-  line-height: 0.85; /* Tighter line height for large text */
-  will-change: transform;
 }
 
 .pct {
-  font-family: "Bebas Neue", sans-serif;
-  font-size: clamp(2rem, 6vw, 5rem);
-  color: var(--loader-muted);
-  margin-left: 0.15em;
-  line-height: 1;
-  align-self: flex-start;
-  margin-top: 0.6em;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 4rem);
+  color: var(--color-accent);
+  margin-left: 0.2em;
+  opacity: 0.8;
 }
 
-/* ── Tagline ── */
 .tagline {
-  font-size: clamp(0.7rem, 1.5vw, 0.85rem);
-  letter-spacing: 0.3em; /* Increased tracking */
+  font-family: var(--font-mono);
+  font-size: clamp(0.7rem, 1.2vw, 0.8rem);
+  letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: var(--loader-muted);
-  margin: 0;
-  min-height: 1.4em;
-  transition: opacity 0.6s ease;
+  color: var(--color-secondary);
+  min-height: 1.5em;
 }
 
-/* ── Progress track ── */
+/* ── Progress Track ── */
 .trackWrap {
-  z-index: 2;
-  margin-bottom: 1.25rem;
+  position: relative;
+  z-index: 5;
+  margin-bottom: 1.5rem;
 }
 
 .track {
   width: 100%;
   height: 1px;
-  background: var(--loader-muted);
+  background: var(--color-text);
   position: relative;
   overflow: hidden;
 }
@@ -147,38 +151,22 @@
   top: 0;
   left: 0;
   height: 100%;
-  background: var(--loader-fg);
+  background: var(--color-secondary);
   transition: width 0.2s linear;
-  will-change: width;
-}
-
-/* thin glow on fill edge */
-.fill::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  top: -2px;
-  width: 40px;
-  height: 5px;
-  background: radial-gradient(
-    ellipse at right,
-    var(--loader-fg),
-    transparent
-  );
-  filter: blur(2px);
 }
 
 .trackLabels {
   display: flex;
   justify-content: space-between;
-  margin-top: 0.5rem;
+  margin-top: 0.75rem;
 }
 
 .trackLabel {
+  font-family: var(--font-mono);
   font-size: 0.6rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--loader-muted);
+  color: var(--color-secondary);
 }
 
 /* ── Bottom bar ── */
@@ -186,75 +174,31 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 2;
-  border-top: 1px solid var(--loader-muted);
-  padding-top: 1.25rem;
+  position: relative;
+  z-index: 5;
+  border-top: 1px solid var(--color-border);
+  padding-top: 1.5rem;
 }
 
 .statusText {
+  font-family: var(--font-mono);
   font-size: 0.65rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--loader-muted);
+  color: var(--color-secondary);
 }
 
 .statusDot {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  background: var(--loader-accent); /* жовтий — єдиний акцент */
-  display: inline-block;
-  will-change: opacity;
+  background: var(--color-accent);
+  box-shadow: 0 0 10px var(--color-accent);
 }
 
-/* ── Mobile: ≤ 768px ── */
-@media (max-width: 768px) {
-  .overlay {
-    padding: 1.5rem;
-  }
-
-  .center {
-    align-items: flex-start;
-  }
-}
-
-/* ── Small mobile: ≤ 480px ── */
+/* ── Responsive ── */
 @media (max-width: 480px) {
   .overlay {
-    padding: 1.25rem 1rem;
-  }
-
-  .brandName,
-  .year {
-    font-size: 0.6rem;
-  }
-
-  .tagline {
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
-  }
-
-  .statusText {
-    font-size: 0.55rem;
-    letter-spacing: 0.1em;
-  }
-
-  .trackLabels {
-    display: none;
-  }
-}
-
-/* ── Reduced motion ── */
-@media (prefers-reduced-motion: reduce) {
-  .grain {
-    animation: none;
-  }
-
-  .curtain {
-    transition-duration: 0.01ms !important;
-  }
-
-  .digit {
-    transition: none;
+    padding: 2rem 1.5rem;
   }
 }

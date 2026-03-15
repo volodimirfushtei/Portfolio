@@ -92,25 +92,42 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-accent);
+  background: var(--color-button-bg);
   color: var(--color-button-text);
-  padding: 0.8rem 2.5rem;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-weight: 500;
+  padding: 1.1rem 2.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
   text-decoration: none;
-  transition: all 0.3s ease;
-  box-shadow: var(--color-shadow);
-  border: none;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid var(--color-button-bg);
   cursor: pointer;
   margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 0;
+}
+
+.button:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
 }
 
 .button:hover {
-  background: var(--color-accent-hover);
-  color: var(--color-button-text);
+  color: var(--bg-color);
+  border-color: var(--color-accent);
   transform: translateY(-2px);
-  box-shadow: var(--color-shadow);
 }
 
 .icon {

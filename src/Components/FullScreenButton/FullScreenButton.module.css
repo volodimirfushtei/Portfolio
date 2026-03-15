@@ -1,0 +1,64 @@
+/* FullScreenButton.module.css — Awwwards editorial premium */
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background: var(--color-surface);
+  color: var(--color-secondary);
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 10;
+}
+
+.toggle::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-accent);
+  transform: scale(0);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.toggle:hover {
+  color: var(--bg-color);
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+}
+
+.toggle:hover::before {
+  transform: scale(1);
+}
+
+.toggle:active {
+  transform: scale(0.92) translateY(0);
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  font-size: 1.1rem;
+  color: inherit;
+  position: relative;
+  z-index: 1;
+}
+
+/* Tablet & Mobile responsive sync with ToggleTheme */
+@media (max-width: 480px) {
+  .toggle {
+    width: 32px;
+    height: 32px;
+  }
+  .icon {
+    font-size: 0.9rem;
+  }
+}

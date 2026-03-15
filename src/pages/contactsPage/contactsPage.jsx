@@ -1,18 +1,14 @@
 import React, { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
-import s from "./contactsPage.module.css";
+import styles from "./contactsPage.module.css";
 import ContactForm from "../../Components/ContactForm/ContactForm";
 import gsap from "gsap/dist/gsap";
-import ScrollTrigger from "gsap/dist/ScrollTrigger";
-
-// Реєстрація плагіна GSAP
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
+import AnimatedPage from "../../Components/AnimatedPage/AnimatedPage";
 
 const ContactsPage = () => {
-  const bgRef = useRef(null);
   const containerRef = useRef(null);
+  const headerRef = useRef(null);
+  const contentRef = useRef(null);
+  const bgRef = useRef(null);
 
   const socialItems = [
     {
@@ -38,174 +34,169 @@ const ContactsPage = () => {
     { icon: "ri-github-fill", label: "GitHub", url: "https://github.com" },
   ];
 
-  // Анімації Framer Motion
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        duration: 0.6,
-        when: "beforeChildren",
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const childVariants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.8,
-        ease: [0.16, 0.77, 0.47, 0.97],
-      },
-    },
-  };
-
-  const socialVariants = {
-    hover: {
-      y: -5,
-      scale: 1.1,
-      transition: { type: "spring", stiffness: 400, damping: 10 },
-    },
-    tap: { scale: 0.9 },
-  };
-
-  // GSAP анімації для фону
   useEffect(() => {
     const ctx = gsap.context(() => {
+      const tl = gsap.timeline();
+
+      // Background entry
+      tl.fromTo(bgRef.current, 
+        { scale: 1.4, opacity: 0, filter: "grayscale(1) brightness(0) blur(20px)" },
+        { scale: 1, opacity: 0.6, filter: "grayscale(1) brightness(0.2) blur(5px)", duration: 2.5, ease: "power2.out" }
+      );
+
+      // Background subtle drift (parallel)
       gsap.to(bgRef.current, {
-        y: 50,
-        repeat: 0,
+        x: -20,
+        y: -15,
+        duration: 20,
+        repeat: -1,
         yoyo: true,
-        duration: 5,
         ease: "sine.inOut",
+        delay: 2.5
       });
+
+      // Header reveal
+      tl.from(`.${styles.eyebrow}`, {
+        opacity: 0,
+        x: -20,
+        duration: 1,
+        ease: "power3.out"
+      }, "-=1.5")
+      .from(`.${styles.headingLine} span`, {
+        y: 120,
+        rotateX: -95,
+        opacity: 0,
+        stagger: 0.15,
+        duration: 1.5,
+        ease: "power4.out"
+      }, "-=0.8")
+      .from(`.${styles.textSection} .article`, {
+        opacity: 0,
+        y: 40,
+        stagger: 0.15,
+        duration: 1,
+        ease: "power3.out"
+      }, "-=0.6")
+      .from(`.${styles.socials} a`, {
+        opacity: 0,
+        scale: 0.5,
+        stagger: 0.08,
+        duration: 0.6,
+        ease: "back.out(1.7)"
+      }, "-=0.4")
+      .from(`.${styles.formsContainer} > div:last-child`, {
+        opacity: 0,
+        x: 30,
+        duration: 1,
+        ease: "power3.out"
+      }, "-=0.8");
+
     }, containerRef);
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <motion.div
-      className={s.contactsPage}
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants}
-      ref={containerRef}
-      aria-labelledby="page-title"
-    >
-      <div className={s.bg} ref={bgRef} aria-hidden="true" />
+    <AnimatedPage>
+      <div className={styles.contactsPage} ref={containerRef}>
+        {/* Visual Overlays */}
+        <div className={styles.noise} aria-hidden="true" />
+        <div className={styles.scanlines} aria-hidden="true" />
+        <div className={styles.bg} ref={bgRef} aria-hidden="true" />
 
-      <div className={s.container}>
-        <motion.h1
-          className={s.pageTitle}
-          variants={childVariants}
-          id="page-title"
-        >
-          Let's<span className={s.pageTitleAccent}> Connect</span>
-        </motion.h1>
-
-        <div className={s.formsContainer}>
-          <motion.div
-            className={s.textSection}
-            variants={containerVariants}
-            aria-labelledby="contact-info"
-          >
-            <div className={s.glassBox}>
-              <motion.article variants={childVariants}>
-                <h3 className={s.title} id="contact-info">
-                  <i className="ri-mail-line" aria-hidden="true" /> Get in Touch
-                </h3>
-                <p className={s.description}>
-                  Fill in the form and I'll get back to you within 24 hours. I'm
-                  excited to hear about your project ideas!
-                </p>
-              </motion.article>
-
-              <motion.article variants={childVariants}>
-                <h3 className={s.title}>
-                  <i className="ri-reactjs-line" aria-hidden="true" /> Modern
-                  Tech Stack
-                </h3>
-                <p className={s.description}>
-                  Built with React, Framer Motion, and CSS Modules for buttery
-                  smooth animations and responsive design.
-                </p>
-              </motion.article>
-
-              <motion.article variants={childVariants}>
-                <h3 className={s.title}>
-                  <i className="ri-group-line" aria-hidden="true" />{" "}
-                  Collaboration Ready
-                </h3>
-                <p className={s.description}>
-                  Perfect for startups, agencies, and freelance projects. Let's
-                  build something amazing together!
-                </p>
-              </motion.article>
-
-              <motion.div
-                className={s.socials}
-                variants={childVariants}
-                aria-label="Social media links"
-              >
-                {socialItems.map((item, index) => (
-                  <motion.a
-                    key={index}
-                    href={item.url}
-                    className={s.socialLink}
-                    variants={socialVariants}
-                    whileHover="hover"
-                    whileTap="tap"
-                    aria-label={item.label}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <i className={item.icon} aria-hidden="true" />
-                  </motion.a>
-                ))}
-              </motion.div>
+        <div className={styles.container}>
+          {/* Header */}
+          <header ref={headerRef} className={styles.header}>
+            <div className={styles.eyebrow}>
+              <span className={styles.eyebrowLine} />
+              <span className={styles.eyebrowText}>Open for opportunities</span>
             </div>
-          </motion.div>
+            <h1 className={styles.pageTitle}>
+              <div className={styles.headingLine}>
+                <span>Let's</span> <span className={styles.pageTitleAccent}>Connect</span>
+              </div>
+            </h1>
+          </header>
 
-          <motion.div
-            variants={childVariants}
-            whileHover={{ scale: 1.01 }}
-            transition={{ type: "spring", stiffness: 400 }}
-          >
-            <ContactForm key="ContactForm" />
-          </motion.div>
+          <div className={styles.formsContainer} ref={contentRef}>
+            <div className={styles.textSection}>
+              <div className={styles.glassBox}>
+                <article className={styles.article}>
+                  <h3 className={styles.title}>
+                    <i className="ri-mail-line" aria-hidden="true" /> Get in Touch
+                  </h3>
+                  <p className={styles.description}>
+                    Drop me a line or follow my digital journey through social media. I'm always 
+                    open to discussing new projects, creative ideas, or opportunities to be 
+                    part of your vision.
+                  </p>
+                </article>
+
+                <article className={styles.article}>
+                  <h3 className={styles.title}>
+                    <i className="ri-reactjs-line" aria-hidden="true" /> Modern Execution
+                  </h3>
+                  <p className={styles.description}>
+                    Every interaction is crafted with precision, utilizing the latest 
+                    technologies to ensure a seamless and engaging user experience.
+                  </p>
+                </article>
+
+                <article className={styles.article}>
+                  <h3 className={styles.title}>
+                    <i className="ri-group-line" aria-hidden="true" /> Collaboration
+                  </h3>
+                  <p className={styles.description}>
+                    I believe in the power of collective creativity. Let's combine our 
+                    strengths to build something that truly stands out in the digital landscape.
+                  </p>
+                </article>
+
+                <article className={styles.article}>
+                  <h3 className={styles.title}>
+                    <i className="ri-group-line" aria-hidden="true" /> Collaboration
+                  </h3>
+                  <p className={styles.description}>
+                    I believe in the power of collective creativity. Let's combine our 
+                    strengths to build something that truly stands out in the digital landscape.
+                  </p>
+                </article>
+
+                <div className={styles.socials} aria-label="Social media links">
+                  {socialItems.map((item, index) => (
+                    <a
+                      key={index}
+                      href={item.url}
+                      className={styles.socialLink}
+                      aria-label={item.label}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <i className={item.icon} aria-hidden="true" />
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <ContactForm key="ContactForm" />
+            </div>
+          </div>
+
+          <footer className={styles.infoContainer}>
+            <p className={styles.copyright}>
+              <i className="ri-copyright-line" aria-hidden="true" /> 2025
+              Volodymyr Fushtey
+              <i className="ri-heart-fill" aria-hidden="true" style={{ color: "var(--color-accent)" }} />
+            </p>
+            <p className={styles.copyright}>
+              Build with dedication <i className="ri-code-s-slash-line" aria-hidden="true" />
+            </p>
+          </footer>
         </div>
-
-        <motion.footer
-          className={s.infoContainer}
-          variants={childVariants}
-          aria-label="Copyright information"
-        >
-          <p className={s.copyright}>
-            <i className="ri-copyright-line" aria-hidden="true" /> 2025
-            Volodymyr Fushtey
-            <motion.i
-              className="ri-heart-fill"
-              aria-hidden="true"
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{
-                repeat: Infinity,
-                duration: 1.5,
-                ease: "easeInOut",
-              }}
-            />
-          </p>
-          <p className={s.copyright}>
-            Crafted with React{" "}
-            <i className="ri-reactjs-line" aria-hidden="true" /> & Framer Motion{" "}
-            <i className="ri-motion-line" aria-hidden="true" />
-          </p>
-        </motion.footer>
       </div>
-    </motion.div>
+    </AnimatedPage>
   );
 };
 

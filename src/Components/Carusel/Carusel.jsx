@@ -11,6 +11,7 @@ export default function Carousel() {
   const containerRef = useRef(null);
   const progressRef = useRef(null);
   const slideRefs = useRef([]);
+  
 
   const slides = useMemo(
     () => [
