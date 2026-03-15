@@ -1,6 +1,6 @@
 .layoutContainer {
   display: flex;
-  min-height: calc(100vh - 5rem);
+ 
   background-color: transparent;
   position: relative;
   overflow: hidden;
@@ -11,7 +11,7 @@
 
   /* Ширина сайдбара */
   transition: all 0.3s ease;
-  min-height: calc(100vh - 5rem);
+  
 }
 
 .mainContent.blurContent {
@@ -35,7 +35,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--color-shadow);
 }
 
 .themeToggleContainer {

@@ -1,0 +1,55 @@
+.cornerBadge {
+  position: fixed;
+  top: 6rem;
+  right: 2rem;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  pointer-events: none;
+  mix-blend-mode: difference;
+}
+
+.cornerBadgeNum {
+  font-family: var(--font-primary, "Bebas Neue", sans-serif);
+  font-size: 2.5rem;
+  line-height: 1;
+  color: var(--color-accent);
+  font-weight: 700;
+  opacity: 0.4;
+  text-shadow: 0 0 10px var(--color-border);
+}
+
+.cornerBadgeLabel {
+  font-family: var(--font-mono, "DM Mono", monospace);
+  font-size: var(--font-size-xs, 0.6rem);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  opacity: 0.5;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+/* Адаптивність */
+@media (max-width: 768px) {
+  .cornerBadge {
+    top: 4rem;
+    right: 1rem;
+  }
+
+  .cornerBadgeNum {
+    font-size: 2rem;
+  }
+
+  .cornerBadgeLabel {
+    font-size: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cornerBadge {
+    display: none;
+  }
+}

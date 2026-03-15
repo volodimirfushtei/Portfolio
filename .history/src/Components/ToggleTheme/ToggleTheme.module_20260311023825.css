@@ -1,0 +1,75 @@
+/* ToggleTheme.module.css — Awwwards editorial dark */
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.85rem;
+  border: 1px solid rgba(245, 245, 240, 0.1);
+  background: transparent;
+  color: rgba(245, 245, 240, 0.45);
+  cursor: pointer;
+  font-family: "DM Mono", monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+  transition:
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+/* Wipe background on hover */
+.toggle::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(232, 243, 60, 0.06);
+  transform: translateX(-101%);
+  transition: transform 0.35s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.toggle:hover::before {
+  transform: translateX(0);
+}
+
+.toggle:hover {
+  border-color: rgba(232, 243, 60, 0.35);
+  color: #f5f5f0;
+}
+
+.toggle:active {
+  transform: scale(0.97);
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  color: #e8f53c;
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+}
+
+.label {
+  line-height: 1;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Mobile: ≤ 480px — іконка тільки ── */
+@media (max-width: 480px) {
+  .label {
+    display: none;
+  }
+
+  .toggle {
+    padding: 0.45rem;
+    width: 34px;
+    height: 34px;
+    justify-content: center;
+  }
+}

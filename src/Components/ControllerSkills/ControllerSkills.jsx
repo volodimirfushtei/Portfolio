@@ -1,16 +1,14 @@
-import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRef, useEffect, useState, useMemo } from "react";
+import { motion, useAnimation } from "framer-motion";
 import styles from "./ControllerSkills.module.css";
 
-gsap.registerPlugin(ScrollTrigger);
-
+// Масив технологій
 const techItems = [
   {
     name: "React",
     icon: "ri-reactjs-line",
     color: "#61dafb",
-    description: "UI library",
+    description: "Library",
   },
   {
     name: "Next.js",
@@ -22,155 +20,175 @@ const techItems = [
     name: "JavaScript",
     icon: "ri-javascript-line",
     color: "#f7df1e",
-    description: "Programming language",
+    description: "Language",
   },
-  
+  {
+    name: "TypeScript",
+    icon: "ri-typescript-line",
+    color: "#3178c6",
+    description: "Language",
+  },
   {
     name: "Node.js",
     icon: "ri-nodejs-line",
     color: "#68a063",
-    description: "Server runtime",
+    description: "Runtime",
+  },
+  {
+    name: "MongoDB",
+    icon: "ri-database-2-line",
+    color: "#47a248",
+    description: "NoSQL DB",
+  },
+  {
+    name: "Tailwind",
+    icon: "ri-css3-line",
+    color: "#38bdf8",
+    description: "Styling",
+  },
+  {
+    name: "Git",
+    icon: "ri-git-branch-line",
+    color: "#f1502f",
+    description: "VCS",
+  },
+  {
+    name: "Docker",
+    icon: "ri-docker-line",
+    color: "#2496ed",
+    description: "Container",
   },
   {
     name: "Figma",
     icon: "ri-pencil-ruler-line",
     color: "#a259ff",
-    description: "Design tool",
+    description: "Design",
   },
   {
-    name: "MongoDB",
-    icon: "ri-database-2-line",
-    color: "#47a248",
-    description: "NoSQL DB",
+    name: "VS Code",
+    icon: "ri-code-line",
+    color: "#007acc",
+    description: "Editor",
   },
   {
-    name: "Tailwind",
-    icon: "ri-css3-line",
-    color: "#38bdf8",
-    description: "Utility CSS",
-  },
-  {
-    name: "Git",
-    icon: "ri-git-branch-line",
-    color: "#f1502f",
-    description: "Version control",
-  },
-  {
-    name: "Docker",
-    icon: "ri-docker-line",
-    color: "#2496ed",
-    description: "Containerization",
+    name: "Postman",
+    icon: "ri-flask-line",
+    color: "#ff6c37",
+    description: "Testing",
   },
   {
     name: "AWS",
-    icon: "ri-aws-line",
+    icon: "ri-cloud-line",
     color: "#ff9900",
-    description: "Cloud services",
+    description: "Cloud",
   },
   {
-    name: "Linux",
-    icon: "ri-linux-line",
-    color: "#fbc02d",
-    description: "Operating system",
+    name: "GraphQL",
+    icon: "ri-graphql-line",
+    color: "#e10098",
+    description: "API",
   },
   {
-    name: "MongoDB",
-    icon: "ri-database-2-line",
-    color: "#47a248",
-    description: "NoSQL DB",
+    name: "Python",
+    icon: "ri-python-line",
+    color: "#3776ab",
+    description: "Language",
   },
   {
-    name: "Tailwind",
-    icon: "ri-css3-line",
-    color: "#38bdf8",
-    description: "Utility CSS",
-  },
-  {
-    name: "Git",
-    icon: "ri-git-branch-line",
-    color: "#f1502f",
-    description: "Version control",
-  },
-  {
-    name: "Docker",
-    icon: "ri-docker-line",
-    color: "#2496ed",
-    description: "Containerization",
-  },
-  {
-    name: "AWS",
-    icon: "ri-aws-line",
-    color: "#ff9900",
-    description: "Cloud services",
-  },
-  {
-    name: "Linux",
-    icon: "ri-linux-line",
-    color: "#fbc02d",
-    description: "Operating system",
+    name: "Sass",
+    icon: "ri-sass-line",
+    color: "#cc6699",
+    description: "Styling",
   },
 ];
 
-export default function ControllerSkills() {
-  const cardsRef = useRef([]);
+// Simplified TechCard (Editorial Cell)
+const TechCard = ({ tech }) => {
+  return (
+    <div className={styles.card}>
+      <div className={styles.cardContent}>
+        <i className={tech.icon} style={{ color: tech.color }} />
+        <div className={styles.info}>
+          <span className={styles.name}>{tech.name}</span>
+          <span className={styles.desc}>{tech.description}</span>
+        </div>
+      </div>
+    </div>
+  );
+};
 
-  useEffect(() => {
-    cardsRef.current.forEach((card, i) => {
-      gsap.fromTo(
-        card,
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: card,
-            start: "top 80%",
-            end: "bottom 60%",
-            toggleActions: "play none none reverse",
-            once: true,
-          },
-          delay: i * 0.1, // stagger
-        },
-      );
-    });
+const ControllerSkills = () => {
+  const sectionRef = useRef(null);
+  const [isInView, setIsInView] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const controls = useAnimation();
+
+  // Optimized duplicated list for marquee
+  const marqueeItems = useMemo(() => {
+    return [...techItems, ...techItems, ...techItems, ...techItems];
   }, []);
 
-  return (
-    <section className={styles.section} aria-label="Technologies I use">
-      <div className={styles.header}>
-        <span className={styles.eyebrowLine} aria-hidden="true" />
-        <h3 className={styles.heading}>Coding process and tools</h3>
-      </div>
+  // Intersection Observer for performance
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
 
-      <div className={styles.track} aria-hidden="true">
-        <div className={styles.inner}>
-          {techItems.map((tech, i) => (
-            <div
-              key={tech.name}
-              className={styles.card}
-              ref={(el) => {
-                if (el) cardsRef.current[i] = el;
-              }}
-            >
-              <div className={styles.cardInner}>
-                <div className={styles.front}>
-                  <i
-                    className={tech.icon}
-                    style={{ color: tech.color }}
-                    aria-hidden="true"
-                  />
-                  <span className={styles.name}>{tech.name}</span>
-                </div>
-                <div className={styles.back}>
-                  <p style={{ color: tech.color }}>{tech.description}</p>
-                </div>
-              </div>
-            </div>
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  // Animation variants
+  const headerVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+    },
+  };
+
+  return (
+    <section ref={sectionRef} className={styles.section}>
+      {/* Header */}
+      <motion.div
+        className={styles.header}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={headerVariants}
+      >
+        <span className={styles.eyebrowLine} />
+        <h3 className={styles.heading}>Coding process and tools</h3>
+      </motion.div>
+
+      {/* Marquee Track */}
+      <div className={styles.track}>
+        <motion.div
+          className={styles.inner}
+          animate={isInView && !isPaused ? { x: [0, -100 / 4 + "%"] } : {}}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            repeatType: "loop",
+            ease: "linear",
+          }}
+          onHoverStart={() => setIsPaused(true)}
+          onHoverEnd={() => setIsPaused(false)}
+        >
+          {marqueeItems.map((tech, index) => (
+            <TechCard
+              key={`${tech.name}-${index}`}
+              tech={tech}
+            />
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
-}
+};
+
+export default ControllerSkills;

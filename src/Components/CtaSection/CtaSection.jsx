@@ -1,15 +1,13 @@
-import { useEffect, useRef } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
+import { motion, useInView } from "framer-motion";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./CtaSection.module.css";
 
-gsap.registerPlugin(ScrollTrigger);
-
 const listItems = [
-  "Responsive Design",
-  "No additional fees",
-  "Easy customization",
-  "24/7 Support",
+  "Bespoke Development",
+  "High Performance",
+  "Editorial Interface",
+  "Scalable Architecture",
 ];
 
 const images = [
@@ -24,181 +22,154 @@ const images = [
   "images/my_photo.jpg",
 ];
 
-// duplicated for seamless marquee
-const marqueeImages = [...images, ...images];
+// 4x for a dense, seamless marquee
+const marqueeImages = [...images, ...images, ...images, ...images];
 
 const CtaSection = () => {
   const sectionRef = useRef(null);
+  const buttonRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
 
-  const headingRef = useRef(null);
-  const subRef = useRef(null);
-  const btnRef = useRef(null);
-  const listRef = useRef(null);
+  const isInView = useInView(sectionRef, {
+    once: false,
+    margin: "-100px",
+  });
 
-  const row1Ref = useRef(null);
-  const row2Ref = useRef(null);
-
-  const hoverTargetsRef = useRef([]);
-
+  // Responsive Check
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      /* ───────────────── Reveal content ───────────────── */
-      gsap
-        .timeline({
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 75%",
-            once: true,
-          },
-          defaults: { ease: "power3.out" },
-        })
-        .from(headingRef.current.children, {
-          opacity: 0,
-          y: 48,
-          duration: 0.9,
-          stagger: 0.08,
-        })
-        .from(subRef.current, { opacity: 0, y: 20, duration: 0.6 }, "-=0.4")
-        .from(btnRef.current, { opacity: 0, y: 16, duration: 0.5 }, "-=0.3")
-        .from(
-          listRef.current.children,
-          {
-            opacity: 0,
-            y: 12,
-            duration: 0.45,
-            stagger: 0.08,
-          },
-          "-=0.25",
-        );
-
-      /* ───────────────── Marquee ───────────────── */
-      gsap.to(row1Ref.current, {
-        x: "-50%",
-        duration: 28,
-        ease: "none",
-        repeat: -1,
-      });
-
-      gsap.fromTo(
-        row2Ref.current,
-        { x: "-50%" },
-        {
-          x: "0%",
-          duration: 32,
-          ease: "none",
-          repeat: -1,
-        },
-      );
-
-      /* ───────────────── Hover interactions (GSAP) ───────────────── */
-      hoverTargetsRef.current.forEach((el) => {
-        if (!el) return;
-
-        const hoverTl = gsap.timeline({ paused: true });
-
-        hoverTl.to(el, {
-          scale: 1.06,
-          y: -4,
-          duration: 0.35,
-          ease: "power3.out",
-        });
-
-        const onEnter = () => hoverTl.play();
-        const onLeave = () => hoverTl.reverse();
-
-        el.addEventListener("mouseenter", onEnter);
-        el.addEventListener("mouseleave", onLeave);
-
-        ScrollTrigger.addEventListener("refreshInit", () => {
-          el.removeEventListener("mouseenter", onEnter);
-          el.removeEventListener("mouseleave", onLeave);
-        });
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
+    const check = () => setIsMobile(window.innerWidth < 1024);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
   }, []);
+
+  // GSAP Magnetic Effect
+  const handleMouseMove = useCallback((e) => {
+    if (isMobile || !buttonRef.current) return;
+    
+    const rect = buttonRef.current.getBoundingClientRect();
+    const x = e.clientX - (rect.left + rect.width / 2);
+    const y = e.clientY - (rect.top + rect.height / 2);
+    
+    gsap.to(buttonRef.current, {
+      x: x * 0.3,
+      y: y * 0.3,
+      duration: 0.4,
+      ease: "power2.out",
+    });
+  }, [isMobile]);
+
+  const handleMouseLeave = useCallback(() => {
+    if (isMobile || !buttonRef.current) return;
+    
+    gsap.to(buttonRef.current, {
+      x: 0,
+      y: 0,
+      duration: 0.6,
+      ease: "power2.out",
+    });
+  }, [isMobile]);
+
+  // Framer Motion Variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+    },
+  };
 
   return (
     <section ref={sectionRef} className={styles.section}>
-      {/* ───────── Marquee background ───────── */}
+      {/* ── Visual Overlays ── */}
+      <div className={styles.noise} aria-hidden="true" />
+      <div className={styles.scanlines} aria-hidden="true" />
+      
+      {/* ── Marquee (Subtle Background) ── */}
       <div className={styles.marqueeWrap} aria-hidden="true">
-        <div ref={row1Ref} className={styles.row}>
+        <motion.div
+          className={styles.row}
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+        >
           {marqueeImages.map((src, i) => (
-            <img
-              key={`row1-${i}`}
-              src={src}
-              alt=""
-              loading="lazy"
-              className={styles.image}
-            />
+            <img key={`m1-${i}`} src={src} alt="" className={styles.image} loading="lazy" />
           ))}
-        </div>
-
-        <div ref={row2Ref} className={styles.row}>
+        </motion.div>
+        <motion.div
+          className={styles.row}
+          animate={{ x: ["-50%", "0%"] }}
+          transition={{ duration: 70, repeat: Infinity, ease: "linear" }}
+        >
           {marqueeImages.map((src, i) => (
-            <img
-              key={`row2-${i}`}
-              src={src}
-              alt=""
-              loading="lazy"
-              className={styles.image}
-            />
+            <img key={`m2-${i}`} src={src} alt="" className={styles.image} loading="lazy" />
           ))}
-        </div>
-
+        </motion.div>
         <div className={styles.marqueeOverlay} />
       </div>
 
-      {/* ───────── Content ───────── */}
       <div className={styles.container}>
-        <div className={styles.content}>
+        <motion.div
+          className={styles.content}
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+        >
           {/* Eyebrow */}
-          <div className={styles.eyebrow}>
+          <motion.div className={styles.eyebrow} variants={itemVariants}>
             <span className={styles.eyebrowLine} />
-            <span className={styles.eyebrowText}>Ready to start?</span>
-          </div>
+            <span className={styles.eyebrowText}>Ready to launch?</span>
+          </motion.div>
 
           {/* Heading */}
-          <h2 ref={headingRef} className={styles.heading}>
-            <span>Take Your Website</span>
-            <span className={styles.headingAccent}> to the Next Level</span>
-          </h2>
+          <motion.h2 className={styles.heading} variants={itemVariants}>
+            Elevate your <span className={styles.headingAccent}>digital vision</span>
+          </motion.h2>
 
-          <p ref={subRef} className={styles.subheading}>
-            Premium templates designed for{" "}
-            <span className={styles.highlight}>modern businesses</span>
-          </p>
+          {/* Subheading */}
+          <motion.p className={styles.subheading} variants={itemVariants}>
+            Blending premium aesthetics with <span className={styles.highlight}>cutting-edge performance</span> for the modern web.
+          </motion.p>
 
-          {/* CTA Button */}
-          <a
-            ref={(el) => {
-              btnRef.current = el;
-              hoverTargetsRef.current[0] = el;
-            }}
-            href="https://webflow.com/templates/designers/brandbes"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.button}
+          {/* Magnetic Button */}
+          <motion.div 
+            className={styles.buttonWrapper} 
+            variants={itemVariants}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
           >
-            <span>Purchase on Webflow</span>
-            <span className={styles.buttonArrow}>→</span>
-          </a>
+            <a
+              href="https://webflow.com/templates/designers/brandbes"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.button}
+              ref={buttonRef}
+            >
+              <span className={styles.buttonText}>Experience Excellence</span>
+              <span className={styles.buttonArrow}>→</span>
+            </a>
+          </motion.div>
 
-          {/* List */}
-          <ul ref={listRef} className={styles.list}>
-            {listItems.map((text, i) => (
-              <li
-                key={text}
-                ref={(el) => (hoverTargetsRef.current[i + 1] = el)}
-                className={styles.listItem}
-              >
-                <i className="ri-checkbox-circle-line" aria-hidden="true" />
+          {/* Quality Tags */}
+          <motion.ul className={styles.list} variants={containerVariants}>
+            {listItems.map((text) => (
+              <motion.li key={text} className={styles.listItem} variants={itemVariants}>
+                <i className="ri-checkbox-circle-line" />
                 <span>{text}</span>
-              </li>
+              </motion.li>
             ))}
-          </ul>
-        </div>
+          </motion.ul>
+        </motion.div>
       </div>
     </section>
   );

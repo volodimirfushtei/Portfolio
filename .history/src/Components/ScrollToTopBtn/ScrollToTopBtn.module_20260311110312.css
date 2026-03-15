@@ -1,0 +1,303 @@
+/* ScrollToTopBtn.module.css — Vertical Scroll Progress */
+
+/* ═════════════════════════════════════════════════════════════ */
+/* MAIN CONTAINER */
+/* ═════════════════════════════════════════════════════════════ */
+
+.scrollToTop {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  z-index: 50;
+  transition: opacity 0.3s ease;
+}
+
+/* ═════════════════════════════════════════════════════════════ */
+/* PROGRESS LINE (VERTICAL) */
+/* ═════════════════════════════════════════════════════════════ */
+
+.progressContainer {
+  position: relative;
+  width: 1px;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.progressBg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(232, 243, 60, 0.1);
+}
+
+.progressBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to top,
+    var(--color-accent) 0%,
+    rgba(232, 243, 60, 0.4) 100%
+  );
+  transform-origin: bottom;
+  box-shadow: 0 0 12px rgba(232, 243, 60, 0.3);
+}
+
+/* ═════════════════════════════════════════════════════════════ */
+/* CONTENT (LABEL + BUTTON) */
+/* ═════════════════════════════════════════════════════════════ */
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+  font-weight: 500;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  white-space: nowrap;
+}
+
+/* ═════════════════════════════════════════════════════════════ */
+/* BUTTON */
+/* ═════════════════════════════════════════════════════════════ */
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-secondary), #5e5e5d);
+  color: var(--color-text);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(232, 243, 60, 0.2);
+}
+
+.button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.1);
+  transform: scale(0);
+  transition: transform var(--transition-fast);
+  z-index: -1;
+}
+
+.button:hover::before {
+  transform: scale(1);
+}
+
+.button:hover {
+  box-shadow: 0 8px 20px rgba(232, 243, 60, 0.4);
+  transform: translateY(-4px);
+}
+
+.button:active {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(232, 243, 60, 0.3);
+}
+
+.button svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2;
+  transition: transform var(--transition-fast);
+}
+
+.button:hover svg {
+  transform: translateY(-3px);
+}
+
+/* ═════════════════════════════════════════════════════════════ */
+/* PERCENTAGE TEXT */
+/* ═════════════════════════════════════════════════════════════ */
+
+.percentage {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--color-accent);
+  min-width: 32px;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+/* ═════════════════════════════════════════════════════════════ */
+/* RESPONSIVE: TABLET (≤ 1024px) */
+/* ═════════════════════════════════════════════════════════════ */
+
+@media (max-width: 1024px) {
+  .scrollToTop {
+    bottom: 2rem;
+    right: 2rem;
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  .progressContainer {
+    width: 100px;
+    height: 1px;
+    justify-content: flex-start;
+  }
+
+  .progressBg,
+  .progressBar {
+    width: 100%;
+    height: 1px;
+  }
+
+  .label {
+    writing-mode: horizontal-tb;
+    transform: none;
+    white-space: nowrap;
+    font-size: 0.6rem;
+  }
+
+  .button {
+    width: 40px;
+    height: 40px;
+  }
+
+  .button svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .percentage {
+    position: absolute;
+    left: 50%;
+    top: -1.5rem;
+    transform: translateX(-50%);
+    font-size: 0.65rem;
+    min-width: auto;
+  }
+}
+
+/* ═════════════════════════════════════════════════════════════ */
+/* RESPONSIVE: MOBILE (≤ 768px) */
+/* ═════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .scrollToTop {
+    bottom: 1.5rem;
+    right: 1.5rem;
+  }
+
+  .label {
+    display: none;
+  }
+
+  .percentage {
+    font-size: 0.6rem;
+    top: -1.25rem;
+  }
+
+  .button {
+    width: 38px;
+    height: 38px;
+  }
+
+  .button svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* ═════════════════════════════════════════════════════════════ */
+/* RESPONSIVE: SMALL MOBILE (≤ 480px) */
+/* ═════════════════════════════════════════════════════════════ */
+
+@media (max-width: 480px) {
+  .scrollToTop {
+    bottom: 1rem;
+    right: 1rem;
+  }
+
+  .button {
+    width: 36px;
+    height: 36px;
+  }
+
+  .button svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .percentage {
+    font-size: 0.55rem;
+    top: -1rem;
+  }
+}
+
+/* ═════════════════════════════════════════════════════════════ */
+/* ACCESSIBILITY */
+/* ═════════════════════════════════════════════════════════════ */
+
+.button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrollToTop,
+  .button,
+  .progressBar {
+    transition: none;
+  }
+
+  .button:hover {
+    transform: none;
+  }
+}
+
+/* ═════════════════════════════════════════════════════════════ */
+/* THEME SUPPORT */
+/* ═════════════════════════════════════════════════════════════ */
+
+.dark-theme .button {
+  background: linear-gradient(135deg, var(--color-accent), #ffd700);
+  color: #080808;
+  box-shadow: 0 4px 12px rgba(232, 243, 60, 0.25);
+}
+
+.dark-theme .button:hover {
+  box-shadow: 0 8px 20px rgba(232, 243, 60, 0.45);
+}
+
+.light-theme .button {
+  background: linear-gradient(135deg, #e8f53c, #d4df28);
+  color: #080808;
+  box-shadow: 0 4px 12px rgba(232, 243, 60, 0.15);
+}
+
+.light-theme .button:hover {
+  box-shadow: 0 8px 20px rgba(232, 243, 60, 0.3);
+}

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import styles from "./homePage.module.css";
 
 import ControllerSkills from "../../Components/ControllerSkills/ControllerSkills.jsx";
@@ -17,10 +17,33 @@ import Sertificate from "../../Components/Sertificate/Sertificate.jsx";
 import CtaSection from "../../Components/CtaSection/CtaSection.jsx";
 import ScrollToTopBtn from "../../Components/ScrollToTopBtn/ScrollTotopBtn.jsx";
 import ScrollProgress from "../../Components/ScrollProgress/ScrollProgress.jsx";
-
-import { useRef } from "react";
-import { useScroll, useTransform } from "framer-motion";
 import StickyZoomSection from "../../Components/StickyZoomSection/StickyZoomSection.jsx";
+
+// Page level reveal animation variants
+const pageReveal = {
+  hidden: { opacity: 0, y: 100 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 1.2,
+      ease: [0.16, 1, 0.3, 1], // Custom Awwwards-style easing
+      staggerChildren: 0.2
+    }
+  }
+};
+
+const sectionReveal = {
+  hidden: { opacity: 0, y: 50 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: "easeOut"
+    }
+  }
+};
 
 const HomePage = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -76,43 +99,62 @@ const HomePage = () => {
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
+      variants={pageReveal}
+      initial="hidden"
+      animate="visible"
       className={styles.container}
     >
       <ScrollProgress scrollProgress={scrollProgress} />
-      <section className={styles.section}>
+      <motion.section variants={sectionReveal} className={styles.section}>
         <HeroSection />
-      </section>
+      </motion.section>
 
       <main className="w-screen overflow-hidden">
         {/* Expertise Section */}
-        <section
+        <motion.section
+          variants={sectionReveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
           id="expertise"
           className={`${styles.expertise} ${styles.section}`}
         >
           <Expertise />
-        </section>
+        </motion.section>
 
         {/* Skills Section */}
-        <section id="skills" className={styles.skillsSection}>
+        <motion.section
+          variants={sectionReveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          id="skills"
+          className={styles.section} // Changed from skillsSection to section for uniform padding layout
+        >
           <ControllerSkills items={skills} />
-        </section>
+        </motion.section>
 
         {/* Projects Section */}
         <section
           id="projects"
           className={`${styles.projects} ${styles.section}`}
         >
-          <div
+          <motion.div
+            variants={sectionReveal}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
             ref={sectionRef}
             className={`${styles.carusel} ${styles.section} `}
           >
             <Carusel />
-          </div>
+          </motion.div>
 
           <motion.section
+            variants={sectionReveal}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
             id="cta"
             className={`${styles.cta} ${styles.section} `}
             style={{ y }}
@@ -121,16 +163,27 @@ const HomePage = () => {
           </motion.section>
 
           {/* Certificate Section */}
-          <section
+          <motion.section
+            variants={sectionReveal}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
             id="serteficate"
             className={`${styles.sertificate} ${styles.section}`}
             style={{ y }}
           >
             <Sertificate />
-          </section>
-          <section className={`${styles.sticky} ${styles.section}`}>
+          </motion.section>
+          
+          <motion.section
+            variants={sectionReveal}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className={`${styles.sticky} ${styles.section}`}
+          >
             <StickyZoomSection />
-          </section>
+          </motion.section>
         </section>
       </main>
       <Footer />

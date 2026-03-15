@@ -6,12 +6,12 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 72px;
+  height: 90px;
   z-index: 1000;
-  background: var(--color-header);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(245, 245, 240, 0.06);
+  background: var(--color-background-scrolled);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  border-bottom: 1px solid var(--color-border);
   transition:
     background 0.4s ease,
     border-color 0.4s ease;
@@ -19,10 +19,10 @@
 }
 
 .scrolled {
-  background: var(--color-hero);
+  background: var(--color-background-scrolled);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom-color: rgba(232, 243, 60, 0.12);
+  border-bottom-color: var(--color-accent);
 }
 
 /* ── Container ── */
@@ -33,7 +33,7 @@
   max-width: 1400px;
   height: 100%;
   margin: 0 auto;
-  padding: 0 2.5rem;
+  padding: 0 clamp(1.5rem, 5vw, 3rem);
 }
 
 /* ── Logo ── */
@@ -69,8 +69,8 @@
 .desktopNav {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
-  margin-left: 1rem;
+  gap: 1rem;
+  margin-left: 1.5rem;
 }
 
 .navItem {
@@ -102,13 +102,13 @@
   transform: translateX(-50%) scaleX(0);
   width: 16px;
   height: 1px;
-  background: #e8f53c;
+  background: var(--color-accent);
   transition: transform 0.3s cubic-bezier(0.76, 0, 0.24, 1);
 }
 
 .navLink:hover,
 .navLink:hover i {
-  color: #f5f5f0;
+  color: var(--color-text);
 }
 
 .navLink:hover::after {
@@ -134,8 +134,8 @@
   font-size: 0.58rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: #080808;
-  background: #e8f53c;
+  color: var(--color-button-bg);
+  background: var(--color-accent);
   padding: 0.2rem 0.5rem;
   white-space: nowrap;
   pointer-events: none;
@@ -160,7 +160,7 @@
   align-items: center;
   gap: 0.6rem;
   padding: 0.3rem 1rem 0.3rem 0.3rem;
-  background: #f5f5f0;
+  background: var(--color-button-text);
   border-radius: 999px;
   text-decoration: none;
   transition: background 0.3s ease;
@@ -173,7 +173,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: #e8f53c;
+  background: var(--color-accent);
   transform: translateX(-101%);
   transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
   border-radius: 999px;
@@ -207,7 +207,7 @@
   font-size: 0.68rem;
   font-weight: 500;
   letter-spacing: 0.05em;
-  color: #080808;
+  color: var(--color-button-text);
   white-space: nowrap;
 }
 
@@ -217,14 +217,14 @@
   gap: 0.3rem;
   font-family: "DM Mono", monospace;
   font-size: 0.58rem;
-  color: rgba(8, 8, 8, 0.5);
+  color: var(--color-secondary);
 }
 
 .ctaDot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #00c07f;
+  background: var(--color-success);
   flex-shrink: 0;
   animation: blink 2s ease-in-out infinite;
 }
@@ -255,7 +255,7 @@
   display: block;
   width: 22px;
   height: 1px;
-  background: rgba(245, 245, 240, 0.7);
+  background: var(--color-text);
   transition:
     transform 0.35s ease,
     opacity 0.35s ease,
@@ -280,7 +280,7 @@
   width: 100%;
   height: 100vh;
   font-size: clamp(0.6rem, 4vw, 1rem);
-  background: rgba(8, 8, 8, 0.98);
+  background: var(--color-overlay);
   pointer-events: none;
   visibility: hidden;
   opacity: 0;
@@ -296,7 +296,7 @@
   justify-content: space-between;
   align-items: center;
   padding-bottom: 2rem;
-  border-bottom: 1px solid rgba(245, 245, 240, 0.06);
+  border-bottom: 1px solid var(--color-border);
   margin-bottom: 2rem;
 }
 
@@ -305,13 +305,13 @@
   font-size: 0.6rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: rgba(245, 245, 240, 0.25);
+  color: var(--color-secondary);
 }
 
 .mobileClose {
   background: none;
-  border: 1px solid rgba(245, 245, 240, 0.15);
-  color: rgba(245, 245, 240, 0.15);
+  border: 1px solid var(--color-border);
+  color: var(--color-secondary);
   padding: 0.3rem 0.6rem;
   font-size: 1.2rem;
   line-height: 1;
@@ -321,8 +321,8 @@
 }
 
 .mobileClose:hover {
-  border-color: #e8f53c;
-  color: #e8f53c;
+  border-color: var(--color-accent);
+  color: var(--color-accent);
 }
 
 /* Mobile nav links */
@@ -337,10 +337,10 @@
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid rgba(245, 245, 240, 0.05);
+  padding: clamp(1rem, 3vh, 2rem) 1.5rem;
+  border-bottom: 1px solid var(--color-border);
   text-decoration: none;
-  color: rgba(245, 245, 240, 0.5);
+  color: var(--color-secondary);
   transition: color 0.2s ease;
   position: relative;
 }
@@ -352,14 +352,14 @@
   top: 0;
   bottom: 0;
   width: 2px;
-  background: #e8f53c;
+  background: var(--color-accent);
   transform: scaleY(0);
   transition: transform 0.3s ease;
 }
 
 .mobileNavLink:hover,
 .mobileNavLink.active {
-  color: #f5f5f0;
+  color: var(--color-text);
 }
 
 .mobileNavLink:hover::before,
@@ -369,15 +369,15 @@
 
 .mobileNum {
   font-family: "Bebas Neue", sans-serif;
-  font-size: 0.8rem;
-  color: rgba(245, 245, 240, 0.15);
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  color: var(--color-border);
   letter-spacing: 0.05em;
   min-width: 24px;
 }
 
 .mobileNavLabel {
   font-family: "Bebas Neue", sans-serif;
-  font-size: 0.8rem;
+  font-size: clamp(2rem, 8vw, 4rem);
   font-weight: 400;
   letter-spacing: 0.03em;
   line-height: 1;
@@ -390,15 +390,15 @@
 }
 .mobileNavLink i {
   font-size: 1.1rem;
-  color: rgba(245, 245, 240, 0.2);
+  color: var(--color-border);
   margin-left: auto;
 }
 
 .mobileNavLink.active .mobileNum {
-  color: #e8f53c;
+  color: var(--color-accent);
 }
 .mobileNavLink.active i {
-  color: #e8f53c;
+  color: var(--color-accent);
 }
 
 /* ── Tablet: ≤ 992px ── */
@@ -431,7 +431,7 @@
   }
 
   .mobileNavLabel {
-    font-size: 1rem;
+    font-size: 2.5rem;
   }
 }
 

@@ -1,0 +1,169 @@
+/* homePage.module.css — Clean Homepage Styles */
+
+/* ═════════════════════════════════════════════════════════════ */
+/* CONTAINER */
+/* ═════════════════════════════════════════════════════════════ */
+
+.container {
+  width: 100%;
+  background: var(--color-background);
+  display: flex;
+  flex-direction: column;
+  color: var(--color-text);
+  position: relative;
+  overflow-x: clip;
+}
+
+/* ═════════════════════════════════════════════════════════════ */
+/* SECTION BASE */
+/* ═════════════════════════════════════════════════════════════ */
+
+.section {
+  width: 100%;
+  position: relative;
+  padding: 4rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+
+/* ═════════════════════════════════════════════════════════════ */
+/* HERO SECTION */
+/* ═════════════════════════════════════════════════════════════ */
+
+.hero {
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+/* ═════════════════════════════════════════════════════════════ */
+/* SPECIFIC SECTIONS */
+/* ═════════════════════════════════════════════════════════════ */
+
+.expertise {
+  min-height: 100vh;
+  background: var(--color-background);
+}
+
+.skillsSection {
+  width: 100%;
+  min-height: 80vh;
+  background: var(--color-background);
+  padding: 4rem 2rem;
+  margin: 0;
+}
+
+.projects {
+  width: 100%;
+  background: var(--color-background);
+}
+
+.carusel {
+  min-height: 100vh;
+  background: var(--color-background);
+}
+
+.cta {
+  min-height: 100vh;
+  background: var(--color-background);
+  position: relative;
+  padding: 4rem 2rem;
+  margin: 0;
+}
+
+.sertificate {
+  min-height: 80vh;
+  background: var(--color-background);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  margin: 0;
+}
+
+.sticky {
+  min-height: 100vh;
+  background: var(--color-background);
+  padding: 4rem 2rem;
+  margin: 0;
+}
+
+/* ═════════════════════════════════════════════════════════════ */
+/* RESPONSIVE: TABLET (≤ 1024px) */
+/* ═════════════════════════════════════════════════════════════ */
+
+@media (max-width: 1024px) {
+  .section {
+    padding: 3rem 1.5rem;
+  }
+
+  .skillsSection {
+    padding: 3rem 1.5rem;
+  }
+
+  .cta,
+  .sertificate,
+  .sticky {
+    padding: 3rem 1.5rem;
+  }
+}
+
+/* ═════════════════════════════════════════════════════════════ */
+/* RESPONSIVE: MOBILE (≤ 768px) */
+/* ═════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .section {
+    padding: 2rem 1rem;
+  }
+
+  .hero {
+    min-height: 90vh;
+  }
+
+  .expertise,
+  .carusel,
+  .sticky {
+    min-height: auto;
+  }
+
+  .skillsSection {
+    padding: 2rem 1rem;
+  }
+
+  .cta,
+  .sertificate,
+  .sticky {
+    padding: 2rem 1rem;
+  }
+}
+
+/* ═════════════════════════════════════════════════════════════ */
+/* RESPONSIVE: SMALL MOBILE (≤ 480px) */
+/* ═════════════════════════════════════════════════════════════ */
+
+@media (max-width: 480px) {
+  .section {
+    padding: 1.5rem 0.75rem;
+  }
+
+  .hero {
+    padding: 1.5rem 0.75rem;
+  }
+
+  .skillsSection,
+  .cta,
+  .sertificate,
+  .sticky {
+    padding: 1.5rem 0.75rem;
+  }
+}
+
+/* ═════════════════════════════════════════════════════════════ */
+/* SCROLL PROGRESS VARIABLE */
+/* ═════════════════════════════════════════════════════════════ */
+
+:root {
+  --scroll-progress: 0%;
+}

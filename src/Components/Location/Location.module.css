@@ -10,14 +10,15 @@
   cursor: default;
   position: relative;
   user-select: none;
+  border-radius: 8px;
   transition:
     border-color 0.3s ease,
     background 0.3s ease;
 }
 
 .badge:hover {
-  border-color: rgba(232, 243, 60, 0.35);
-  background: rgba(232, 243, 60, 0.03);
+ 
+  background: #0d0d0d;
 }
 
 /* ── Pin ── */
@@ -94,7 +95,7 @@
 }
 
 .badge:hover .text {
-  color: var(--color-text );
+  color: var(--color-secondary);
 }
 
 /* ── Tooltip ── */

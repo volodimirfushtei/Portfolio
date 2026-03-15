@@ -11,61 +11,128 @@ const Expertise = () => {
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ["start start", "end start"],
+    offset: ["start end", "end start"],
   });
 
-  /* ── Scroll motion ── */
-  const bgY = useSpring(useTransform(scrollYProgress, [0, 1], ["0%", "18%"]), {
-    stiffness: 80,
-    damping: 30,
-  });
+  /* ── Parallax values ── */
+  const bgY = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "5%"]);
 
-  const contentY = useSpring(
-    useTransform(scrollYProgress, [0, 1], ["0%", "10%"]),
-    { stiffness: 120, damping: 26 },
-  );
+  /* ── Stagger variants ── */
+  const titleContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
 
-  const opacity = useTransform(scrollYProgress, [0.7, 1], [1, 0.85]);
+  const titleLine = {
+    hidden: { y: "110%" },
+    visible: {
+      y: 0,
+      transition: { duration: 1, ease: [0.16, 1, 0.3, 1] }
+    }
+  };
+
+  const columnsVariants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, ease: "easeOut", delay: 0.4 }
+    }
+  };
 
   return (
     <section ref={sectionRef} id="expertise" className={styles.expertise}>
-      {/* Corner badge */}
-      <div className={styles.cornerBadge} aria-hidden>
+      {/* ── Background elements ── */}
+      <div className={styles.noise} aria-hidden="true" />
+      <div className={styles.gridBg} aria-hidden="true" />
+      <motion.div 
+        className={styles.background} 
+        style={{ y: bgY }}
+        aria-hidden="true" 
+      />
+      <div className={styles.scanlines} aria-hidden="true" />
+
+      {/* ── Corner section index ── */}
+      <div className={styles.cornerBadge} aria-hidden="true">
         <span className={styles.cornerBadgeNum}>02</span>
         <span className={styles.cornerBadgeLabel}>Expertise</span>
       </div>
 
-      {/* Background */}
-      <motion.div className={styles.background} style={{ y: bgY, opacity }} />
+      {/* ── Main content ── */}
+      <motion.div className={styles.inner} style={{ y: contentY }}>
+        
+        {/* Section header */}
+        <header className={styles.header}>
+          <motion.div 
+            className={styles.eyebrow}
+            initial={{ clipPath: "inset(0 100% 0 0)", opacity: 0 }}
+            whileInView={{ clipPath: "inset(0 0% 0 0)", opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            
+            <span className={styles.eyebrowText}>Skills & Technologies · 2025</span>
+            
+          </motion.div>
 
-      <motion.div
-        className={styles.container}
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true, margin: "-120px" }}
-      >
-        {/* Location */}
-        <motion.div
-          className={styles.locationBadge}
-          style={{ y: contentY }}
-          whileHover={{ scale: 1.04 }}
+          <motion.h2 
+            className={styles.title}
+            variants={titleContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            <span className={styles.titleLine}>
+              <motion.span variants={titleLine} className={styles.titleAccent}>My</motion.span>
+            </span>
+            <span className={styles.titleLine}>
+              <motion.span variants={titleLine} className={styles.titlePlain}>Expertise</motion.span>
+            </span>
+          </motion.h2>
+
+          <motion.div 
+            className={styles.divider}
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          />
+
+          <motion.div 
+            className={styles.locationWrap}
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+          >
+            <LocationBadge location="Located in Ivano-Frankivsk" />
+          </motion.div>
+        </header>
+
+        {/* Content columns */}
+        <motion.div 
+          className={styles.columns}
+          variants={columnsVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
         >
-          <LocationBadge location="Located in Ivano-Frankivsk" />
+          <div className={styles.cardCol}>
+            <CardTech />
+          </div>
+
+          <div className={styles.tableCol}>
+            <ExperienceTable />
+          </div>
         </motion.div>
 
-        {/* Tech card */}
-        <motion.div
-          className={styles.section}
-          style={{ y: contentY }}
-          whileHover={{ scale: 1.03 }}
-        >
-          <CardTech />
-        </motion.div>
-
-        {/* Experience */}
-        <motion.div style={{ y: contentY }} whileHover={{ scale: 1.03 }}>
-          <ExperienceTable />
-        </motion.div>
       </motion.div>
     </section>
   );

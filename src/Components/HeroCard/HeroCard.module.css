@@ -7,8 +7,8 @@
   align-items: center;
   gap: 5rem;
   padding: 6rem 4rem;
-  background: #080808;
-  border: 1px solid rgba(232, 243, 60, 0.08);
+  background: var(--bg-color);
+  border: 1px solid var(--color-border);
   border-radius: 0;
   color: var(--color-text);
   position: relative;
@@ -26,8 +26,8 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(232, 243, 60, 0.6) 40%,
-    rgba(232, 243, 60, 0.6) 60%,
+    var(--color-accent) 40%,
+    var(--color-accent) 60%,
     transparent 100%
   );
 }
@@ -51,7 +51,7 @@
   display: block;
   width: 32px;
   height: 1px;
-  background: #e8f53c;
+  background: var(--color-accent);
   flex-shrink: 0;
 }
 
@@ -60,7 +60,7 @@
   font-size: 0.65rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: #e8f53c;
+  color: var(--color-accent);
 }
 
 /* ── Heading ── */
@@ -70,7 +70,7 @@
   font-weight: 400;
   line-height: 0.92;
   letter-spacing: -0.01em;
-  color: #f5f5f0;
+  color: var(--color-text);
   margin: 0 0 1.5rem;
   display: block;
 }
@@ -98,7 +98,7 @@
   font-family: "DM Mono", monospace;
   font-size: 0.88rem;
   line-height: 1.8;
-  color: rgba(245, 245, 240, 0.38);
+  color: var(--color-secondary);
   margin-bottom: 2.5rem;
   max-width: 440px;
   letter-spacing: 0.02em;
@@ -113,8 +113,8 @@
 }
 
 .primary {
-  background: #e8f53c;
-  color: #080808;
+  background: var(--color-button-bg);
+  color: var(--color-button-text);
   padding: 0.9rem 1.6rem;
   border-radius: 0;
   font-family: "DM Mono", monospace;
@@ -137,7 +137,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: #080808;
+  background: var(--color-button-text);
   transform: translateX(-101%);
   transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
 }
@@ -146,13 +146,13 @@
   transform: translateX(0);
 }
 .primary:hover {
-  color: #e8f53c;
+  color: var(--color-button-bg);
 }
 
 .secondary {
   background: transparent;
-  color: rgba(245, 245, 240, 0.5);
-  border: 1px solid rgba(245, 245, 240, 0.12);
+  color: var(--color-secondary);
+  border: 1px solid var(--color-border);
   padding: 0.9rem 1.6rem;
   border-radius: 0;
   font-family: "DM Mono", monospace;
@@ -176,7 +176,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(245, 245, 240, 0.04);
+  background: var(--color-overlay);
   transform: translateX(-101%);
   transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
 }
@@ -185,8 +185,8 @@
   transform: translateX(0);
 }
 .secondary:hover {
-  color: #f5f5f0;
-  border-color: rgba(245, 245, 240, 0.28);
+  color: var(--color-text);
+  border-color: var(--color-accent);
 }
 
 /* Button content above ::before */
@@ -206,7 +206,7 @@
 
 /* ── Trusted by ── */
 .trustedBy {
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid var(--color-border);
   padding-top: 1.5rem;
 }
 
@@ -215,7 +215,7 @@
   font-size: 0.62rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(245, 245, 240, 0.22);
+  color: var(--color-secondary);
   display: block;
   margin-bottom: 0.875rem;
 }
@@ -254,7 +254,7 @@
   left: -1.5rem;
   right: 1.5rem;
   bottom: -1.5rem;
-  border: 1px solid rgba(232, 243, 60, 0.1);
+  border: 1px solid var(--color-border);
   pointer-events: none;
 }
 
@@ -279,10 +279,9 @@
   bottom: 20px;
   left: 20px;
   z-index: 3;
-  background: rgba(8, 8, 8, 0.9);
+  background: var(--color-surface);
   backdrop-filter: blur(16px);
-  border: 1px solid rgba(232, 243, 60, 0.2);
-  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--color-border);  padding: 0.6rem 0.9rem;
   display: flex;
   flex-direction: column;
   gap: 0.1rem;
@@ -297,7 +296,7 @@
   font-family: "Bebas Neue", sans-serif;
   font-size: 1.6rem;
   line-height: 1;
-  color: #e8f53c;
+  color: var(--color-accent);
 }
 
 .badgeText {
@@ -305,7 +304,7 @@
   font-size: 0.58rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: rgba(245, 245, 240, 0.4);
+  color: var(--color-secondary);
 }
 
 /* ── Stat ── */
@@ -314,10 +313,9 @@
   top: 20px;
   right: 20px;
   z-index: 3;
-  background: rgba(8, 8, 8, 0.9);
+  background: var(--color-surface);
   backdrop-filter: blur(16px);
-  border: 1px solid rgba(245, 245, 240, 0.08);
-  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--color-border);  padding: 0.6rem 0.9rem;
   display: flex;
   flex-direction: column;
   gap: 0.1rem;
@@ -332,7 +330,7 @@
   font-family: "Bebas Neue", sans-serif;
   font-size: 1.6rem;
   line-height: 1;
-  color: #f5f5f0;
+  color: var(--color-text);
 }
 
 .statText {
@@ -340,7 +338,7 @@
   font-size: 0.58rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: rgba(245, 245, 240, 0.3);
+  color: var(--color-secondary);
 }
 
 /* ── Tablet: ≤ 1024px ── */

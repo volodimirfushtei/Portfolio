@@ -23,8 +23,8 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(232, 243, 60, 0.5) 40%,
-    rgba(232, 243, 60, 0.5) 60%,
+    var(--color-accent) 40%,
+    var(--color-accent) 60%,
     transparent 100%
   );
   z-index: 5;
@@ -66,8 +66,8 @@
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(245, 245, 240, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(245, 245, 240, 0.025) 1px, transparent 1px);
+    linear-gradient(var(--color-border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-border) 1px, transparent 1px);
   background-size: 80px 80px;
   z-index: 0;
   pointer-events: none;
@@ -81,8 +81,8 @@
     0deg,
     transparent,
     transparent 2px,
-    rgba(0, 0, 0, 0.08) 2px,
-    rgba(0, 0, 0, 0.08) 4px
+    var(--color-border) 2px,
+    var(--color-border) 4px
   );
   z-index: 1;
   pointer-events: none;
@@ -98,7 +98,7 @@
   font-size: clamp(16rem, 40vw, 32rem);
   font-weight: 400;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(232, 243, 60, 0.04);
+  -webkit-text-stroke: 1px var(--color-border);
   letter-spacing: -0.02em;
   line-height: 1;
   user-select: none;
@@ -131,7 +131,7 @@
   display: block;
   width: 24px;
   height: 1px;
-  background: rgba(232, 243, 60, 0.4);
+  background: var(--color-border);
 }
 
 .eyebrowText {
@@ -139,7 +139,7 @@
   font-size: 0.58rem;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: rgba(232, 243, 60, 0.5);
+  color: var(--color-secondary);
 }
 
 /* ── 404 number ── */
@@ -152,7 +152,7 @@
   font-family: "Bebas Neue", sans-serif;
   font-size: clamp(6rem, 18vw, 12rem);
   font-weight: 400;
-  color: #f5f5f0;
+  color: var(--color-text);
   letter-spacing: 0.02em;
   line-height: 1;
   position: relative;
@@ -163,14 +163,14 @@
   position: absolute;
   top: 0;
   left: 0;
-  color: #e8f53c;
+  color: var(--color-accent);
   clip-path: polygon(0 30%, 100% 30%, 100% 50%, 0 50%);
   animation: glitchSlice 4s ease-in-out infinite;
 }
 
 .numReal {
   /* normal "0" underneath */
-  color: #f5f5f0;
+  color: var(--color-text);
 }
 
 @keyframes glitchSlice {
@@ -204,7 +204,7 @@
   font-size: clamp(1.8rem, 5vw, 3rem);
   font-weight: 400;
   letter-spacing: 0.08em;
-  color: rgba(245, 245, 240, 0.45);
+  color: var(--color-secondary);
   margin-bottom: 1.25rem;
   line-height: 1;
 }
@@ -213,7 +213,7 @@
 .desc {
   font-family: "DM Mono", monospace;
   font-size: 0.78rem;
-  color: rgba(245, 245, 240, 0.28);
+  color: var(--color-secondary);
   line-height: 1.8;
   letter-spacing: 0.04em;
   max-width: 400px;
@@ -235,8 +235,8 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.85rem 1.75rem;
-  background: #e8f53c;
-  color: #080808;
+  background: var(--color-button-bg);
+  color: var(--color-button-text);
   font-family: "DM Mono", monospace;
   font-size: 0.72rem;
   font-weight: 500;
@@ -252,8 +252,8 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: #080808;
-  border: 1px solid #e8f53c;
+  background: var(--color-button-text);
+  border: 1px solid var(--color-button-bg);
   transform: translateX(-101%);
   transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
 }
@@ -262,7 +262,7 @@
   transform: translateX(0);
 }
 .btnPrimary:hover {
-  color: #e8f53c;
+  color: var(--color-button-bg);
 }
 .btnPrimary > * {
   position: relative;
@@ -281,8 +281,8 @@
   justify-content: center;
   width: 40px;
   height: 40px;
-  border: 1px solid rgba(245, 245, 240, 0.08);
-  color: rgba(245, 245, 240, 0.3);
+  border: 1px solid var(--color-border);
+  color: var(--color-secondary);
   text-decoration: none;
   font-size: 1rem;
   margin-right: -1px;
@@ -295,14 +295,14 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: #e8f53c;
+  background: var(--color-accent);
   transform: translateY(101%);
   transition: transform 0.35s cubic-bezier(0.76, 0, 0.24, 1);
 }
 
 .socialLink:hover {
-  color: #080808;
-  border-color: #e8f53c;
+  color: var(--bg-color);
+  border-color: var(--color-accent);
   z-index: 1;
 }
 .socialLink:hover::before {

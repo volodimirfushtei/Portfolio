@@ -30,9 +30,9 @@ const ToggleTheme = () => {
   };
 
   const icons = {
-    "light-theme": <Sun size={16} strokeWidth={1.5} />,
-    "dark-theme": <Moon size={16} strokeWidth={1.5} />,
-    "auto-theme": <SunMoon size={16} strokeWidth={1.5} />,
+    "light-theme": <Sun size={18} strokeWidth={1.2} />,
+    "dark-theme": <Moon size={18} strokeWidth={1.2} />,
+    "auto-theme": <SunMoon size={18} strokeWidth={1.2} />,
   };
 
   const labels = {
@@ -49,7 +49,6 @@ const ToggleTheme = () => {
       title={labels[theme]}
     >
       <span className={styles.icon}>{icons[theme]}</span>
-      <span className={styles.label}>{labels[theme]}</span>
     </button>
   );
 };

@@ -48,8 +48,8 @@ const Loader = () => {
   useEffect(() => {
     if (progress >= 100) {
       setTimeout(() => setPhase("reveal"), 300);
-      setTimeout(() => setPhase("done"), 1600);
-      setTimeout(() => setIsLoading(false), 2000);
+      setTimeout(() => setPhase("done"), 1800);
+      setTimeout(() => setIsLoading(false), 2800);
     }
   }, [progress]);
 
@@ -80,7 +80,7 @@ const Loader = () => {
               transition={{
                 duration: 0.9,
                 ease: [0.76, 0, 0.24, 1],
-                delay: i * 0.06,
+                delay: i * 0.08,
               }}
             />
           ))}

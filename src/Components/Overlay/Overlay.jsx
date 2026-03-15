@@ -14,12 +14,22 @@ const Overlay = () => {
   if (!isVisible) return null;
 
   return (
-    <Motion.div
-      initial={{ x: 0 }}
-      animate={{ x: "100%" }}
-      transition={{ duration: 2, ease: "easeInOut" }}
-      className={s.overlay}
-    />
+    <div className={s.overlayContainer}>
+      {[0, 1, 2, 3, 4].map((i) => (
+        <Motion.div
+          key={i}
+          className={s.column}
+          style={{ left: `${i * 20}%` }}
+          initial={{ y: "0%" }}
+          animate={{ y: "-100%" }}
+          transition={{
+            duration: 0.9,
+            ease: [0.76, 0, 0.24, 1],
+            delay: i * 0.08,
+          }}
+        />
+      ))}
+    </div>
   );
 };
 

@@ -1,0 +1,33 @@
+/* ── Corner badge ── */
+.cornerBadge {
+  position: fixed;
+  top: 6rem;
+  right: 2rem;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  pointer-events: none;
+}
+
+.cornerBadgeNum {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 2.5rem;
+  line-height: 1;
+  color: var(--color-primary);
+  font-weight: 700;
+  opacity: 0.3;
+}
+
+.cornerBadgeLabel {
+  font-family: "DM Mono", monospace;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+  opacity: 0.4;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}

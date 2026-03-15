@@ -1,0 +1,14 @@
+export const sections = [
+  { id: "hero", number: 1, label: "Hero", component: HeroSection },
+  { id: "expertise", number: 2, label: "Expertise", component: Expertise },
+  { id: "skills", number: 3, label: "Skills", component: ControllerSkills },
+  { id: "carusel", number: 4, label: "Projects", component: Carusel },
+  { id: "cta", number: 5, label: "Contact", component: CtaSection },
+  {
+    id: "certificate",
+    number: 6,
+    label: "Certificate",
+    component: Sertificate,
+  },
+  { id: "sticky", number: 7, label: "Showcase", component: StickyZoomSection },
+];

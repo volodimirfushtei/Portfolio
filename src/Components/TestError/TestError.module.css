@@ -27,7 +27,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #080808;
+  background: var(--bg-color);
   padding: 3rem 1.5rem;
   overflow: hidden;
 }
@@ -43,8 +43,8 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(232, 243, 60, 0.5) 40%,
-    rgba(232, 243, 60, 0.5) 60%,
+    var(--color-accent) 40%,
+    var(--color-accent) 60%,
     transparent 100%
   );
   z-index: 2;
@@ -65,8 +65,8 @@
   z-index: 1;
   width: 100%;
   max-width: 640px;
-  background: rgba(10, 10, 10, 0.9);
-  border: 1px solid rgba(245, 245, 240, 0.07);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   padding: 3rem;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -80,8 +80,8 @@
   left: 0;
   width: 24px;
   height: 24px;
-  border-top: 2px solid #e8f53c;
-  border-left: 2px solid #e8f53c;
+  border-top: 2px solid var(--color-accent);
+  border-left: 2px solid var(--color-accent);
   pointer-events: none;
 }
 
@@ -93,8 +93,8 @@
   right: 0;
   width: 24px;
   height: 24px;
-  border-bottom: 2px solid rgba(232, 243, 60, 0.3);
-  border-right: 2px solid rgba(232, 243, 60, 0.3);
+  border-bottom: 2px solid var(--color-border);
+  border-right: 2px solid var(--color-border);
   pointer-events: none;
 }
 
@@ -110,7 +110,7 @@
   display: block;
   width: 28px;
   height: 1px;
-  background: #e8f53c;
+  background: var(--color-accent);
 }
 
 .eyebrowText {
@@ -118,7 +118,7 @@
   font-size: 0.6rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: #e8f53c;
+  color: var(--color-accent);
 }
 
 /* ── Title ── */
@@ -128,7 +128,7 @@
   font-weight: 400;
   line-height: 0.92;
   letter-spacing: -0.01em;
-  color: #f5f5f0;
+  color: var(--color-text);
   margin: 0 0 1.25rem;
 }
 
@@ -154,7 +154,7 @@
 .desc {
   font-family: "DM Mono", monospace;
   font-size: 0.75rem;
-  color: rgba(245, 245, 240, 0.3);
+  color: var(--color-secondary);
   line-height: 1.8;
   letter-spacing: 0.02em;
   margin: 0 0 2rem;
@@ -165,8 +165,8 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1px;
-  background: rgba(245, 245, 240, 0.05);
-  border: 1px solid rgba(245, 245, 240, 0.05);
+  background: var(--color-border);
+  border: 1px solid var(--color-border);
   margin-bottom: 1px; /* flush with reset btn */
 }
 
@@ -181,13 +181,14 @@
   font-size: 0.68rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(245, 245, 240, 0.4);
+  color: var(--color-secondary);
   cursor: pointer;
   position: relative;
   overflow: hidden;
   transition:
     color 0.3s ease,
     background 0.3s ease;
+  background: var(--color-surface);
   text-align: left;
 }
 
@@ -195,7 +196,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(245, 56, 56, 0.08);
+  background: var(--color-error);
   transform: translateX(-101%);
   transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
 }
@@ -204,20 +205,20 @@
   transform: translateX(0);
 }
 .errorBtn:hover {
-  color: rgba(245, 100, 100, 0.85);
+  color: var(--color-button-text);
 }
 
 .errorBtnDot {
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: rgba(245, 56, 56, 0.5);
+  background: var(--color-error);
   flex-shrink: 0;
   transition: background 0.3s ease;
 }
 
 .errorBtn:hover .errorBtnDot {
-  background: rgb(245, 56, 56);
+  background: var(--color-button-text);
 }
 
 /* ── Reset button ── */
@@ -228,8 +229,8 @@
   justify-content: center;
   gap: 0.6rem;
   padding: 0.9rem 1.5rem;
-  background: #e8f53c;
-  color: #080808;
+  background: var(--color-button-bg);
+  color: var(--color-button-text);
   border: none;
   cursor: pointer;
   font-family: "DM Mono", monospace;
@@ -251,7 +252,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: #080808;
+  background: var(--color-button-text);
   transform: translateX(-101%);
   transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
 }
@@ -260,7 +261,7 @@
   transform: translateX(0);
 }
 .resetBtn:hover {
-  color: #e8f53c;
+  color: var(--color-button-bg);
 }
 
 .resetArrow {
@@ -281,7 +282,7 @@
   font-size: 0.6rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(245, 56, 56, 0.4);
+  color: var(--color-error);
   margin: 0;
   animation: blink 3s ease-in-out infinite;
 }

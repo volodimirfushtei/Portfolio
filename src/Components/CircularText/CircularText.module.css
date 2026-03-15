@@ -32,8 +32,8 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #e7f70b 0%, rgba(232, 243, 60, 0.4) 100%);
-  box-shadow: 0 0 20px rgba(232, 243, 60, 0.25);
+  background: var(--color-accent);
+  box-shadow: var(--color-shadow);
   pointer-events: none;
   will-change: transform;
 }

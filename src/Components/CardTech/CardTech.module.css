@@ -10,20 +10,23 @@
   justify-content: center;
   align-items: center;
   perspective: 1200px;
+  border-radius: 8px;
+ 
 }
 
 /* ───────────────── Card ───────────────── */
 .card {
   position: relative;
-  width: 400px;
-  height: 400px;
+  width: 460px;
+  height: 480px;
 
   transform-style: preserve-3d;
   transition: transform 0.75s cubic-bezier(0.76, 0, 0.24, 1);
-
+  border-radius: 8px;
   cursor: pointer;
-  background: transparent;
+  background: var(--color-overlay);
   outline: none;
+  border: 1px solid var(--color-border);
 }
 
 .flipped {
@@ -44,11 +47,48 @@
 
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  box-shadow: var(--color-shadow);
 
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   overflow: hidden;
+  isolation: isolate;
+}
+
+/* Noise overlay */
+.noise {
+  position: absolute;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  opacity: 0.025;
+  will-change: transform;
+}
+
+/* Scanlines overlay */
+.scanlines {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 1px,
+    var(--color-border) 1px,
+    var(--color-border) 2px
+  );
+  background-size: 100% 4px;
+  opacity: 0.1;
+  animation: scanline 12s linear infinite;
+}
+
+@keyframes scanline {
+  from { background-position: 0 0; }
+  to   { background-position: 0 100%; }
 }
 
 /* Accent corners */
@@ -59,6 +99,8 @@
   width: 24px;
   height: 24px;
   pointer-events: none;
+  z-index: 5;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .side::before {
@@ -71,10 +113,16 @@
 .side::after {
   right: 0;
   bottom: 0;
-  border-bottom: 2px solid
-    color-mix(in srgb, var(--color-accent) 40%, transparent);
-  border-right: 2px solid
-    color-mix(in srgb, var(--color-accent) 40%, transparent);
+  border-bottom: 2px solid var(--color-accent);
+  border-right: 2px solid var(--color-accent);
+  opacity: 0.4;
+}
+
+.card:hover .side::before,
+.card:hover .side::after {
+  width: 48px;
+  height: 48px;
+  opacity: 1;
 }
 
 /* Back side */
@@ -86,6 +134,7 @@
 .avatarWrap {
   position: relative;
   margin-bottom: 1.5rem;
+  z-index: 3;
 }
 
 .avatar {
@@ -96,7 +145,7 @@
   object-fit: cover;
   object-position: top;
 
-  border: 1px solid color-mix(in srgb, var(--color-accent) 30%, transparent);
+  border: 1px solid var(--color-border);
   position: relative;
   z-index: 2;
 }
@@ -107,9 +156,9 @@
   inset: -6px;
   border-radius: 50%;
 
-  border: 1px solid color-mix(in srgb, var(--color-accent) 20%, transparent);
+  border: 1px solid var(--color-border);
   animation: ringPulse 3s ease-in-out infinite;
-  z-index: 1;
+  z-index: 5;
 }
 
 @keyframes ringPulse {
@@ -126,11 +175,12 @@
 
 .textBlock {
   text-align: center;
+  z-index: 3;
 }
 
 .subtitle {
-  font-family: var(--loader-font);
-  font-size: 0.65rem;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.7rem;
   letter-spacing: 0.25em;
   text-transform: uppercase;
 
@@ -139,8 +189,8 @@
 }
 
 .title {
-  font-family: "Bebas Neue", sans-serif;
-  font-size: 2.4rem;
+  font-family: var(--font-display, "Bebas Neue", sans-serif);
+  font-size: 2rem;
   font-weight: 400;
   letter-spacing: 0.04em;
   line-height: 1;
@@ -149,7 +199,23 @@
 }
 
 .highlight {
-  color: var(--color-accent);
+  display: inline-block;
+ background: linear-gradient(
+    120deg,
+    var(--color-text, #f5f5f0) 0%,
+    var(--color-secondary, #d0d0c8) 50%,
+    var(--color-text, #f5f5f0) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 6s linear infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
 }
 
 .flipHint {

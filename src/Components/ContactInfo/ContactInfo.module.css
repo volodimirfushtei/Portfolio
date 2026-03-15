@@ -5,14 +5,14 @@
   background: var(--color-surface);
   border-radius: 16px;
   padding: 1.5rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--color-shadow);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   overflow: hidden;
   position: relative;
 }
 
 .contactInfo:hover {
-  box-shadow: 0 15px 40px rgba(0, 174, 193, 0.2);
+  box-shadow: var(--color-shadow);
   transform: translateY(-5px);
 }
 
@@ -40,8 +40,8 @@
   height: 200%;
   background: radial-gradient(
     circle,
-    rgba(255, 255, 255, 0.1) 0%,
-    rgba(255, 255, 255, 0) 70%
+    var(--color-overlay) 0%,
+    transparent 70%
   );
   transform: rotate(30deg);
 }
@@ -78,11 +78,11 @@
   border-radius: 12px;
   transition: all 0.3s ease;
   background: var(--color-surface);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--color-shadow);
 }
 
 .infoItem:hover {
-  background: rgba(var(--color-primary-rgb), 0.1);
+  background: var(--color-surface-hover);
   transform: translateX(5px);
 }
 
@@ -97,7 +97,7 @@
   justify-content: center;
   flex-shrink: 0;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--color-shadow);
 }
 
 .infoItem:hover .iconWrapper {
@@ -112,7 +112,7 @@
 }
 
 .infoItem:hover .iconWrapper i {
-  color: rgb(231, 229, 229);
+  color: var(--color-button-text);
 }
 
 /* Info Text */
@@ -169,7 +169,7 @@ a.infoDetail:hover {
   height: 200px;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--color-shadow);
   margin-top: 1rem;
 }
 

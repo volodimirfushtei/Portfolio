@@ -1,0 +1,502 @@
+/* HeroSection.module.css — Final Awwwards Editorial Style */
+
+/* ═════════════════════════════════════════════════════════════ */
+/* HERO SECTION */
+/* ═════════════════════════════════════════════════════════════ */
+
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: var(--color-background);
+  isolation: isolate;
+}
+
+/* ═════════════════════════════════════════════════════════════ */
+/* SCROLL INDICATOR (LEFT SIDE - VERTICAL) */
+/* ═════════════════════════════════════════════════════════════ */
+
+.scrollIndicator {
+  position: fixed;
+  left: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  z-index: 50;
+  pointer-events: none;
+}
+
+.scrollText {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+  font-weight: 500;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  white-space: nowrap;
+}
+
+.scrollLineContainer {
+  position: relative;
+  width: 1px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scrollLine {
+  position: absolute;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    var(--color-accent) 0%,
+    rgba(232, 243, 60, 0.15) 100%
+  );
+  transform-origin: top;
+  box-shadow: 0 0 12px rgba(232, 243, 60, 0.4);
+}
+
+/* ═════════════════════════════════════════════════════════════ */
+/* HERO INNER & CONTENT */
+/* ═════════════════════════════════════════════════════════════ */
+
+.heroInner {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content {
+  position: relative;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 4rem;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 10rem;
+  align-items: center;
+}
+
+/* ═════════════════════════════════════════════════════════════ */
+/* TEXT CONTENT */
+/* ═════════════════════════════════════════════════════════════ */
+
+.textContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  will-change: transform;
+}
+
+/* Eyebrow */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.eyebrowLine {
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: var(--color-accent);
+  flex-shrink: 0;
+}
+
+.eyebrowText {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  font-weight: 500;
+}
+
+/* Title */
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 12vw, 8.5rem);
+  font-weight: 400;
+  line-height: 0.9;
+  letter-spacing: -0.015em;
+  color: var(--color-title);
+  margin: 0;
+  margin-right: -1.5rem; /* Grid breaking for impact */
+}
+
+.titleGradient {
+  background: linear-gradient(90deg, #f8a12f 0%, #ffd700 50%, #f8ab04 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: block;
+  animation: shimmer 4s linear infinite;
+  will-change: background-position;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.titleSecond {
+  display: block;
+  color: var(--color-title);
+}
+
+/* Divider */
+.divider {
+  width: 100%;
+  max-width: 400px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 1rem 0;
+}
+
+/* Subtitle */
+.subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  color: var(--color-secondary);
+  line-height: 1.75;
+  font-weight: 300;
+  max-width: 450px;
+  letter-spacing: 0.02em;
+  margin: 0;
+  min-height: 2.75em;
+}
+
+/* ═════════════════════════════════════════════════════════════ */
+/* BUTTONS */
+/* ═════════════════════════════════════════════════════════════ */
+
+.buttons {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.primaryButton,
+.secondaryButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.95rem 1.75rem;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.35s ease;
+  white-space: nowrap;
+  z-index: 5;
+}
+
+/* Primary Button */
+.primaryButton {
+  background: var(--color-accent);
+  color: #080808;
+}
+
+.primaryButton::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #080808;
+  transform: translateX(-101%);
+  transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
+  z-index: -1;
+}
+
+.primaryButton:hover::before {
+  transform: translateX(0);
+}
+
+.primaryButton:hover {
+  color: var(--color-accent);
+}
+
+/* Secondary Button */
+.secondaryButton {
+  background: transparent;
+  color: var(--color-secondary);
+  border: 1px solid var(--color-border);
+  transition:
+    color 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.secondaryButton::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(232, 243, 60, 0.04);
+  transform: translateX(-101%);
+  transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
+  z-index: -1;
+}
+
+.secondaryButton:hover::before {
+  transform: translateX(0);
+}
+
+.secondaryButton:hover {
+  color: var(--color-title);
+  border-color: var(--color-accent);
+}
+
+/* Button content above ::before */
+.primaryButton > *,
+.secondaryButton > * {
+  position: relative;
+  z-index: 1;
+}
+
+.buttonArrow {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.primaryButton:hover .buttonArrow,
+.secondaryButton:hover .buttonArrow {
+  transform: translateX(5px);
+}
+
+/* ═════════════════════════════════════════════════════════════ */
+/* MEDIA CONTAINER */
+/* ═════════════════════════════════════════════════════════════ */
+
+.mediaContainer {
+  position: relative;
+  will-change: transform;
+  z-index: 8;
+}
+
+.mediaContainer::before {
+  content: "";
+  position: absolute;
+  top: 2rem;
+  left: -1.5rem;
+  right: 1.5rem;
+  bottom: -1.5rem;
+  border: 1px solid var(--color-border);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ═════════════════════════════════════════════════════════════ */
+/* RESPONSIVE: TABLET (769px - 1024px) */
+/* ═════════════════════════════════════════════════════════════ */
+
+@media (max-width: 1024px) {
+  .content {
+    grid-template-columns: 1fr;
+    padding: 0 2rem;
+    gap: 3rem;
+  }
+
+  .textContent {
+    align-items: center;
+    text-align: center;
+  }
+
+  .eyebrow {
+    justify-content: center;
+  }
+
+  .title {
+    margin-right: 0;
+    font-size: clamp(2.5rem, 8vw, 5rem);
+  }
+
+  .divider {
+    max-width: 100%;
+    margin: 1.5rem auto;
+  }
+
+  .subtitle {
+    max-width: 100%;
+  }
+
+  .buttons {
+    justify-content: center;
+  }
+
+  .mediaContainer::before {
+    display: none;
+  }
+
+  .scrollIndicator {
+    position: absolute;
+    left: 50%;
+    top: auto;
+    bottom: 3rem;
+    transform: translateX(-50%);
+    flex-direction: row;
+    gap: 0.75rem;
+  }
+
+  .scrollText {
+    writing-mode: horizontal-tb;
+    transform: none;
+    white-space: nowrap;
+  }
+
+  .scrollLineContainer {
+    width: 100px;
+    height: 1px;
+  }
+
+  .scrollLine {
+    width: 100%;
+    height: 1px;
+  }
+}
+
+/* ═════════════════════════════════════════════════════════════ */
+/* RESPONSIVE: MOBILE (481px - 768px) */
+/* ═════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 2rem;
+  }
+
+  .content {
+    padding: 6rem 1.5rem 4rem;
+    gap: 2.5rem;
+  }
+
+  .title {
+    font-size: clamp(2rem, 6vw, 3.5rem);
+  }
+
+  .buttons {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+    width: 100%;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    width: 100%;
+    justify-content: center;
+    padding: 0.9rem 1.25rem;
+  }
+
+  .scrollIndicator {
+    display: none;
+  }
+}
+
+/* ═════════════════════════════════════════════════════════════ */
+/* RESPONSIVE: SMALL MOBILE (≤ 480px) */
+/* ═════════════════════════════════════════════════════════════ */
+
+@media (max-width: 480px) {
+  .content {
+    padding: 5rem 1rem 3.5rem;
+  }
+
+  .title {
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
+  }
+
+  .subtitle {
+    font-size: 0.8rem;
+  }
+
+  .eyebrowLine {
+    width: 24px;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    padding: 0.8rem 1rem;
+    font-size: 0.7rem;
+  }
+}
+
+/* ═════════════════════════════════════════════════════════════ */
+/* ACCESSIBILITY */
+/* ═════════════════════════════════════════════════════════════ */
+
+.primaryButton:focus-visible,
+.secondaryButton:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .titleGradient,
+  .scrollLine,
+  .primaryButton,
+  .secondaryButton {
+    animation: none;
+    transition: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .eyebrowText,
+  .scrollText {
+    font-weight: 700;
+  }
+
+  .divider {
+    opacity: 1;
+  }
+}
+
+/* ═════════════════════════════════════════════════════════════ */
+/* PRINT STYLES */
+/* ═════════════════════════════════════════════════════════════ */
+
+@media print {
+  .scrollIndicator,
+  .primaryButton,
+  .secondaryButton {
+    display: none;
+  }
+
+  .hero {
+    min-height: auto;
+    page-break-inside: avoid;
+  }
+
+  .title {
+    color: black;
+  }
+}

@@ -76,7 +76,7 @@ function App() {
 
         <Suspense
           fallback={
-            <div style={{ background: "#080808", minHeight: "100vh" }} />
+            <div style={{ background: "var(--bg-color)", minHeight: "100vh" }} />
           }
         >
           <Routes location={location}>

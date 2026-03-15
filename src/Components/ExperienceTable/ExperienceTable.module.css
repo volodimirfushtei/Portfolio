@@ -1,223 +1,668 @@
-/* ExperienceTable.module.css — Awwwards editorial dark */
+/* ExperienceTable.module.css — Awwwards Editorial Premium */
 
-.container {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
-/* ── Card ── */
-.card {
-  width: 100%;
-  max-width: 1000px;
-  padding: 2.5rem;
-  background: var(--color-background);
-  border: 1px solid rgba(232, 243, 60, 0.08);
+/* ═══════════════════════════════════════════
+   SECTION WRAPPER
+═══════════════════════════════════════════ */
+.section {
   position: relative;
+  width: 100%;
+  overflow: hidden;
   isolation: isolate;
-  overflow: visible;
+  padding: clamp(1rem, 2vw, 2rem) 0;
+  border-radius: 8px;
+  background: var(--color-overlay);
 }
 
-/* Top accent line */
-.card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(232, 243, 60, 0.5) 40%,
-    rgba(232, 243, 60, 0.5) 60%,
-    transparent 100%
-  );
+
+.inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 2vw, 2rem);
 }
 
-/* Accent corner TL */
-.card::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 28px;
-  height: 28px;
-  border-top: 2px solid #e8f53c;
-  border-left: 2px solid #e8f53c;
-  pointer-events: none;
-}
-
-/* ── Grid ── */
+/* ═══════════════════════════════════════════
+   STATS GRID
+═══════════════════════════════════════════ */
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1px; /* gap через border замість spacing */
-  background: rgba(245, 245, 240, 0.04); /* колір ліній сітки */
-  border: 1px solid rgba(245, 245, 240, 0.04);
+  gap: 0.5rem; 
   position: relative;
+  background: var(--color-surface);
 }
 
-/* ── Stat item ── */
-.statItem {
+
+/* ── Single Cell ── */
+.cell {
+  position: relative;
+  padding: clamp(1rem, 2vw, 2rem) clamp(1rem, 2vw, 1.5rem);
+z-index: 2;
   background: var(--color-background);
-  padding: 2rem 1.5rem;
-  text-align: center;
-  position: relative;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  overflow: hidden;
+  transition: all 0.3s ease;
   cursor: default;
-  transition: background 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
 }
 
-.statItem:hover {
-  background: #111111;
+/* Remove right border for last column */
+.cell:nth-child(3n) {
+  border-right: none;
 }
 
-/* Accent bottom line при ховері */
-.statItem::after {
-  content: "";
+
+
+/* Hover state */
+.cell:hover {
+  background: var(--color-background);
+  transform: translateY(-2px);
+}
+
+/* Corner index number */
+.cellIndex {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: #e8f53c;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
+  top: 0.85rem;
+  right: 1rem;
+  font-family: "DM Mono", monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  color: var(--color-secondary, #d0d0c8);
+  opacity: 0.4;
+  z-index: 2;
+  transition: opacity 0.3s ease;
 }
 
-.statItem:hover::after {
-  transform: scaleX(1);
+.cell:hover .cellIndex {
+  opacity: 0.8;
 }
 
 /* ── Counter ── */
-.counter {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 2px;
-}
-
-.value {
+.valueWrap {
+  margin-bottom: 1rem;
   display: flex;
   justify-content: center;
   align-items: baseline;
-  margin-bottom: 0.5rem;
+  width: 100%;
 }
 
-/* Число */
-.counter [data-num] {
+.counterWrap {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.1em;
+  line-height: 1;
+  position: relative;
+}
+
+.counterNum {
   font-family: "Bebas Neue", sans-serif;
-  font-size: 3.5rem;
+  font-size: clamp(0.8rem, 1.6vw, 1.6rem);
   font-weight: 400;
-  line-height: 1;
-  color: var(--color-title);
+  line-height: 0.9;
+  color: var(--color-title, #f5f5f0);
   letter-spacing: -0.01em;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
 }
 
-.suffix {
+.cell:hover .counterNum {
+  color: var(--color-accent, #e8f53c);
+  transform: translateY(-4px);
+  text-shadow: 0 0 20px rgba(232, 243, 60, 0.3);
+}
+
+.counterSuffix {
   font-family: "Bebas Neue", sans-serif;
-  font-size: 2rem;
-  color: #e8f53c;
+  font-size: clamp(1rem, 2vw, 2rem);
+  color: var(--color-accent, #e8f53c);
   line-height: 1;
+  align-self: flex-start;
+  margin-top: 0.1em;
+  margin-left: 0.1em;
+  transition: all 0.3s ease;
+  opacity: 0.8;
+}
+
+.cell:hover .counterSuffix {
+  opacity: 1;
+  transform: translateY(-2px);
 }
 
 /* ── Label ── */
 .label {
   font-family: "DM Mono", monospace;
-  font-size: 0.62rem;
-  letter-spacing: 0.2em;
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--color-text);
+  color: var(--color-secondary, #d0d0c8);
   line-height: 1.5;
+  margin: 0;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  transition: color 0.3s ease;
 }
 
-/* ── Tablet: ≤ 1023px ── */
-@media (max-width: 1023px) {
-  .card {
-    padding: 2rem;
-  }
+.cell:hover .label {
+  color: var(--color-text, #f5f5f0);
+}
 
-  .counter [data-num] {
-    font-size: 3rem;
-  }
+/* ── Hover accent bar (bottom) ── */
+.accentBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--color-accent, #e8f53c);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s cubic-bezier(0.76, 0, 0.24, 1);
+  z-index: 2;
+}
 
-  .suffix {
-    font-size: 1.7rem;
+.cell:hover .accentBar {
+  transform: scaleX(1);
+}
+
+
+
+.cell:hover::before {
+  opacity: 1;
+}
+
+/* ═══════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════ */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
   }
 }
 
-/* ── Tablet portrait: ≤ 767px ── */
-@media (max-width: 767px) {
-  .card {
+.pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media (max-width: 1200px) {
+  .counterNum {
+    font-size: clamp(2.8rem, 5vw, 4rem);
+  }
+  
+  .counterSuffix {
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+  }
+  
+  .cell {
+    min-height: 200px;
     padding: 1.5rem 1rem;
   }
+}
 
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
+@media (max-width: 1024px) {
+  .counterNum { 
+    font-size: clamp(2.5rem, 6vw, 3.5rem); 
   }
-
-  .statItem {
-    padding: 1.5rem 1rem;
-  }
-
-  .counter [data-num] {
-    font-size: 2.6rem;
-  }
-
-  .suffix {
-    font-size: 1.5rem;
+  
+  .counterSuffix { 
+    font-size: clamp(2rem, 5vw, 2.8rem); 
   }
 }
 
-/* ── Mobile: ≤ 480px ── */
+@media (max-width: 768px) {
+  .grid { 
+    grid-template-columns: repeat(2, 1fr); 
+  }
+
+  /* Скидаємо border-right для 3n */
+  .cell:nth-child(3n) { 
+    border-right: 1px solid var(--color-border, rgba(232, 243, 60, 0.15)); 
+  }
+  
+  /* Встановлюємо для парних */
+  .cell:nth-child(2n) { 
+    border-right: none; 
+  }
+  
+  /* Останній ряд */
+  .cell:nth-last-child(-n+3) { 
+    border-bottom: 1px solid var(--color-border, rgba(232, 243, 60, 0.15)); 
+  }
+  
+  .cell:nth-last-child(-n+2) { 
+    border-bottom: none; 
+  }
+
+  .counterNum { 
+    font-size: clamp(2.2rem, 7vw, 3rem); 
+  }
+  
+  .counterSuffix { 
+    font-size: 1.8rem; 
+  }
+  
+  .cell {
+    min-height: 180px;
+    padding: 1.25rem;
+  }
+  
+  .grid::before,
+  .grid::after {
+    width: 20px;
+    height: 20px;
+  }
+}
+
 @media (max-width: 480px) {
-  .card {
-    padding: 1rem 0.75rem;
-  }
-
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .statItem {
+  .cell { 
     padding: 1.25rem 0.75rem;
+    min-height: 160px;
   }
-
-  .counter [data-num] {
-    font-size: 2.2rem;
+  
+  .counterNum { 
+    font-size: 2rem; 
   }
-
-  .suffix {
-    font-size: 1.3rem;
+  
+  .counterSuffix { 
+    font-size: 1.5rem; 
   }
-
-  .label {
-    font-size: 0.58rem;
-    letter-spacing: 0.12em;
+  
+  .label { 
+    font-size: 0.6rem; 
+    letter-spacing: 0.15em; 
+  }
+  
+  .cellIndex {
+    font-size: 0.55rem;
+    top: 0.5rem;
+    right: 0.75rem;
+  }
+  
+  .valueWrap {
+    margin-bottom: 0.5rem;
   }
 }
 
-/* ── Small mobile: ≤ 360px ── */
 @media (max-width: 360px) {
-  .grid {
-    grid-template-columns: 1fr;
+  .grid { 
+    grid-template-columns: 1fr; 
   }
-
-  .counter [data-num] {
-    font-size: 2rem;
+  
+  .cell:nth-child(2n) { 
+    border-right: none; 
+  }
+  
+  .cell:nth-last-child(-n+2) { 
+    border-bottom: 1px solid var(--color-border, rgba(232, 243, 60, 0.15)); 
+  }
+  
+  .cell:last-child { 
+    border-bottom: none; 
+  }
+  
+  .counterNum { 
+    font-size: 2.2rem; 
   }
 }
 
-/* ── Reduced motion ── */
+/* ═══════════════════════════════════════════
+   REDUCED MOTION
+═══════════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
-  .statItem::after {
-    transition: none;
+  .accentBar,
+  .counterNum,
+  .counterSuffix,
+  .cell,
+  .cell::before {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
   }
-  @keyframes glowRotate {
-    from,
-    to {
-      transform: none;
-    }
+  
+  .noise, 
+  .scanlines { 
+    animation: none !important; 
+  }
+}
+
+/* ═══════════════════════════════════════════
+   HIGH CONTRAST MODE
+═══════════════════════════════════════════ */
+@media (forced-colors: active) {
+  .grid {
+    border: 2px solid CanvasText;
+  }
+  
+  .accentBar {
+    forced-color-adjust: none;
+    background: Highlight;
+  }
+  
+  .counterSuffix {
+    forced-color-adjust: none;
+    color: Highlight;
+  }
+}
+
+/* Remove right border for last column */
+.cell:nth-child(3n) {
+  border-right: none;
+}
+
+/* Remove bottom border for last row */
+.cell:nth-last-child(-n+3) {
+  border-bottom: none;
+}
+
+/* Hover state */
+.cell:hover {
+  background: var(--color-surface-hover, #1a1a1a);
+  transform: translateY(-2px);
+}
+
+/* Corner index number */
+.cellIndex {
+  position: absolute;
+  top: 0.85rem;
+  right: 1rem;
+  font-family: "DM Mono", monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  color: var(--color-secondary, #d0d0c8);
+  opacity: 0.4;
+  z-index: 2;
+  transition: opacity 0.3s ease;
+}
+
+.cell:hover .cellIndex {
+  opacity: 0.8;
+}
+
+/* ── Counter ── */
+.valueWrap {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  width: 100%;
+}
+
+.counterWrap {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.1em;
+  line-height: 1;
+  position: relative;
+}
+
+.counterNum {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(2rem, 3vw, 3rem);
+  font-weight: 400;
+  line-height: 0.9;
+  color: var(--color-title, #f5f5f0);
+  letter-spacing: -0.01em;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.cell:hover .counterNum {
+  color: var(--color-accent, #e8f53c);
+  transform: translateY(-4px);
+  text-shadow: 0 0 20px rgba(232, 243, 60, 0.3);
+}
+
+.counterSuffix {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(1rem, 2vw, 2rem);
+  color: var(--color-accent, #e8f53c);
+  line-height: 1;
+  align-self: flex-start;
+  margin-top: 0.1em;
+  margin-left: 0.1em;
+  transition: all 0.3s ease;
+  opacity: 0.8;
+}
+
+.cell:hover .counterSuffix {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+/* ── Label ── */
+.label {
+  font-family: "DM Mono", monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-secondary, #d0d0c8);
+  line-height: 1.5;
+  margin: 0;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  transition: color 0.3s ease;
+}
+
+.cell:hover .label {
+  color: var(--color-text, #f5f5f0);
+}
+
+/* ── Hover accent bar (bottom) ── */
+.accentBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--color-accent, #e8f53c);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s cubic-bezier(0.76, 0, 0.24, 1);
+  z-index: 2;
+}
+
+.cell:hover .accentBar {
+  transform: scaleX(1);
+}
+
+
+
+.cell:hover::before {
+  opacity: 1;
+}
+
+/* ═══════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════ */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media (max-width: 1200px) {
+  .counterNum {
+    font-size: clamp(2.8rem, 5vw, 4rem);
+  }
+  
+  .counterSuffix {
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+  }
+  
+  .cell {
+    min-height: 200px;
+    padding: 1.5rem 1rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .counterNum { 
+    font-size: clamp(2.5rem, 6vw, 3.5rem); 
+  }
+  
+  .counterSuffix { 
+    font-size: clamp(2rem, 5vw, 2.8rem); 
+  }
+}
+
+@media (max-width: 768px) {
+  .grid { 
+    grid-template-columns: repeat(2, 1fr); 
+  }
+
+  /* Скидаємо border-right для 3n */
+  .cell:nth-child(3n) { 
+    border-right: 1px solid var(--color-border, rgba(232, 243, 60, 0.15)); 
+  }
+  
+  /* Встановлюємо для парних */
+  .cell:nth-child(2n) { 
+    border-right: none; 
+  }
+  
+  /* Останній ряд */
+  .cell:nth-last-child(-n+3) { 
+    border-bottom: 1px solid var(--color-border, rgba(232, 243, 60, 0.15)); 
+  }
+  
+  .cell:nth-last-child(-n+2) { 
+    border-bottom: none; 
+  }
+
+  .counterNum { 
+    font-size: clamp(2.2rem, 7vw, 3rem); 
+  }
+  
+  .counterSuffix { 
+    font-size: 1.8rem; 
+  }
+  
+  .cell {
+    min-height: 180px;
+    padding: 1.25rem;
+  }
+  
+  .grid::before,
+  .grid::after {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cell { 
+    padding: 1.25rem 0.75rem;
+    min-height: 160px;
+  }
+  
+  .counterNum { 
+    font-size: 2rem; 
+  }
+  
+  .counterSuffix { 
+    font-size: 1.5rem; 
+  }
+  
+  .label { 
+    font-size: 0.6rem; 
+    letter-spacing: 0.15em; 
+  }
+  
+  .cellIndex {
+    font-size: 0.55rem;
+    top: 0.5rem;
+    right: 0.75rem;
+  }
+  
+  .valueWrap {
+    margin-bottom: 0.5rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .grid { 
+    grid-template-columns: 1fr; 
+  }
+  
+  .cell:nth-child(2n) { 
+    border-right: none; 
+  }
+  
+  .cell:nth-last-child(-n+2) { 
+    border-bottom: 1px solid var(--color-border, rgba(232, 243, 60, 0.15)); 
+  }
+  
+  .cell:last-child { 
+    border-bottom: none; 
+  }
+  
+  .counterNum { 
+    font-size: 2.2rem; 
+  }
+}
+
+/* ═══════════════════════════════════════════
+   REDUCED MOTION
+═══════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  .accentBar,
+  .counterNum,
+  .counterSuffix,
+  .cell,
+  .cell::before {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+  
+  .noise, 
+  .scanlines { 
+    animation: none !important; 
+  }
+}
+
+/* ═══════════════════════════════════════════
+   HIGH CONTRAST MODE
+═══════════════════════════════════════════ */
+@media (forced-colors: active) {
+  .grid {
+    border: 2px solid CanvasText;
+  }
+  
+  .accentBar {
+    forced-color-adjust: none;
+    background: Highlight;
+  }
+  
+  .counterSuffix {
+    forced-color-adjust: none;
+    color: Highlight;
   }
 }

@@ -1,216 +1,163 @@
-import React, { useState, useEffect } from "react";
-import {
-  motion,
-  useMotionValue,
-  useTransform,
-  useSpring,
-  AnimatePresence,
-} from "framer-motion";
-
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import { motion } from "framer-motion";
+import { gsap } from "gsap";
 import styles from "./Sertificate.module.css";
 
 const Certificate = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [isScaled, setIsScaled] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-  const [viewport, setViewport] = useState({ width: 0, height: 0 });
+  const [isMobile, setIsMobile] = useState(false);
+  const cardRef = useRef(null);
 
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  // Safe viewport dimensions for SSR
+  // Responsive Check
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      setViewport({ width: window.innerWidth, height: window.innerHeight });
-    }
+    const check = () => setIsMobile(window.innerWidth < 1024);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
   }, []);
 
-  // tilt math
-  const rotateX = useTransform(mouseY, [0, 300], [8, -8]);
-  const rotateY = useTransform(mouseX, [0, 300], [-8, 8]);
-
-  const smoothX = useSpring(rotateX, { stiffness: 150, damping: 25 });
-  const smoothY = useSpring(rotateY, { stiffness: 150, damping: 25 });
-
-  const scale = useSpring(isScaled ? 1.8 : 1, {
-    stiffness: 200,
-    damping: 25,
-  });
-
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-
-    mouseX.set(e.clientX - rect.left);
-    mouseY.set(e.clientY - rect.top);
-  };
-
+  // Time update
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
 
+  const formattedTime = currentTime.toLocaleTimeString("uk-UA", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  // GSAP Magnetic Tilt (Subtle)
+  const handleMouseMove = useCallback((e) => {
+    if (isMobile || !cardRef.current) return;
+    
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    const rotateX = (y - centerY) / 20;
+    const rotateY = (centerX - x) / 20;
+    
+    gsap.to(cardRef.current, {
+      rotateX: rotateX,
+      rotateY: rotateY,
+      duration: 0.5,
+      ease: "power2.out",
+    });
+  }, [isMobile]);
+
+  const handleMouseLeave = useCallback(() => {
+    if (isMobile || !cardRef.current) return;
+    
+    gsap.to(cardRef.current, {
+      rotateX: 0,
+      rotateY: 0,
+      duration: 0.8,
+      ease: "power2.out",
+    });
+  }, [isMobile]);
+
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.infoContainer}>
-        <motion.div
-          className={styles.infoContent}
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <h4 className={styles.infoSubtitle}>
-            From{" "}
-            <motion.span
-              className={styles.flagIcon}
-              animate={{ rotate: [0, 10, -10, 0] }}
-              transition={{
-                duration: 5,
-                repeat: Infinity,
-                repeatType: "mirror",
-                ease: "easeInOut",
-              }}
-            >
-              <i className="">
-                <img
-                  src="https://flagcdn.com/ua.svg"
-                  alt="Ukraine Flag"
-                  width="20"
-                  height="20"
-                />
-              </i>
-            </motion.span>{" "}
-            with Passion
-          </h4>
+    <section className={styles.section}>
+      {/* ── Visual Overlays ── */}
+      <div className={styles.noise} aria-hidden="true" />
+      <div className={styles.scanlines} aria-hidden="true" />
 
-          <h2 className={styles.infoTitle}>
-            Local time –{" "}
-            <motion.span
-              className={styles.time}
-              animate={{
-                color: ["#e8f53c", "#ff5252", "#e8f53c"],
-              }}
-              transition={{ duration: 5, repeat: Infinity }}
-            >
-              {currentTime.toLocaleTimeString()}
-              <i className="ri-time-line" aria-hidden="true"></i>
-            </motion.span>
-          </h2>
-
-          <motion.p className={styles.infoText} whileHover={{ x: 5 }}>
-            Got a question?
-          </motion.p>
-
-          <motion.p className={styles.infoText}>
-            Email me at:{" "}
-            <motion.a
-              href="mailto:fuschteyy@gmail.com"
-              className={styles.emailLink}
-              whileHover={{
-                scale: 1.05,
-                boxShadow: "0 2px 8px rgba(255, 82, 82, 0.5)",
-              }}
-            >
-              fuschteyy@gmail.com
-            </motion.a>
-          </motion.p>
-        </motion.div>
-      </div>
-
-      <div
-        className={styles.cardContainer}
-        onMouseMove={handleMouseMove}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        <motion.div
-          className={styles.card}
-          style={{ rotateX: smoothX, rotateY: smoothY, scale }}
-          onClick={() => setIsScaled(!isScaled)}
-          whileTap={{ scale: 0.95 }}
-        >
-          <AnimatePresence>
-            {isHovered && (
-              <motion.div
-                key="glow"
-                className={styles.glow}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.3 }}
-                exit={{ opacity: 0.9 }}
-                transition={{ duration: 0.3 }}
-              />
-            )}
-          </AnimatePresence>
-
-          <div className={styles.certificate}>
-            <div className={styles.corner}></div>
-            <div className={`${styles.corner} ${styles.cornerRight}`}></div>
-
-            <div className={styles.header}>
-              <h1 className={styles.certificateTitle}>
-                <span>CERTIFICATE</span>
-                <span className={styles.goitBadge}>GOIT</span>
-              </h1>
-              <h2 className={styles.name}>FUSHTEI VOLODYMYR</h2>
-            </div>
-
-            <div className={styles.body}>
-              <p className={styles.achievement}>
-                Has successfully completed <br />
-                <span className={styles.course}>FULLSTACK DEVELOPER</span>{" "}
-                <br />
-                course at GoIT
-              </p>
-
-              <div className={styles.divider}>
-                <div className={styles.dividerInner}></div>
-              </div>
-
-              <div className={styles.details}>
-                <div className={styles.detailItem}>
-                  <span>Date</span>
-                  <span className={styles.detailValue}>21/01/2025</span>
-                </div>
-                <div className={styles.detailItem}>
-                  <span>ID</span>
-                  <span className={styles.detailValue}>35048</span>
-                </div>
-                <div className={styles.detailItem}>
-                  <span>Specialty</span>
-                  <span className={styles.detailValue}>FULLSTACK</span>
-                </div>
-                <div className={styles.detailItem}>
-                  <span>Website</span>
-                  <span className={styles.detailValue}>goit.global</span>
-                </div>
-              </div>
-
-              <div className={styles.signature}>
-                <div className={styles.signatureLine}></div>
-                <div className={styles.signatureDetails}>
-                  <div className={styles.ceo}>CEO of GoIT</div>
-                  <div className={styles.ceoName}>Anton Chornyi</div>
-                  <div className={styles.signatureLine}></div>
-                </div>
-              </div>
-            </div>
-
-            <div className={styles.watermark}>GOIT</div>
-          </div>
-
-          <motion.a
-            href="/images/FUSHTEI_VOLODYMYR.pdf"
-            download
-            className={styles.downloadButton}
-            initial={{ opacity: 0, y: 40 }}
-            animate={isHovered ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-            transition={{ duration: 0.35, ease: "easeOut" }}
+      <div className={styles.wrapper}>
+        {/* Info Column */}
+        <div className={styles.infoContainer}>
+          <motion.div
+            className={styles.infoSubtitle}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
           >
-            Download Certificate
-            <i className="ri-download-line" />
-          </motion.a>
-        </motion.div>
+            <span className={styles.eyebrowLine} />
+            <span className={styles.infoSubtitleText}>Ivano-Frankivsk, Ukraine</span>
+          </motion.div>
+
+          <motion.h2 
+            className={styles.infoTitle}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+          >
+            Local time
+            <span className={`${styles.time} ${styles.timeShimmer}`}>
+              {formattedTime}
+            </span>
+          </motion.h2>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.4 }}
+          >
+            <p className={styles.infoText}>
+              Collaborating across borders. <br />
+              <a href="mailto:fuschteyy@gmail.com" className={styles.emailLink}>
+                fuschteyy@gmail.com
+              </a>
+            </p>
+          </motion.div>
+        </div>
+
+        {/* Card Column */}
+        <div className={styles.cardContainer}>
+          <motion.div
+            className={styles.card}
+            ref={cardRef}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className={styles.certificate}>
+              <div className={styles.certificateHeader}>
+                <div className={styles.certLabel}>
+                  <span className={styles.certLabelText}>CERTIFICATE</span>
+                  <span className={styles.goitBadge}>GOIT</span>
+                </div>
+                <h3 className={styles.userName}>FUSHTEI VOLODYMYR</h3>
+              </div>
+
+              <div className={styles.body}>
+                <p className={styles.achievement}>
+                  Has successfully completed <br />
+                  <span className={styles.courseName}>FULLSTACK DEVELOPER</span>
+                </p>
+
+                <div className={styles.details}>
+                  <div className={styles.detailItem}>
+                    <span className={styles.detailLabel}>Date</span>
+                    <span className={styles.detailValue}>21/01/2025</span>
+                  </div>
+                  <div className={styles.detailItem}>
+                    <span className={styles.detailLabel}>ID</span>
+                    <span className={styles.detailValue}>35048</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className={styles.watermark}>GOIT</div>
+            </div>
+
+            <a
+              href="/certificates/FUSHTEI_VOLODYMYR.pdf"
+              download
+              className={styles.downloadButton}
+            >
+              <span className={styles.downloadText}>Download PDF</span>
+              <span className={styles.downloadIcon}>→</span>
+            </a>
+          </motion.div>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

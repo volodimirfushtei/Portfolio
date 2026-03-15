@@ -1,0 +1,170 @@
+.section {
+  position: relative;
+  height: 100vh;
+  background: var(--color-background);
+  overflow: hidden;
+}
+
+/* Центр сцени */
+.stage {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+/* Zoom-група */
+.zoom {
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  gap: 3rem;
+  will-change: transform;
+  transform-origin: center center;
+}
+
+/* Тексти */
+.label {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(2.5rem, 7vw, 4.8rem);
+  letter-spacing: 0.08em;
+  color: var(--color-secondary);
+  white-space: nowrap;
+}
+
+/* Image */
+.imageWrap {
+  width: 380px;
+  height: 240px;
+
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(8, 8, 8, 0.3);
+}
+.imageWrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-background);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+
+  opacity: 0.75;
+}
+.imageWrap img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  will-change: transform;
+  transform-origin: center center;
+}
+
+/* CTA */
+.cta {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: auto;
+  z-index: 20;
+
+  padding: 0.9rem 1.8rem;
+  background: #e8f53c;
+  color: #080808;
+
+  font-family: "DM Mono", monospace;
+  font-size: 1rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+
+  overflow: hidden;
+  cursor: pointer;
+  border: none;
+}
+
+/* ТЕКСТ — ЗАВЖДИ ЗВЕРХУ */
+.ctaText {
+  position: relative;
+  z-index: 2;
+  transition: color 0.35s ease;
+}
+
+/* WIPE */
+.cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-background);
+
+  transform: translateX(-101%);
+  transition: transform 0.45s cubic-bezier(0.76, 0, 0.24, 1);
+  z-index: 1;
+}
+
+.cta:hover::before {
+  transform: translateX(0);
+  transition: transform 0.45s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.cta:hover .ctaText {
+  color: #e8f53c;
+}
+@media (max-width: 1024px) {
+  .zoom {
+    gap: 1.5rem;
+  }
+
+  .imageWrap {
+    width: 280px;
+    height: 180px;
+  }
+  .label {
+    font-size: clamp(1.8rem, 5vw, 3.5rem);
+    letter-spacing: 0.06em;
+  }
+  .cta {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+    letter-spacing: 0.12em;
+  }
+}
+@media (max-width: 768px) {
+  .zoom {
+    gap: 1rem;
+  }
+  .imageWrap {
+    width: 220px;
+    height: 140px;
+  }
+  .label {
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
+    letter-spacing: 0.04em;
+  }
+  .cta {
+    padding: 0.6rem 1.25rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+  }
+}
+@media (max-width: 375px) {
+  .zoom {
+    gap: 0.75rem;
+  }
+  .imageWrap {
+    width: 180px;
+    height: 120px;
+  }
+  .label {
+    font-size: clamp(1.2rem, 8vw, 1.8rem);
+    letter-spacing: 0.02em;
+  }
+  .cta {
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+  }
+}

@@ -1,10 +1,20 @@
-/* Overlay.css */
-.overlay {
+/* Overlay.module.css */
+.overlayContainer {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: var(--color-overlay); /* або будь-який колір */
+  inset: 0;
   z-index: 9999;
+  pointer-events: none; /* Let clicks pass through while animating */
+  display: flex; /* Helps ensure things stretch, though left-positioning is used */
+  box-shadow: var(--color-shadow);
+}
+
+/* Beautiful dark slate curtain columns */
+.column {
+  position: absolute;
+  top: 0;
+  width: 20.5%; /* slight overlap */
+  height: 100vh;
+  background: var(--bg-color);
+  will-change: transform;
+  border: 1px solid var(--color-border);
 }

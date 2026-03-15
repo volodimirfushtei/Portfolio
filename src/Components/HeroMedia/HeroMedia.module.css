@@ -1,469 +1,309 @@
-/* HeroMedia.module.css — Awwwards editorial dark, темnizovani через index.css */
+/* ── HeroMedia.module.css — Awwwards editorial ── */
 
-/* ── Card container (z-index: 1) ── */
-.card {
+/* ═══════════════════════════════════════
+   CONTAINER
+═══════════════════════════════════════ */
+.mediaContainer {
+  position: relative;
   width: 100%;
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 1.5rem;
+  height: clamp(460px, 65vh, 700px);
+  overflow: hidden;
+  border-radius: var(--border-radius);
   border: 1px solid var(--color-border);
-  border-radius: 0;
-  background: rgba(var(--color-surface), 0.02);
-  backdrop-filter: blur(var(--blur-amount));
-  position: relative;
-  overflow: hidden;
-  z-index: 1;
-  transition: all 0.3s ease;
-  box-shadow: var(--color-shadow);
+  background: var(--color-surface);
+  isolation: isolate;
+  cursor: none; /* custom cursor area */
 }
 
-/* Top-left accent corner (z-index: 3) */
-.card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 32px;
-  height: 32px;
-  border-top: 2px solid rgba(232, 243, 60, 0.3);
-  border-left: 2px solid rgba(232, 243, 60, 0.3);
-  pointer-events: none;
-  z-index: 3;
-}
-
-/* Bottom-right accent corner (z-index: 3) */
-.card::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 32px;
-  height: 32px;
-  border-bottom: 2px solid rgba(232, 243, 60, 0.3);
-  border-right: 2px solid rgba(232, 243, 60, 0.3);
-  pointer-events: none;
-  z-index: 3;
-}
-
-/* ── Image wrapper (z-index: 1) ── */
-.imageWrap {
-  position: relative;
-  overflow: hidden;
-  margin-bottom: 1.25rem;
-  z-index: 1;
-  border-radius: 2px;
-}
-
-/* ── Image (z-index: 1) ── */
+/* ═══════════════════════════════════════
+   BASE IMAGE
+═══════════════════════════════════════ */
 .image {
-  width: 100%;
-  height: 380px;
+  position: absolute;
+  inset: -4% -4%;          /* slight overscan for parallax headroom */
+  width: 108%;
+  height: 108%;
   object-fit: cover;
-  object-position: center;
-  display: block;
-  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   will-change: transform;
-  z-index: 1;
+  transition: transform 0.1s linear;
 }
 
-.imageWrap:hover .image {
-  transform: scale(1.03);
-}
-
-/* ── Gradient overlay (z-index: 2) ── */
+/* ═══════════════════════════════════════
+   CINEMATIC GRADIENT OVERLAY
+═══════════════════════════════════════ */
 .overlay {
   position: absolute;
   inset: 0;
-  background-color: rgba(8, 8, 8, 0.02);
-  background-image: radial-gradient(
-    circle at center,
-    rgba(232, 243, 60, 0.12) 0%,
-    transparent 70%
-  );
-  opacity: 0.6;
-  transition: opacity 0.4s ease;
   z-index: 2;
   pointer-events: none;
+  background:
+    linear-gradient(to bottom,
+      rgba(0,0,0,0.08)  0%,
+      rgba(0,0,0,0.0)  40%,
+      rgba(0,0,0,0.55) 75%,
+      rgba(0,0,0,0.82) 100%),
+    radial-gradient(ellipse at 80% 0%, var(--color-accent) 0%, transparent 55%);
+  opacity: 0.75;
 }
 
-.imageWrap:hover .overlay {
-  opacity: 0.85;
-}
-
-/* ── Circular text wrapper (z-index: 4) ── */
-.circleWrap {
+/* ═══════════════════════════════════════
+   FILM GRAIN
+═══════════════════════════════════════ */
+.grain {
   position: absolute;
-  top: 1rem;
-  right: 0.5rem;
+  inset: -60%;
+  width: 220%;
+  height: 220%;
+  z-index: 3;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.04;
+  animation: grainShift 0.12s steps(2) infinite;
+}
+
+@keyframes grainShift {
+  0%   { transform: translate(0,    0); }
+  25%  { transform: translate(-3%, -1%); }
+  50%  { transform: translate(2%,   3%); }
+  75%  { transform: translate(-1%,  2%); }
+  100% { transform: translate(3%,  -2%); }
+}
+
+/* ═══════════════════════════════════════
+   ACCENT FRAME (decorative corner border)
+═══════════════════════════════════════ */
+.accentFrame {
+  position: absolute;
+  inset: 1rem;
   z-index: 4;
   pointer-events: none;
+  border: 1px solid rgba(198, 198, 198, 0.1);
+  border-radius: calc(var(--border-radius) - 2px);
+  /* Clip to just corners */
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 0.75rem;
+  transform-origin: center;
 }
 
-/* ── Badge container (z-index: 5) ── */
-.badge {
+/* ═══════════════════════════════════════
+   CIRCULAR TEXT
+═══════════════════════════════════════ */
+.circleWrap {
   position: absolute;
-  bottom: 1rem;
-  right: 1rem;
-  z-index: 5;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 10;
+  pointer-events: none;
+  opacity: 0.9;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.35));
+}
+
+/* ═══════════════════════════════════════
+   CORNER STAT
+═══════════════════════════════════════ */
+.stat {
+  position: absolute;
+  top: 1.75rem;
+  left: 1.75rem;
+  z-index: 10;
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: rgba(8, 8, 8, 0.92);
-  backdrop-filter: blur(16px);
-  border: 1px solid var(--color-border);
-  border-radius: 999px;
-  padding: 0.5rem 1rem 0.5rem 0.6rem;
-  transition: all 0.3s ease;
-  will-change: transform;
+  align-items: baseline;
+  gap: 0.15em;
+  line-height: 1;
 }
 
-.badge:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(232, 243, 60, 0.15);
-  border-color: rgba(232, 243, 60, 0.3);
+.statNum {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 6vw, 4.5rem);
+  color: var(--color-accent);
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  filter: drop-shadow(0 0 12px var(--color-accent));
+  will-change: contents;
 }
 
-/* ── Ping animation wrapper (z-index: 6) ── */
-.pingWrap {
-  position: relative;
-  width: 10px;
-  height: 10px;
-  flex-shrink: 0;
-  z-index: 6;
+.statSuffix {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  color: var(--color-accent);
+  align-self: flex-start;
+  margin-top: 0.4em;
 }
 
-.ping {
+.statLabel {
   position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: var(--loader-accent);
-  opacity: 0.6;
-  animation: ping 1.8s ease-out infinite;
-  z-index: 6;
+  bottom: -1.4em;
+  left: 0;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  white-space: nowrap;
 }
 
-.pingDot {
+/* ═══════════════════════════════════════
+   CONTENT BAR (bottom)
+═══════════════════════════════════════ */
+.content {
   position: absolute;
-  inset: 2px;
-  border-radius: 50%;
-  background: var(--loader-accent);
-  z-index: 7;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  pointer-events: none;
 }
 
-@keyframes ping {
-  0% {
-    transform: scale(1);
-    opacity: 0.6;
-  }
-  100% {
-    transform: scale(2.2);
-    opacity: 0;
-  }
+.content > * { pointer-events: auto; }
+
+/* Hairline divider */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(255,255,255,0.14);
+  transform-origin: left;
 }
 
-/* ── Badge text (z-index: 5) ── */
-.badgeText {
-  font-family: var(--loader-font);
-  font-size: 0.7rem;
-  color: rgba(245, 245, 240, 0.7);
-  white-space: nowrap;
-  letter-spacing: 0.03em;
-  z-index: 5;
-  position: relative;
-  font-weight: 500;
+.contentInner {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 1.25rem 1.75rem 1.75rem;
+  gap: 1rem;
 }
 
-/* ── Badge link (z-index: 5) ── */
-.badgeLink {
-  font-family: var(--loader-font);
-  font-size: 0.68rem;
-  color: var(--loader-accent);
-  text-decoration: none;
-  white-space: nowrap;
-  letter-spacing: 0.05em;
-  transition: all 0.2s ease;
-  z-index: 5;
-  position: relative;
-  font-weight: 600;
-}
-
-.badgeLink:hover {
-  opacity: 0.8;
-  color: #f5ff80;
-}
-
-/* ── Text section (z-index: 2) ── */
-.textSection {
-  padding: 0.5rem 0.25rem;
-  border-top: 1px solid var(--color-border);
-  padding-top: 1.25rem;
+/* ── Left text block ── */
+.textBlock {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  z-index: 2;
-  position: relative;
+  gap: 0.35rem;
 }
 
-/* ── Heading (z-index: 3) ── */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  display: block;
+}
+
 .heading {
-  font-family: "Bebas Neue", sans-serif;
-  font-size: 1.6rem;
-  font-weight: 400;
-  letter-spacing: 0.04em;
-  color: var(--color-title);
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+  line-height: 0.9;
+  color: #ffffff;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  letter-spacing: 0.01em;
   margin: 0;
-  z-index: 3;
-  position: relative;
-  line-height: 1.1;
-  transition: color 0.3s ease;
 }
 
-/* Light theme heading gradient */
-.light-theme .heading {
-  background: linear-gradient(90deg, #1a1a1a 0%, rgba(26, 26, 26, 0.6) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+/* ── Right actions ── */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
 }
 
-/* Dark theme heading gradient */
-.dark-theme .heading {
-  background: linear-gradient(90deg, #ffffff 0%, rgba(255, 255, 255, 0.7) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+/* Status badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.55rem 1rem;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(var(--blur-amount));
+  -webkit-backdrop-filter: blur(var(--blur-amount));
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--border-radius-pill);
 }
 
-/* ── Description (z-index: 3) ── */
-.description {
-  font-family: var(--loader-font);
-  font-size: 0.75rem;
+.badgeDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 8px 2px rgba(74, 222, 128, 0.6);
+  animation: pulse 2.2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.6; transform: scale(0.7); }
+}
+
+/* Hire me CTA */
+.hireBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.25rem;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-button-text, #080808);
+  background: var(--color-accent);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--border-radius-pill);
+  transition: all var(--transition-back);
+  white-space: nowrap;
+}
+
+.hireBtn svg {
+  transition: transform var(--transition-back);
+  color: var(--color-text);
+}
+
+.hireBtn:hover {
+  background: transparent;
   color: var(--color-secondary);
-  line-height: 1.7;
-  letter-spacing: 0.02em;
-  margin: 0;
-  z-index: 3;
-  position: relative;
-  opacity: 0.8;
+  transform: translateY(-2px);
 }
-
-/* ═════════════════════════════════════════════════════════════ */
-/* Z-INDEX HIERARCHY */
-/* ═════════════════════════════════════════════════════════════ */
-/* 1: .card, .imageWrap, .image, .textSection
-   2: .overlay, .textSection
-   3: .card::before, .card::after, .circleWrap, .heading, .description
-   4: .circleWrap
-   5: .badge, .badgeText, .badgeLink
-   6: .pingWrap, .ping
-   7: .pingDot
-*/
-
-/* ── Tablet: ≤ 1023px ── */
-@media (max-width: 1023px) {
-  .card {
-    max-width: 100%;
-    padding: 1.25rem;
-  }
-
-  .image {
-    height: 320px;
-  }
-
-  .heading {
-    font-size: 1.4rem;
-  }
-
-  .description {
-    font-size: 0.7rem;
-  }
+.hireBtn:hover svg {
+  transform: translate(3px, -3px);
+  color: var(--color-secondary);
 }
-
-/* ── Tablet portrait: ≤ 768px ── */
+.hireBtnText {
+  color: var(--color-text);
+}
+/* ═══════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════ */
 @media (max-width: 768px) {
-  .card {
-    max-width: 100%;
-    padding: 1rem;
-  }
-
-  .image {
-    height: 280px;
-  }
-
-  .imageWrap:hover .image {
-    transform: none;
-  }
-
-  .imageWrap:hover .overlay {
-    opacity: 0.6;
-  }
-
-  .heading {
-    font-size: 1.3rem;
-  }
-
-  .description {
-    font-size: 0.68rem;
-  }
-
-  .badge {
-    padding: 0.45rem 0.85rem 0.45rem 0.5rem;
-    font-size: 0.65rem;
-  }
+  .mediaContainer { height: clamp(340px, 55vh, 480px); }
+  .contentInner { padding: 1rem 1.25rem 1.25rem; }
+  .heading { font-size: clamp(1.2rem, 5vw, 1.8rem); }
+  .badge { display: none; }
 }
 
-/* ── Mobile: ≤ 480px ── */
 @media (max-width: 480px) {
-  .card {
-    padding: 1rem;
-    border-radius: 0;
-  }
-
-  .card::before,
-  .card::after {
-    width: 24px;
-    height: 24px;
-    border-width: 1.5px;
-  }
-
-  .image {
-    height: 240px;
-  }
-
-  .imageWrap {
-    margin-bottom: 1rem;
-  }
-
-  .heading {
-    font-size: 1.2rem;
-  }
-
-  .badgeText {
-    display: none;
-  }
-
-  .badge {
-    padding: 0.4rem 0.6rem 0.4rem 0.45rem;
-    bottom: 0.75rem;
-    right: 0.75rem;
-  }
-
-  .textSection {
-    padding-top: 1rem;
-    gap: 0.5rem;
-  }
-
-  .description {
-    font-size: 0.65rem;
-  }
+  .mediaContainer { height: clamp(280px, 50vh, 360px); }
+  .statNum { font-size: 2.4rem; }
+  .hireBtn { padding: 0.5rem 1rem; }
 }
 
-/* ── Small mobile: ≤ 360px ── */
-@media (max-width: 360px) {
-  .card {
-    padding: 0.75rem;
-  }
-
-  .image {
-    height: 200px;
-  }
-
-  .heading {
-    font-size: 1.1rem;
-  }
-
-  .badge {
-    padding: 0.35rem 0.5rem;
-    font-size: 0.6rem;
-  }
-
-  .pingWrap {
-    width: 8px;
-    height: 8px;
-  }
-}
-
-/* ── Light Theme Overrides ── */
-.light-theme .card {
-  background: rgba(245, 245, 240, 0.5);
-  box-shadow: 0 8px 25px rgba(8, 8, 8, 0.08);
-}
-
-.light-theme .badge {
-  background: rgba(8, 8, 8, 0.85);
-}
-
-.light-theme .overlay {
-  background: rgba(8, 8, 8, 0.3);
-}
-
-/* ── Dark Theme Overrides ── */
-.dark-theme .card {
-  background: rgba(8, 8, 8, 0.4);
-  box-shadow: 0 8px 25px rgba(232, 243, 60, 0.1);
-}
-
-.dark-theme .badge {
-  background: rgba(8, 8, 8, 0.95);
-  border-color: rgba(232, 243, 60, 0.15);
-}
-
-.dark-theme .overlay {
-  background: rgba(8, 8, 8, 0.4);
-}
-
-/* ── Reduced motion ── */
+/* ═══════════════════════════════════════
+   REDUCED MOTION
+═══════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
-  .image,
-  .overlay,
-  .badge,
-  .badgeLink,
-  .heading {
-    transition: none !important;
-  }
-
-  .ping {
-    animation: none;
-  }
-
-  .imageWrap:hover .image {
-    transform: none;
-  }
-}
-
-/* ── High contrast mode ── */
-@media (prefers-contrast: more) {
-  .card {
-    border-width: 2px;
-    border-color: var(--loader-accent);
-  }
-
-  .heading {
-    color: var(--color-title);
-    -webkit-background-clip: unset;
-    background-clip: unset;
-  }
-
-  .badge {
-    border-width: 1.5px;
-  }
-}
-
-/* ── Focus visibility ── */
-.badgeLink:focus-visible {
-  outline: 2px solid var(--loader-accent);
-  outline-offset: 2px;
-}
-
-/* ── Print styles ── */
-@media print {
-  .badge,
-  .pingWrap,
-  .circleWrap {
-    display: none;
-  }
-
-  .image {
-    transform: none !important;
-  }
+  .grain { animation: none; }
+  .badgeDot { animation: none; }
+  .image { transition: none; }
 }

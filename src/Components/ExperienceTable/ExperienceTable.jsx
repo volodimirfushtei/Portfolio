@@ -1,119 +1,218 @@
-import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
+import { useRef, useEffect, useState, useCallback, useMemo } from "react";
+import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./ExperienceTable.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const stats = [
-  { value: 1, suffix: "+", label: "Years Experience" },
-  { value: 5, suffix: "+", label: "Projects Completed" },
-  { value: 3, suffix: "+", label: "Happy Clients" },
-  { value: 10, suffix: "+", label: "Technologies" },
-  { value: 2, suffix: "+", label: "Languages" },
-  { value: 1, suffix: "+", label: "Certifications" },
+// Статистика винесена в константу з актуальними значеннями
+const STATS = [
+  { value: 3, suffix: "+", label: "Years Experience", index: "01" },
+  { value: 15, suffix: "+", label: "Projects Completed", index: "02" },
+  { value: 12, suffix: "+", label: "Happy Clients", index: "03" },
+  { value: 20, suffix: "+", label: "Technologies", index: "04" },
+  { value: 3, suffix: "+", label: "Languages", index: "05" },
+  { value: 4, suffix: "+", label: "Certifications", index: "06" },
 ];
 
-const ExperienceTable = () => {
-  const cardRef = useRef(null);
-  const itemsRef = useRef([]);
-  const counterRefs = useRef([]);
+/* ── Precision GSAP Counter з оптимізацією ── */
+const Counter = ({ value, suffix, trigger }) => {
+  const [displayValue, setDisplayValue] = useState(0);
+  const countRef = useRef({ val: 0 });
+  const animationRef = useRef(null);
 
   useEffect(() => {
-    const card = cardRef.current;
-    if (!card) return;
+    if (!trigger) return;
 
-    const ctx = gsap.context(() => {
-      const items = itemsRef.current.filter(Boolean);
+    // Зупиняємо попередню анімацію
+    if (animationRef.current) {
+      animationRef.current.kill();
+    }
 
-      if (items.length === 0) return;
-
-      /* ── Reveal animation for stat items ── */
-      gsap.from(items, {
-        opacity: 0,
-        y: 24,
-        duration: 0.7,
-        stagger: 0.1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: card,
-          start: "top 75%",
-          end: "top 65%",
-          toggleActions: "play none none none",
-          once: true,
-        },
-      });
-
-      /* ── Counter animations ── */
-      items.forEach((item, index) => {
-        const numEl = item.querySelector(`.${styles.number}`);
-        const target = Number(item.dataset.value);
-
-        if (!numEl || isNaN(target) || target === 0) return;
-
-        /* Create a proxy object for animation */
-        const counterObj = { value: 0 };
-
-        gsap.to(counterObj, {
-          value: target,
-          duration: 2,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: card,
-            start: "top 75%",
-            end: "top 65%",
-            toggleActions: "play none none none",
-            once: true,
-          },
-          onUpdate: () => {
-            numEl.textContent = Math.round(counterObj.value);
-          },
-        });
-
-        /* Store reference for cleanup */
-        counterRefs.current[index] = counterObj;
-      });
-    }, cardRef);
+    // Створюємо нову анімацію
+    animationRef.current = gsap.to(countRef.current, {
+      val: value,
+      duration: 2.2,
+      ease: "power2.out",
+      onUpdate: () => {
+        setDisplayValue(Math.floor(countRef.current.val));
+      },
+      onComplete: () => {
+        setDisplayValue(value); // Фінальне значення
+      },
+    });
 
     return () => {
-      ctx.revert();
-      counterRefs.current = [];
+      if (animationRef.current) {
+        animationRef.current.kill();
+      }
     };
+  }, [trigger, value]);
+
+  return (
+    <span className={styles.counterWrap}>
+      <span className={styles.counterNum}>{displayValue}</span>
+      <span className={styles.counterSuffix}>{suffix}</span>
+    </span>
+  );
+};
+
+const ExperienceTable = () => {
+  const sectionRef = useRef(null);
+  const gridRef = useRef(null);
+  const noiseRef = useRef(null);
+  const scanlinesRef = useRef(null);
+  
+  const [triggered, setTriggered] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Мемоізація статистики
+  const stats = useMemo(() => STATS, []);
+
+  // Responsive check
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener("resize", checkMobile, { passive: true });
+    
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // Mouse move handler для градієнта
+  const handleMouseMove = useCallback((e) => {
+    if (isMobile) return;
+    
+    const cells = gridRef.current?.querySelectorAll(`.${styles.cell}`);
+    cells?.forEach((cell) => {
+      const rect = cell.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      cell.style.setProperty("--x", `${x}%`);
+      cell.style.setProperty("--y", `${y}%`);
+    });
+  }, [isMobile]);
+
+  // GSAP анімації
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Анімація noise фону
+      if (noiseRef.current) {
+        gsap.to(noiseRef.current, {
+          backgroundPosition: "100% 100%",
+          duration: 20,
+          repeat: -1,
+          ease: "none",
+          yoyo: true,
+        });
+      }
+
+      // Анімація сканлайнів
+      if (scanlinesRef.current) {
+        gsap.to(scanlinesRef.current, {
+          opacity: 0.15,
+          duration: 2,
+          yoyo: true,
+          repeat: -1,
+          ease: "sine.inOut",
+        });
+      }
+
+      // ScrollTrigger для появи сітки
+      const cells = gridRef.current?.querySelectorAll("[data-cell]");
+      
+      if (cells?.length) {
+        // Початковий стан
+        gsap.set(cells, {
+          opacity: 0,
+          y: 40,
+          clipPath: "inset(100% 0 0 0)",
+        });
+
+        // Таймлайн появи
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 75%",
+            end: "bottom 20%",
+            once: true,
+            onEnter: () => setTriggered(true),
+          },
+          defaults: { ease: "power3.out" },
+        });
+
+        tl.to(cells, {
+          opacity: 1,
+          y: 0,
+          clipPath: "inset(0% 0 0 0)",
+          stagger: 0.08,
+          duration: 0.8,
+        });
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (
-    <div className={styles.container}>
-      <div ref={cardRef} className={styles.card}>
-        {/* Decorative top line */}
-        <div className={styles.cardDecor} aria-hidden="true" />
+    <section
+      ref={sectionRef}
+      className={styles.section}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={() => {
+        if (isMobile) return;
+        const cells = gridRef.current?.querySelectorAll(`.${styles.cell}`);
+        cells?.forEach((cell) => {
+          cell.style.setProperty("--x", "50%");
+          cell.style.setProperty("--y", "50%");
+        });
+      }}
+    >
+  
 
-        {/* Stats grid */}
-        <div className={styles.grid}>
-          {stats.map((stat, i) => (
+      {/* Внутрішній контент */}
+      <div className={styles.inner}>
+        <div
+          ref={gridRef}
+          className={styles.grid}
+          role="list"
+          aria-label="Experience statistics"
+        >
+          {stats.map((stat) => (
             <div
-              key={`stat-${stat.label}`}
-              ref={(el) => {
-                if (el) itemsRef.current[i] = el;
-              }}
-              className={styles.statItem}
-              data-value={stat.value}
+              key={stat.label}
+              data-cell
               role="listitem"
+              className={styles.cell}
+              style={{ "--i": stat.index }}
+              aria-label={`${stat.label}: ${stat.value}${stat.suffix}`}
             >
-              {/* Value */}
-              <div className={styles.value}>
-                <span className={styles.counter}>
-                  <span className={styles.number}>0</span>
-                  <span className={styles.suffix}>{stat.suffix}</span>
-                </span>
+              {/* Індекс в кутку */}
+              <span className={styles.cellIndex} aria-hidden="true">
+                {stat.index}
+              </span>
+
+              {/* Значення з лічильником */}
+              <div className={styles.valueWrap}>
+                <Counter
+                  value={stat.value}
+                  suffix={stat.suffix}
+                  trigger={triggered}
+                />
               </div>
 
-              {/* Label */}
-              <div className={styles.label}>{stat.label}</div>
+              {/* Мітка */}
+              <p className={styles.label}>{stat.label}</p>
+
+              {/* Акцентна лінія при наведенні */}
+              <span className={styles.accentBar} aria-hidden="true" />
             </div>
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
