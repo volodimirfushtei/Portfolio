@@ -4,6 +4,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Typewriter } from "react-simple-typewriter";
 import styles from "./HeroSection.module.css";
 import HeroMedia from "../HeroMedia/HeroMedia";
+import DotGrid from "../DotGrid/DotGrid";
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -138,12 +140,16 @@ const HeroSection = () => {
 
       /* ── 5. Scroll line pulse loop ── */
       gsap.to(scrollLineRef.current, {
+     
+
         opacity: 0,
         y: 20,
         duration: 2,
         repeat: -1,
         ease: "power2.inOut",
         delay: 1.5 // Wait for entry to finish
+      
+        
       });
     }, sectionRef);
 
@@ -152,9 +158,21 @@ const HeroSection = () => {
 
   return (
     <section ref={sectionRef} className={styles.hero}>
-
-      {/* ── Noise / scanline layer ── */}
-      <div ref={noiseRef} className={styles.noise} aria-hidden="true" />
+{/* DotGrid background */}
+      <div className={styles.dotGridWrap} aria-hidden="true">
+        <DotGrid
+          dotSize={2}
+          gap={10}
+          baseColor="#575757ff"
+          activeColor="#e8f53c"
+          proximity={120}
+          shockRadius={250}
+          shockStrength={5}
+          resistance={750}
+          returnDuration={1.5}
+        />
+      </div>
+     
 
       {/* ── Background ── */}
       <div ref={bgRef} className={styles.gradientBackground} aria-hidden="true" />
@@ -173,6 +191,8 @@ const HeroSection = () => {
         <span className={styles.scrollText}>Scroll</span>
         <div className={styles.scrollLineContainer}>
           <div ref={scrollLineRef} className={styles.scrollLine} />
+          
+    
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
             <path d="M2 12L12 2M12 2H4M12 2V10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
@@ -257,7 +277,7 @@ const HeroSection = () => {
           </div>
 
           {/* RIGHT — Media column */}
-          <div ref={mediaRef} className={styles.mediaContainer}>
+          <div data-cursor='hover' ref={mediaRef} className={styles.mediaContainer}>
             <HeroMedia />
           </div>
         </div>

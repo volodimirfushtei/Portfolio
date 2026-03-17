@@ -269,7 +269,7 @@ body {
   --color-loader-bar:        linear-gradient(90deg, #111, #3a3a38);
 
   /* Overlays */
-  --color-overlay: linear-gradient(135deg, rgba(244, 244, 239, 0.7) 0%, rgba(228, 228, 218, 0.8) 100%);
+  --color-overlay: linear-gradient(135deg, rgba(244, 244, 239, 0.78) 0%, rgba(228, 228, 218, 0.88) 100%);
 
   /* Grid */
   --color-grid:
@@ -335,7 +335,7 @@ body {
   --color-loader-bar:        linear-gradient(90deg, #e8f53c, #f5ff80);
 
   /* Overlays */
-  --color-overlay: rgba(5, 5, 5, 0.82);
+  --color-overlay: rgba(5, 5, 5, 0.92);
 
   /* Grid */
   --color-grid:

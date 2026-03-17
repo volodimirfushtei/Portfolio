@@ -1,11 +1,6 @@
-import { useRef, useEffect, useState, useCallback, useMemo } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRef, useEffect, useState } from "react";
 import styles from "./ExperienceTable.module.css";
 
-gsap.registerPlugin(ScrollTrigger);
-
-// Статистика винесена в константу з актуальними значеннями
 const STATS = [
   { value: 3, suffix: "+", label: "Years Experience", index: "01" },
   { value: 15, suffix: "+", label: "Projects Completed", index: "02" },
@@ -15,43 +10,31 @@ const STATS = [
   { value: 4, suffix: "+", label: "Certifications", index: "06" },
 ];
 
-/* ── Precision GSAP Counter з оптимізацією ── */
-const Counter = ({ value, suffix, trigger }) => {
-  const [displayValue, setDisplayValue] = useState(0);
-  const countRef = useRef({ val: 0 });
-  const animationRef = useRef(null);
+const Counter = ({ value, suffix, start }) => {
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
-    if (!trigger) return;
+    if (!start) return;
 
-    // Зупиняємо попередню анімацію
-    if (animationRef.current) {
-      animationRef.current.kill();
-    }
+    let current = 0;
+    const step = Math.max(1, Math.floor(value / 40)); 
 
-    // Створюємо нову анімацію
-    animationRef.current = gsap.to(countRef.current, {
-      val: value,
-      duration: 2.2,
-      ease: "power2.out",
-      onUpdate: () => {
-        setDisplayValue(Math.floor(countRef.current.val));
-      },
-      onComplete: () => {
-        setDisplayValue(value); // Фінальне значення
-      },
-    });
-
-    return () => {
-      if (animationRef.current) {
-        animationRef.current.kill();
+    const interval = setInterval(() => {
+      current += step;
+      if (current >= value) {
+        setCount(value);
+        clearInterval(interval);
+      } else {
+        setCount(current);
       }
-    };
-  }, [trigger, value]);
+    }, 33); 
+
+    return () => clearInterval(interval);
+  }, [start, value]);
 
   return (
     <span className={styles.counterWrap}>
-      <span className={styles.counterNum}>{displayValue}</span>
+      <span className={styles.counterNum}>{count}</span>
       <span className={styles.counterSuffix}>{suffix}</span>
     </span>
   );
@@ -59,132 +42,38 @@ const Counter = ({ value, suffix, trigger }) => {
 
 const ExperienceTable = () => {
   const sectionRef = useRef(null);
-  const gridRef = useRef(null);
-  const noiseRef = useRef(null);
-  const scanlinesRef = useRef(null);
-  
-  const [triggered, setTriggered] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [startCount, setStartCount] = useState(false);
 
-  // Мемоізація статистики
-  const stats = useMemo(() => STATS, []);
-
-  // Responsive check
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    checkMobile();
-    window.addEventListener("resize", checkMobile, { passive: true });
-    
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setStartCount(true);
+          observer.disconnect(); // запускаємо лише один раз
+        }
+      },
+      { threshold: 0.5 } // 50% секції в viewport
+    );
 
-  // Mouse move handler для градієнта
-  const handleMouseMove = useCallback((e) => {
-    if (isMobile) return;
-    
-    const cells = gridRef.current?.querySelectorAll(`.${styles.cell}`);
-    cells?.forEach((cell) => {
-      const rect = cell.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width) * 100;
-      const y = ((e.clientY - rect.top) / rect.height) * 100;
-      cell.style.setProperty("--x", `${x}%`);
-      cell.style.setProperty("--y", `${y}%`);
-    });
-  }, [isMobile]);
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
 
-  // GSAP анімації
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // ScrollTrigger для появи сітки
-      const cells = gridRef.current?.querySelectorAll("[data-cell]");
-      
-      if (cells?.length) {
-        // Початковий стан
-        gsap.set(cells, {
-          opacity: 0,
-          y: 60,
-          clipPath: "inset(0 0 100% 0)",
-        });
-
-        // Таймлайн появи
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 80%",
-            once: true,
-            onEnter: () => setTriggered(true),
-          },
-          defaults: { ease: "expo.out" },
-        });
-
-        tl.to(cells, {
-          opacity: 1,
-          y: 0,
-          clipPath: "inset(0% 0 0% 0)",
-          stagger: 0.1,
-          duration: 1.2,
-        });
-      }
-    }, sectionRef);
-
-    return () => ctx.revert();
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      className={styles.section}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={() => {
-        if (isMobile) return;
-        const cells = gridRef.current?.querySelectorAll(`.${styles.cell}`);
-        cells?.forEach((cell) => {
-          cell.style.setProperty("--x", "50%");
-          cell.style.setProperty("--y", "50%");
-        });
-      }}
-    >
-  
-
-      {/* Внутрішній контент */}
+    <section ref={sectionRef} className={styles.section}>
       <div className={styles.inner}>
-        <div
-          ref={gridRef}
-          className={styles.grid}
-          role="list"
-          aria-label="Experience statistics"
-        >
-          {stats.map((stat) => (
-            <div
-              key={stat.label}
-              data-cell
-              role="listitem"
-              className={styles.cell}
-              style={{ "--i": stat.index }}
-              aria-label={`${stat.label}: ${stat.value}${stat.suffix}`}
-            >
-              {/* Індекс в кутку */}
-              <span className={styles.cellIndex} aria-hidden="true">
-                {stat.index}
-              </span>
-
-              {/* Значення з лічильником */}
+        <div className={styles.grid}>
+          {STATS.map((stat) => (
+            <div key={stat.label} className={styles.cell}>
+              <span className={styles.cellIndex}>{stat.index}</span>
               <div className={styles.valueWrap}>
-                <Counter
-                  value={stat.value}
-                  suffix={stat.suffix}
-                  trigger={triggered}
-                />
+                <Counter value={stat.value} suffix={stat.suffix} start={startCount} />
               </div>
-
-              {/* Мітка */}
               <p className={styles.label}>{stat.label}</p>
-
-              {/* Акцентна лінія при наведенні */}
-              <span className={styles.accentBar} aria-hidden="true" />
+              <span className={styles.accentBar} />
             </div>
           ))}
         </div>

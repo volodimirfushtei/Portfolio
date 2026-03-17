@@ -6,7 +6,7 @@ import styles from "./CustomCursor.module.css";
 const CustomCursor = () => {
   const cursorX = useMotionValue(0);
   const cursorY = useMotionValue(0);
-
+  const cursorRef = useRef(null);
   const springX = useSpring(cursorX, { damping: 25, stiffness: 200 });
   const springY = useSpring(cursorY, { damping: 25, stiffness: 200 });
 
@@ -38,29 +38,30 @@ const CustomCursor = () => {
   }, []);
 
   // Hover-ефекти для інтерактивних елементів
-  useEffect(() => {
-    const hoverElements = document.querySelectorAll("[data-cursor='hover']");
-    hoverElements.forEach((el) => {
-      el.addEventListener("mouseenter", () => {
-        gsap.to(".cursor", {
-          scale: 1.5,
-          backgroundColor: "rgba(255, 255, 255, 0.8)",
-          duration: 0.3,
-        });
-      });
-      el.addEventListener("mouseleave", () => {
-        gsap.to(".cursor", {
-          scale: 1,
-          backgroundColor: "rgba(255, 255, 255, 0.4)",
-          duration: 0.3,
-        });
+useEffect(() => {
+  const hoverElements = document.querySelectorAll("[data-cursor='hover']");
+
+  hoverElements.forEach((el) => {
+    el.addEventListener("mouseenter", () => {
+      gsap.to(cursorRef.current, {
+        scale: 2,
+        duration: 0.3
       });
     });
-  }, []);
+
+    el.addEventListener("mouseleave", () => {
+      gsap.to(cursorRef.current, {
+        scale: 1,
+        duration: 0.3
+      });
+    });
+  });
+}, []);
 
   return (
     <>
       <motion.div
+        ref={cursorRef}
         className={styles.cursor}
         style={{ translateX: springX, translateY: springY }}
       />

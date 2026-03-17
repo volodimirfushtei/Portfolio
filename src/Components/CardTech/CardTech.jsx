@@ -71,10 +71,7 @@ const CardTech = () => {
         {/* ── Back ── */}
         <div className={`${styles.side} ${styles.back}`}>
           <div className={styles.backContent}>
-            <div className={styles.badge}>
-              <span className={styles.badgeLine} />
-              Tech Stack
-            </div>
+            
 
             <p className={styles.flipMessage}>
               {manualFlip

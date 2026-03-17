@@ -30,7 +30,7 @@ const preload = () =>
 /* ── Toast styles ── */
 const toastStyle = {
   base: {
-    borderRadius: "0", // відповідає прямим кутам проекту
+    borderRadius: "0", 
     background: "#0d0d0d",
     color: "#f5f5f0",
     fontSize: "0.78rem",
@@ -46,9 +46,9 @@ const toastStyle = {
     color: "#e8f53c",
   },
   error: {
-    background: "#0d0d0d",
-    border: "1px solid #f53c3c",
-    color: "#f53c3c",
+    background: "var(--color-surface)",
+    border: "1px solid #ff4b4b",
+    color: "#ff4b4b",
   },
   loading: { background: "#0d0d0d", border: "1px solid rgba(245,245,240,0.2)" },
 };
