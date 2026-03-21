@@ -4,7 +4,7 @@
   width: 100%;
   padding: clamp(0.2rem, 0.5vw, 0.5rem) 0.5rem;
   border-radius: 8px;
-  background: var(--color-overlay);
+  background: var(--color-background);
 }
 
 /* ── Grid ── */
@@ -13,7 +13,7 @@
   grid-template-columns: 1fr 1fr;
   gap: 0.5rem;
   position: relative;
-  background: var(--color-surface);
+  background: var(--color-background);
 }
 
 /* ── Block ── */
@@ -30,6 +30,8 @@
   flex-direction: column;
   gap: 1.25rem;
   z-index: 2;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
 }
 
 .block:hover {

@@ -10,8 +10,8 @@
   gap: 4rem;
   align-items: center;
   justify-content: center;
-  padding: 4rem 2rem;
-  background: var(--color-overlay);
+  
+  background: var(--color-background);
   isolation: isolate;
 }
 

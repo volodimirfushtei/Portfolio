@@ -171,7 +171,7 @@ const ControllerSkills = () => {
           className={styles.inner}
           animate={isInView && !isPaused ? { x: [0, -100 / 4 + "%"] } : {}}
           transition={{
-            duration: 20,
+            duration: 40,
             repeat: Infinity,
             repeatType: "loop",
             ease: "linear",
@@ -183,6 +183,7 @@ const ControllerSkills = () => {
             <TechCard
               key={`${tech.name}-${index}`}
               tech={tech}
+              style={{transform: `translateZ(${index}px)`}}
             />
           ))}
         </motion.div>

@@ -3,7 +3,7 @@
 .scrollToTop {
   position: fixed;
   bottom: 2.5rem;
-  right: 2.5rem;
+  right: 1rem;
   z-index: 100;
   display: flex;
   flex-direction: column;
@@ -84,7 +84,7 @@
 
 .progressCircleBg {
   fill: none;
-  stroke: var(--color-border-subtle);
+  stroke: var(--color-border);
   stroke-width: 2;
 }
 

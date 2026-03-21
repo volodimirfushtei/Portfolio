@@ -20,7 +20,7 @@
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  opacity: 0.12;
+  opacity: 0.18;
 }
 
 /* ═══════════════════════════════════════════
@@ -229,24 +229,39 @@ display: block;
 }
 
 .titleAccent {
-  display: block;
+  display: inline-block;
+  position: relative;
+
   background: linear-gradient(
     120deg,
-    var(--color-text, #f5f5f0) 0%,
-    var(--color-secondary, #d0d0c8) 50%,
-    var(--color-text, #f5f5f0) 100%
+    var(--color-text) 0%,
+    var(--color-secondary) 30%,
+    var(--color-text) 50%,
+    var(--color-secondary) 70%,
+    var(--color-text) 100%
   );
+
   background-size: 200% auto;
+  background-position: 0% center;
+
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  animation: shimmer 6s linear infinite;
+
+  animation: shimmer 5s linear infinite;
+
+  /* ✨ depth */
+  filter: drop-shadow(0 8px 8px var(--color-secondary));
 }
 
+
+/* ✨ shimmer */
 @keyframes shimmer {
   0%   { background-position: 0% center; }
   100% { background-position: 200% center; }
 }
+
+
 
 
 

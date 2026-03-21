@@ -17,9 +17,9 @@ export default function StickyZoomSection() {
 
     const ctx = gsap.context(() => {
       // Встановлюємо початкові значення
-      gsap.set(zoomRef.current, { scale: 0.15 });
+      gsap.set(zoomRef.current, { scale: 0.1 });
       gsap.set(textBgRef.current, { opacity: 0, scale: 0.8 });
-      gsap.set(textFgRef.current, { opacity: 0, scale: 1.2, y: 50 });
+      gsap.set(textFgRef.current, { opacity: 0, scale: 1, y: 50 });
       gsap.set(ctaRef.current, { opacity: 0, y: 24 });
 
       // Створюємо ScrollTrigger
@@ -70,7 +70,7 @@ export default function StickyZoomSection() {
         .to(
           zoomRef.current,
           {
-            scale: 5.2, // Massive scale to envelope the screen
+            scale: 1.6, // Massive scale to envelope the screen
             duration: 1.5,
             ease: "power2.in",
           },
@@ -119,11 +119,7 @@ export default function StickyZoomSection() {
 
         <div ref={zoomRef} className={styles.zoom}>
           <div className={styles.imageWrap}>
-            <img
-              src="https://images.unsplash.com/photo-1498050108023-c5249f4df085"
-              alt="Code"
-              loading="lazy"
-            />
+           <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="github" />
           </div>
         </div>
 

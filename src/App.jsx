@@ -60,12 +60,12 @@ function App() {
   useEffect(() => {
     preload().then(() => {
       // Loader показується мінімум 2s (щоб анімація встигла відпрацювати)
-      const id = setTimeout(() => setLoading(false), 2000);
+      const id = setTimeout(() => setLoading(false), 3400);
       return () => clearTimeout(id);
     });
   }, []);
 
-  if (loading) return <Loader />;
+  if (loading) return <Loader /> ;
 
   return (
     <OverlayProvider>
@@ -79,6 +79,7 @@ function App() {
             <div style={{ background: "var(--bg-color)", minHeight: "100vh" }} />
           }
         >
+
           <Routes location={location}>
             <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />

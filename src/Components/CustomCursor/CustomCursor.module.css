@@ -10,13 +10,9 @@
   background-color: var(--color-text);
   border: 1px solid var(--bg-color);
   mix-blend-mode: difference;
-  backdrop-filter: blur(2px);
+  
   transform: translate(-50%, -50%);
-  transition:
-    background-color 0.3s,
-    border-color 0.3s,
-    box-shadow 0.3s,
-    transform 0.3s;
+  will-change: transform;
 }
 
 /* Ripple ефект */

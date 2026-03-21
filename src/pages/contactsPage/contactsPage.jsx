@@ -40,8 +40,8 @@ const ContactsPage = () => {
 
       // Background entry
       tl.fromTo(bgRef.current, 
-        { scale: 1.4, opacity: 0, filter: "grayscale(1) brightness(0) blur(20px)" },
-        { scale: 1, opacity: 0.6, filter: "grayscale(1) brightness(0.2) blur(5px)", duration: 2.5, ease: "power2.out" }
+        { scale: 1.4, opacity: 0, filter: "grayscale(1) brightness(0) blur(10px)" },
+        { scale: 1, opacity: 0.6, filter: "grayscale(1) brightness(0.2) blur(2px)", duration: 2.5, ease: "power2.out" }
       );
 
       // Background subtle drift (parallel)

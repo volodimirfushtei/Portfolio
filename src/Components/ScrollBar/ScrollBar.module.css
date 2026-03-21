@@ -1,7 +1,7 @@
 /* ScrollBar.module.css — Awwwards editorial premium */
 
 .container {
-  scrollbar-width: none; /* Firefox */
+ /* Firefox */
   -ms-overflow-style: none; /* IE/Edge */
 }
 

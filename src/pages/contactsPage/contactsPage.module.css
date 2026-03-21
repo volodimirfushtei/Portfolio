@@ -19,46 +19,12 @@
   height: 120%;
   z-index: 0;
   background: url("/images/ryan_wilson_map.jpg") center / cover no-repeat;
-  filter: grayscale(1) brightness(0.5) blur(2px);
+  filter: grayscale(1) brightness(0.5) blur(8px);
   pointer-events: none;
   opacity: 0.8;
 }
 
-/* ── Noise layer ── */
-.noise {
-  position: absolute;
-  inset: -60%;
-  width: 220%;
-  height: 220%;
-  z-index: 0;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-  background-size: 220px 220px;
-  opacity: 0.025;
-}
 
-/* ── Scanlines layer ── */
-.scanlines {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background-image: repeating-linear-gradient(
-    0deg,
-    transparent 0px,
-    transparent 2px,
-    var(--color-border) 2px,
-    var(--color-border) 3px
-  );
-  background-size: 100% 6px;
-  opacity: 0.12;
-  animation: scanlineScroll 24s linear infinite;
-}
-
-@keyframes scanlineScroll {
-  from { background-position: 0 0; }
-  to   { background-position: 0 100%; }
-}
 
 .container {
   position: relative;

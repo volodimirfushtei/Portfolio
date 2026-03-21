@@ -65,6 +65,7 @@ const ScrollToTopBtn = () => {
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
+    setScrollProgress(0);
   };
 
   // SVG dimensions for circular progress

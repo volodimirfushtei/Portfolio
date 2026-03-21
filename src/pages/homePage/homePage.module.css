@@ -42,7 +42,11 @@
   overflow: auto; /* виправлено: було overflow:auto — краще clip щоб не з'являвся горизонтальний скрол */
   overflow-x: clip;
 }
-
+.main {
+  width: 100%;
+  overflow: hidden;
+  padding: 0;
+}
 /* ── Certificate section ── */
 .sertificate {
   background: var(--color-background);
@@ -197,7 +201,7 @@
 /* ── Tablet: 481px – 768px ── */
 @media (max-width: 768px) {
   .container {
-    padding: 1rem;
+    padding: 0;
     height: auto;
   }
 
@@ -239,7 +243,7 @@
 /* ── Mobile: ≤ 480px ── */
 @media (max-width: 480px) {
   .container {
-    padding: 0.5rem; /* виправлено: було "0, 5rem" — некоректне значення */
+
     height: auto;
   }
 
@@ -293,9 +297,12 @@
 
 /* ── Small mobile: ≤ 360px ── */
 @media (max-width: 360px) {
-  .container {
-    padding: 0.25rem;
+  .main {
+    width: 100%;
+    overflow: hidden;
+    padding: 0;
   }
+  
 
   .textContent {
     padding: 0.5rem;

@@ -12,9 +12,10 @@
 .column {
   position: absolute;
   top: 0;
-  width: 20.5%; /* slight overlap */
+  width: 20%; /* slight overlap */
   height: 100vh;
-  background: var(--bg-color);
+  background: var(--color-secondary);
   will-change: transform;
-  border: 1px solid var(--color-border);
+  
+  
 }

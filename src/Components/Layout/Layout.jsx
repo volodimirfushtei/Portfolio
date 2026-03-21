@@ -39,11 +39,14 @@ const menuItems = [
   },
 ];
 
+
+ 
+
 const Layout = () => {
   return (
     <div className={s.layoutContainer}>
       <Header />
-
+<Overlay  />
       <motion.main
         className={`${s.mainContent} `}
         initial={{ opacity: 0 }}
@@ -51,6 +54,7 @@ const Layout = () => {
         transition={{ duration: 0.3 }}
       >
         <AnimatePresence mode="wait">
+          
           <Outlet key={location.pathname} />
         </AnimatePresence>
       </motion.main>

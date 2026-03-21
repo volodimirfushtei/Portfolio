@@ -89,6 +89,7 @@
 ──────────────────────────────────────────── */
 html,
 body {
+  scroll-behavior: smooth;
   background-color: var(--bg-color);
   color: var(--color-text);
   font-family: var(--font-body);
@@ -269,7 +270,7 @@ body {
   --color-loader-bar:        linear-gradient(90deg, #111, #3a3a38);
 
   /* Overlays */
-  --color-overlay: linear-gradient(135deg, rgba(244, 244, 239, 0.78) 0%, rgba(228, 228, 218, 0.88) 100%);
+  --color-overlay: linear-gradient(to bottom, rgba(244, 244, 239, 0.78) 0%, rgba(228, 228, 218, 0.99) 100%);
 
   /* Grid */
   --color-grid:
@@ -335,7 +336,7 @@ body {
   --color-loader-bar:        linear-gradient(90deg, #e8f53c, #f5ff80);
 
   /* Overlays */
-  --color-overlay: rgba(5, 5, 5, 0.92);
+  --color-overlay: linear-gradient(to bottom, rgba(5, 5, 5, 0.85), rgba(0, 0, 0, 0.99));
 
   /* Grid */
   --color-grid:

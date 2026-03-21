@@ -12,55 +12,67 @@ const Loader = () => {
   const curtainRefs = useRef([]);
   const timers = useRef([]);
 
-  useEffect(() => {
-    if (!isLoading) return;
-    let current = 0;
+useEffect(() => {
+  if (!isLoading) return;
 
-    const steps = [
-      { target: 30, delay: 0, speed: 18 },
-      { target: 65, delay: 400, speed: 12 },
-      { target: 85, delay: 800, speed: 22 },
-      { target: 100, delay: 1100, speed: 8 },
-    ];
+  const currentRef = { value: 0 };
 
-    steps.forEach(({ target, delay, speed }) => {
-      const timeout = setTimeout(() => {
-        const interval = setInterval(() => {
-          current += 1;
-          setProgress(current);
-          if (current >= target) {
-            clearInterval(interval);
-          }
-        }, speed);
-        timers.current.push(interval);
-      }, delay);
-      timers.current.push(timeout);
+  const runStep = (target, speed) => {
+    return new Promise((resolve) => {
+      const interval = setInterval(() => {
+        currentRef.value += 1;
+        setProgress(currentRef.value);
+
+        if (currentRef.value >= target) {
+          clearInterval(interval);
+          resolve();
+        }
+      }, speed);
     });
+  };
 
-    return () => {
-      timers.current.forEach(clearTimeout);
-      timers.current.forEach(clearInterval);
-    };
-  }, []);
+  const run = async () => {
+    await runStep(30, 18);
+    await new Promise(r => setTimeout(r, 200));
+
+    await runStep(65, 12);
+    await new Promise(r => setTimeout(r, 200));
+
+    await runStep(85, 22);
+    await new Promise(r => setTimeout(r, 200));
+
+    await runStep(100, 8);
+  };
+
+  run();
+}, []);
 
   useEffect(() => {
     if (progress >= 100) {
       setTimeout(() => setPhase("reveal"), 400);
       setTimeout(() => setPhase("done"), 1800);
-      setTimeout(() => setIsLoading(false), 2800);
+      setTimeout(() => setIsLoading(false), 3200);
     }
   }, [progress]);
 
   // GSAP Curtain Animation
   useEffect(() => {
     if (phase === "reveal") {
+      gsap.to(containerRef.current, {
+  filter: "blur(8px)",
+  duration: 0.6
+      });
+      gsap.fromTo(curtainRefs.current,
+  { scaleY: 1 },
+  { scaleY: 1.2, y: "-100%", stagger: 0.1 }
+);
       gsap.to(curtainRefs.current, {
         y: "-100%",
-        duration: 1.2,
+        duration: 0.8,
         stagger: 0.1,
         ease: "power4.inOut",
       });
-      
+   
       // Fade out textual content
       gsap.to(`.${styles.topBar}, .${styles.center}, .${styles.trackWrap}, .${styles.bottomBar}`, {
         opacity: 0,
@@ -68,6 +80,7 @@ const Loader = () => {
         duration: 0.8,
         ease: "power3.in"
       });
+   
     }
   }, [phase]);
 
@@ -77,9 +90,8 @@ const Loader = () => {
     <AnimatePresence>
       {isLoading && (
         <div className={styles.overlay} ref={containerRef}>
-          {/* Visual Overlays */}
-          <div className={styles.noise} aria-hidden="true" />
-          <div className={styles.scanlines} aria-hidden="true" />
+          
+       
 
           {/* Curtain panels */}
           {[0, 1, 2, 3, 4].map((i) => (

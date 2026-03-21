@@ -15,7 +15,8 @@ const Expertise = () => {
   });
 
   /* ── Parallax values ── */
-  const bgY = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
+  const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
   const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "5%"]);
 
   /* ── Stagger variants ── */
@@ -54,10 +55,10 @@ const Expertise = () => {
       <div className={styles.gridBg} aria-hidden="true" />
       <motion.div 
         className={styles.background} 
-        style={{ y: bgY }}
+        style={{ y: bgY, scale: bgScale }}
         aria-hidden="true" 
       />
-      <div className={styles.scanlines} aria-hidden="true" />
+      
 
       {/* ── Corner section index ── */}
       <div className={styles.cornerBadge} aria-hidden="true">

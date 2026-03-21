@@ -3,51 +3,18 @@
 .overlay {
   position: fixed;
   inset: 0;
-  z-index: 10000;
-  background: var(--bg-color);
+  z-index: 1000;
+  
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: clamp(2rem, 5vw, 4rem);
   overflow: hidden;
   isolation: isolate;
+   background:   linear-gradient(to bottom, #1a1a1a, #000);
 }
 
-/* ── Noise layer ── */
-.noise {
-  position: absolute;
-  inset: -60%;
-  width: 220%;
-  height: 220%;
-  z-index: 1;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-  background-size: 220px 220px;
-  opacity: 0.025;
-}
 
-/* ── Scanlines layer ── */
-.scanlines {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  background-image: repeating-linear-gradient(
-    0deg,
-    transparent 0px,
-    transparent 2px,
-    var(--color-border) 2px,
-    var(--color-border) 3px
-  );
-  background-size: 100% 6px;
-  opacity: 0.12;
-  animation: scanlineScroll 24s linear infinite;
-}
-
-@keyframes scanlineScroll {
-  from { background-position: 0 0; }
-  to   { background-position: 0 100%; }
-}
 
 /* ── Curtain panels ── */
 .curtain {
@@ -55,7 +22,7 @@
   top: 0;
   width: 20.2%; /* Tiny overlap to prevent gaps */
   height: 100%;
-  background: var(--bg-color);
+  background: var(--color-surface);
   z-index: 10;
   will-change: transform;
 }
@@ -75,15 +42,17 @@
   font-family: var(--font-mono);
   font-size: 0.65rem;
   letter-spacing: 0.3em;
-  color: var(--color-secondary);
+  color: var(--color-text);
   text-transform: uppercase;
+  color: #f1f0f0;
 }
 
 .year {
   font-family: var(--font-mono);
   font-size: 0.65rem;
   letter-spacing: 0.2em;
-  color: var(--color-secondary);
+
+  color: #f1f0f0;
 }
 
 /* ── Center Content ── */
@@ -109,26 +78,29 @@
 .digit {
   font-family: var(--font-display);
   font-size: clamp(6rem, 20vw, 15rem);
-  color: var(--color-text);
+  
   line-height: 0.8;
   display: inline-block;
+  color: #f1f0f0;
 }
 
 .pct {
   font-family: var(--font-display);
   font-size: clamp(2rem, 5vw, 4rem);
-  color: var(--color-accent);
+ 
   margin-left: 0.2em;
   opacity: 0.8;
+  color: #f1f0f0;
 }
 
 .tagline {
   font-family: var(--font-mono);
-  font-size: clamp(0.7rem, 1.2vw, 0.8rem);
+  font-size: clamp(0.7rem, 1.2vw, 1rem);
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: var(--color-secondary);
+  
   min-height: 1.5em;
+  color: #f1f0f0;
 }
 
 /* ── Progress Track ── */
@@ -141,7 +113,7 @@
 .track {
   width: 100%;
   height: 1px;
-  background: var(--color-text);
+  background: var(--color-background);
   position: relative;
   overflow: hidden;
 }
@@ -151,7 +123,7 @@
   top: 0;
   left: 0;
   height: 100%;
-  background: var(--color-secondary);
+  background: #edf948;
   transition: width 0.2s linear;
 }
 
@@ -178,6 +150,7 @@
   z-index: 5;
   border-top: 1px solid var(--color-border);
   padding-top: 1.5rem;
+  color: #f1f0f0;
 }
 
 .statusText {
@@ -185,14 +158,14 @@
   font-size: 0.65rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--color-secondary);
+  color: #f1f0f0;
 }
 
 .statusDot {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: var(--color-accent);
+  background: #edf948;
   box-shadow: 0 0 10px var(--color-accent);
 }
 

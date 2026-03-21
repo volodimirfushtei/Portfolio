@@ -60,20 +60,21 @@
 /* Image */
 .imageWrap {
   position: relative;
-  width: 380px;
-  height: 240px;
+  width: 560px;
+  height: 480px;
   overflow: hidden;
-  box-shadow: var(--color-shadow);
-  border-radius: var(--radius-md, 8px);
+ border-radius: 8px;
   transition: box-shadow var(--transition-base) ease;
   pointer-events: auto;
+  box-shadow: 0 8px 8px var(--color-secondary);
+ 
 }
 
 .imageWrap::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: var(--color-overlay, rgba(8, 8, 8, 0.4));
+  
   pointer-events: none;
   opacity: 1;
   transition: opacity var(--transition-base) ease;
@@ -104,6 +105,9 @@
 /* CTA */
 .cta {
   position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
   left: 50%;
   transform: translateX(-50%);
   pointer-events: auto;
@@ -138,6 +142,7 @@
   position: relative;
   z-index: var(--z-content, 2);
   transition: color var(--transition-base) ease;
+  text-align: center;
   
 }
 

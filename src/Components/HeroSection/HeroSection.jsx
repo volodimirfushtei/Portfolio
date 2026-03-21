@@ -163,7 +163,7 @@ const HeroSection = () => {
         <DotGrid
           dotSize={2}
           gap={10}
-          baseColor="#575757ff"
+          baseColor="#838383ff"
           activeColor="#e8f53c"
           proximity={120}
           shockRadius={250}

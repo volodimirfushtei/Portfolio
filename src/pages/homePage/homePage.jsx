@@ -18,6 +18,7 @@ import CtaSection from "../../Components/CtaSection/CtaSection.jsx";
 import ScrollToTopBtn from "../../Components/ScrollToTopBtn/ScrollTotopBtn.jsx";
 import ScrollProgress from "../../Components/ScrollProgress/ScrollProgress.jsx";
 import StickyZoomSection from "../../Components/StickyZoomSection/StickyZoomSection.jsx";
+import ScrollBar from "../../Components/ScrollBar/ScrollBar.jsx";
 
 // Page level reveal animation variants
 const pageReveal = {
@@ -104,12 +105,12 @@ const HomePage = () => {
       animate="visible"
       className={styles.container}
     >
-      <ScrollProgress scrollProgress={scrollProgress} />
+      <ScrollToTopBtn/>
       <motion.section variants={sectionReveal} className={styles.section}>
         <HeroSection />
       </motion.section>
 
-      <main className="w-screen overflow-hidden">
+      <main className={styles.main}>
         {/* Expertise Section */}
         <motion.section
           variants={sectionReveal}
@@ -183,12 +184,13 @@ const HomePage = () => {
             className={`${styles.sticky} ${styles.section}`}
           >
             <StickyZoomSection />
+            
           </motion.section>
         </section>
       </main>
       <Footer />
-      <ScrollToTopBtn />
-      <ScrollProgress progress={scrollProgress} />
+      
+      
     </motion.div>
   );
 };

@@ -46,8 +46,9 @@
   background: transparent;
  
 
-  backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+ 
   overflow: hidden;
   isolation: isolate;
   transition: border-color 0.4s ease;

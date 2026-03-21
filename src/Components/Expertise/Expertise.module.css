@@ -15,36 +15,9 @@
   padding: clamp(5rem, 6vw, 6rem) 0;
 }
 
-/* ═══════════════════════════════════════════
-   NOISE / GRAIN LAYER
-═══════════════════════════════════════════ */
-.noise {
-  position: absolute;
-  inset: -60%;
-  width: 220%;
-  height: 220%;
-  z-index: 0;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-  background-size: 220px 220px;
-  opacity: 0.025;
-  will-change: transform;
-}
 
-/* ═══════════════════════════════════════════
-   GRID BG LINES
-═══════════════════════════════════════════ */
-.gridBg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(var(--color-border) 1px, transparent 1px),
-    linear-gradient(90deg, var(--color-border) 1px, transparent 1px);
-  background-size: 200px 200px;
-  opacity: 0.45;
-}
+
+
 
 /* ═══════════════════════════════════════════
    PARALLAX BACKGROUND IMAGE
@@ -64,33 +37,12 @@
   position: absolute;
   inset: 0;
   background: var(--color-overlay);
-  z-index: 1;
-}
-
-/* ═══════════════════════════════════════════
-   SCANLINES
-═══════════════════════════════════════════ */
-.scanlines {
-  position: absolute;
-  inset: 0;
   z-index: 2;
-  pointer-events: none;
-  background-image: repeating-linear-gradient(
-    0deg,
-    transparent 0px,
-    transparent 2px,
-    var(--color-border) 2px,
-    var(--color-border) 3px
-  );
-  background-size: 100% 6px;
-  opacity: 0.12;
-  animation: scanline 24s linear infinite;
 }
 
-@keyframes scanline {
-  from { background-position: 0 0; }
-  to   { background-position: 0 100%; }
-}
+
+
+
 
 /* ═══════════════════════════════════════════
    CORNER BADGE
@@ -335,6 +287,13 @@
   .eyebrowText {
     font-size: 0.65rem;
     letter-spacing: 0.2em;
+    margin-left: 10px;
+  }
+  .title {
+    font-size: clamp(3rem, 14vw, 5rem); 
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-align: center;
   }
 
   .inner {
@@ -363,6 +322,8 @@
 ═══════════════════════════════════════════ */
 @media (forced-colors: active) {
   .titleAccent {
+   
     forced-color-adjust: none;
+
   }
 }
