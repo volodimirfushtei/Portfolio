@@ -95,16 +95,7 @@ const ScrollToTopBtn = () => {
                 cy="30"
                 r={radius}
               />
-              <motion.circle
-                className={styles.progressCircle}
-                cx="30"
-                cy="30"
-                r={radius}
-                style={{
-                  strokeDasharray: circumference,
-                  strokeDashoffset: strokeDashoffset,
-                }}
-              />
+            
             </svg>
 
             {/* Main Button with Icon */}

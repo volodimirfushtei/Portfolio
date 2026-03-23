@@ -225,7 +225,7 @@ const TechnologyPage = () => {
     <AnimatedPage>
       <section ref={wrapperRef} className={styles.wrapper} id="tech">
         {/* Visual Overlays */}
-        <div className={styles.noise} aria-hidden="true" />
+        
         <div className={styles.scanlines} aria-hidden="true" />
 
         <div className={styles.container}>

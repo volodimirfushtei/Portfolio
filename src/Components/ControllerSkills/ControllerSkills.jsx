@@ -102,10 +102,17 @@ const techItems = [
   },
 ];
 
-// Simplified TechCard (Editorial Cell)
-const TechCard = ({ tech }) => {
+// Fixed: Use motion.div for 3D transforms
+const TechCard = ({ tech, style, index, totalItems }) => {
   return (
-    <div className={styles.card}>
+    <motion.div
+      className={styles.card}
+      style={style}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5, delay: index * 0.02 }}
+    >
+      <div className={styles.glare} />
       <div className={styles.cardContent}>
         <i className={tech.icon} style={{ color: tech.color }} />
         <div className={styles.info}>
@@ -113,7 +120,7 @@ const TechCard = ({ tech }) => {
           <span className={styles.desc}>{tech.description}</span>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -121,39 +128,31 @@ const ControllerSkills = () => {
   const sectionRef = useRef(null);
   const [isInView, setIsInView] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
-  const controls = useAnimation();
 
-  // Optimized duplicated list for marquee
   const marqueeItems = useMemo(() => {
-    return [...techItems, ...techItems, ...techItems, ...techItems];
+    return [...techItems, ...techItems, ...techItems];
   }, []);
 
-  // Intersection Observer for performance
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsInView(entry.isIntersecting);
-      },
+      ([entry]) => setIsInView(entry.isIntersecting),
       { threshold: 0.1 }
     );
-
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
 
-  // Animation variants
   const headerVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 40 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
-    },
+      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+    }
   };
 
   return (
     <section ref={sectionRef} className={styles.section}>
-      {/* Header */}
       <motion.div
         className={styles.header}
         initial="hidden"
@@ -165,27 +164,31 @@ const ControllerSkills = () => {
         <h3 className={styles.heading}>Coding process and tools</h3>
       </motion.div>
 
-      {/* Marquee Track */}
       <div className={styles.track}>
         <motion.div
           className={styles.inner}
-          animate={isInView && !isPaused ? { x: [0, -100 / 4 + "%"] } : {}}
+          animate={isInView && !isPaused ? { x: ["0%", "-33.333%"] } : {}}
           transition={{
             duration: 40,
             repeat: Infinity,
             repeatType: "loop",
-            ease: "linear",
+            ease: "linear"
           }}
           onHoverStart={() => setIsPaused(true)}
           onHoverEnd={() => setIsPaused(false)}
         >
-          {marqueeItems.map((tech, index) => (
-            <TechCard
-              key={`${tech.name}-${index}`}
-              tech={tech}
-              style={{transform: `translateZ(${index}px)`}}
-            />
-          ))}
+          {marqueeItems.map((tech, index) => {
+            const originalIndex = index % techItems.length;
+            const depth = originalIndex * -15;
+            
+            return (
+              <TechCard
+                key={`${tech.name}-${index}`}
+                tech={tech}
+               
+              />
+            );
+          })}
         </motion.div>
       </div>
     </section>

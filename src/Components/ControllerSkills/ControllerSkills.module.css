@@ -2,10 +2,8 @@
 
 .section {
   background: var(--color-background);
-  padding:  0;
+  padding: 0;
   overflow: hidden;
-  
- 
 }
 
 /* ── Header ── */
@@ -37,13 +35,10 @@
 
 /* ── Track ── */
 .track {
+  perspective: 1200px;
   position: relative;
-  
-
-  
-  padding: 1px 0;
-
-  
+  padding: 1rem 0;
+  overflow-x: hidden;
 }
 
 /* Fade edges */
@@ -53,7 +48,7 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 150px;
+  width: 180px;
   z-index: 5;
   pointer-events: none;
 }
@@ -73,11 +68,12 @@
   width: max-content;
   will-change: transform;
   gap: 0.5rem;
-
+  transform-style: preserve-3d; /* Critical for 3D children */
 }
 
 /* ── Card (Simplified Editorial Cell) ── */
 .card {
+  position: relative;
   width: clamp(140px, 15vw, 180px);
   height: 90px;
   flex-shrink: 0;
@@ -89,16 +85,42 @@
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  transition: background 0.4s ease;
+  transition: transform 0.3s ease, background 0.4s ease, border-color 0.4s ease, box-shadow 0.3s ease;
   cursor: default;
-  transform-style: preserve-3d;
+  transform-style: preserve-3d; /* Maintain 3D context */
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 .card:hover {
   background: var(--color-surface);
-  border: 1px solid var(--color-accent);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: var(--color-accent);
+  transform: translateY(-5px) translateZ(20px); /* Combine transforms */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  z-index: 100 !important;
+}
+
+/* Glare Effect */
+.glare {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-20deg);
+  transition: left 0.5s ease;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.card:hover .glare {
+  left: 150%;
 }
 
 .cardContent {
@@ -107,6 +129,12 @@
   gap: 1rem;
   text-align: left;
   width: 100%;
+  transform: translateZ(20px);
+  transition: transform 0.3s ease;
+}
+
+.card:hover .cardContent {
+  transform: translateZ(40px);
 }
 
 .cardContent i {

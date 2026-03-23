@@ -42,7 +42,7 @@
 :root {
   /* Blur / radius */
   --blur-amount: 12px;
-  --blur-heavy:  24px;
+  --blur-heavy:  34px;
   --border-radius: 10px;
   --border-radius-lg: 20px;
   --border-radius-pill: 9999px;
@@ -290,63 +290,342 @@ body {
 ══════════════════════════════════════════════ */
 .dark-theme {
   /* Base palette */
-  --color-primary:       #f0f878;
-  --color-info:          #38bdf8;
-  --color-success:       #4ade80;
-  --color-warning:       #fbbf24;
+  --color-primary:       #7c8cff;   /* м’який індиго */
+  --color-info:          #4dabf7;
+  --color-success:       #52d6a3;
+  --color-warning:       #f4b860;
   --color-error:         #f87171;
-  --color-accent:        #e8f53c;
-  --color-accent-hover:  #d4df28;
+  --color-accent:        #8f9bff;
+  --color-accent-hover:  #6f7cff;
 
   /* Backgrounds */
-  --bg-color:                  #0c0c0c;
-  --color-background:          #0c0c0c;
-  --color-surface:             #070707;
-  --color-surface-hover:       #1c1c1c;
-  --color-background-scrolled: #0c0c0c;
+  --bg-color:                  #171d3f;
+  --color-background:          #151a39;
+  --color-surface:             #2f355f;  /* ↓ затемнили для контрасту */
+  --color-surface-hover:       #3a4170;
+  --color-background-scrolled: #1c1f36;
   --color-sidebar:             var(--color-surface);
-  --color-footer:              #0a0a0a;
-  --color-gradient: linear-gradient(135deg, rgba(8,8,8,0.9) 0%, rgba(16,16,16,0.8) 100%);
+  --color-footer:              #16182b;
+  --color-gradient: linear-gradient(135deg, #1e223a 0%, #2a2f55 100%);
 
   /* Borders & shadows */
-  --color-border:        rgba(232, 243, 60, 0.2);
-  --color-border-subtle: rgba(232, 243, 60, 0.05);
-  --color-shadow:        0 4px 32px rgba(0, 0, 0, 0.5);
-  --color-shadow-hover:  0 12px 48px rgba(0, 0, 0, 0.7);
+  --color-border:        rgba(140, 150, 255, 0.25);
+  --color-border-subtle: rgba(140, 150, 255, 0.08);
+  --color-shadow:        0 8px 40px rgba(10, 10, 30, 0.6);
+  --color-shadow-hover:  0 16px 60px rgba(10, 10, 30, 0.8);
 
   /* Text */
-  --color-text:       #f2f2ed;
+  --color-text:       #d6c2a8;  /* трохи світліший */
+  --color-secondary:  #aab0d6;
+  --color-text-muted: #7c82a8;
+  --color-title:      #ffffff;
+
+  /* Buttons */
+  --color-button-bg:       #7c8cff;
+  --color-button-bg-hover: #6f7cff;
+  --color-button-text:     #ffffff;
+
+  /* Header */
+  --color-header: linear-gradient(145deg, #1c1f36 0%, #2a2f55 100%);
+  --color-hero:   var(--color-header);
+
+  /* Loaders */
+  --color-loader:            rgba(140, 150, 255, 0.9);
+  --color-loader-bg:         #1c1f36;
+  --color-loader-background: linear-gradient(135deg, #1c1f36, #2a2f55);
+  --color-loader-bar:        linear-gradient(90deg, #7c8cff, #aab0ff);
+
+  /* Overlays */
+  --color-overlay: linear-gradient(to bottom, rgba(20, 20, 40, 0.85), rgba(10, 10, 20, 0.98));
+
+  /* Grid */
+  --color-grid:
+    repeating-linear-gradient(to right, transparent 0px, transparent 39px, rgba(140,150,255,0.06) 39px, rgba(140,150,255,0.06) 40px),
+    repeating-linear-gradient(to bottom, transparent 0px, transparent 39px, rgba(140,150,255,0.06) 39px, rgba(140,150,255,0.06) 40px);
+
+  /* Glass */
+  --glass-bg:     rgba(36, 41, 72, 0.7);
+  --glass-border: rgba(140, 150, 255, 0.15);
+
+  /* Scroll */
+  --scroll-progress: #7c8cff;
+}
+.neutral-theme {
+  --color-primary:       #a1a1aa;
+  --color-accent:        #d4d4d8;
+  --color-accent-hover:  #71717a;
+
+  --bg-color:                  #0a0a0a;
+  --color-background:          #121212;
+  --color-surface:             #1c1c1c;
+  --color-surface-hover:       #262626;
+  --color-background-scrolled: #080808;
+
+  --color-border:        rgba(255, 255, 255, 0.08);
+  --color-border-subtle: rgba(255, 255, 255, 0.04);
+
+  --color-text:       #e4e4e7;
+  --color-secondary:  #a1a1aa;
+  --color-text-muted: #71717a;
+  --color-title:      #ffffff;
+
+  --color-button-bg:       #e4e4e7;
+  --color-button-bg-hover: #d4d4d8;
+  --color-button-text:     #0a0a0a;
+
+  --color-gradient: linear-gradient(135deg, #0a0a0a, #1c1c1c);
+--color-header: linear-gradient(145deg, #1c1f36 0%, #2a2f55 100%);
+--color-hero:   var(--color-header);
+--color-footer: linear-gradient(180deg, #1c1f36 0%, #2a2f55 100%);
+--color-overlay: linear-gradient(to bottom, rgba(33, 33, 38, 0.85), rgba(49, 49, 52, 0.98));
+  --color-shadow:       0 8px 30px rgba(0, 0, 0, 0.7);
+  --color-shadow-hover: 0 16px 50px rgba(0, 0, 0, 0.9);
+
+  --glass-bg:     rgba(18, 18, 18, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.08);
+
+  --scroll-progress: #e4e4e7;
+}
+
+
+.purple-theme {
+  --color-primary:       #8b5cf6;
+  --color-accent:        #a78bfa;
+  --color-accent-hover:  #7c3aed;
+
+  --bg-color:                  #1a1625;
+  --color-background:          #211c33;
+  --color-surface:             #2b2550;
+  --color-surface-hover:       #352f63;
+  --color-background-scrolled: #18132a;
+
+  --color-border:        rgba(139, 92, 246, 0.25);
+  --color-border-subtle: rgba(139, 92, 246, 0.08);
+
+  --color-text:       #e5d9ff;
+  --color-secondary:  #b8a9ff;
+  --color-text-muted: #7c6fa3;
+  --color-title:      #ffffff;
+
+  --color-button-bg:       #8b5cf6;
+  --color-button-bg-hover: #7c3aed;
+  --color-button-text:     #ffffff;
+
+  --color-gradient: linear-gradient(135deg, #1a1625, #2b2550);
+
+  --color-shadow:       0 10px 40px rgba(20, 10, 50, 0.6);
+  --color-shadow-hover: 0 20px 60px rgba(20, 10, 50, 0.8);
+
+  --glass-bg:     rgba(33, 28, 51, 0.7);
+  --glass-border: rgba(139, 92, 246, 0.15);
+
+  --scroll-progress: #8b5cf6;
+}
+.blue-theme {
+  --color-primary:       #3b82f6;
+  --color-accent:        #60a5fa;
+  --color-accent-hover:  #2563eb;
+
+  --bg-color:                  #0f172a;
+  --color-background:          #111827;
+  --color-surface:             #1f2937;
+  --color-surface-hover:       #2b3545;
+  --color-background-scrolled: #0b1220;
+
+  --color-border:        rgba(96, 165, 250, 0.25);
+  --color-border-subtle: rgba(96, 165, 250, 0.08);
+
+  --color-text:       #e5e7eb;
   --color-secondary:  #9ca3af;
   --color-text-muted: #6b7280;
   --color-title:      #ffffff;
 
+  --color-button-bg:       #3b82f6;
+  --color-button-bg-hover: #2563eb;
+  --color-button-text:     #ffffff;
+
+  --color-gradient: linear-gradient(135deg, #0f172a, #1f2937);
+
+  --color-shadow:       0 10px 40px rgba(0, 0, 0, 0.6);
+  --color-shadow-hover: 0 20px 60px rgba(0, 0, 0, 0.8);
+
+  --glass-bg:     rgba(17, 24, 39, 0.7);
+  --glass-border: rgba(96, 165, 250, 0.15);
+
+  --scroll-progress: #3b82f6;
+}
+
+.emerald-theme {
+  --color-primary:       #10b981;
+  --color-accent:        #34d399;
+  --color-accent-hover:  #059669;
+
+  --bg-color:                  #064e3b;
+  --color-background:          #065f46;
+  --color-surface:             #064e3b;
+  --color-surface-hover:       #047857;
+  --color-background-scrolled: #022c22;
+
+  --color-border:        rgba(16, 185, 129, 0.25);
+  --color-border-subtle: rgba(16, 185, 129, 0.08);
+
+  --color-text:       #d1fae5;
+  --color-secondary:  #6ee7b7;
+  --color-text-muted: #34d399;
+  --color-title:      #ffffff;
+
+  --color-button-bg:       #10b981;
+  --color-button-bg-hover: #059669;
+  --color-button-text:     #ffffff;
+
+  --color-gradient: linear-gradient(135deg, #064e3b, #065f46);
+
+  --color-shadow:       0 10px 40px rgba(0, 0, 0, 0.6);
+  --color-shadow-hover: 0 20px 60px rgba(0, 0, 0, 0.8);
+
+  --glass-bg:     rgba(6, 78, 59, 0.7);
+  --glass-border: rgba(16, 185, 129, 0.15);
+
+  --scroll-progress: #10b981;
+}
+
+.sunset-theme {
+  /* Base palette */
+  --color-primary:       #ff7a18;   /* sunset orange */
+  --color-accent:        #ff9a3c;
+  --color-accent-hover:  #e66912;
+
+  --color-info:          #38bdf8;
+  --color-success:       #4ade80;
+  --color-warning:       #fbbf24;
+  --color-error:         #f87171;
+
+  /* Backgrounds */
+  --bg-color:                  #140d0a;
+  --color-background:          #1c120e;
+  --color-surface:             #2a1a14;
+  --color-surface-hover:       #34221a;
+  --color-background-scrolled: #120b08;
+  --color-sidebar:             #2a1a14;
+  --color-footer:              #100907;
+
+  --color-gradient: linear-gradient(
+    135deg,
+    #140d0a 0%,
+    #2a1a14 40%,
+    #3b2318 100%
+  );
+
+  /* Borders & shadows */
+  --color-border:        rgba(255, 122, 24, 0.25);
+  --color-border-subtle: rgba(255, 122, 24, 0.08);
+
+  --color-shadow:        0 10px 50px rgba(0, 0, 0, 0.7);
+  --color-shadow-hover:  0 20px 80px rgba(0, 0, 0, 0.9);
+
+  /* Text */
+  --color-text:       #f5d6c6;   /* теплий крем */
+  --color-secondary:  #d6a88c;
+  --color-text-muted: #8b6b5c;
+  --color-title:      #fff4ee;
+
   /* Buttons */
-  --color-button-bg:       #e8f53c;
-  --color-button-bg-hover: #d4df28;
-  --color-button-text:     #080808;
+  --color-button-bg:       #ff7a18;
+  --color-button-bg-hover: #e66912;
+  --color-button-text:     #1a0e08;
 
   /* Header */
-  --color-header: linear-gradient(145deg, #111111 0%, #161616 100%);
+  --color-header: linear-gradient(145deg, #1c120e 0%, #2a1a14 100%);
   --color-hero:   var(--color-header);
 
   /* Loaders */
-  --color-loader:            rgba(232, 243, 60, 0.9);
-  --color-loader-bg:         #0f0f0f;
-  --color-loader-background: linear-gradient(135deg, #111, #1a1a1a);
-  --color-loader-bar:        linear-gradient(90deg, #e8f53c, #f5ff80);
+  --color-loader:            rgba(255, 140, 60, 0.9);
+  --color-loader-bg:         #1a0f0b;
+  --color-loader-background: linear-gradient(135deg, #1c120e, #2a1a14);
+  --color-loader-bar:        linear-gradient(90deg, #ff7a18, #ffb347);
 
   /* Overlays */
-  --color-overlay: linear-gradient(to bottom, rgba(5, 5, 5, 0.85), rgba(0, 0, 0, 0.99));
+  --color-overlay: linear-gradient(
+    to bottom,
+    rgba(20, 10, 5, 0.85),
+    rgba(10, 5, 2, 0.98)
+  );
 
   /* Grid */
   --color-grid:
-    repeating-linear-gradient(to right, transparent 0px, transparent 39px, rgba(232,243,60,0.06) 39px, rgba(232,243,60,0.06) 40px),
-    repeating-linear-gradient(to bottom, transparent 0px, transparent 39px, rgba(232,243,60,0.06) 39px, rgba(232,243,60,0.06) 40px);
+    repeating-linear-gradient(to right, transparent 0px, transparent 39px, rgba(255,122,24,0.06) 39px, rgba(255,122,24,0.06) 40px),
+    repeating-linear-gradient(to bottom, transparent 0px, transparent 39px, rgba(255,122,24,0.06) 39px, rgba(255,122,24,0.06) 40px);
 
-  /* Glass tokens */
-  --glass-bg:     rgba(12, 12, 12, 0.72);
-  --glass-border: rgba(232, 243, 60, 0.1);
+  /* Glass */
+  --glass-bg:     rgba(28, 18, 14, 0.7);
+  --glass-border: rgba(255, 122, 24, 0.15);
 
-  /* Scroll progress */
-  --scroll-progress: #e8f53c;
+  /* Scroll */
+  --scroll-progress: #ff7a18;
+}
+
+.prelight-theme {
+  /* Base palette */
+  --color-primary:       #4f46e5;
+  --color-accent:        #6366f1;
+  --color-accent-hover:  #4338ca;
+
+  --color-info:          #0ea5e9;
+  --color-success:       #22c55e;
+  --color-warning:       #f59e0b;
+  --color-error:         #ef4444;
+
+  /* Backgrounds */
+  --bg-color:                  #f8fafc;
+  --color-background:          #ffffff;
+  --color-surface:             #f1f5f9;
+  --color-surface-hover:       #e2e8f0;
+  --color-background-scrolled: #f1f5f9;
+  --color-sidebar:             #ffffff;
+  --color-footer:              #f1f5f9;
+
+  --color-gradient: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+
+  /* Borders & shadows */
+  --color-border:        rgba(79, 70, 229, 0.15);
+  --color-border-subtle: rgba(0, 0, 0, 0.05);
+
+  --color-shadow:        0 4px 20px rgba(0, 0, 0, 0.06);
+  --color-shadow-hover:  0 10px 40px rgba(0, 0, 0, 0.1);
+
+  /* Text */
+  --color-text:       #1e293b;
+  --color-secondary:  #475569;
+  --color-text-muted: #94a3b8;
+  --color-title:      #0f172a;
+
+  /* Buttons */
+  --color-button-bg:       #4f46e5;
+  --color-button-bg-hover: #4338ca;
+  --color-button-text:     #ffffff;
+
+  /* Header */
+  --color-header: linear-gradient(145deg, #ffffff 0%, #f1f5f9 100%);
+  --color-hero:   var(--color-header);
+
+  /* Loaders */
+  --color-loader:            rgba(79, 70, 229, 0.8);
+  --color-loader-bg:         #e2e8f0;
+  --color-loader-background: linear-gradient(135deg, #ffffff, #f1f5f9);
+  --color-loader-bar:        linear-gradient(90deg, #6366f1, #818cf8);
+
+  /* Overlays */
+  --color-overlay: linear-gradient(to bottom, rgba(255,255,255,0.8), rgba(255,255,255,0.95));
+
+  /* Grid */
+  --color-grid:
+    repeating-linear-gradient(to right, transparent 0px, transparent 39px, rgba(0,0,0,0.04) 39px, rgba(0,0,0,0.04) 40px),
+    repeating-linear-gradient(to bottom, transparent 0px, transparent 39px, rgba(0,0,0,0.04) 39px, rgba(0,0,0,0.04) 40px);
+
+  /* Glass */
+  --glass-bg:     rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(0, 0, 0, 0.08);
+
+  /* Scroll */
+  --scroll-progress: #4f46e5;
 }

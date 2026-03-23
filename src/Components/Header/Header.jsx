@@ -13,7 +13,10 @@ const useScrollDirection = () => {
   const [direction, setDirection] = useState(null);
   const prevRef = useRef(0);
   const rafRef = useRef(null);
-
+  const scrollPosition = useScrollDetection(50);
+  console.log(scrollPosition);
+  const scrolled = scrollPosition > 50;
+  
   useEffect(() => {
     const onScroll = () => {
       if (rafRef.current) return;

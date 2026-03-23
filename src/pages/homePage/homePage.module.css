@@ -2,7 +2,7 @@
 
 /* ── Section base ── */
 .section {
-  padding: clamp(2rem, 6vw, 6rem) 0;
+  padding: clamp(2rem, 4vw, 4rem) 0;
   margin-bottom: 0;
   position: relative;
   transition: background 1.5s ease-in-out;

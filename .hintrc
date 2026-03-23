@@ -9,7 +9,9 @@
         "ignore": [
           "scrollbar-width",
           "forced-color-adjust",
-          "forced-color-adjust: none"
+          "forced-color-adjust: none",
+          "user-select",
+          "backdrop-filter"
         ]
       }
     ]

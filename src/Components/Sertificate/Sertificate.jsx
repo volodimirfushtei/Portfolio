@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { gsap } from "gsap";
 import styles from "./Sertificate.module.css";
 
@@ -7,7 +7,12 @@ const Certificate = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [isMobile, setIsMobile] = useState(false);
   const cardRef = useRef(null);
-
+ const { scrollYProgress } = useScroll({
+    target: cardRef,
+    offset: ["start start", "end start"],
+ });
+ const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  
   // Responsive Check
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 1024);
@@ -110,10 +115,11 @@ const Certificate = () => {
           <motion.div
             className={styles.card}
             ref={cardRef}
+            style={{ y: bgY}}  
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            whileInView={{ opacity: 1, scale: 1, rotateY: -15, rotateX: 15, rotateZ: 5 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className={styles.certificate}>

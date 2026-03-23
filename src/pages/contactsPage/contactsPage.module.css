@@ -6,7 +6,7 @@
   min-height: 100vh;
   background: var(--bg-color);
   color: var(--color-text);
-  padding: clamp(8rem, 15vw, 15rem) 0;
+  padding: clamp(4rem, 15vw, 8rem) 0;
   overflow: hidden;
   isolation: isolate;
 }

@@ -70,7 +70,7 @@ export default function StickyZoomSection() {
         .to(
           zoomRef.current,
           {
-            scale: 1.6, // Massive scale to envelope the screen
+            scale: 2, // Massive scale to envelope the screen
             duration: 1.5,
             ease: "power2.in",
           },
@@ -119,7 +119,7 @@ export default function StickyZoomSection() {
 
         <div ref={zoomRef} className={styles.zoom}>
           <div className={styles.imageWrap}>
-           <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="github" />
+           <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="github" />
           </div>
         </div>
 
