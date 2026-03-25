@@ -220,8 +220,7 @@
     font-size: 0.8rem;
     letter-spacing: 0.1em;
     bottom: 40%;
-    width: 120px;
-    height: 120px;
+    width: 100%;
   }
 }
 
@@ -229,17 +228,7 @@
   .section {
     height: 30vh;
   }
-  .section::before {
-    height: 30vh;
-  }
-  .textFg {
-    font-size: claimp(1rem, 4vw, 1.5rem);
-    letter-spacing: 0.02em;
-  }
-  .textBg {
-    font-size: claimp(1rem, 4vw, 1.5rem);
-    letter-spacing: 0.02em;
-  }
+
   .zoom {
     gap: 0.75rem;
   }

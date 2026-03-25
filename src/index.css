@@ -389,37 +389,84 @@ body {
 
 
 .purple-theme {
+  /* 🎨 Primary */
   --color-primary:       #8b5cf6;
   --color-accent:        #a78bfa;
   --color-accent-hover:  #7c3aed;
 
-  --bg-color:                  #1a1625;
-  --color-background:          #211c33;
-  --color-surface:             #2b2550;
-  --color-surface-hover:       #352f63;
-  --color-background-scrolled: #18132a;
+  /* 🌌 Backgrounds (глибші + градієнт) */
+  --bg-color: #140f1f;
 
-  --color-border:        rgba(139, 92, 246, 0.25);
-  --color-border-subtle: rgba(139, 92, 246, 0.08);
+  --color-background: 
+    linear-gradient(135deg, #1a1625 0%, #191528 50%, #231e44 100%);
 
-  --color-text:       #e5d9ff;
-  --color-secondary:  #b8a9ff;
-  --color-text-muted: #7c6fa3;
+  --color-surface: 
+    linear-gradient(145deg, #2b2550, #221d3a);
+
+  --color-surface-hover: 
+    linear-gradient(145deg, #352f63, #2a2450);
+
+  --color-background-scrolled: #120e1c;
+
+  /* 🧊 Borders */
+  --color-border:        rgba(139, 92, 246, 0.35);
+  --color-border-subtle: rgba(139, 92, 246, 0.12);
+
+  /* ✍️ Text */
+  --color-text:       #e9ddff;
+  --color-secondary:  #c4b5fd;
+  --color-text-muted: #8a7cb3;
   --color-title:      #ffffff;
 
-  --color-button-bg:       #8b5cf6;
-  --color-button-bg-hover: #7c3aed;
-  --color-button-text:     #ffffff;
+  /* 🔘 Buttons (з glow) */
+  --color-button-bg: 
+    linear-gradient(135deg, #8b5cf6, #7c3aed);
 
-  --color-gradient: linear-gradient(135deg, #1a1625, #2b2550);
+  --color-button-bg-hover: 
+    linear-gradient(135deg, #7c3aed, #6d28d9);
 
-  --color-shadow:       0 10px 40px rgba(20, 10, 50, 0.6);
-  --color-shadow-hover: 0 20px 60px rgba(20, 10, 50, 0.8);
+  --color-button-text: #ffffff;
 
-  --glass-bg:     rgba(33, 28, 51, 0.7);
-  --glass-border: rgba(139, 92, 246, 0.15);
+  /* 🌈 Accent gradient (для hover / border / text) */
+  --color-gradient: 
+    linear-gradient(135deg, #8b5cf6, #c084fc, #6366f1);
 
-  --scroll-progress: #8b5cf6;
+  /* 💡 Glow ефекти */
+  --color-glow: 
+    0 0 20px rgba(139, 92, 246, 0.4),
+    0 0 40px rgba(139, 92, 246, 0.2);
+
+  /* 🌫 Shadows */
+  --color-shadow: 
+    0 10px 40px rgba(10, 5, 30, 0.7);
+
+  --color-shadow-hover: 
+    0 25px 80px rgba(20, 10, 50, 0.9);
+
+  /* 🧊 Glass */
+  --glass-bg: 
+    linear-gradient(
+      135deg,
+      rgba(33, 28, 51, 0.6),
+      rgba(43, 37, 80, 0.4)
+    );
+
+  --glass-border: rgba(139, 92, 246, 0.25);
+
+  /* ⚡ Scroll */
+  --scroll-progress: 
+    linear-gradient(90deg, #5935ac, #ad5ffb);
+
+  /* ✨ Extra (можеш юзати в hover) */
+  --hover-glow: 
+    0 0 15px rgba(168, 139, 250, 0.5);
+
+  --card-highlight: 
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(139, 92, 246, 0.25),
+      transparent 60%
+    );
 }
 .blue-theme {
   --color-primary:       #3b82f6;
@@ -454,39 +501,91 @@ body {
 
   --scroll-progress: #3b82f6;
 }
-
 .emerald-theme {
-  --color-primary:       #10b981;
-  --color-accent:        #34d399;
-  --color-accent-hover:  #059669;
+  /* 🎨 Primary (неонові) */
+  --color-primary:       #00ff9c;
+  --color-accent:        #00ffa6;
+  --color-accent-hover:  #00cc7a;
 
-  --bg-color:                  #064e3b;
-  --color-background:          #065f46;
-  --color-surface:             #064e3b;
-  --color-surface-hover:       #047857;
-  --color-background-scrolled: #022c22;
+  /* 🌌 Background (майже чорний з зеленим відтінком) */
+  --bg-color: #020705;
 
-  --color-border:        rgba(16, 185, 129, 0.25);
-  --color-border-subtle: rgba(16, 185, 129, 0.08);
+  --color-background: 
+    radial-gradient(circle at 20% 20%, rgba(0,255,156,0.08), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(0,255,156,0.05), transparent 50%),
+    #020705;
 
-  --color-text:       #d1fae5;
-  --color-secondary:  #6ee7b7;
-  --color-text-muted: #34d399;
-  --color-title:      #ffffff;
+  --color-surface: 
+    linear-gradient(145deg, #03110c, #020705);
 
-  --color-button-bg:       #10b981;
-  --color-button-bg-hover: #059669;
-  --color-button-text:     #ffffff;
+  --color-surface-hover: 
+    linear-gradient(145deg, #042017, #03110c);
 
-  --color-gradient: linear-gradient(135deg, #064e3b, #065f46);
+  --color-background-scrolled: #010403;
 
-  --color-shadow:       0 10px 40px rgba(0, 0, 0, 0.6);
-  --color-shadow-hover: 0 20px 60px rgba(0, 0, 0, 0.8);
+  /* 🧊 Borders (neon line) */
+  --color-border:        rgba(0, 255, 156, 0.4);
+  --color-border-subtle: rgba(0, 255, 156, 0.15);
 
-  --glass-bg:     rgba(6, 78, 59, 0.7);
-  --glass-border: rgba(16, 185, 129, 0.15);
+  /* ✍️ Text */
+  --color-text:       #b6ffe3;
+  --color-secondary:  #66ffd1;
+  --color-text-muted: #1affb2;
+  --color-title:      #eafff7;
 
-  --scroll-progress: #10b981;
+  /* 🔘 Buttons (glow + gradient) */
+  --color-button-bg: 
+    linear-gradient(135deg, #00ff9c, #00cc7a);
+
+  --color-button-bg-hover: 
+    linear-gradient(135deg, #00cc7a, #00995c);
+
+  --color-button-text: #001a10;
+
+  /* 🌈 Accent gradient */
+  --color-gradient: 
+    linear-gradient(135deg, #00ff9c, #00ffa6, #00cc7a);
+
+  /* 💡 NEON GLOW (головна фішка) */
+  --color-glow: 
+    0 0 5px rgba(0,255,156,0.8),
+    0 0 10px rgba(0,255,156,0.6),
+    0 0 20px rgba(0,255,156,0.4),
+    0 0 40px rgba(0,255,156,0.2);
+
+  /* 🌫 Shadows */
+  --color-shadow: 
+    0 10px 40px rgba(0, 0, 0, 0.9);
+
+  --color-shadow-hover: 
+    0 25px 80px rgba(0, 0, 0, 1);
+
+  /* 🧊 Glass */
+  --glass-bg: 
+    linear-gradient(
+      135deg,
+      rgba(0, 255, 156, 0.05),
+      rgba(0, 255, 156, 0.02)
+    );
+
+  --glass-border: rgba(0, 255, 156, 0.25);
+
+  /* ⚡ Scroll */
+  --scroll-progress: 
+    linear-gradient(90deg, #00ff9c, #00ffa6);
+
+  /* ✨ Extra (ВАЖЛИВО) */
+  --hover-glow: 
+    0 0 10px rgba(26, 138, 67, 0.9),
+    0 0 30px rgba(0,255,156,0.6),
+    0 0 60px rgba(0,255,156,0.4);
+
+  --card-highlight: 
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(0,255,156,0.3),
+      transparent 60%
+    );
 }
 
 .sunset-theme {

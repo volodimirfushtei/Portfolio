@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Sun, Moon, SunMoon, X } from "lucide-react";
 import styles from "./ToggleTheme.module.css";
+import { gsap } from "gsap";
 
 const THEMES = [
   "dark-theme",
@@ -28,27 +29,93 @@ const THEME_COLORS = {
 
 const ToggleTheme = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [shouldRender, setShouldRender] = useState(false);
+  const modalRef = useRef(null);
 
+ useEffect(() => {
+  if (isModalOpen) {
+    gsap.fromTo(
+      modalRef.current,
+      { x: -100, opacity: 0,zoom: 0.5 },
+      { x: 0, opacity: 1,zoom: 1, duration: 0.5, ease: "power3.out",backdropFilter: "blur(20px)",WebkitBackdropFilter: "blur(20px)",brightness: "1" }
+    );
+  } else if (shouldRender) {
+    gsap.to(modalRef.current, {
+      x: -100,
+      opacity: 0,
+      duration: 0.8,
+      zoom: 0.5,
+      backdropFilter: "blur(0px)",
+      WebkitBackdropFilter: "blur(0px)",
+      brightness: "0",
+      ease: "power2.out",
+      onComplete: () => setShouldRender(false),
+    });
+  }
+}, [isModalOpen]);
   const getSystemTheme = () =>
     window.matchMedia("(prefers-color-scheme: dark)").matches
       ? "dark-theme"
       : "light-theme";
 
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem("theme") || "dark-theme";
+    const saved = localStorage.getItem("theme");
+    if (saved) return saved;
+
+    const system = getSystemTheme();
+    localStorage.setItem("theme", system);
+    return system;
   });
 
-  useEffect(() => {
+ useEffect(() => {
+  if (theme !== "auto-theme") return;
+
+  const media = window.matchMedia("(prefers-color-scheme: dark)");
+
+  const handler = () => {
     const root = document.documentElement;
-    const applied = theme === "auto-theme" ? getSystemTheme() : theme;
+    const newTheme = media.matches ? "dark-theme" : "light-theme";
+
     THEMES.forEach((t) => root.classList.remove(t));
-    root.classList.add(applied);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
+    root.classList.add(newTheme);
+  };
 
-  const toggleModal = () => setIsModalOpen(!isModalOpen);
+  media.addEventListener("change", handler);
 
+  return () => media.removeEventListener("change", handler);
+}, [theme]);
+
+ const toggleModal = () => {
+  if (!isModalOpen) {
+    setShouldRender(true);
+    setIsModalOpen(true);
+  } else {
+    setIsModalOpen(false);
+  }
+};
+useEffect(() => {
+  const root = document.documentElement;
+
+  const appliedTheme =
+    theme === "auto-theme" ? getSystemTheme() : theme;
+
+  THEMES.forEach((t) => root.classList.remove(t));
+  root.classList.add(appliedTheme);
+
+  localStorage.setItem("theme", theme);
+}, [theme]);
   const handleSelectTheme = (newTheme) => {
+    gsap.to(modalRef.current, {
+      x: -100,
+      opacity: 0,
+      duration: 0.8,
+      zoom: 0.5,
+      backdropFilter: "blur(0px)",
+      WebkitBackdropFilter: "blur(0px)",
+      brightness: "0",
+      ease: "power2.out",
+      onComplete: () => setShouldRender(false),
+    });
     setTheme(newTheme);
     setIsModalOpen(false);
   };
@@ -88,15 +155,18 @@ const ToggleTheme = () => {
         <span className={styles.icon}>{icons[theme]}</span>
       </button>
 
-      {isModalOpen && (
+      {shouldRender && (
         <div className={styles.overlay} onClick={toggleModal}>
           <div 
             className={styles.modal} 
+            ref={modalRef}
+            
+
             onClick={(e) => e.stopPropagation()}
           >
             <div className={styles.modalHeader}>
               <h2 className={styles.modalTitle}>Select Theme</h2>
-              <button className={styles.modalClose} onClick={toggleModal}>
+              <button className={styles.modalClose} onClick={toggleModal} title="Close" aria-label="Close"   >
                 <X size={20} strokeWidth={1.5} />
               </button>
             </div>
