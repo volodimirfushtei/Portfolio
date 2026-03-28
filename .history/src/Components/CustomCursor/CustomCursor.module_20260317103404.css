@@ -1,0 +1,39 @@
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  background-color: var(--color-text);
+  border: 1px solid var(--bg-color);
+  mix-blend-mode: difference;
+  
+  transform: translate(-50%, -50%);
+  will-change: transform;
+}
+
+/* Ripple ефект */
+.ripple {
+  position: fixed;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, var(--color-accent) 0%, transparent 70%);
+  filter: blur(10px);
+}
+
+/* Додаткове світіння (опціонально) */
+@keyframes rippleGlow {
+  0% {
+    box-shadow: 0 0 0px var(--color-accent);
+  }
+  100% {
+    box-shadow: 0 0 20px var(--color-accent);
+  }
+}

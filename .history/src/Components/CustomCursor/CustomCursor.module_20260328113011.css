@@ -1,0 +1,87 @@
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 40px;
+  min-height: 40px;
+  padding: 8px 16px;
+  border-radius: 40px;
+  background-color: #e8f53c;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "DM Mono", monospace;
+  font-size: 12px;
+  font-weight: 500;
+  color: #0d0d0d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
+  transition: background-color 0.2s ease;
+}
+
+.cursorText {
+  opacity: 0;
+  transform: scale(0.8);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.cursor.hovering {
+  background-color: #ff6b6b;
+}
+
+.cursor.hovering .cursorText {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Анімація для тексту */
+@keyframes textPop {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.cursor.hovering .cursorText {
+  animation: textPop 0.3s ease-out;
+}
+
+.ripple {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: rgba(232, 245, 60, 0.5);
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+}
+
+/* Медіа запит для мобільних пристроїв */
+@media (max-width: 768px) {
+  .cursor {
+    display: none;
+  }
+}

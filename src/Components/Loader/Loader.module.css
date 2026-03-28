@@ -4,17 +4,15 @@
   position: fixed;
   inset: 0;
   z-index: 1000;
-  
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: clamp(2rem, 5vw, 4rem);
   overflow: hidden;
   isolation: isolate;
-   background:   linear-gradient(to bottom, #1a1a1a, #000);
+  background: linear-gradient(to bottom, #1c1c1c, #171616);
 }
-
-
 
 /* ── Curtain panels ── */
 .curtain {
@@ -44,7 +42,7 @@
   letter-spacing: 0.3em;
   color: var(--color-text);
   text-transform: uppercase;
-  color: #f1f0f0;
+  color: var(--color-orange-100);
 }
 
 .year {
@@ -52,7 +50,7 @@
   font-size: 0.65rem;
   letter-spacing: 0.2em;
 
-  color: #f1f0f0;
+  color: var(--color-orange-100);
 }
 
 /* ── Center Content ── */
@@ -78,29 +76,29 @@
 .digit {
   font-family: var(--font-display);
   font-size: clamp(6rem, 20vw, 15rem);
-  
+
   line-height: 0.8;
   display: inline-block;
-  color: #f1f0f0;
+  color: var(--color-orange-300);
 }
 
 .pct {
   font-family: var(--font-display);
   font-size: clamp(2rem, 5vw, 4rem);
- 
+
   margin-left: 0.2em;
   opacity: 0.8;
-  color: #f1f0f0;
+  color: var(--color-orange-300);
 }
 
 .tagline {
   font-family: var(--font-mono);
-  font-size: clamp(0.7rem, 1.2vw, 1rem);
+  font-size: clamp(2rem, 4.5rem, 6rem);
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  
+
   min-height: 1.5em;
-  color: #f1f0f0;
+  color: var(--color-orange-300);
 }
 
 /* ── Progress Track ── */
@@ -123,7 +121,7 @@
   top: 0;
   left: 0;
   height: 100%;
-  background: #f6f6f6;
+  background: var(--color-orange-100);
   transition: width 0.2s linear;
 }
 
@@ -131,14 +129,15 @@
   display: flex;
   justify-content: space-between;
   margin-top: 0.75rem;
+  color: var(--color-orange-100);
 }
 
 .trackLabel {
-  font-family: var(--font-mono);
+  font-family: var(--font-display);
   font-size: 0.6rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--color-secondary);
+  color: var(--color-orange-100);
 }
 
 /* ── Bottom bar ── */
@@ -150,7 +149,7 @@
   z-index: 5;
   border-top: 1px solid var(--color-border);
   padding-top: 1.5rem;
-  color: #f1f0f0;
+  color: var(--color-orange-100);
 }
 
 .statusText {
@@ -158,7 +157,7 @@
   font-size: 0.65rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: #f1f0f0;
+  color: var(--color-orange-100);
 }
 
 .statusDot {

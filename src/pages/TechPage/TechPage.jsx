@@ -257,6 +257,9 @@ const TechnologyPage = () => {
                   ref={(el) => (cardRefs.current[index] = el)}
                   onMouseMove={(e) => handleMouseMove(e, index)}
                   onMouseLeave={() => handleMouseLeave(index)}
+                  data-cursor="hover"
+                  data-cursor-type="link"
+                  data-cursor-text="Open Link"
                 >
                   <div className={styles.cardWatermark}>{tech.name.split(' ')[0]}</div>
                   
@@ -267,7 +270,7 @@ const TechnologyPage = () => {
                   </span>
 
                   <div className={styles.iconWrap} style={{ color: tech.color }}>
-                    <i className={tech.icon} aria-hidden="true" />
+                    <i className={tech.icon} aria-hidden="true" data-cursor-type="link" data-cursor-text="Open Link" />
                   </div>
 
                   <h3 className={styles.cardTitle}>{tech.name}</h3>
@@ -287,6 +290,12 @@ const TechnologyPage = () => {
             <nav className={styles.pagination}>
               {Array.from({ length: totalPages }, (_, i) => (
                 <button
+                  data-cursor="hover"
+                  aria-label={`Page ${i + 1}`}
+                  aria-pressed={currentPage === i + 1}
+                  aria-controls="tech-grid"
+                data-cursor-type="link"
+                data-cursor-text="Find out more" 
                   key={i + 1}
                   onClick={() => handlePage(i + 1)}
                   className={`${styles.pageBtn} ${currentPage === i + 1 ? styles.active : ""}`}

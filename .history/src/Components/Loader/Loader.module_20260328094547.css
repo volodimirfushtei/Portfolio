@@ -1,0 +1,175 @@
+/* Loader.module.css — Awwwards editorial premium sync */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(2rem, 5vw, 4rem);
+  overflow: hidden;
+  isolation: isolate;
+  background: linear-gradient(to bottom, #3b3a3a, #141313);
+}
+
+/* ── Curtain panels ── */
+.curtain {
+  position: absolute;
+  top: 0;
+  width: 20.2%; /* Tiny overlap to prevent gaps */
+  height: 100%;
+  background: var(--color-surface);
+  z-index: 10;
+  will-change: transform;
+}
+
+/* ── Top bar ── */
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 5;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 1.5rem;
+}
+
+.brandName {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: var(--color-text);
+  text-transform: uppercase;
+  color: var(--color-orange-300);
+}
+
+.year {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+
+  color: var(--color-orange-300);
+}
+
+/* ── Center Content ── */
+.center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  position: relative;
+  z-index: 5;
+}
+
+.counterWrap {
+  display: flex;
+  align-items: baseline;
+  gap: 0.1em;
+  overflow: hidden;
+  line-height: 1;
+  margin-bottom: 2rem;
+}
+
+.digit {
+  font-family: var(--font-display);
+  font-size: clamp(6rem, 20vw, 15rem);
+
+  line-height: 0.8;
+  display: inline-block;
+  color: var(--color-orange-300);
+}
+
+.pct {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 4rem);
+
+  margin-left: 0.2em;
+  opacity: 0.8;
+  color: var(--color-orange-300);
+}
+
+.tagline {
+  font-family: var(--font-mono);
+  font-size: clamp(0.7rem, 1.2vw, 1rem);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+
+  min-height: 1.5em;
+  color: #f1f0f0;
+}
+
+/* ── Progress Track ── */
+.trackWrap {
+  position: relative;
+  z-index: 5;
+  margin-bottom: 1.5rem;
+}
+
+.track {
+  width: 100%;
+  height: 1px;
+  background: var(--color-background);
+  position: relative;
+  overflow: hidden;
+}
+
+.fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: #efefef;
+  transition: width 0.2s linear;
+}
+
+.trackLabels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.75rem;
+}
+
+.trackLabel {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+}
+
+/* ── Bottom bar ── */
+.bottomBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 5;
+  border-top: 1px solid var(--color-border);
+  padding-top: 1.5rem;
+  color: var(--color-orange-100);
+}
+
+.statusText {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-orange-100);
+}
+
+.statusDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #fdfdfc;
+  box-shadow: 0 0 10px var(--color-accent);
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .overlay {
+    padding: 2rem 1.5rem;
+  }
+}

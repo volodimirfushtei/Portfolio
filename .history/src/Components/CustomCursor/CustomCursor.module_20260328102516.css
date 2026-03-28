@@ -1,0 +1,44 @@
+/* CustomCursor.module.css */
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+
+  border: 1px solid var(--color-accent);
+  border-shadow: 0 0 10px #fff;
+
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+  transition: opacity 0.2s ease;
+}
+
+.cursor.visible {
+  opacity: 1;
+}
+
+/* Ripple ефект */
+.ripple {
+  position: fixed;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, var(--color-accent) 0%, transparent 70%);
+  filter: blur(10px);
+}
+
+/* Додаткове світіння (опціонально) */
+@keyframes rippleGlow {
+  0% {
+    box-shadow: 0 0 0px var(--color-accent);
+  }
+  100% {
+    box-shadow: 0 0 20px var(--color-accent);
+  }
+}

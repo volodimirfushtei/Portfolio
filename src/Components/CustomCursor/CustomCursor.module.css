@@ -1,39 +1,192 @@
+/* CustomCursor.module.css — Advanced Custom Cursor */
+
+/* ═════════════════════════════════════════════════════════════ */
+/* HIDE NATIVE CURSOR */
+/* ═════════════════════════════════════════════════════════════ */
+
+.noCursorBody {
+  cursor: none !important;
+}
+
+.noCursorBody * {
+  cursor: none !important;
+}
+
+/* ═════════════════════════════════════════════════════════════ */
+/* CURSOR DOT */
+/* ═════════════════════════════════════════════════════════════ */
+
 .cursor {
   position: fixed;
   top: 0;
   left: 0;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  background-color: var(--color-text);
-  border: 1px solid var(--bg-color);
-  mix-blend-mode: difference;
+  width: 12px;
+  height: 12px;
+  background: var(--color-accent);
   
-  transform: translate(-50%, -50%);
-  will-change: transform;
+  pointer-events: none;
+  z-index: 99999;
+  margin-top: -6px;
+  margin-left: -6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  will-change: transform, width, height, box-shadow;
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              margin 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.4s ease,
+            
+              opacity 0.3s ease;
+  opacity: 1;
 }
 
-/* Ripple ефект */
+
+
+/* ═════════════════════════════════════════════════════════════ */
+/* CURSOR HIDDEN STATE */
+/* ═════════════════════════════════════════════════════════════ */
+
+.cursor.hidden {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+/* ═════════════════════════════════════════════════════════════ */
+/* CURSOR TEXT CONTAINER */
+/* ═════════════════════════════════════════════════════════════ */
+
+.cursorTextInner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ═════════════════════════════════════════════════════════════ */
+/* CURSOR TEXT */
+/* ═════════════════════════════════════════════════════════════ */
+
+.cursorText {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+  
+  white-space: nowrap;
+  pointer-events: none;
+  text-align: center;
+  filter: drop-shadow(0 0 4px var(--color-secondary));
+  
+  text-decoration-color: var(--color-secondary);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 1px; 
+  letter-spacing: 0.05em;
+  white-space: normal;
+}
+
+.dark-theme .cursorText {
+  color: var(--color-accent);
+  
+}
+
+.light-theme .cursorText {
+  color: #080808;
+  text-shadow: none;
+  filter: none;
+}
+
+/* ═════════════════════════════════════════════════════════════ */
+/* CURSOR HOVER STATE */
+/* ═════════════════════════════════════════════════════════════ */
+
+.cursor.hovering {
+  width: 100px;
+  height: 100px;
+  margin-top: -50px;
+  margin-left: -50px;
+  background: transparent;
+  border: 1px solid var(--color-accent);
+  background: var(--color-overlay);
+ 
+}
+
+.dark-theme .cursor.hovering {
+  border-color: var(--color-accent);
+ 
+}
+
+.light-theme .cursor.hovering {
+  border-color: #080808;
+ 
+}
+
+/* ═════════════════════════════════════════════════════════════ */
+/* RIPPLE EFFECT */
+/* ═════════════════════════════════════════════════════════════ */
+
 .ripple {
   position: fixed;
-  width: 80px;
-  height: 80px;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  margin-top: -20px;
+  margin-left: -20px;
   border-radius: 50%;
+  border: 2px solid var(--color-accent);
   pointer-events: none;
-  z-index: 9998;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(circle, var(--color-accent) 0%, transparent 70%);
-  filter: blur(10px);
+  z-index: 99998;
+  background: transparent;
+  box-shadow: 0 0 15px rgba(232, 243, 60, 0.5),
+              inset 0 0 10px rgba(232, 243, 60, 0.3);
+  will-change: transform, opacity;
 }
 
-/* Додаткове світіння (опціонально) */
-@keyframes rippleGlow {
-  0% {
-    box-shadow: 0 0 0px var(--color-accent);
+.dark-theme .ripple {
+  border-color: rgba(232, 243, 60, 0.8);
+  box-shadow: 0 0 15px rgba(232, 243, 60, 0.6),
+              inset 0 0 10px rgba(232, 243, 60, 0.4);
+}
+
+.light-theme .ripple {
+  border-color: rgba(8, 8, 8, 0.4);
+  box-shadow: 0 0 12px rgba(8, 8, 8, 0.3),
+              inset 0 0 8px rgba(8, 8, 8, 0.15);
+}
+
+/* ═════════════════════════════════════════════════════════════ */
+/* ACCESSIBILITY */
+/* ═════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor,
+  .cursorText,
+  .ripple {
+    transition: none;
+    animation: none;
   }
-  100% {
-    box-shadow: 0 0 20px var(--color-accent);
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .cursor,
+  .ripple {
+    display: none;
+  }
+}
+
+/* ═════════════════════════════════════════════════════════════ */
+/* PRINT STYLES */
+/* ═════════════════════════════════════════════════════════════ */
+
+@media print {
+  .cursor,
+  .ripple {
+    display: none;
   }
 }
