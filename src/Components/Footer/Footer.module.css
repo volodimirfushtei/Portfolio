@@ -107,7 +107,12 @@
   background-clip: text;
   color: transparent;
 }
-
+/* Ефект 3: Тінь, що рухається */
+.getStarted:hover {
+  text-shadow: 5px 5px 0px var(--color-accent);
+  transform: translate(-2px, -2px);
+  transition: all 0.3s ease;
+}
 .description {
   font-family: "DM Mono", monospace;
   font-size: 0.75rem;

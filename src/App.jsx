@@ -10,6 +10,7 @@ import Overlay from "./Components/Overlay/Overlay.jsx";
 import ScrollToTop from "./Components/ScrollToTop/ScrollToTop.jsx";
 import CustomCursor from "./Components/CustomCursor/CustomCursor.jsx";
 
+
 /* ── Lazy pages ── */
 const Home = lazy(() => import("./pages/homePage/homePage.jsx"));
 const Contacts = lazy(() => import("./pages/contactsPage/contactsPage.jsx"));
@@ -63,7 +64,7 @@ function App() {
     setIsTouchDevice("ontouchstart" in window || navigator.maxTouchPoints > 0);
 
     preload().then(() => {
-      const id = setTimeout(() => setLoading(false), 1000);
+      const id = setTimeout(() => setLoading(false), 4000);
       return () => clearTimeout(id);
     });
   }, []);
@@ -71,7 +72,7 @@ function App() {
   useEffect(() => {
     preload().then(() => {
       // Loader показується мінімум 2s (щоб анімація встигла відпрацювати)
-      const id = setTimeout(() => setLoading(false), 3400);
+      const id = setTimeout(() => setLoading(false), 3500);
       return () => clearTimeout(id);
     });
   }, []);

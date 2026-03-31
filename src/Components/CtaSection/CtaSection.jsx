@@ -147,6 +147,11 @@ const CtaSection = () => {
             variants={itemVariants}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
+            whileHover={{ scale: 1.05 }}  
+            whileTap={{ scale: 0.95 }}
+           data-cursor="hover"
+                data-cursor-type="link"
+                data-cursor-text="Let's work together"
           >
             <a
               href="https://webflow.com/templates/designers/brandbes"
@@ -154,6 +159,8 @@ const CtaSection = () => {
               rel="noopener noreferrer"
               className={styles.button}
               ref={buttonRef}
+              
+
             >
               <span className={styles.buttonText}>Experience Excellence</span>
               <span className={styles.buttonArrow}>→</span>

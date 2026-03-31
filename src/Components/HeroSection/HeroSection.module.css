@@ -19,7 +19,7 @@
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  opacity: 0.18;
+  opacity: 0.28;
 }
 
 /* ═══════════════════════════════════════════
@@ -36,6 +36,11 @@
   background-position: center;
   opacity: 0.5;
   will-change: transform, opacity;
+  background-position: center;
+  &:hover {
+    opacity: 1;
+    box-shadow: 0 8px 8px var(--color-secondary);
+  }
 }
 
 /* ═══════════════════════════════════════════

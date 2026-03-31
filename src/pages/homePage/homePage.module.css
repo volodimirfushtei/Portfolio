@@ -9,6 +9,15 @@
   width: 100vw;
   max-width: 100%;
 }
+.canvas {
+  position: fixed;
+  top: 0;
+  left: 0;  
+  width: 100vw; 
+  height: 100vh;
+  z-index: 50; /* Float above content */
+  pointer-events: none; /* Let users click through to the web content */
+}
 
 @media (max-width: 1024px) {
   .section {

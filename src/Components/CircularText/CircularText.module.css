@@ -23,7 +23,7 @@
   font-family: "DM Mono", monospace;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  fill: var(--color-secondary);
+  fill: var(--color-title);
 }
 
 /* Center dot */
@@ -37,7 +37,17 @@
   pointer-events: none;
   will-change: transform;
 }
-
+.logo{
+  position: absolute;
+ 
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  box-shadow: var(--color-shadow);
+  pointer-events: none;
+  will-change: transform;
+}
 /* ── Mobile ── */
 @media (max-width: 768px) {
   .wrap {

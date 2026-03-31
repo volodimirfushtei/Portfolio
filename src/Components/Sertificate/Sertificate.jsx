@@ -111,7 +111,9 @@ const Certificate = () => {
         </div>
 
         {/* Card Column */}
-        <div className={styles.cardContainer}>
+        <div className={styles.cardContainer} data-cursor="hover"
+                data-cursor-type="link"
+                data-cursor-text="GOIT sertificate"  >
           <motion.div
             className={styles.card}
             ref={cardRef}
@@ -156,6 +158,9 @@ const Certificate = () => {
               href="/certificates/FUSHTEI_VOLODYMYR.pdf"
               download
               className={styles.downloadButton}
+              data-cursor="hover"
+                data-cursor-type="link"
+                data-cursor-text="Download Sertificate" 
             >
               <span className={styles.downloadText}>Download PDF</span>
               <span className={styles.downloadIcon}>→</span>

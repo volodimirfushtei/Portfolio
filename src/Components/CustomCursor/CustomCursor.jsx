@@ -57,7 +57,7 @@ const CustomCursor = () => {
   useEffect(() => {
     const addHoverEffects = () => {
       const elements = document.querySelectorAll(
-        "a, button, input, textarea, select, [data-cursor='hover']"
+        "button, input, textarea, select, [data-cursor='hover']"
       );
 
       elements.forEach((el) => {

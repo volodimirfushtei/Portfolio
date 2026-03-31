@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import gsap from "gsap";
 import styles from "./Loader.module.css";
 
+
 const Loader = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [progress, setProgress] = useState(0);
@@ -10,42 +11,48 @@ const Loader = () => {
 
   const containerRef = useRef(null);
   const curtainRefs = useRef([]);
-  const timers = useRef([]);
 
-useEffect(() => {
-  if (!isLoading) return;
+  useEffect(() => {
+    if (!isLoading) return;
 
-  const currentRef = { value: 0 };
+    // Intro animation for the name
+    gsap.fromTo(
+      `.${styles.nameSpan}`,
+      { y: 40, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1, stagger: 0.15, ease: "power3.out", delay: 0.2 }
+    );
 
-  const runStep = (target, speed) => {
-    return new Promise((resolve) => {
-      const interval = setInterval(() => {
-        currentRef.value += 1;
-        setProgress(currentRef.value);
+    const currentRef = { value: 0 };
 
-        if (currentRef.value >= target) {
-          clearInterval(interval);
-          resolve();
-        }
-      }, speed);
-    });
-  };
+    const runStep = (target, speed) => {
+      return new Promise((resolve) => {
+        const interval = setInterval(() => {
+          currentRef.value += 1;
+          setProgress(currentRef.value);
 
-  const run = async () => {
-    await runStep(30, 18);
-    await new Promise(r => setTimeout(r, 200));
+          if (currentRef.value >= target) {
+            clearInterval(interval);
+            resolve();
+          }
+        }, speed);
+      });
+    };
 
-    await runStep(65, 12);
-    await new Promise(r => setTimeout(r, 200));
+    const run = async () => {
+      await runStep(30, 18);
+      await new Promise(r => setTimeout(r, 200));
 
-    await runStep(85, 22);
-    await new Promise(r => setTimeout(r, 200));
+      await runStep(65, 12);
+      await new Promise(r => setTimeout(r, 200));
 
-    await runStep(100, 8);
-  };
+      await runStep(85, 22);
+      await new Promise(r => setTimeout(r, 200));
 
-  run();
-}, []);
+      await runStep(100, 8);
+    };
+
+    run();
+  }, []);
 
   useEffect(() => {
     if (progress >= 100) {
@@ -59,13 +66,13 @@ useEffect(() => {
   useEffect(() => {
     if (phase === "reveal") {
       gsap.to(containerRef.current, {
-  filter: "blur(8px)",
-  duration: 0.6
+        filter: "blur(8px)",
+        duration: 0.6
       });
       gsap.fromTo(curtainRefs.current,
-  { scaleY: 1 },
-  { scaleY: 1.2, y: "-100%", stagger: 0.1 }
-);
+        { scaleY: 1 },
+        { scaleY: 1.2, y: "-100%", stagger: 0.1 }
+      );
       gsap.to(curtainRefs.current, {
         y: "-100%",
         duration: 0.8,
@@ -91,8 +98,6 @@ useEffect(() => {
       {isLoading && (
         <div className={styles.overlay} ref={containerRef}>
           
-       
-
           {/* Curtain panels */}
           {[0, 1, 2, 3, 4].map((i) => (
             <div
@@ -106,11 +111,22 @@ useEffect(() => {
           {/* Top bar */}
           <div className={styles.topBar}>
             <span className={styles.brandName}>VF / PORTFOLIO</span>
-            <span className={styles.year}>2025</span>
+            <span className={styles.year}>2026</span>
           </div>
 
           {/* Center content */}
           <div className={styles.center}>
+            <div className={styles.nameWrap}>
+              <h1 className={styles.developerName}>
+                <div className={styles.nameMask}>
+                  <span className={`${styles.nameSpan} ${styles.firstName}`}>VOLODYMYR</span>
+                </div>
+                <div className={styles.nameMask}>
+                  <span className={`${styles.nameSpan} ${styles.lastName}`}>FUSHTEI</span>
+                </div>
+              </h1>
+            </div>
+
             <div className={styles.counterWrap}>
               {digits.map((d, i) => (
                 <span key={`${i}-${d}`} className={styles.digit}>
@@ -142,7 +158,7 @@ useEffect(() => {
           {/* Bottom bar */}
           <div className={styles.bottomBar}>
             <span className={styles.statusText}>
-              Motion Specialist / Crafting Digital Excellence
+              Frontend Engineer / Crafting Digital Excellence
             </span>
             <motion.span
               className={styles.statusDot}

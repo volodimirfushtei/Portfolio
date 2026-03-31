@@ -15,7 +15,7 @@ const useScrollDirection = () => {
   const rafRef = useRef(null);
   const scrollPosition = useScrollDetection(50);
   console.log(scrollPosition);
-  const scrolled = scrollPosition > 50;
+  const isScrolled = scrollPosition > 50;
   
   useEffect(() => {
     const onScroll = () => {
@@ -113,11 +113,10 @@ const Header = () => {
     >
       <div className={styles.container}>
         {/* Logo */}
-        <Link to="/about" className={styles.logo}>
+        <div className={styles.logo}>
           <Logo />
           <span className={styles.logoText}>Portfolio</span>
-        </Link>
-
+        </div>
         <div className={styles.rightSection}>
           <ToggleTheme />
           <FullscreenButton />

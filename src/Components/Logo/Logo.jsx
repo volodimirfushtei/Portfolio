@@ -1,60 +1,63 @@
 import React from "react";
 import s from "./Logo.module.css";
+
 const Logo = () => {
   return (
-    <div className="relative w-6 h-6  md:w-8 md:h-8 xl:w-10 xl:h-10 rounded-full border-4 border-[#ffb74d]">
+    <div className={s.logoContainer}>
       <svg
-        width="50"
-        height="50"
-        viewBox="0 0 200 200"
+        viewBox="0 0 100 100"
         xmlns="http://www.w3.org/2000/svg"
-        xmlnsXlink="http://www.w3.org/1999/xlink"
-        version="1.1"
-        xmlSpace="preserve"
-        className="absolute top-1 left-0 w-full h-full"
+        className={s.logoSvg}
       >
         <defs>
-          <linearGradient id="gradF" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#ffb74d" />
-            <stop offset="100%" stopColor="#f57c00" />
+          <linearGradient id="primaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style={{ stopColor: "var(--color-primary)" }} />
+            <stop offset="100%" style={{ stopColor: "var(--color-accent)" }} />
           </linearGradient>
-          <linearGradient id="gradV" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#ffe082" />
-            <stop offset="100%" stopColor="#ff9800" />
-          </linearGradient>
-          <filterstopColor
-            id="shadow"
-            x="-50%"
-            y="-50%"
-            width="200%"
-            height="200%"
-          >
-            <feOffset result="offOut" in="SourceAlpha" dx="4" dy="4" />
-            <feGaussianBlur result="blurOut" in="offOut" stdDeviation="4" />
-            <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
-          </filterstopColor>
         </defs>
 
-        <g filter="url(#shadow)">
-          <text
-            x="30"
-            y="120"
-            fontFamily="Arial Black, sans-serif"
-            fontSize="100"
-            fill="url(#gradF)"
-          >
-            F
-          </text>
-          <text
-            x="90"
-            y="120"
-            fontFamily="Arial Black, sans-serif"
-            fontSize="100"
-            fill="url(#gradV)"
-          >
-            V
-          </text>
-        </g>
+        {/* Inner track circle */}
+        <circle
+          cx="50"
+          cy="50"
+          r="44"
+          fill="none"
+          stroke="var(--color-border)"
+          strokeWidth="2"
+        />
+        
+        {/* Animated hover circle */}
+        <circle
+          cx="50"
+          cy="50"
+          r="44"
+          fill="none"
+          stroke="url(#primaryGradient)"
+          strokeWidth="3"
+          className={s.pulseCircle}
+        />
+
+        {/* The 'V' */}
+        <path
+          d="M 32 36 L 50 64 L 68 36"
+          fill="none"
+          stroke="var(--color-title)"
+          strokeWidth="6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className={s.pathV}
+        />
+
+        {/* The 'F' */}
+        <path
+          d="M 41 36 L 41 64 M 41 36 L 56 36 M 41 50 L 53 50"
+          fill="none"
+          stroke="url(#primaryGradient)"
+          strokeWidth="6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className={s.pathF}
+        />
       </svg>
     </div>
   );

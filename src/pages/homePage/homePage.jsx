@@ -19,7 +19,12 @@ import ScrollToTopBtn from "../../Components/ScrollToTopBtn/ScrollTotopBtn.jsx";
 import ScrollProgress from "../../Components/ScrollProgress/ScrollProgress.jsx";
 import StickyZoomSection from "../../Components/StickyZoomSection/StickyZoomSection.jsx";
 import ScrollBar from "../../Components/ScrollBar/ScrollBar.jsx";
-
+import { Canvas } from "@react-three/fiber";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Model from "../../Components/Model/Model.jsx";
+ 
+gsap.registerPlugin(ScrollTrigger);
 // Page level reveal animation variants
 const pageReveal = {
   hidden: { opacity: 0, y: 100 },
@@ -49,7 +54,7 @@ const sectionReveal = {
 const HomePage = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const sectionRef = useRef(null);
-
+  const modelRef = useRef(null);
   // Custom scroll hook
   const isScrolled = useScrollDetection(1200);
 
@@ -103,13 +108,20 @@ const HomePage = () => {
       variants={pageReveal}
       initial="hidden"
       animate="visible"
-      className={styles.container}
+      className={styles.container}  
+      ref={sectionRef}
     >
+      
       <ScrollToTopBtn />
-      <motion.section variants={sectionReveal} className={styles.section}>
+      <motion.section variants={sectionReveal} className={styles.section} >
         <HeroSection />
+       
       </motion.section>
-
+   <section className={styles.canvas} ref={modelRef}>
+        <Canvas>
+     <Model />
+    </Canvas>
+    </section>
       <main className={styles.main}>
         {/* Expertise Section */}
         <motion.section
@@ -145,7 +157,7 @@ const HomePage = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            ref={sectionRef}
+            
             className={`${styles.carusel} ${styles.section} `}
           >
             <Carusel />

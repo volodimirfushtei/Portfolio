@@ -248,6 +248,9 @@ export default function Carousel() {
             ref={(el) => (slideRefs.current[i] = el)}
             className={styles.slide}
             data-slide-id={slide.id}
+            data-cursor="hover"
+            data-cursor-type="link"
+            data-cursor-text="Scroll for Soft Skills"
           >
             {/* Background image (z-index: 0) */}
             <div className={`${styles.slideImg} ${styles.slideImgWrap}`}>

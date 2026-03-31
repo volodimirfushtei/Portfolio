@@ -64,15 +64,13 @@
     <!-- React -->
     <script type="module" src="/src/main.jsx"></script>
 
-    <!-- ScrollTrigger -->
-
     <!-- SVG Sprite Loader -->
     <script>
       fetch("/icons/sprite.svg")
         .then((response) => response.text())
         .then((data) => {
           const div = document.createElement("div");
-          div.style.display = "none"; // ховаємо, щоб не заважало
+          div.style.display = "none"; 
           div.innerHTML = data;
           document.body.appendChild(div);
         });

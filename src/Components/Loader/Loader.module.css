@@ -1,9 +1,12 @@
-/* Loader.module.css — Awwwards editorial premium sync */
+/* Loader.module.css — Premium Awwwards Style */
+
+/* Define CSS variables first */
+
 
 .overlay {
   position: fixed;
   inset: 0;
-  z-index: 1000;
+  z-index: 999;
 
   display: flex;
   flex-direction: column;
@@ -11,18 +14,37 @@
   padding: clamp(2rem, 5vw, 4rem);
   overflow: hidden;
   isolation: isolate;
-  background: linear-gradient(to bottom, #1c1c1c, #171616);
+  background: linear-gradient(to bottom, #a1a1a1, #5e5e5e);
+}
+.center {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 10;
+}
+/* Subtle background grain/grid */
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--color-border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-border) 1px, transparent 1px);
+  background-size: 80px 80px;
+  z-index: 0; /* Fixed: added value */
+  pointer-events: none;
+  opacity: 0.3;
 }
 
 /* ── Curtain panels ── */
 .curtain {
   position: absolute;
   top: 0;
-  width: 20.2%; /* Tiny overlap to prevent gaps */
+  width: 20.2%;
   height: 100%;
   background: var(--color-surface);
   z-index: 10;
   will-change: transform;
+  transform-origin: top;
 }
 
 /* ── Top bar ── */
@@ -34,13 +56,13 @@
   z-index: 5;
   border-bottom: 1px solid var(--color-border);
   padding-bottom: 1.5rem;
+ 
 }
 
 .brandName {
   font-family: var(--font-mono);
   font-size: 0.65rem;
   letter-spacing: 0.3em;
-  color: var(--color-text);
   text-transform: uppercase;
   color: var(--color-orange-100);
 }
@@ -49,7 +71,6 @@
   font-family: var(--font-mono);
   font-size: 0.65rem;
   letter-spacing: 0.2em;
-
   color: var(--color-orange-100);
 }
 
@@ -62,6 +83,42 @@
   align-items: flex-start;
   position: relative;
   z-index: 5;
+  padding: 2rem;
+  
+}
+
+.nameWrap {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.nameMask {
+  overflow: hidden;
+}
+
+.developerName {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 10vw, 8rem);
+  line-height: 0.85;
+  font-weight: 700;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  letter-spacing: -0.02em;
+}
+
+.nameSpan {
+  display: block;
+}
+
+.firstName {
+  color: #ffffff;
+}
+
+.lastName {
+  color: var(--color-accent, #ffb74d);
+  margin-left: clamp(2rem, 10vw, 6rem);
 }
 
 .counterWrap {
@@ -75,30 +132,30 @@
 
 .digit {
   font-family: var(--font-display);
-  font-size: clamp(6rem, 20vw, 15rem);
-
+  font-size: clamp(4rem, 12vw, 10rem);
+  font-weight: 700;
   line-height: 0.8;
   display: inline-block;
-  color: var(--color-orange-300);
+  color: var(--color-title, #ffffff);
+  opacity: 0.9;
 }
 
 .pct {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 5vw, 4rem);
-
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  font-weight: 700;
   margin-left: 0.2em;
-  opacity: 0.8;
-  color: var(--color-orange-300);
+  opacity: 0.7;
+  color: var(--color-title, #ffffff);
 }
 
 .tagline {
   font-family: var(--font-mono);
-  font-size: clamp(2rem, 4.5rem, 6rem);
+  font-size: clamp(0.75rem, 1.2vw, 1rem);
   letter-spacing: 0.25em;
   text-transform: uppercase;
-
   min-height: 1.5em;
-  color: var(--color-orange-300);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 /* ── Progress Track ── */
@@ -106,12 +163,14 @@
   position: relative;
   z-index: 5;
   margin-bottom: 1.5rem;
+  height: 40px;
+  width: 400px ;
 }
 
 .track {
   width: 100%;
-  height: 1px;
-  background: var(--color-background);
+  height: 40px;
+  background: rgba(221, 218, 218, 0.2);
   position: relative;
   overflow: hidden;
 }
@@ -121,15 +180,16 @@
   top: 0;
   left: 0;
   height: 100%;
-  background: var(--color-orange-100);
-  transition: width 0.2s linear;
+  background: var(--color-gray-300);
+  transition: width 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  
+  border-right: 1px solid var(--color-orange-500) ;
 }
 
 .trackLabels {
   display: flex;
   justify-content: space-between;
   margin-top: 0.75rem;
-  color: var(--color-orange-100);
 }
 
 .trackLabel {
@@ -149,28 +209,65 @@
   z-index: 5;
   border-top: 1px solid var(--color-border);
   padding-top: 1.5rem;
-  color: var(--color-orange-100);
 }
 
 .statusText {
   font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  max-width: 60%;
+}
+
+.statusDotWrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.statusDotLabel {
+  font-family: var(--font-mono);
   font-size: 0.65rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--color-orange-100);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .statusDot {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: #fdfdfc;
-  box-shadow: 0 0 10px var(--color-accent);
+  background: #4ade80;
+  box-shadow: 0 0 10px #4ade80;
 }
 
 /* ── Responsive ── */
+@media (max-width: 768px) {
+  .pct {
+    transform: translateY(-4vw);
+  }
+  
+  .tagline {
+    letter-spacing: 0.15em;
+  }
+}
+
 @media (max-width: 480px) {
   .overlay {
-    padding: 2rem 1.5rem;
+    padding: 1.5rem 1rem;
+  }
+  
+  .trackWrap {
+    margin-bottom: 1.5rem;
+  }
+  
+  .statusText {
+    font-size: 0.6rem;
+    max-width: 70%;
+  }
+  
+  .statusDotLabel {
+    display: none;
   }
 }
