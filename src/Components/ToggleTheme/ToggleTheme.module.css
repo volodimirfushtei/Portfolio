@@ -56,10 +56,10 @@
 /* MODAL */
 .modal {
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 20%;
+  left: 35%;
   width: 100%;
-  height: 100vh;
+  height: 40vh;
 
   z-index: 100;
   display: flex;
@@ -67,7 +67,7 @@
   align-items: center;
   flex-direction: column;
   width: 100%;
-  max-width: 420px;
+  max-width: 320px;
   background: var(--glass-bg);
   backdrop-filter: blur(var(--blur-heavy));
   -webkit-backdrop-filter: blur(var(--blur-heavy));

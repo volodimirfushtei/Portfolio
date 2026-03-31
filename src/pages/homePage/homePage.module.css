@@ -2,6 +2,7 @@
 
 /* ── Section base ── */
 .section {
+  position: relative; 
   padding: clamp(2rem, 4vw, 4rem) 0;
   margin-bottom: 0;
   position: relative;
@@ -19,23 +20,12 @@
   pointer-events: none; /* Let users click through to the web content */
 }
 
-@media (max-width: 1024px) {
-  .section {
-    padding: clamp(2rem, 10vw, 3rem) 0;
-  }
-}
 
-@media (max-width: 768px) {
-  .section {
-    padding: clamp(1rem, 8vw, 2rem) 0;
-  }
-}
 
-@media (max-width: 480px) {
-  .section {
-    padding: clamp(0.5rem, 6vw, 1rem) 0;
-  }
-}
+
+
+
+
 
 /* ── Page container ── */
 .container {
@@ -151,9 +141,7 @@
 }
 
 /* ── Projects ── */
-.projects {
-  margin-top: 2rem;
-}
+
 
 /* ── Skills ── */
 
@@ -213,7 +201,10 @@
     padding: 0;
     height: auto;
   }
-
+  
+.section{
+  padding: 0;
+}
   .content {
     flex-direction: column;
   }
@@ -251,10 +242,7 @@
 
 /* ── Mobile: ≤ 480px ── */
 @media (max-width: 480px) {
-  .container {
 
-    height: auto;
-  }
 
   .skillsSection {
     margin: 0.5rem auto;
@@ -262,7 +250,7 @@
   }
 
   .imageWrapper {
-    margin-top: 0.5rem; /* виправлено: було "0, 5rem" — некоректне значення */
+    
     max-width: 100%;
     border-radius: 12px;
   }
@@ -292,11 +280,11 @@
   }
 
   .profileImage {
-    height: 320px; /* виправлено: було 400px — забагато для мобільного */
+    height: 320px; 
   }
 
   .carusel {
-    padding: 0 0.75rem;
+    padding: 0 
   }
 
   .button:hover {
@@ -306,11 +294,7 @@
 
 /* ── Small mobile: ≤ 360px ── */
 @media (max-width: 360px) {
-  .main {
-    width: 100%;
-    overflow: hidden;
-    padding: 0;
-  }
+  
   
 
   .textContent {

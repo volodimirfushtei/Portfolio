@@ -5,12 +5,17 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { OrbitControls } from '@react-three/drei'
 import { Iphone } from '../Iphone/Iphone'
-
+import { useFrame } from '@react-three/fiber'
 gsap.registerPlugin(ScrollTrigger)
 
-export default function Model() {
-  const groupRef = useRef();
-
+export default function Model({process}) {
+  const groupRef = useRef(0);
+  const cameraRef = useRef(0);
+ useFrame(() => {
+   cameraRef.current.lookAt(2.8, 0, 0);
+  
+ }) 
+  
   useLayoutEffect(() => {
     // We create a GSAP context to ensure proper garbage collection inside React
     let ctx = gsap.context(() => {
@@ -27,7 +32,7 @@ export default function Model() {
 
       // Animate the rotation and position of the 3D Phone
       tl.to(groupRef.current.rotation, {
-        y: Math.PI * 4, // Spin a full 360 degrees
+        y: Math.PI * 2, // Spin a full 360 degrees
         x: Math.PI * 0.25,
         // Slight tilt backwards
         ease: "none"
@@ -42,11 +47,11 @@ export default function Model() {
     });
 
     return () => ctx.revert();
-  }, []);
+  }, [process]);
 
   return (
     <>
-      <PerspectiveCamera fov={50} near={0.1} far={1000} makeDefault position={[0, 0, 8]} />
+      <PerspectiveCamera fov={50} near={0.1} far={1000} makeDefault position={[3, 0, 4]} ref={cameraRef} />
       <Environment preset="city" />
       
       {/* Group holding the iPhone, targeted by GSAP */}

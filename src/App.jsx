@@ -10,7 +10,6 @@ import Overlay from "./Components/Overlay/Overlay.jsx";
 import ScrollToTop from "./Components/ScrollToTop/ScrollToTop.jsx";
 import CustomCursor from "./Components/CustomCursor/CustomCursor.jsx";
 
-
 /* ── Lazy pages ── */
 const Home = lazy(() => import("./pages/homePage/homePage.jsx"));
 const Contacts = lazy(() => import("./pages/contactsPage/contactsPage.jsx"));
@@ -63,20 +62,18 @@ function App() {
     // Перевірка на touch device
     setIsTouchDevice("ontouchstart" in window || navigator.maxTouchPoints > 0);
 
+    // Об'єднаний preload з одним таймером
     preload().then(() => {
-      const id = setTimeout(() => setLoading(false), 4000);
-      return () => clearTimeout(id);
+      // Мінімальний час показу Loader для анімації
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 4500);
+      
+      return () => clearTimeout(timer);
     });
   }, []);
 
-  useEffect(() => {
-    preload().then(() => {
-      // Loader показується мінімум 2s (щоб анімація встигла відпрацювати)
-      const id = setTimeout(() => setLoading(false), 3500);
-      return () => clearTimeout(id);
-    });
-  }, []);
-
+  // Тимчасово вимкніть Overlay та CustomCursor під час завантаження
   if (loading) return <Loader />;
 
   return (
@@ -84,6 +81,7 @@ function App() {
       <ErrorBoundary>
         {!isTouchDevice && <CustomCursor />}
         <ScrollToTop />
+        {/* Overlay може перекривати Loader, тому він має бути після перевірки loading */}
         <Overlay />
 
         <Suspense

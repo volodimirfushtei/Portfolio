@@ -233,7 +233,7 @@ body {
   --color-accent-hover:  #2a2a2a;
 
   /* Backgrounds */
-  --bg-color:                  #f4f4ef;
+  --bg-color:                  oklch(0.96 0.005 264.5);
   --color-background:          #eeeeee;
   --color-surface:             #fcfcfc;
   --color-surface-hover:       #e5e5de;
@@ -352,22 +352,27 @@ body {
 }
 .neutral-theme {
   --color-primary:       #a1a1aa;
-  --color-accent:        #d4d4d8;
+  --color-accent: oklch(70% 0.15 260);
   --color-accent-hover:  #71717a;
 
-  --bg-color:                  #0a0a0a;
-  --color-background:          #121212;
-  --color-surface:             #1c1c1c;
-  --color-surface-hover:       #262626;
-  --color-background-scrolled: #080808;
+ --color-bg: oklch(18% 0.02 260);
+  --color-background: linear-gradient(
+  135deg,
+  oklch(20.438% 0.00428 264.518),
+  oklch(20.452% 0.01785 284.705),
+  oklch(26.695% 0.00349 229.263)
+);
+  --color-surface:             oklch(20.438% 0.00428 264.518);
+  --color-surface-hover:       oklch(20.452% 0.01785 284.705);
+  --color-background-scrolled: oklch(26.695% 0.00349 229.263);
 
-  --color-border:        rgba(255, 255, 255, 0.08);
+  --color-border: oklch(100% 0 0 / 0.08);
   --color-border-subtle: rgba(255, 255, 255, 0.04);
 
-  --color-text:       #e4e4e7;
-  --color-secondary:  #a1a1aa;
-  --color-text-muted: #71717a;
-  --color-title:      #ffffff;
+  --color-title:      oklch(97% 0.01 260);
+  --color-text:       oklch(92% 0.02 260);
+  --color-secondary:  oklch(88% 0.02 250);
+  --color-text-muted: oklch(82% 0.01 250);
 
   --color-button-bg:       #e4e4e7;
   --color-button-bg-hover: #d4d4d8;

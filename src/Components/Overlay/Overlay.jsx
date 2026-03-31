@@ -21,7 +21,7 @@ const Overlay = () => {
           className={s.column}
           style={{ left: `${i * 20}%` }}
           initial={{ y: "0%" }}
-          animate={{ y: "-100%" }}
+          animate={{ y: "100%" }}
           transition={{
             duration: 0.9,
             ease: [0.76, 0, 0.24, 1],
