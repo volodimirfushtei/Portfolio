@@ -2,21 +2,22 @@
 
 /* ── Section base ── */
 .section {
-  position: relative; 
+  position: relative;
   padding: clamp(2rem, 4vw, 4rem) 0;
   margin-bottom: 0;
-  position: relative;
   transition: background 1.5s ease-in-out;
   width: 100vw;
   max-width: 100%;
+  z-index: 10;
+  background: transparent; /* inherit page gradient from container */
 }
-.canvas {
+.canvasContainer {
   position: fixed;
   top: 0;
   left: 0;  
   width: 100vw; 
   height: 100vh;
-  z-index: 50; /* Float above content */
+  z-index: 1; /* Float above content */
   pointer-events: none; /* Let users click through to the web content */
 }
 
@@ -29,8 +30,9 @@
 
 /* ── Page container ── */
 .container {
-  background: var(--color-background);
-  background-size: cover;
+  /* Single unified gradient for the whole page */
+  background: var(--color-page-gradient, var(--color-background));
+  background-attachment: fixed; /* gradient stays fixed while content scrolls */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -38,18 +40,19 @@
   height: auto;
   width: 100%;
   position: relative;
-  overflow: auto; /* виправлено: було overflow:auto — краще clip щоб не з'являвся горизонтальний скрол */
+  overflow: auto;
   overflow-x: clip;
+  z-index: 1;
 }
 .main {
   width: 100%;
-  overflow: hidden;
+  overflow-x: clip;
   padding: 0;
+  background: transparent;
 }
-/* ── Certificate section ── */
+/* ── Certificate section — transparent to show gradient ── */
 .sertificate {
-  background: var(--color-background);
-  background-size: cover;
+  background: transparent;
 }
 
 /* ── Content layout ── */
@@ -190,9 +193,8 @@
 
 /* ── Carousel ── */
 .carusel {
-  background: var(--color-background);
-  background-size: cover;
-  padding: 0 2rem;
+  background: transparent;
+ padding: 0;
 }
 
 /* ── Tablet: 481px – 768px ── */

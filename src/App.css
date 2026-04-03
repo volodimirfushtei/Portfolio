@@ -7,5 +7,7 @@
   --overlay-strength: 0.6;
 
   --image-hover-scale: 1.03;
+
+background-color: var(--color-page-gradient);
 }
  

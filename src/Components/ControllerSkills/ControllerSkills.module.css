@@ -1,7 +1,7 @@
 /* ControllerSkills.module.css — Awwwards editorial premium */
 
 .section {
-  background: var(--color-background);
+  background: transparent;
   padding: 0;
   overflow: hidden;
 }
@@ -55,12 +55,12 @@
 
 .track::before {
   left: 0;
-  background: linear-gradient(to right, var(--color-background), transparent);
+  background: linear-gradient(to right, transparent, transparent);
 }
 
 .track::after {
   right: 0;
-  background: linear-gradient(to left, var(--color-background), transparent);
+  background: linear-gradient(to left, transparent, transparent);
 }
 
 .inner {
@@ -77,7 +77,7 @@
   width: clamp(140px, 15vw, 180px);
   height: 90px;
   flex-shrink: 0;
-  background: var(--color-background);
+  background: transparent;
   border: 1px solid var(--color-border);
   border-radius: 8px;
   overflow: hidden;

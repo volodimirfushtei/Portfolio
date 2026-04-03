@@ -104,6 +104,7 @@ const HomePage = () => {
   ];
 
   return (
+    <div id="scroll-container">
     <motion.div
       variants={pageReveal}
       initial="hidden"
@@ -116,12 +117,12 @@ const HomePage = () => {
       <motion.section variants={sectionReveal} className={styles.section} >
         <HeroSection />
        
-      </motion.section>
-   <section className={styles.canvas} ref={modelRef}>
-        <Canvas>
-     <Model />
-    </Canvas>
-    </section>
+        </motion.section>
+        <section className={styles.canvasContainer} >
+  <Canvas>
+    <Model modelRef={modelRef} />
+  </Canvas>
+        </section>
       <main className={styles.main}>
         {/* Expertise Section */}
         <motion.section
@@ -200,7 +201,8 @@ const HomePage = () => {
         </section>
       </main>
       <Footer />
-    </motion.div>
+      </motion.div>
+      </div>
   );
 };
 

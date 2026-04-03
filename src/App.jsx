@@ -9,7 +9,7 @@ import Layout from "./Components/Layout/Layout.jsx";
 import Overlay from "./Components/Overlay/Overlay.jsx";
 import ScrollToTop from "./Components/ScrollToTop/ScrollToTop.jsx";
 import CustomCursor from "./Components/CustomCursor/CustomCursor.jsx";
-
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 /* ── Lazy pages ── */
 const Home = lazy(() => import("./pages/homePage/homePage.jsx"));
 const Contacts = lazy(() => import("./pages/contactsPage/contactsPage.jsx"));
@@ -62,14 +62,26 @@ function App() {
     // Перевірка на touch device
     setIsTouchDevice("ontouchstart" in window || navigator.maxTouchPoints > 0);
 
+    // Додаємо клас завантаження
+    document.body.classList.add("loading");
+
     // Об'єднаний preload з одним таймером
     preload().then(() => {
       // Мінімальний час показу Loader для анімації
       const timer = setTimeout(() => {
         setLoading(false);
+        document.body.classList.remove("loading");
+        
+        // Refresh GSAP after content is visible to recalculate heights
+        setTimeout(() => {
+          ScrollTrigger.refresh();
+        }, 100);
       }, 4500);
       
-      return () => clearTimeout(timer);
+      return () => {
+        clearTimeout(timer);
+        document.body.classList.remove("loading");
+      };
     });
   }, []);
 
@@ -83,6 +95,7 @@ function App() {
         <ScrollToTop />
         {/* Overlay може перекривати Loader, тому він має бути після перевірки loading */}
         <Overlay />
+        
 
         <Suspense
           fallback={

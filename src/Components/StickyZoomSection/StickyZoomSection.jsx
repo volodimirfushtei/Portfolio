@@ -70,7 +70,7 @@ export default function StickyZoomSection() {
         .to(
           zoomRef.current,
           {
-            scale: 2, // Massive scale to envelope the screen
+            scale: 1.8, // Massive scale to envelope the screen
             duration: 1.5,
             ease: "power2.in",
           },

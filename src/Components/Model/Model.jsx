@@ -8,9 +8,9 @@ import { Iphone } from '../Iphone/Iphone'
 import { useFrame } from '@react-three/fiber'
 gsap.registerPlugin(ScrollTrigger)
 
-export default function Model({process}) {
-  const groupRef = useRef(0);
-  const cameraRef = useRef(0);
+export default function Model(modelRef) {
+  const groupRef = useRef();
+  const cameraRef = useRef();
  useFrame(() => {
    cameraRef.current.lookAt(2.8, 0, 0);
   
@@ -22,7 +22,7 @@ export default function Model({process}) {
       // Create a timeline hooked to the main document scroll
       const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: "body",      // triggers off the entire height of the page
+          trigger: modelRef.current,      // triggers off the entire height of the page
           start: "top top",
           end: "bottom bottom",
           markers: true,
@@ -32,7 +32,7 @@ export default function Model({process}) {
 
       // Animate the rotation and position of the 3D Phone
       tl.to(groupRef.current.rotation, {
-        y: Math.PI * 2, // Spin a full 360 degrees
+        y: Math.PI * 6, // Spin a full 360 degrees
         x: Math.PI * 0.25,
         // Slight tilt backwards
         ease: "none"
@@ -41,13 +41,13 @@ export default function Model({process}) {
       
       tl.to(groupRef.current.position, {
         y: -1, // Slowly drift down
-        x: 6,  // Drift right
-        ease: "none"
+        x: 0,  // Drift right
+        ease: "power2.out"
       }, 0);
     });
 
     return () => ctx.revert();
-  }, [process]);
+  }, [modelRef]);
 
   return (
     <>
@@ -55,10 +55,10 @@ export default function Model({process}) {
       <Environment preset="city" />
       
       {/* Group holding the iPhone, targeted by GSAP */}
-      <group ref={groupRef} position={[0, 0, 0]}>
-        <Float speed={2} rotationIntensity={0.5} floatIntensity={1.5}>
+      <group ref={groupRef} position={[2.5, .2, -1.5]}>
+        
           <Iphone />
-        </Float>
+        
       </group>
     </>
   )

@@ -1,8 +1,9 @@
 import { useEffect, useState, useRef } from "react";
-import { Sun, Moon, SunMoon, X } from "lucide-react";
+import { Sun, Moon, SunMoon, Check } from "lucide-react";
 import styles from "./ToggleTheme.module.css";
 import { gsap } from "gsap";
 
+/* ── Theme definitions ── */
 const THEMES = [
   "dark-theme",
   "light-theme",
@@ -15,194 +16,210 @@ const THEMES = [
   "prelight-theme",
 ];
 
-const THEME_COLORS = {
-  "dark-theme": "#020229ff",
-  "light-theme": "#dfdfdfff",
-  "auto-theme": "linear-gradient(135deg, #7c8cff 50%, #111111 50%)",
-  "purple-theme": "#8b5cf6",
-  "neutral-theme": "#080808ff",
-  "blue-theme": "#3b82f6",
-  "emerald-theme": "#10b981",
-  "sunset-theme": "#ff7a18",
-  "prelight-theme": "#4f46e5",
+/* Perceptually rich oklch swatches per theme */
+const THEME_SWATCHES = {
+  "dark-theme":    "linear-gradient(145deg, oklch(13% 0.022 265) 0%, oklch(22% 0.075 278) 100%)",
+  "light-theme":   "linear-gradient(145deg, oklch(97% 0.004 90) 0%, oklch(90% 0.01 78) 100%)",
+  "auto-theme":    "linear-gradient(135deg, oklch(13% 0.022 265) 50%, oklch(97% 0.004 90) 50%)",
+  "purple-theme":  "linear-gradient(145deg, oklch(9% 0.025 20) 0%, oklch(55% 0.28 24) 100%)",
+  "neutral-theme": "linear-gradient(145deg, oklch(10% 0.008 264) 0%, oklch(16% 0.01 264) 100%)",
+  "blue-theme":    "linear-gradient(145deg, oklch(14% 0.04 260) 0%, oklch(22% 0.055 236) 100%)",
+  "emerald-theme": "linear-gradient(145deg, oklch(5% 0.015 152) 0%, oklch(88% 0.32 152) 100%)",
+  "sunset-theme":  "linear-gradient(145deg, oklch(13% 0.025 28) 0%, oklch(78% 0.2 52) 100%)",
+  "prelight-theme":"linear-gradient(145deg, oklch(100% 0 0) 0%, oklch(54% 0.24 278) 100%)",
 };
 
-const ToggleTheme = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [shouldRender, setShouldRender] = useState(false);
-  const modalRef = useRef(null);
+const THEME_ICONS = {
+  "dark-theme":    <Moon    size={14} strokeWidth={1.5} />,
+  "light-theme":   <Sun     size={14} strokeWidth={1.5} />,
+  "auto-theme":    <SunMoon size={14} strokeWidth={1.5} />,
+  "purple-theme":  <Moon    size={14} strokeWidth={1.5} />,
+  "neutral-theme": <Moon    size={14} strokeWidth={1.5} />,
+  "blue-theme":    <Moon    size={14} strokeWidth={1.5} />,
+  "emerald-theme": <Moon    size={14} strokeWidth={1.5} />,
+  "sunset-theme":  <Sun     size={14} strokeWidth={1.5} />,
+  "prelight-theme":<Sun     size={14} strokeWidth={1.5} />,
+};
 
-  useEffect(() => {
-    if (isModalOpen) {
-      gsap.fromTo(
-        modalRef.current,
-        { x: -100, opacity: 0, zoom: 0.5 },
-        {
-          x: 0,
-          opacity: 1,
-          zoom: 1,
-          duration: 0.5,
-          ease: "power3.out",
-          backdropFilter: "blur(20px)",
-          WebkitBackdropFilter: "blur(20px)",
-          brightness: "1",
-        },
-      );
-    } else if (shouldRender) {
-      gsap.to(modalRef.current, {
-        x: -100,
-        opacity: 0,
-        duration: 0.8,
-        zoom: 0.5,
-        backdropFilter: "blur(0px)",
-        WebkitBackdropFilter: "blur(0px)",
-        brightness: "0",
-        ease: "power2.out",
-        onComplete: () => setShouldRender(false),
-      });
-    }
-  }, [isModalOpen]);
-  const getSystemTheme = () =>
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark-theme"
-      : "light-theme";
+const THEME_LABELS = {
+  "dark-theme":    "Dark",
+  "light-theme":   "Light",
+  "auto-theme":    "Auto",
+  "purple-theme":  "Crimson",
+  "neutral-theme": "Neutral",
+  "blue-theme":    "Ocean",
+  "emerald-theme": "Neon",
+  "sunset-theme":  "Sunset",
+  "prelight-theme":"Indigo",
+};
+
+/* ── Helpers ── */
+const getSystemTheme = () =>
+  window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark-theme"
+    : "light-theme";
+
+/* ════════════════════════════════════════════════ */
+const ToggleTheme = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [shouldRender, setShouldRender] = useState(false);
+  const panelRef = useRef(null);
 
   const [theme, setTheme] = useState(() => {
     const saved = localStorage.getItem("theme");
     if (saved) return saved;
-
     const system = getSystemTheme();
     localStorage.setItem("theme", system);
     return system;
   });
 
+  /* ── Apply theme to <html> ── */
+  useEffect(() => {
+    const root = document.documentElement;
+    const applied = theme === "auto-theme" ? getSystemTheme() : theme;
+    THEMES.forEach((t) => root.classList.remove(t));
+    root.classList.add(applied);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  /* ── Auto theme media listener ── */
   useEffect(() => {
     if (theme !== "auto-theme") return;
-
     const media = window.matchMedia("(prefers-color-scheme: dark)");
-
     const handler = () => {
       const root = document.documentElement;
-      const newTheme = media.matches ? "dark-theme" : "light-theme";
-
       THEMES.forEach((t) => root.classList.remove(t));
-      root.classList.add(newTheme);
+      root.classList.add(media.matches ? "dark-theme" : "light-theme");
     };
-
     media.addEventListener("change", handler);
-
     return () => media.removeEventListener("change", handler);
   }, [theme]);
 
-  const toggleModal = () => {
-    if (!isModalOpen) {
-      setShouldRender(true);
-      setIsModalOpen(true);
-    } else {
-      setIsModalOpen(false);
-    }
-  };
+  /* ── Panel GSAP animations ── */
   useEffect(() => {
-    const root = document.documentElement;
+    if (isOpen) {
+      gsap.fromTo(
+        panelRef.current,
+        { y: -12, opacity: 0, scale: 0.97 },
+        { y: 0, opacity: 1, scale: 1, duration: 0.35, ease: "power3.out" }
+      );
+    } else if (shouldRender) {
+      gsap.to(panelRef.current, {
+        y: -8, opacity: 0, scale: 0.96,
+        duration: 0.22, ease: "power2.in",
+        onComplete: () => setShouldRender(false),
+      });
+    }
+  }, [isOpen]);
 
-    const appliedTheme = theme === "auto-theme" ? getSystemTheme() : theme;
+  /* ── Toggle panel ── */
+  const openPanel = () => { setShouldRender(true); setIsOpen(true); };
+  const closePanel = () => setIsOpen(false);
+  const togglePanel = () => (isOpen ? closePanel() : openPanel());
 
-    THEMES.forEach((t) => root.classList.remove(t));
-    root.classList.add(appliedTheme);
-
-    localStorage.setItem("theme", theme);
-  }, [theme]);
-  const handleSelectTheme = (newTheme) => {
-    gsap.to(modalRef.current, {
-      x: -100,
-      opacity: 0,
-      duration: 0.8,
-      zoom: 0.5,
-      backdropFilter: "blur(0px)",
-      WebkitBackdropFilter: "blur(0px)",
-      brightness: "0",
-      ease: "power2.out",
-      onComplete: () => setShouldRender(false),
+  /* ── Select theme ── */
+  const handleSelect = (t) => {
+    setTheme(t);
+    gsap.to(panelRef.current, {
+      y: -8, opacity: 0, scale: 0.96,
+      duration: 0.22, ease: "power2.in",
+      onComplete: () => { setIsOpen(false); setShouldRender(false); },
     });
-    setTheme(newTheme);
-    setIsModalOpen(false);
   };
 
-  const icons = {
-    "light-theme": <Sun size={18} strokeWidth={1.5} />,
-    "dark-theme": <Moon size={18} strokeWidth={1.5} />,
-    "auto-theme": <SunMoon size={18} strokeWidth={1.5} />,
-    "purple-theme": <Moon size={18} strokeWidth={1.5} />,
-    "neutral-theme": <Moon size={18} strokeWidth={1.5} />,
-    "blue-theme": <Moon size={18} strokeWidth={1.5} />,
-    "emerald-theme": <Moon size={18} strokeWidth={1.5} />,
-    "sunset-theme": <Sun size={18} strokeWidth={1.5} />,
-    "prelight-theme": <Sun size={18} strokeWidth={1.5} />,
-  };
-
-  const labels = {
-    "light-theme": "Light",
-    "dark-theme": "Dark",
-    "auto-theme": "Auto",
-    "purple-theme": "Purple",
-    "neutral-theme": "Neutral",
-    "blue-theme": "Blue",
-    "emerald-theme": "Emerald",
-    "sunset-theme": "Sunset",
-    "prelight-theme": "Prelight",
-  };
+  const currentLabel = THEME_LABELS[theme];
 
   return (
     <>
+      {/* ── Trigger pill ── */}
       <button
-        className={`${styles.toggle} ${isModalOpen ? styles.active : ""}`}
-        onClick={toggleModal}
-        aria-label={`Switch theme, current: ${labels[theme]}`}
-        title={`Current theme: ${labels[theme]}`}
+        className={`${styles.toggle} ${isOpen ? styles.active : ""}`}
+        onClick={togglePanel}
+        aria-label={`Theme: ${currentLabel}. Click to change.`}
+        title={`Current theme: ${currentLabel}`}
       >
-        <span className={styles.icon}>{icons[theme]}</span>
+        <span className={styles.toggleDot} />
+        <span className={styles.icon}>{THEME_ICONS[theme]}</span>
+        <span className={styles.toggleLabel}>{currentLabel}</span>
       </button>
 
+      {/* ── Panel + backdrop ── */}
       {shouldRender && (
-        <div className={styles.overlay} onClick={toggleModal}>
+        <>
+          <div className={styles.overlay} onClick={closePanel} />
+
           <div
-            className={styles.modal}
-            ref={modalRef}
-            onClick={(e) => e.stopPropagation()}
+            className={styles.panel}
+            ref={panelRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Select theme"
           >
-            <div className={styles.modalHeader}>
-              <h2 className={styles.modalTitle}>Select Theme</h2>
+            {/* Header */}
+            <div className={styles.panelHeader}>
+              <div className={styles.panelMeta}>
+                <h2 className={styles.panelTitle}>Appearance</h2>
+                <span className={styles.panelSubtitle}>Select a colour theme</span>
+              </div>
               <button
-                className={styles.modalClose}
-                onClick={toggleModal}
-                title="Close"
+                className={styles.panelClose}
+                onClick={closePanel}
                 aria-label="Close"
+                title="Close"
               >
-                <X size={20} strokeWidth={1.5} />
+                ✕
               </button>
             </div>
-            <div className={styles.grid}>
-              {THEMES.map((t) => (
-                <button
-                  key={t}
-                  className={`${styles.themeCard} ${theme === t ? styles.selected : ""}`}
-                  onClick={() => handleSelectTheme(t)}
-                >
-                  <div
-                    className={styles.colorPreview}
-                    style={{ background: THEME_COLORS[t] }}
+
+            {/* Grid */}
+            <div className={styles.panelBody}>
+              <div className={styles.grid}>
+                {THEMES.map((t) => (
+                  <button
+                    key={t}
+                    className={`${styles.themeCard} ${theme === t ? styles.selected : ""}`}
+                    onClick={() => handleSelect(t)}
+                    title={THEME_LABELS[t]}
+                    aria-pressed={theme === t}
                   >
-                    <span className={styles.themeIcon}>{icons[t]}</span>
-                  </div>
-                  <span className={styles.themeLabel}>{labels[t]}</span>
-                </button>
-              ))}
+                    {/* Swatch */}
+                    <div
+                      className={styles.swatch}
+                      style={{ background: THEME_SWATCHES[t] }}
+                    >
+                      <span className={styles.swatchIcon}>
+                        {THEME_ICONS[t]}
+                      </span>
+                      {theme === t && (
+                        <span className={styles.selectedBadge}>
+                          <Check size={9} strokeWidth={3} />
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Footer strip */}
+                    <div className={styles.cardFooter}>
+                      <span className={styles.themeLabel}>{THEME_LABELS[t]}</span>
+                      <span className={styles.activeDot} />
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className={styles.panelFooter}>
+              <span className={styles.footerDot} />
+              Active — {currentLabel}
             </div>
           </div>
-        </div>
+        </>
       )}
     </>
   );
 };
 
 export default ToggleTheme;
+
+
+

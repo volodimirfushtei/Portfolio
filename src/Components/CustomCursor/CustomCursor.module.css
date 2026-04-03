@@ -31,7 +31,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  
+ 
+  mix-blend-mode: difference;
+  box-shadow: 0 0 20px rgba(255,255,255,0.2);
   will-change: transform, width, height, box-shadow;
   transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
               height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
@@ -96,7 +98,7 @@
 }
 
 .light-theme .cursorText {
-  color: #080808;
+  color: oklch(4% 0 0);
   text-shadow: none;
   filter: none;
 }
@@ -122,7 +124,7 @@
 }
 
 .light-theme .cursor.hovering {
-  border-color: #080808;
+  border-color: oklch(4% 0 0);
  
 }
 
@@ -143,21 +145,21 @@
   pointer-events: none;
   z-index: 99998;
   background: transparent;
-  box-shadow: 0 0 15px rgba(232, 243, 60, 0.5),
-              inset 0 0 10px rgba(232, 243, 60, 0.3);
+  box-shadow: 0 0 15px oklch(91% 0.21 101 / 0.5),
+              inset 0 0 10px oklch(91% 0.21 101 / 0.3);
   will-change: transform, opacity;
 }
 
 .dark-theme .ripple {
-  border-color: rgba(232, 243, 60, 0.8);
-  box-shadow: 0 0 15px rgba(232, 243, 60, 0.6),
-              inset 0 0 10px rgba(232, 243, 60, 0.4);
+  border-color: oklch(91% 0.21 101 / 0.8);
+  box-shadow: 0 0 15px oklch(91% 0.21 101 / 0.6),
+              inset 0 0 10px oklch(91% 0.21 101 / 0.4);
 }
 
 .light-theme .ripple {
-  border-color: rgba(8, 8, 8, 0.4);
-  box-shadow: 0 0 12px rgba(8, 8, 8, 0.3),
-              inset 0 0 8px rgba(8, 8, 8, 0.15);
+  border-color: oklch(4% 0 0 / 0.4);
+  box-shadow: 0 0 12px oklch(4% 0 0 / 0.3),
+              inset 0 0 8px oklch(4% 0 0 / 0.15);
 }
 
 /* ═════════════════════════════════════════════════════════════ */
@@ -190,3 +192,4 @@
     display: none;
   }
 }
+

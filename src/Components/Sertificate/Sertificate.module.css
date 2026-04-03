@@ -8,7 +8,7 @@
   align-items: center;
   justify-content: center;
   padding: clamp(6rem, 12vw, 12rem) 0;
-  background: var(--color-background);
+  background: transparent;
   overflow: hidden;
   isolation: isolate;
 }
@@ -179,7 +179,7 @@
   position: relative;
   z-index: 1;
   border: 1px solid var(--color-border);
-  background: var(--color-surface);
+  background: transparent;
   box-shadow: var(--color-shadow);
   filter: drop-shadow(0px 20px 30px rgba(0,0,0,0.2));
   overflow: hidden;

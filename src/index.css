@@ -90,13 +90,14 @@
 html,
 body {
   scroll-behavior: smooth;
-  background-color: var(--bg-color);
+  
   color: var(--color-text);
   font-family: var(--font-body);
   font-size: var(--font-size-base);
   line-height: 1.7;
   margin: 0;
   padding: 0;
+ 
   min-height: 100vh;
   transition:
     background-color var(--transition-smooth),
@@ -242,6 +243,16 @@ body {
   --color-footer: linear-gradient(180deg, #f4f4ef 0%, #dedad2 100%);
   --color-gradient: linear-gradient(135deg, rgba(244, 244, 239, 0.9) 0%, rgba(228, 228, 218, 0.8) 100%);
 
+  /* Page-wide gradient background */
+  --color-page-gradient: linear-gradient(
+    170deg,
+    #f4f4ef 0%,
+    #eceae3 25%,
+    #e8e4db 55%,
+    #dedad2 80%,
+    #d5d0c8 100%
+  );
+
   /* Borders & shadows */
   --color-border:        rgba(10, 10, 10, 0.1);
   --color-border-subtle: rgba(10, 10, 10, 0.05);
@@ -307,6 +318,16 @@ body {
   --color-sidebar:             var(--color-surface);
   --color-footer:              #16182b;
   --color-gradient: linear-gradient(135deg, #1e223a 0%, #2a2f55 100%);
+
+  /* Page-wide gradient background */
+  --color-page-gradient: linear-gradient(
+    170deg,
+    #101428 0%,
+    #151a39 20%,
+    #1c2248 45%,
+    #212a58 70%,
+    #1a1e45 100%
+  );
 
   /* Borders & shadows */
   --color-border:        rgba(140, 150, 255, 0.25);
@@ -379,6 +400,14 @@ body {
   --color-button-text:     #0a0a0a;
 
   --color-gradient: linear-gradient(135deg, #0a0a0a, #1c1c1c);
+  --color-page-gradient: linear-gradient(
+    170deg,
+    #0e0e12 0%,
+    #141418 25%,
+    #18181e 55%,
+    #1c1c24 80%,
+    #0e0e12 100%
+  );
 --color-header: linear-gradient(145deg, #1c1f36 0%, #2a2f55 100%);
 --color-hero:   var(--color-header);
 --color-footer: linear-gradient(180deg, #1c1f36 0%, #2a2f55 100%);
@@ -435,6 +464,16 @@ body {
   /* 🌈 Accent gradient (для hover / border / text) */
   --color-gradient: 
     linear-gradient(135deg, #e80a0a, #c10000, #e80a0a);
+
+  /* Page-wide gradient background */
+  --color-page-gradient: linear-gradient(
+    170deg,
+    #0b090f 0%,
+    #100d14 25%,
+    #14101a 55%,
+    #0e0b12 80%,
+    #080608 100%
+  );
 
   /* 💡 Glow ефекти */
   --color-glow: 
@@ -496,6 +535,16 @@ body {
 
   --color-gradient: linear-gradient(135deg, #0f172a, #1f2937);
 
+  /* Page-wide gradient background */
+  --color-page-gradient: linear-gradient(
+    170deg,
+    #0a1020 0%,
+    #0f172a 25%,
+    #131f35 55%,
+    #172038 80%,
+    #0a1020 100%
+  );
+
   --color-shadow:       0 10px 40px rgba(0, 0, 0, 0.6);
   --color-shadow-hover: 0 20px 60px rgba(0, 0, 0, 0.8);
 
@@ -548,6 +597,16 @@ body {
   /* 🌈 Accent gradient */
   --color-gradient: 
     linear-gradient(135deg, #00ff9c, #00ffa6, #00cc7a);
+
+  /* Page-wide gradient background */
+  --color-page-gradient: linear-gradient(
+    170deg,
+    #020705 0%,
+    #030c08 25%,
+    #021008 55%,
+    #030d07 80%,
+    #020705 100%
+  );
 
   /* 💡 NEON GLOW (головна фішка) */
   --color-glow: 
@@ -616,6 +675,16 @@ body {
     #140d0a 0%,
     #211510 40%,
     #18100b 100%
+  );
+
+  /* Page-wide gradient background */
+  --color-page-gradient: linear-gradient(
+    170deg,
+    #100a07 0%,
+    #160e0a 25%,
+    #1c120d 55%,
+    #17100c 80%,
+    #0f0905 100%
   );
 
   /* Borders & shadows */
@@ -687,6 +756,16 @@ body {
   --color-footer:              #f1f5f9;
 
   --color-gradient: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+
+  /* Page-wide gradient background */
+  --color-page-gradient: linear-gradient(
+    170deg,
+    #ffffff 0%,
+    #f8fafc 25%,
+    #f1f5f9 55%,
+    #e8eef6 80%,
+    #dde6f0 100%
+  );
 
   /* Borders & shadows */
   --color-border:        rgba(79, 70, 229, 0.15);

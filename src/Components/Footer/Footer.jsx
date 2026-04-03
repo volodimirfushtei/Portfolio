@@ -12,11 +12,12 @@ const Footer = () => {
   });
 
   // Зсув backgroundPositionY в залежності від скролу
-  const bgPosition = useTransform(scrollYProgress, [0, 1], ["50%", "100%"]);
+  const bgPosition = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
   const bgPositionSpring = useSpring(bgPosition, {
     stiffness: 50,
     damping: 20,
     restDelta: 0.001,
+    ease: "easeInOut",
   });
 
   return (
@@ -27,11 +28,13 @@ const Footer = () => {
       aria-label="Footer"
       style={{
         backgroundPositionY: bgPositionSpring,
-
+        position: "relative",
         backgroundImage: "url(/images/njeromin2.jpg)",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         width: "100%",
+        zIndex: 2,
+        opacity: 0.5,
       }}
     >
       <div className={styles.content}>
