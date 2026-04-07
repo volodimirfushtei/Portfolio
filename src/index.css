@@ -90,14 +90,14 @@
 html,
 body {
   scroll-behavior: smooth;
-  
+  position: relative;
   color: var(--color-text);
   font-family: var(--font-body);
   font-size: var(--font-size-base);
   line-height: 1.7;
   margin: 0;
   padding: 0;
- 
+  background: var(--color-page-gradient);
   min-height: 100vh;
   transition:
     background-color var(--transition-smooth),
@@ -236,7 +236,7 @@ body {
   /* Backgrounds */
   --bg-color:                  oklch(0.96 0.005 264.5);
   --color-background:          #eeeeee;
-  --color-surface:             #fcfcfc;
+  --color-surface:             oklch(98% 0.01 260);
   --color-surface-hover:       #e5e5de;
   --color-background-scrolled: #ecece7;
   --color-sidebar:             var(--color-surface);
@@ -244,14 +244,11 @@ body {
   --color-gradient: linear-gradient(135deg, rgba(244, 244, 239, 0.9) 0%, rgba(228, 228, 218, 0.8) 100%);
 
   /* Page-wide gradient background */
-  --color-page-gradient: linear-gradient(
-    170deg,
-    #f4f4ef 0%,
-    #eceae3 25%,
-    #e8e4db 55%,
-    #dedad2 80%,
-    #d5d0c8 100%
-  );
+  --color-page-gradient:  linear-gradient(
+  135deg,
+  oklch(98% 0.01 260),
+  oklch(92% 0.015 240)
+);
 
   /* Borders & shadows */
   --color-border:        rgba(10, 10, 10, 0.1);
@@ -310,9 +307,9 @@ body {
   --color-accent-hover:  #6f7cff;
 
   /* Backgrounds */
-  --bg-color:                  #171d3f;
-  --color-background:          #151a39;
-  --color-surface:             #2f355f;  /* ↓ затемнили для контрасту */
+  --bg-color:                  oklch(10% 0 0);
+  --color-background:          oklch(14.11% 0.0018 16.88);
+  --color-surface:             oklch(14.479% 0.00002 271.152);  /* ↓ затемнили для контрасту */
   --color-surface-hover:       #3a4170;
   --color-background-scrolled: #1c1f36;
   --color-sidebar:             var(--color-surface);
@@ -320,14 +317,10 @@ body {
   --color-gradient: linear-gradient(135deg, #1e223a 0%, #2a2f55 100%);
 
   /* Page-wide gradient background */
-  --color-page-gradient: linear-gradient(
-    170deg,
-    #101428 0%,
-    #151a39 20%,
-    #1c2248 45%,
-    #212a58 70%,
-    #1a1e45 100%
-  );
+  --color-page-gradient:
+
+  linear-gradient(90deg, rgba(0, 0, 0, 0) 44.86%, rgba(0, 0, 0, 0.69) 100%), linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 100%), conic-gradient(from 137deg at 100% 100%, #7db9e8 24.23077deg, rgba(48, 102, 213, 0) 129.60001deg, #376ced 180deg, rgba(30, 87, 153, 0) 357.12193deg), #000;
+
 
   /* Borders & shadows */
   --color-border:        rgba(140, 150, 255, 0.25);
@@ -347,7 +340,7 @@ body {
   --color-button-text:     #ffffff;
 
   /* Header */
-  --color-header: linear-gradient(145deg, #1c1f36 0%, #2a2f55 100%);
+  --color-header: oklch(16.376% 0.00002 271.152);
   --color-hero:   var(--color-header);
 
   /* Loaders */
@@ -357,7 +350,7 @@ body {
   --color-loader-bar:        linear-gradient(90deg, #7c8cff, #aab0ff);
 
   /* Overlays */
-  --color-overlay: linear-gradient(to bottom, rgba(20, 20, 40, 0.85), rgba(10, 10, 20, 0.98));
+  --color-overlay: linear-gradient(to bottom, rgba(28, 28, 29, 0.85), rgba(12, 12, 15, 0.98));
 
   /* Grid */
   --color-grid:
@@ -365,8 +358,8 @@ body {
     repeating-linear-gradient(to bottom, transparent 0px, transparent 39px, rgba(140,150,255,0.06) 39px, rgba(140,150,255,0.06) 40px);
 
   /* Glass */
-  --glass-bg:     rgba(36, 41, 72, 0.7);
-  --glass-border: rgba(140, 150, 255, 0.15);
+  --glass-bg:     oklch(29.716% 0.00003 271.152);
+  --glass-border: oklch(23.185% 0.00153 16.319);
 
   /* Scroll */
   --scroll-progress: #7c8cff;
@@ -375,7 +368,6 @@ body {
   --color-primary:       #a1a1aa;
   --color-accent: oklch(70% 0.15 260);
   --color-accent-hover:  #71717a;
-
  --color-bg: oklch(18% 0.02 260);
   --color-background: linear-gradient(
   135deg,

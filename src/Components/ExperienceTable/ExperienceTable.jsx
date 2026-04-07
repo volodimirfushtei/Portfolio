@@ -10,35 +10,7 @@ const STATS = [
   { value: 4, suffix: "+", label: "Certifications", index: "06" },
 ];
 
-const Counter = ({ value, suffix, start }) => {
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    if (!start) return;
-
-    let current = 0;
-    const step = Math.max(1, Math.floor(value / 40)); 
-
-    const interval = setInterval(() => {
-      current += step;
-      if (current >= value) {
-        setCount(value);
-        clearInterval(interval);
-      } else {
-        setCount(current);
-      }
-    }, 33); 
-
-    return () => clearInterval(interval);
-  }, [start, value]);
-
-  return (
-    <span className={styles.counterWrap}>
-      <span className={styles.counterNum}>{count}</span>
-      <span className={styles.counterSuffix}>{suffix}</span>
-    </span>
-  );
-};
+import Counter from "../Counter/Counter.jsx";
 
 const ExperienceTable = () => {
   const sectionRef = useRef(null);

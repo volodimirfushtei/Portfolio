@@ -36,7 +36,9 @@ const Footer = () => {
         zIndex: 2,
         opacity: 0.5,
       }}
-    >
+    >  <div className="absolute top-60 right-10 md:right-40 w-72 h-72 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
+      <div className="absolute bottom-10 left-10 md:left-40 w-84 h-84 bg-gradient-to-tr from-blue-300 to-purple-500 rounded-full blur-[120px] opacity-20 pointer-events-none"></div>
+      
       <div className={styles.content}>
         <div className={styles.column}>
           <div className={styles.logo}>

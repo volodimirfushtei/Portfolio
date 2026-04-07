@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import gsap from "gsap";
 import styles from "./Loader.module.css";
+import NoiseOverlay from "../NoiseOverlay/NoiseOverlay";
 
 
 const Loader = () => {
@@ -97,6 +98,7 @@ const Loader = () => {
     <AnimatePresence>
       {isLoading && (
         <div className={styles.overlay} ref={containerRef}>
+          <NoiseOverlay />
           
           {/* Curtain panels */}
           {[0, 1, 2, 3, 4].map((i) => (

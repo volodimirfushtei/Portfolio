@@ -1,65 +1,103 @@
-import React, { useRef, useLayoutEffect } from 'react'
-import { useGLTF } from '@react-three/drei'
-import { Environment, PerspectiveCamera, Float } from '@react-three/drei'
+import React, { useRef, useEffect, forwardRef, useState, useLayoutEffect } from 'react'
+import { Environment, PerspectiveCamera } from '@react-three/drei'
+import { useFrame } from '@react-three/fiber'
+import { Iphone } from '../Iphone/Iphone'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { OrbitControls } from '@react-three/drei'
-import { Iphone } from '../Iphone/Iphone'
-import { useFrame } from '@react-three/fiber'
-gsap.registerPlugin(ScrollTrigger)
 
-export default function Model(modelRef) {
-  const groupRef = useRef();
-  const cameraRef = useRef();
- useFrame(() => {
-   cameraRef.current.lookAt(2.8, 0, 0);
+gsap.registerPlugin(ScrollTrigger)  
+
+const Model = forwardRef(({ progress }, ref) => {
+  const cameraRef = useRef()
+  const groupRef = useRef()
+  const [contextLost, setContextLost] = useState(false)
   
- }) 
+  useFrame(() => {
+    if (cameraRef.current && !contextLost && groupRef.current) {
+      cameraRef.current.lookAt(groupRef.current.position)
+    }
+  })
+  
+  useEffect(() => {
+    const canvas = document.querySelector('canvas')
+    if (!canvas) return
+    
+    const handleContextLost = (event) => {
+      event.preventDefault()
+      setContextLost(true)
+      setTimeout(() => {
+        setContextLost(false)
+        window.location.reload()
+      }, 1000)
+    }
+    
+    const handleContextRestored = () => {
+      setContextLost(false)
+    }
+    
+    canvas.addEventListener('webglcontextlost', handleContextLost)
+    canvas.addEventListener('webglcontextrestored', handleContextRestored)
+    
+    return () => {
+      canvas.removeEventListener('webglcontextlost', handleContextLost)
+      canvas.removeEventListener('webglcontextrestored', handleContextRestored)
+    }
+  }, [])
   
   useLayoutEffect(() => {
-    // We create a GSAP context to ensure proper garbage collection inside React
+    if (!groupRef.current) return
+    
     let ctx = gsap.context(() => {
-      // Create a timeline hooked to the main document scroll
+      // Використовуємо timeline для синхронізації анімацій
       const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: modelRef.current,      // triggers off the entire height of the page
+          trigger: document.body,
           start: "top top",
           end: "bottom bottom",
-          markers: true,
-          scrub: 1,            // Smooth scrubbing
+          scrub: 2, // Більш плавний скраб
+          invalidateOnRefresh: true
         }
-      });
-
-      // Animate the rotation and position of the 3D Phone
+      })
+      
+      // Додаємо анімації в timeline
       tl.to(groupRef.current.rotation, {
-        y: Math.PI * 6, // Spin a full 360 degrees
-        x: Math.PI * 0.25,
-        // Slight tilt backwards
+        y: Math.PI * 4,    // 360 градусів
+        x: Math.PI * 0.1,  // легкий нахил
+        duration: 1,
         ease: "none"
-        
-      }, 0);
+      }, 0)
       
       tl.to(groupRef.current.position, {
-        y: -1, // Slowly drift down
-        x: 0,  // Drift right
-        ease: "power2.out"
-      }, 0);
-    });
-
-    return () => ctx.revert();
-  }, [modelRef]);
-
+        x: 0.8,   // кінцева позиція X
+        y: -2,    // кінцева позиція Y
+        z: -3.3,  // кінцева позиція Z
+        duration: 1,
+        ease: "none"
+      }, 0)
+    })
+    
+    return () => ctx.revert()
+  }, [])
+  
+  if (contextLost) return null
+  
   return (
     <>
-      <PerspectiveCamera fov={50} near={0.1} far={1000} makeDefault position={[3, 0, 4]} ref={cameraRef} />
+      <PerspectiveCamera 
+        fov={50} 
+        near={0.1} 
+        far={1000}
+        makeDefault 
+        position={[-1, 0, 4]} 
+        ref={cameraRef} 
+      />
       <Environment preset="city" />
       
-      {/* Group holding the iPhone, targeted by GSAP */}
-      <group ref={groupRef} position={[2.5, .2, -1.5]}>
-        
-          <Iphone />
-        
+      <group ref={groupRef} position={[2.4, -1, -1.8]}>
+        <Iphone />
       </group>
     </>
   )
-}
+})
+
+export default Model

@@ -1,3 +1,4 @@
+
 import "./App.css";
 import { useState, useEffect, lazy, Suspense } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
@@ -9,7 +10,7 @@ import Layout from "./Components/Layout/Layout.jsx";
 import Overlay from "./Components/Overlay/Overlay.jsx";
 import ScrollToTop from "./Components/ScrollToTop/ScrollToTop.jsx";
 import CustomCursor from "./Components/CustomCursor/CustomCursor.jsx";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 /* ── Lazy pages ── */
 const Home = lazy(() => import("./pages/homePage/homePage.jsx"));
 const Contacts = lazy(() => import("./pages/contactsPage/contactsPage.jsx"));
@@ -18,7 +19,7 @@ const Tech = lazy(() => import("./pages/TechPage/TechPage.jsx"));
 const NotFound = lazy(() => import("./pages/NotFoundPage/NotFoundPage.jsx"));
 const TestError = lazy(() => import("./Components/TestError/TestError.jsx"));
 
-/* ── Preload критичних сторінок після першого рендеру ── */
+/* ── Preload критичних сторінок ── */
 const preload = () =>
   Promise.all([
     import("./pages/homePage/homePage.jsx"),
@@ -50,7 +51,10 @@ const toastStyle = {
     border: "1px solid #ff4b4b",
     color: "#ff4b4b",
   },
-  loading: { background: "#0d0d0d", border: "1px solid rgba(245,245,240,0.2)" },
+  loading: {
+    background: "#0d0d0d",
+    border: "1px solid rgba(245,245,240,0.2)",
+  },
 };
 
 function App() {
@@ -59,47 +63,67 @@ function App() {
   const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   useEffect(() => {
-    // Перевірка на touch device
-    setIsTouchDevice("ontouchstart" in window || navigator.maxTouchPoints > 0);
+    // ── Перевірка на touch device ──
+    setIsTouchDevice(
+      "ontouchstart" in window || navigator.maxTouchPoints > 0
+    );
 
-    // Додаємо клас завантаження
+    // ── Додаємо клас завантаження ──
     document.body.classList.add("loading");
 
-    // Об'єднаний preload з одним таймером
-    preload().then(() => {
-      // Мінімальний час показу Loader для анімації
-      const timer = setTimeout(() => {
+    let isMounted = true;
+    let loadTimer;
+
+    // ── Preload критичних сторінок ──
+    preload()
+      .then(() => {
+        // ── Перевірка: компонент все ще змонтований? ──
+        if (!isMounted) return;
+
+        // ── Мінімальний час показу Loader для анімації ──
+        loadTimer = setTimeout(() => {
+          if (!isMounted) return;
+
+          setLoading(false);
+          document.body.classList.remove("loading");
+        }, 3800);
+      })
+      .catch((error) => {
+        // ── Обробка помилок завантаження ──
+        if (!isMounted) return;
+
+        console.error("[App] Preload error:", error);
         setLoading(false);
         document.body.classList.remove("loading");
-        
-        // Refresh GSAP after content is visible to recalculate heights
-        setTimeout(() => {
-          ScrollTrigger.refresh();
-        }, 100);
-      }, 4500);
-      
-      return () => {
-        clearTimeout(timer);
-        document.body.classList.remove("loading");
-      };
-    });
+      });
+
+    // ── Cleanup функція ──
+    return () => {
+      isMounted = false;
+
+      if (loadTimer) {
+        clearTimeout(loadTimer);
+      }
+
+      document.body.classList.remove("loading");
+    };
   }, []);
 
-  // Тимчасово вимкніть Overlay та CustomCursor під час завантаження
-  if (loading) return <Loader />;
+  // ── Показуємо Loader під час завантаження ──
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <OverlayProvider>
       <ErrorBoundary>
         {!isTouchDevice && <CustomCursor />}
         <ScrollToTop />
-        {/* Overlay може перекривати Loader, тому він має бути після перевірки loading */}
+     
         <Overlay />
-        
-
         <Suspense
           fallback={
-            <div style={{ background: "#0d0d0d", minHeight: "100vh" }} />
+            <div style={{ minHeight: "100vh", background: "#000" }} />
           }
         >
           <Routes location={location}>

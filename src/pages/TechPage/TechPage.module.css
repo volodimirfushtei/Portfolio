@@ -4,7 +4,7 @@
   position: relative;
   width: 100%;
   min-height: 100vh;
-  background: var(--bg-color);
+  background: var(--color-surface);
   color: var(--color-text);
   padding: clamp(4rem, 15vw,8rem) 0;
   overflow: hidden;

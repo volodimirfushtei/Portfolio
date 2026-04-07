@@ -103,14 +103,19 @@ const techItems = [
 ];
 
 // Fixed: Use motion.div for 3D transforms
-const TechCard = ({ tech, style, index, totalItems }) => {
+const TechCard = ({ tech, style, index }) => {
   return (
     <motion.div
       className={styles.card}
       style={style}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5, delay: index * 0.02 }}
+      initial={{ opacity: 0, y: 30, rotateX: 30 }}
+      whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+      viewport={{ once: true }}
+      transition={{ 
+        duration: 0.8, 
+        delay: (index % 16) * 0.05,
+        ease: [0.22, 1, 0.36, 1]
+      }}
     >
       <div className={styles.glare} />
       <div className={styles.cardContent}>

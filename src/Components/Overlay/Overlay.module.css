@@ -16,6 +16,9 @@
   height: 100vh;
   background: var(--color-secondary);
   will-change: transform;
+
+
+  opacity: 0.8;
   
   
 }

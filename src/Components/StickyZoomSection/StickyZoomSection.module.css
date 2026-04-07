@@ -33,7 +33,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: transparent;
+  background: var(--color-overlay);
   border-radius: 8px;
   transition: transform 0.45s cubic-bezier(0.76, 0, 0.24, 1);
   z-index: 1;

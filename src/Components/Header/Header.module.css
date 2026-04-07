@@ -3,16 +3,19 @@
 /* ── Header ── */
 .header {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 90px;
+  top: 2%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1400px;
+  height: 75px;
   z-index: 1000;
-  background: var(--glass-bg);
+  background: var(--color-gradient);
   opacity: 0.5; 
-  backdrop-filter: blur(0px);
-  -webkit-backdrop-filter: blur(0px);
-  border-bottom: 1px solid transparent;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 18px;
+  border: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
   transition:
     background var(--transition-smooth),
     backdrop-filter var(--transition-smooth),
@@ -22,17 +25,19 @@
 }
 
 .scrolled {
-  height: 75px;
-  background: var(--glass-bg);
+  height: 65px;
+  background: var(--color-surface);
   backdrop-filter: blur(var(--blur-amount));
   -webkit-backdrop-filter: blur(var(--blur-amount));
-  border-bottom: 1px solid var(--glass-border);
+  border: 1px solid var(--color-border);
   box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+  opacity: 1;
 }
 
 .dark-theme .scrolled {
-  box-shadow: 0 10px 40px -15px rgba(0, 0, 0, 0.5);
-  border-bottom: 1px solid rgba(232, 243, 60, 0.1);
+  box-shadow: 0 10px 40px -15px var(--color-shadow);
+  
+  border-bottom: 1px solid var(--color-border);
 }
 
 /* ── Container ── */
@@ -406,6 +411,10 @@
 
 /* ── Responsive ── */
 @media (max-width: 1024px) {
+  .header {
+    width: 90%;
+    border-radius: 4px;
+  }
   .desktopNav {
     display: none;
   }
@@ -417,6 +426,8 @@
 @media (max-width: 768px) {
   .header {
     height: 70px;
+    width: 90%;
+    border-radius: 4px;
   }
   .scrolled {
     height: 60px;
@@ -438,6 +449,31 @@
     display: none;
   }
 }
-
+@media (max-width: 375px) {
+  .header {
+    width: 340px;
+    height: 60px;
+    border-radius: 0;
+  }
+  .scrolled {
+    height: 50px;
+  }
+  .rightSection {
+    gap: 0.5rem;
+  }
+  .ctaBtn {
+    padding: 3px 12px 3px 3px;
+  }
+  .ctaPhoto {
+    width: 28px;
+    height: 28px;
+  }
+  .ctaMain {
+    font-size: 0.6rem;
+  }
+  .ctaSub {
+    display: none;
+  }
+}
 
 /* За замовчуванням меню приховане але в DOM */

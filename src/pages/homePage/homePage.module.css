@@ -18,10 +18,37 @@
   width: 100vw; 
   height: 100vh;
   z-index: 1; /* Float above content */
-  pointer-events: none; /* Let users click through to the web content */
+  pointer-events: none;
+  background: transparent; /* Let users click through to the web content */
+}
+.canvas{
+  width: 100%;
+  height: 100%;
+  background: var(--color-page-gradient);
+}
+.canvasError {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-overlay);
 }
 
+.canvasErrorText {
+  color: #fd5c5c;
+  font-size: 30px;
+  text-align: center;
+}
 
+.canvasErrorBtn {
+  color: #afaeae;
+  font-size: 20px;
+  text-align: center;
+  cursor: pointer;
+}
 
 
 
@@ -31,7 +58,7 @@
 /* ── Page container ── */
 .container {
   /* Single unified gradient for the whole page */
-  background: var(--color-page-gradient, var(--color-background));
+  background: transparent;
   background-attachment: fixed; /* gradient stays fixed while content scrolls */
   display: flex;
   flex-direction: column;

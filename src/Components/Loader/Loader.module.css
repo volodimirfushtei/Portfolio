@@ -14,9 +14,14 @@
   padding: clamp(2rem, 5vw, 4rem);
   overflow: hidden;
   isolation: isolate;
-  background: linear-gradient(to bottom, #181818, #181818);
+  background: radial-gradient(circle, #1a1a1a, #110f01, #060606);}
+.overlayGradient {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.6));
+  pointer-events: none;
+  z-index: 2;
 }
-
 /* Subtle background grain/grid */
 .grid {
   position: absolute;
@@ -90,6 +95,7 @@
 
 .nameMask {
   overflow: hidden;
+  
 }
 
 .developerName {
@@ -105,6 +111,7 @@
 
 .nameSpan {
   display: block;
+  text-align: left;
 }
 
 .firstName {
@@ -113,7 +120,8 @@
 
 .lastName {
   color: var(--color-accent, #ffb74d);
-  margin-left: clamp(2rem, 10vw, 6rem);
+  
+  text-align: left;
 }
 
 .counterWrap {
@@ -158,13 +166,13 @@
   position: relative;
   z-index: 5;
   margin-bottom: 1.5rem;
-  height: 40px;
-  width: 400px ;
+  height: 2px;
+  width: 100%;
 }
 
 .track {
   width: 100%;
-  height: 40px;
+  height: 2px;
   background: rgba(221, 218, 218, 0.2);
   position: relative;
   overflow: hidden;

@@ -14,8 +14,8 @@ const useScrollDirection = () => {
   const prevRef = useRef(0);
   const rafRef = useRef(null);
   const scrollPosition = useScrollDetection(50);
-  console.log(scrollPosition);
-  const isScrolled = scrollPosition > 50;
+  
+  const isScrolled = useScrollDetection(50) > 50;
   
   useEffect(() => {
     const onScroll = () => {
@@ -58,39 +58,54 @@ const Header = () => {
   }, [isScrolled, scrollDirection]);
 
   useEffect(() => {
+  if (!headerRef.current) return;
+
+  const ctx = gsap.context(() => {
     gsap.to(headerRef.current, {
       y: hidden ? -100 : 0,
       opacity: hidden ? 0 : 1,
       duration: 0.5,
-      ease: "power3.out",
     });
-  }, [hidden]);
+  });
+
+  return () => ctx.revert();
+}, [hidden]);
 
   /* ── Mobile menu animations ── */
-  useEffect(() => {
-    if (menuOpen) {
-      gsap.fromTo(
-        navLinksRef.current,
-        { y: 50, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          stagger: 0.1,
-          delay: 0.3,
-          ease: "power4.out",
-        }
-      );
-    } else {
-      gsap.to(navLinksRef.current, {
-        y: 20,
-        opacity: 0,
-        duration: 0.3,
-        stagger: 0.05,
-        ease: "power2.in",
-      });
-    }
-  }, [menuOpen]);
+useEffect(() => {
+  const links = navLinksRef.current.filter(Boolean);
+  
+if (links.length) {
+  gsap.fromTo(
+    links,
+    { y: 50, opacity: 0 },
+    { y: 0, opacity: 1, stagger: 0.1, duration: 0.8 }
+  );
+}
+
+  if (menuOpen) {
+    gsap.fromTo(
+      links,
+      { y: 50, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        stagger: 0.1,
+        delay: 0.3,
+        ease: "power4.out",
+      }
+    );
+  } else {
+    gsap.to(links, {
+      y: 20,
+      opacity: 0,
+      duration: 0.3,
+      stagger: 0.05,
+      ease: "power2.in",
+    });
+  }
+}, [menuOpen]);
 
   const toggleMenu = useCallback(() => {
     const next = !menuOpen;

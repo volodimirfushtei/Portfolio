@@ -45,6 +45,7 @@ const DotGrid = ({
   const wrapperRef = useRef(null);
   const canvasRef = useRef(null);
   const dotsRef = useRef([]);
+  const isMountedRef = useRef(true); // Додаємо цей ref
   const pointerRef = useRef({
     x: 0,
     y: 0,
@@ -114,7 +115,7 @@ const DotGrid = ({
 
     const draw = () => {
       const canvas = canvasRef.current;
-      if (!canvas) return;
+      if (!canvas || !isMountedRef.current) return; // Додаємо перевірку isMounted
       const ctx = canvas.getContext("2d");
       if (!ctx) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -149,14 +150,18 @@ const DotGrid = ({
     };
 
     draw();
-    return () => cancelAnimationFrame(rafId);
+    return () => {
+      cancelAnimationFrame(rafId);
+    };
   }, [proximity, baseColor, activeRgb, baseRgb, circlePath]);
 
   useEffect(() => {
     buildGrid();
     let ro = null;
     if ("ResizeObserver" in window) {
-      ro = new ResizeObserver(buildGrid);
+      ro = new ResizeObserver(() => {
+        if (isMountedRef.current) buildGrid();
+      });
       wrapperRef.current && ro.observe(wrapperRef.current);
     } else {
       window.addEventListener("resize", buildGrid);
@@ -168,7 +173,15 @@ const DotGrid = ({
   }, [buildGrid]);
 
   useEffect(() => {
+    // Встановлюємо isMountedRef при монтуванні
+    isMountedRef.current = true;
+
     const onMove = (e) => {
+      // Головна перевірка - видаляємо isMountedRef.current
+      if (!canvasRef.current) {
+        return;
+      }
+
       const now = performance.now();
       const pr = pointerRef.current;
       const dt = pr.lastTime ? now - pr.lastTime : 16;
@@ -191,6 +204,8 @@ const DotGrid = ({
       pr.speed = speed;
 
       const rect = canvasRef.current.getBoundingClientRect();
+      if (!rect) return; // Додаємо перевірку rect
+      
       pr.x = e.clientX - rect.left;
       pr.y = e.clientY - rect.top;
 
@@ -204,13 +219,15 @@ const DotGrid = ({
           gsap.to(dot, {
             inertia: { xOffset: pushX, yOffset: pushY, resistance },
             onComplete: () => {
-              gsap.to(dot, {
-                xOffset: 0,
-                yOffset: 0,
-                duration: returnDuration,
-                ease: "elastic.out(1,0.75)",
-              });
-              dot._inertiaApplied = false;
+              if (isMountedRef.current && dot) { // Перевіряємо чи компонент ще змонтований
+                gsap.to(dot, {
+                  xOffset: 0,
+                  yOffset: 0,
+                  duration: returnDuration,
+                  ease: "elastic.out(1,0.75)",
+                });
+                dot._inertiaApplied = false;
+              }
             },
           });
         }
@@ -218,7 +235,10 @@ const DotGrid = ({
     };
 
     const onClick = (e) => {
+      if (!canvasRef.current || !isMountedRef.current) return; // Додаємо перевірку isMounted
       const rect = canvasRef.current.getBoundingClientRect();
+      if (!rect) return; // Додаємо перевірку rect
+      
       const cx = e.clientX - rect.left;
       const cy = e.clientY - rect.top;
       for (const dot of dotsRef.current) {
@@ -232,13 +252,15 @@ const DotGrid = ({
           gsap.to(dot, {
             inertia: { xOffset: pushX, yOffset: pushY, resistance },
             onComplete: () => {
-              gsap.to(dot, {
-                xOffset: 0,
-                yOffset: 0,
-                duration: returnDuration,
-                ease: "elastic.out(1,0.75)",
-              });
-              dot._inertiaApplied = false;
+              if (isMountedRef.current && dot) { // Перевіряємо чи компонент ще змонтований
+                gsap.to(dot, {
+                  xOffset: 0,
+                  yOffset: 0,
+                  duration: returnDuration,
+                  ease: "elastic.out(1,0.75)",
+                });
+                dot._inertiaApplied = false;
+              }
             },
           });
         }
@@ -250,8 +272,14 @@ const DotGrid = ({
     window.addEventListener("click", onClick);
 
     return () => {
+      isMountedRef.current = false; // Важливо: скидаємо при розмонтуванні
       window.removeEventListener("mousemove", throttledMove);
       window.removeEventListener("click", onClick);
+      
+      // Зупиняємо всі анімації GSAP
+      for (const dot of dotsRef.current) {
+        gsap.killTweensOf(dot);
+      }
     };
   }, [
     maxSpeed,

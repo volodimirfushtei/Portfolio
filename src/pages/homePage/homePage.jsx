@@ -3,16 +3,13 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import styles from "./homePage.module.css";
 
 import ControllerSkills from "../../Components/ControllerSkills/ControllerSkills.jsx";
-
 import Footer from "../../Components/Footer/Footer.jsx";
-
 import Expertise from "../../Components/Expertise/Expertise";
 import Carusel from "../../Components/Carusel/Carusel.jsx";
-
 import HeroSection from "../../Components/HeroSection/HeroSection.jsx";
 import FadeInAnimate from "../../Components/FadeInAnimate/FadeInAnimate.jsx";
 import useScrollDetection from "../../hooks/useScrollDetection";
-
+import { Suspense } from "react";
 import Sertificate from "../../Components/Sertificate/Sertificate.jsx";
 import CtaSection from "../../Components/CtaSection/CtaSection.jsx";
 import ScrollToTopBtn from "../../Components/ScrollToTopBtn/ScrollTotopBtn.jsx";
@@ -23,69 +20,63 @@ import { Canvas } from "@react-three/fiber";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Model from "../../Components/Model/Model.jsx";
- 
-gsap.registerPlugin(ScrollTrigger);
-// Page level reveal animation variants
-const pageReveal = {
-  hidden: { opacity: 0, y: 100 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 1.2,
-      ease: [0.16, 1, 0.3, 1], // Custom Awwwards-style easing
-      staggerChildren: 0.2,
-    },
-  },
-};
 
-const sectionReveal = {
-  hidden: { opacity: 0, y: 50 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.8,
-      ease: "easeOut",
-    },
-  },
-};
+gsap.registerPlugin(ScrollTrigger);
+
+import NoiseOverlay from "../../Components/NoiseOverlay/NoiseOverlay.jsx";
 
 const HomePage = () => {
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const [canvasError, setCanvasError] = useState(false);
   const sectionRef = useRef(null);
-  const modelRef = useRef(null);
-  // Custom scroll hook
-  const isScrolled = useScrollDetection(1200);
+  const canvasContainerRef = useRef(null);
 
-  // Scroll progress calculation
+  // Розрахунок прогресу скролу для 3D моделі
   useEffect(() => {
-    const updateScrollProgress = () => {
-      const scrollTotal =
-        document.documentElement.scrollHeight -
-        document.documentElement.clientHeight;
-      const scrollPosition = window.scrollY;
-      const progress = Math.min(100, (scrollPosition / scrollTotal) * 100);
-      setScrollProgress(progress);
-      document.documentElement.style.setProperty(
-        "--scroll-progress",
-        `${progress}%`,
+    const handleScroll = () => {
+      if (!sectionRef.current) return;
+      const rect = sectionRef.current.getBoundingClientRect();
+      const scrollProgress = Math.min(
+        1,
+        Math.max(0, -rect.top / (rect.height - window.innerHeight))
       );
+      setProgress(scrollProgress);
     };
 
-    const throttledScroll = throttle(updateScrollProgress, 16);
-    window.addEventListener("scroll", throttledScroll);
-    return () => window.removeEventListener("scroll", throttledScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Scroll animation for CTA section
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["end end", "end start"],
-  });
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "0px"]);
+  // Обробка помилок Canvas
+  const handleContextLost = () => {
+    console.warn('Canvas context lost');
+    setCanvasError(true);
+    
+    setTimeout(() => {
+      setCanvasError(false);
+    }, 100);
+  };
 
-  // Skills data
+  if (canvasError) {
+    return (
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: '100vh',
+        color: '#dad7d7ff',
+        background: 'var(--color-page-gradient)'
+      }}>
+        <div className={styles.canvasError}>
+          <p className={styles.canvasErrorText}>3D scene is loading...</p>
+          <button className={styles.canvasErrorBtn} onClick={() => window.location.reload()}>
+            Reload page
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   const skills = [
     { src: "/icons/react.svg", alt: "React" },
     { src: "/icons/javascript.svg", alt: "JavaScript" },
@@ -105,116 +96,85 @@ const HomePage = () => {
 
   return (
     <div id="scroll-container">
-    <motion.div
-      variants={pageReveal}
-      initial="hidden"
-      animate="visible"
-      className={styles.container}  
-      ref={sectionRef}
-    >
-      
-      <ScrollToTopBtn />
-      <motion.section variants={sectionReveal} className={styles.section} >
-        <HeroSection />
-       
-        </motion.section>
-        <section className={styles.canvasContainer} >
-  <Canvas>
-    <Model modelRef={modelRef} />
-  </Canvas>
+      <NoiseOverlay />
+      <div className={styles.container} ref={sectionRef}>
+        <ScrollToTopBtn />
+        
+        <section className={styles.section}>
+          <HeroSection />
         </section>
-      <main className={styles.main}>
-        {/* Expertise Section */}
-        <motion.section
-          variants={sectionReveal}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          id="expertise"
-          className={`${styles.expertise} ${styles.section}`}
-        >
-          <Expertise />
-        </motion.section>
+        
+        {/* 3D Canvas Section */}
+        <div className={styles.canvasContainer} ref={canvasContainerRef}>
+          <Suspense fallback={
+            <div className={styles.canvasError}>
+              Loading 3D Model...
+            </div>
+          }>
+            <Canvas
+              onCreated={handleContextLost}
+              style={{ background: 'transparent' }}  // Важливо для прозорості
+              shadows
+              gl={{
+                powerPreference: "high-performance",
+                antialias: true,
+                alpha: true,  // Включено для прозорого фону
+                depth: true,
+                stencil: false,
+                preserveDrawingBuffer: false
+              }}
+              dpr={[1, 2]}
+            >
+              {/* Освітлення */}
+              <ambientLight intensity={0.4} />
+              <pointLight position={[5, 5, 5]} intensity={1} />
+              <pointLight position={[-5, 2, 3]} intensity={0.5} color="#ffffff" />
+              <pointLight position={[10, 10, 10]} intensity={0.5} />
+              
+              {/* Додаткове світло ззаду для підсвітки */}
+              <pointLight position={[0, 2, -3]} intensity={0.3} />
+              
+              <Model progress={progress} />
+            </Canvas>
+          </Suspense>
+        </div>
+        
+        <main className={styles.main}>
+          {/* Expertise Section */}
+          <section id="expertise" className={`${styles.expertise} ${styles.section}`}>
+            <Expertise />
+          </section>
 
-        {/* Skills Section */}
-        <motion.section
-          variants={sectionReveal}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          id="skills"
-          className={styles.section} // Changed from skillsSection to section for uniform padding layout
-        >
-          <ControllerSkills items={skills} />
-        </motion.section>
+          {/* Skills Section */}
+          <section id="skills" className={styles.section}>
+            <ControllerSkills items={skills} />
+          </section>
 
-        {/* Projects Section */}
-        <section
-          id="projects"
-          className={`${styles.projects} ${styles.section}`}
-        >
-          <motion.div
-            variants={sectionReveal}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            
-            className={`${styles.carusel} ${styles.section} `}
-          >
-            <Carusel />
-          </motion.div>
+          {/* Projects Section */}
+          <section id="projects" className={`${styles.projects} ${styles.section}`}>
+            <div className={`${styles.carusel} ${styles.section}`}>
+              <Carusel />
+            </div>
 
-          <motion.section
-            variants={sectionReveal}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            id="cta"
-            className={`${styles.cta} ${styles.section} `}
-            style={{ y }}
-          >
-            <CtaSection />
-          </motion.section>
+            <section id="cta" className={`${styles.cta} ${styles.section}`}>
+              <CtaSection />
+            </section>
 
-          {/* Certificate Section */}
-          <motion.section
-            variants={sectionReveal}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            id="serteficate"
-            className={`${styles.sertificate} ${styles.section}`}
-            style={{ y }}
-          >
-            <Sertificate />
-          </motion.section>
+            {/* Certificate Section */}
+            <section id="serteficate" className={`${styles.sertificate} ${styles.section}`}>
+              <Sertificate />
+            </section>
 
-          <motion.section
-            variants={sectionReveal}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            className={`${styles.sticky} ${styles.section}`}
-          >
-            <StickyZoomSection />
-          </motion.section>
-        </section>
-      </main>
-      <Footer />
-      </motion.div>
+            <section className={`${styles.sticky} ${styles.section}`}>
+              <StickyZoomSection />
+            </section>
+          </section>
+        </main>
+        
+        <Footer />
       </div>
+    </div>
   );
 };
-
-// Throttle function for scroll events
-function throttle(fn, wait) {
-  let time = Date.now();
-  return function () {
-    if (time + wait - Date.now() < 0) {
-      fn();
-      time = Date.now();
-    }
-  };
-}
 
 export default HomePage;

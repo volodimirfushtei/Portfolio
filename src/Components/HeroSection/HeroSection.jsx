@@ -5,6 +5,7 @@ import { Typewriter } from "react-simple-typewriter";
 import styles from "./HeroSection.module.css";
 import HeroMedia from "../HeroMedia/HeroMedia";
 import DotGrid from "../DotGrid/DotGrid";
+import { useMagnetic } from "../../hooks/useMagnetic";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -22,8 +23,11 @@ const HeroSection = () => {
   const cornerRef = useRef(null);
   const scrollIndicatorRef = useRef(null);
   const scrollLineRef = useRef(null);
-
   const taglineRef = useRef(null);
+
+  // Magnetic refs
+  const magneticPrimary = useMagnetic(0.3);
+  const magneticSecondary = useMagnetic(0.3);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -210,8 +214,8 @@ const HeroSection = () => {
       />
 
       {/* ── Grid ── */}
-      <div ref={gridRef} className={styles.gridOverlay} aria-hidden="true" />
-
+      <div ref={gridRef} className="absolute top-60 left-10 opacity-50 md:right-40 w-72 h-72 bg-gradient-to-br from-blue-200 to-purple-200 rounded-full blur-[100px] opacity-20 pointer-events-none "></div>
+      <div ref={gridRef} className="absolute bottom-10 right-50 opacity-50 md:right-40 w-52 h-52 bg-gradient-to-br from-blue-200 to-purple-200 rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
       {/* ── Corner index badge ── */}
       <div ref={cornerRef} className={styles.cornerBadge} aria-hidden="true">
         <span className={styles.cornerBadgeNum}>01</span>

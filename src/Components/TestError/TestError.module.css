@@ -7,7 +7,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--bg-color);
+  background: var(--color-surface);
   padding: clamp(2rem, 5vw, 4rem);
   overflow: hidden;
   isolation: isolate;
