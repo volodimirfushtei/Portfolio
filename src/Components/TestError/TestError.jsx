@@ -55,6 +55,7 @@ const TestError = () => {
   return (
     <section ref={sectionRef} className={styles.section}>
       {/* DotGrid background */}
+      <div className={styles.noise} />
       <div className={styles.dotGridWrap} aria-hidden="true">
         <DotGrid
           dotSize={2}

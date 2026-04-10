@@ -111,8 +111,8 @@ const TechCard = ({ tech, style, index }) => {
       initial={{ opacity: 0, y: 30, rotateX: 30 }}
       whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
       viewport={{ once: true }}
-      transition={{ 
-        duration: 0.8, 
+      transition={{
+        duration: 0.8,
         delay: (index % 16) * 0.05,
         ease: [0.22, 1, 0.36, 1]
       }}
@@ -158,6 +158,7 @@ const ControllerSkills = () => {
 
   return (
     <section ref={sectionRef} className={styles.section}>
+      <div className={styles.glare} />
       <motion.div
         className={styles.header}
         initial="hidden"
@@ -185,12 +186,12 @@ const ControllerSkills = () => {
           {marqueeItems.map((tech, index) => {
             const originalIndex = index % techItems.length;
             const depth = originalIndex * -15;
-            
+
             return (
               <TechCard
                 key={`${tech.name}-${index}`}
                 tech={tech}
-               
+
               />
             );
           })}

@@ -1,44 +1,38 @@
-import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import s from "./Overlay.module.css";
-
-/* ── Синхронизировать с App.jsx ── */
-const OVERLAY_HIDE_DELAY = 4500; // 4500ms (Loader) - 1200ms (exit animation)
+import React, { useEffect, useRef } from "react"
+import s from "./Overlay.module.css"
+import { gsap } from "gsap"
 
 const Overlay = () => {
-  const [isVisible, setIsVisible] = useState(true);
+  const blindsRef = useRef(null)
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(false), OVERLAY_HIDE_DELAY);
-    return () => clearTimeout(timer);
-  }, []);
+    const ctx = gsap.context(() => {
+      const lines = blindsRef.current.querySelectorAll(`.${s.line}`)
+
+      gsap.fromTo(
+        lines,
+        {
+          scaleY: 1,
+        },
+        {
+          scaleY: 0,
+          stagger: 0.08,
+          ease: "power4.inOut",
+          duration: 1.2,
+        }
+      )
+    }, blindsRef)
+
+    return () => ctx.revert()
+  }, [])
 
   return (
-    <AnimatePresence>
-      {isVisible && (
-        <div
-          className={s.overlayContainer}
-          style={{ pointerEvents: "none" }}
-        >
-          {[0, 1, 2, 3, 4].map((i) => (
-            <motion.div
-              key={i}
-              className={s.column}
-              style={{ left: `${i * 20}%` }}
-              initial={{ y: "0%" }}
-              animate={{ y: "100%" }}
-              exit={{ y: "100%" }}
-              transition={{
-                duration: 1,
-                ease: [0.76, 0, 0.24, 1],
-                delay: i * 0.08,
-              }}
-            />
-          ))}
-        </div>
-      )}
-    </AnimatePresence>
-  );
-};
+    <div ref={blindsRef} className={s.blinds}>
+      {[...Array(12)].map((_, i) => (
+        <div key={i} className={s.line} />
+      ))}
+    </div>
+  )
+}
 
-export default Overlay;
+export default Overlay

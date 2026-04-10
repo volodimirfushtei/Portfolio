@@ -11,7 +11,7 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding: 0 clamp(1.5rem, 4vw, 4rem);
+  padding: 0 clamp(4rem, 6vw, 8rem);
   margin-bottom: 2rem;
 }
 
@@ -80,10 +80,7 @@
   width: clamp(160px, 18vw, 220px);
   height: 110px;
   flex-shrink: 0;
-  background: var(--glass-bg);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid var(--color-border-subtle);
+  border: 1px solid var(--color-border);
   border-radius: 12px;
   overflow: hidden;
   display: flex;
@@ -92,12 +89,15 @@
   padding: 1.25rem;
   transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   cursor: default;
+  background: var(--color-grid);
+
   transform-style: preserve-3d;
   will-change: transform;
 }
 
 .card:hover {
-  background: var(--color-surface);
+  background: var(--color-grid);
+transform: scale(1.1);
   border-color: var(--color-accent);
   transform: translateY(-5px) translateZ(20px); /* Combine transforms */
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
@@ -160,7 +160,7 @@
 
 .name {
   font-family: var(--font-display, "Bebas Neue", sans-serif);
-  font-size: 1.1rem;
+  font-size: 1.4rem;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--color-title);
@@ -169,12 +169,14 @@
 
 .desc {
   font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 0.55rem;
+  font-size: 0.85rem;
   letter-spacing: 0.05em;
   color: var(--color-secondary);
   opacity: 0.6;
 }
-
+.icon{
+  font-size: 1.8rem;
+}
 /* ── Mobile ── */
 @media (max-width: 768px) {
   .section {

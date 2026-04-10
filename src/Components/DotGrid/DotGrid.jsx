@@ -1,4 +1,4 @@
-import { useRef, useEffect, useCallback, useMemo } from "react";
+import { useRef, useEffect, useCallback, useMemo, useState } from "react";
 import { gsap } from "gsap";
 import { InertiaPlugin } from "gsap/InertiaPlugin";
 
@@ -28,10 +28,10 @@ function hexToRgb(hex) {
 }
 
 const DotGrid = ({
-  dotSize = 16,
-  gap = 32,
-  baseColor = "#ed0c4cff",
-  activeColor = "#ed0c4cff",
+  dotSize = 8,
+  gap = 24,
+  baseColor = "#ed0c4c",
+  activeColor = "#ed0c4c",
   proximity = 150,
   speedTrigger = 100,
   shockRadius = 250,
@@ -45,10 +45,13 @@ const DotGrid = ({
   const wrapperRef = useRef(null);
   const canvasRef = useRef(null);
   const dotsRef = useRef([]);
-  const isMountedRef = useRef(true); // Додаємо цей ref
+  const isMountedRef = useRef(true);
+  const animationFrameRef = useRef(null);
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+
   const pointerRef = useRef({
-    x: 0,
-    y: 0,
+    x: -1000,
+    y: -1000,
     vx: 0,
     vy: 0,
     speed: 0,
@@ -62,24 +65,28 @@ const DotGrid = ({
 
   const circlePath = useMemo(() => {
     if (typeof window === "undefined" || !window.Path2D) return null;
-
     const p = new window.Path2D();
     p.arc(0, 0, dotSize / 2, 0, Math.PI * 2);
     return p;
   }, [dotSize]);
 
+  // Побудова сітки точок
   const buildGrid = useCallback(() => {
     const wrap = wrapperRef.current;
     const canvas = canvasRef.current;
-    if (!wrap || !canvas) return;
+    if (!wrap || !canvas || !isMountedRef.current) return;
 
     const { width, height } = wrap.getBoundingClientRect();
-    const dpr = window.devicePixelRatio || 1;
+    if (width === 0 || height === 0) return;
 
+    setDimensions({ width, height });
+
+    const dpr = window.devicePixelRatio || 1;
     canvas.width = width * dpr;
     canvas.height = height * dpr;
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
+
     const ctx = canvas.getContext("2d");
     if (ctx) ctx.scale(dpr, dpr);
 
@@ -89,10 +96,8 @@ const DotGrid = ({
 
     const gridW = cell * cols - gap;
     const gridH = cell * rows - gap;
-
     const extraX = width - gridW;
     const extraY = height - gridH;
-
     const startX = extraX / 2 + dotSize / 2;
     const startY = extraY / 2 + dotSize / 2;
 
@@ -101,42 +106,55 @@ const DotGrid = ({
       for (let x = 0; x < cols; x++) {
         const cx = startX + x * cell;
         const cy = startY + y * cell;
-        dots.push({ cx, cy, xOffset: 0, yOffset: 0, _inertiaApplied: false });
+        dots.push({
+          cx,
+          cy,
+          xOffset: 0,
+          yOffset: 0,
+          _inertiaApplied: false,
+          _tween: null
+        });
       }
     }
     dotsRef.current = dots;
   }, [dotSize, gap]);
 
+  // Малювання точок
   useEffect(() => {
-    if (!circlePath) return;
-
-    let rafId;
-    const proxSq = proximity * proximity;
+    if (!circlePath || !canvasRef.current) return;
 
     const draw = () => {
+      if (!isMountedRef.current || !canvasRef.current) return;
+
       const canvas = canvasRef.current;
-      if (!canvas || !isMountedRef.current) return; // Додаємо перевірку isMounted
       const ctx = canvas.getContext("2d");
       if (!ctx) return;
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       const { x: px, y: py } = pointerRef.current;
+      const proxSq = proximity * proximity;
+      const hasValidPointer = px !== -1000 && py !== -1000;
 
       for (const dot of dotsRef.current) {
-        const ox = dot.cx + dot.xOffset;
-        const oy = dot.cy + dot.yOffset;
-        const dx = dot.cx - px;
-        const dy = dot.cy - py;
-        const dsq = dx * dx + dy * dy;
+        const ox = dot.cx + (dot.xOffset || 0);
+        const oy = dot.cy + (dot.yOffset || 0);
 
+        // Розрахунок кольору
         let style = baseColor;
-        if (dsq <= proxSq) {
-          const dist = Math.sqrt(dsq);
-          const t = 1 - dist / proximity;
-          const r = Math.round(baseRgb.r + (activeRgb.r - baseRgb.r) * t);
-          const g = Math.round(baseRgb.g + (activeRgb.g - baseRgb.g) * t);
-          const b = Math.round(baseRgb.b + (activeRgb.b - baseRgb.b) * t);
-          style = `rgb(${r},${g},${b})`;
+        if (hasValidPointer) {
+          const dx = dot.cx - px;
+          const dy = dot.cy - py;
+          const dsq = dx * dx + dy * dy;
+
+          if (dsq <= proxSq) {
+            const dist = Math.sqrt(dsq);
+            const t = 1 - dist / proximity;
+            const r = Math.round(baseRgb.r + (activeRgb.r - baseRgb.r) * t);
+            const g = Math.round(baseRgb.g + (activeRgb.g - baseRgb.g) * t);
+            const b = Math.round(baseRgb.b + (activeRgb.b - baseRgb.b) * t);
+            style = `rgb(${r},${g},${b})`;
+          }
         }
 
         ctx.save();
@@ -146,138 +164,177 @@ const DotGrid = ({
         ctx.restore();
       }
 
-      rafId = requestAnimationFrame(draw);
+      animationFrameRef.current = requestAnimationFrame(draw);
     };
 
     draw();
-    return () => {
-      cancelAnimationFrame(rafId);
-    };
-  }, [proximity, baseColor, activeRgb, baseRgb, circlePath]);
 
+    return () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, [proximity, baseColor, activeColor, baseRgb, activeRgb, circlePath]);
+
+  // Відстеження зміни розміру
   useEffect(() => {
     buildGrid();
+
     let ro = null;
-    if ("ResizeObserver" in window) {
+    if (typeof ResizeObserver !== "undefined") {
       ro = new ResizeObserver(() => {
-        if (isMountedRef.current) buildGrid();
+        if (isMountedRef.current) {
+          buildGrid();
+        }
       });
-      wrapperRef.current && ro.observe(wrapperRef.current);
+      if (wrapperRef.current) ro.observe(wrapperRef.current);
     } else {
       window.addEventListener("resize", buildGrid);
     }
+
     return () => {
       if (ro) ro.disconnect();
       else window.removeEventListener("resize", buildGrid);
     };
   }, [buildGrid]);
 
+  // Обробка руху миші та кліків
   useEffect(() => {
-    // Встановлюємо isMountedRef при монтуванні
     isMountedRef.current = true;
 
     const onMove = (e) => {
-      // Головна перевірка - видаляємо isMountedRef.current
-      if (!canvasRef.current) {
-        return;
-      }
+      if (!canvasRef.current || !isMountedRef.current) return;
+
+      const rect = canvasRef.current.getBoundingClientRect();
+      if (!rect || rect.width === 0 || rect.height === 0) return;
 
       const now = performance.now();
       const pr = pointerRef.current;
-      const dt = pr.lastTime ? now - pr.lastTime : 16;
+      const dt = pr.lastTime ? Math.min(now - pr.lastTime, 100) : 16;
       const dx = e.clientX - pr.lastX;
       const dy = e.clientY - pr.lastY;
+
       let vx = (dx / dt) * 1000;
       let vy = (dy / dt) * 1000;
       let speed = Math.hypot(vx, vy);
-      if (speed > maxSpeed) {
+
+      if (speed > maxSpeed && maxSpeed > 0) {
         const scale = maxSpeed / speed;
         vx *= scale;
         vy *= scale;
         speed = maxSpeed;
       }
+
       pr.lastTime = now;
       pr.lastX = e.clientX;
       pr.lastY = e.clientY;
       pr.vx = vx;
       pr.vy = vy;
       pr.speed = speed;
-
-      const rect = canvasRef.current.getBoundingClientRect();
-      if (!rect) return; // Додаємо перевірку rect
-      
       pr.x = e.clientX - rect.left;
       pr.y = e.clientY - rect.top;
 
+      // Обробка відштовхування точок
       for (const dot of dotsRef.current) {
         const dist = Math.hypot(dot.cx - pr.x, dot.cy - pr.y);
         if (speed > speedTrigger && dist < proximity && !dot._inertiaApplied) {
           dot._inertiaApplied = true;
-          gsap.killTweensOf(dot);
-          const pushX = dot.cx - pr.x + vx * 0.005;
-          const pushY = dot.cy - pr.y + vy * 0.005;
-          gsap.to(dot, {
-            inertia: { xOffset: pushX, yOffset: pushY, resistance },
+
+          if (dot._tween) dot._tween.kill();
+
+          const pushX = (dot.cx - pr.x) * 0.5 + vx * 0.005;
+          const pushY = (dot.cy - pr.y) * 0.5 + vy * 0.005;
+
+          dot._tween = gsap.to(dot, {
+            xOffset: pushX,
+            yOffset: pushY,
+            duration: 0.5,
+            ease: "power2.out",
             onComplete: () => {
-              if (isMountedRef.current && dot) { // Перевіряємо чи компонент ще змонтований
-                gsap.to(dot, {
+              if (isMountedRef.current && dot) {
+                dot._tween = gsap.to(dot, {
                   xOffset: 0,
                   yOffset: 0,
                   duration: returnDuration,
-                  ease: "elastic.out(1,0.75)",
+                  ease: "elastic.out(1, 0.75)",
+                  onComplete: () => {
+                    if (dot) dot._inertiaApplied = false;
+                  }
                 });
-                dot._inertiaApplied = false;
               }
-            },
+            }
           });
         }
       }
     };
 
     const onClick = (e) => {
-      if (!canvasRef.current || !isMountedRef.current) return; // Додаємо перевірку isMounted
+      if (!canvasRef.current || !isMountedRef.current) return;
+
       const rect = canvasRef.current.getBoundingClientRect();
-      if (!rect) return; // Додаємо перевірку rect
-      
+      if (!rect) return;
+
       const cx = e.clientX - rect.left;
       const cy = e.clientY - rect.top;
+
       for (const dot of dotsRef.current) {
         const dist = Math.hypot(dot.cx - cx, dot.cy - cy);
         if (dist < shockRadius && !dot._inertiaApplied) {
           dot._inertiaApplied = true;
-          gsap.killTweensOf(dot);
+
+          if (dot._tween) dot._tween.kill();
+
           const falloff = Math.max(0, 1 - dist / shockRadius);
           const pushX = (dot.cx - cx) * shockStrength * falloff;
           const pushY = (dot.cy - cy) * shockStrength * falloff;
-          gsap.to(dot, {
-            inertia: { xOffset: pushX, yOffset: pushY, resistance },
+
+          dot._tween = gsap.to(dot, {
+            xOffset: pushX,
+            yOffset: pushY,
+            duration: 0.3,
+            ease: "power2.out",
             onComplete: () => {
-              if (isMountedRef.current && dot) { // Перевіряємо чи компонент ще змонтований
-                gsap.to(dot, {
+              if (isMountedRef.current && dot) {
+                dot._tween = gsap.to(dot, {
                   xOffset: 0,
                   yOffset: 0,
                   duration: returnDuration,
-                  ease: "elastic.out(1,0.75)",
+                  ease: "elastic.out(1, 0.75)",
+                  onComplete: () => {
+                    if (dot) dot._inertiaApplied = false;
+                  }
                 });
-                dot._inertiaApplied = false;
               }
-            },
+            }
           });
         }
       }
     };
 
-    const throttledMove = throttle(onMove, 50);
-    window.addEventListener("mousemove", throttledMove, { passive: true });
+    const handleMouseLeave = () => {
+      // Скидаємо позицію курсора при виході
+      pointerRef.current.x = -1000;
+      pointerRef.current.y = -1000;
+      pointerRef.current.speed = 0;
+    };
+
+    const throttledMove = throttle(onMove, 16); // Зменшив затримку для плавності
+
+    window.addEventListener("mousemove", throttledMove);
     window.addEventListener("click", onClick);
+    window.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
-      isMountedRef.current = false; // Важливо: скидаємо при розмонтуванні
+      isMountedRef.current = false;
       window.removeEventListener("mousemove", throttledMove);
       window.removeEventListener("click", onClick);
-      
+      window.removeEventListener("mouseleave", handleMouseLeave);
+
       // Зупиняємо всі анімації GSAP
       for (const dot of dotsRef.current) {
+        if (dot._tween) {
+          dot._tween.kill();
+        }
         gsap.killTweensOf(dot);
       }
     };
@@ -292,11 +349,11 @@ const DotGrid = ({
   ]);
 
   return (
-    <section className={`dot-grid ${styles.container}`} style={style}>
+    <div className={`${styles.container} ${className}`} style={style}>
       <div ref={wrapperRef} className={styles.wrapper}>
         <canvas ref={canvasRef} className={styles.canvas} />
       </div>
-    </section>
+    </div>
   );
 };
 

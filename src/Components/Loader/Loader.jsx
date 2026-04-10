@@ -59,7 +59,7 @@ const Loader = () => {
     if (progress >= 100) {
       setTimeout(() => setPhase("reveal"), 400);
       setTimeout(() => setPhase("done"), 1800);
-      setTimeout(() => setIsLoading(false), 3200);
+      setTimeout(() => setIsLoading(false), 2000);
     }
   }, [progress]);
 
@@ -80,7 +80,7 @@ const Loader = () => {
         stagger: 0.1,
         ease: "power4.inOut",
       });
-   
+
       // Fade out textual content
       gsap.to(`.${styles.topBar}, .${styles.center}, .${styles.trackWrap}, .${styles.bottomBar}`, {
         opacity: 0,
@@ -88,7 +88,7 @@ const Loader = () => {
         duration: 0.8,
         ease: "power3.in"
       });
-   
+
     }
   }, [phase]);
 
@@ -99,7 +99,7 @@ const Loader = () => {
       {isLoading && (
         <div className={styles.overlay} ref={containerRef}>
           <NoiseOverlay />
-          
+
           {/* Curtain panels */}
           {[0, 1, 2, 3, 4].map((i) => (
             <div

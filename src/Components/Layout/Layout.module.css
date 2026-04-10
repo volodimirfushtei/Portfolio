@@ -31,9 +31,8 @@
 
 @media (max-width: 768px) {
   .mainContent {
-    margin-left: 0;
     width: 100%;
-    padding: 1rem;
+    padding: 0
   }
 
   .mainContent.blurContent {

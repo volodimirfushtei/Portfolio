@@ -10,6 +10,7 @@ import Layout from "./Components/Layout/Layout.jsx";
 import Overlay from "./Components/Overlay/Overlay.jsx";
 import ScrollToTop from "./Components/ScrollToTop/ScrollToTop.jsx";
 import CustomCursor from "./Components/CustomCursor/CustomCursor.jsx";
+import SmoothScroll from "./Components/SmoothScroll/SmoothScroll.jsx";
 
 /* ── Lazy pages ── */
 const Home = lazy(() => import("./pages/homePage/homePage.jsx"));
@@ -61,7 +62,7 @@ function App() {
   const location = useLocation();
   const [loading, setLoading] = useState(true);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
-
+  const [showOverlay, setShowOverlay] = useState(false)
   useEffect(() => {
     // ── Перевірка на touch device ──
     setIsTouchDevice(
@@ -108,7 +109,16 @@ function App() {
       document.body.classList.remove("loading");
     };
   }, []);
+  useEffect(() => {
+    if (loading) return
+    setShowOverlay(true)
 
+    const timer = setTimeout(() => {
+      setShowOverlay(false)
+    }, 1600)
+
+    return () => clearTimeout(timer)
+  }, [location.pathname])
   // ── Показуємо Loader під час завантаження ──
   if (loading) {
     return <Loader />;
@@ -119,23 +129,24 @@ function App() {
       <ErrorBoundary>
         {!isTouchDevice && <CustomCursor />}
         <ScrollToTop />
-     
-        <Overlay />
         <Suspense
           fallback={
             <div style={{ minHeight: "100vh", background: "#000" }} />
           }
         >
-          <Routes location={location}>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Home />} />
-              <Route path="contacts" element={<Contacts />} />
-              <Route path="projects" element={<Projects />} />
-              <Route path="tech" element={<Tech />} />
-              <Route path="error" element={<TestError />} />
-              <Route path="*" element={<NotFound />} />
-            </Route>
-          </Routes>
+          <SmoothScroll>
+            {showOverlay && <Overlay />}
+            <Routes location={location} key={location.pathname}>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<Home />} />
+                <Route path="contacts" element={<Contacts />} />
+                <Route path="projects" element={<Projects />} />
+                <Route path="tech" element={<Tech />} />
+                <Route path="error" element={<TestError />} />
+                <Route path="*" element={<NotFound />} />
+              </Route>
+            </Routes>
+          </SmoothScroll>
         </Suspense>
 
         <Toaster

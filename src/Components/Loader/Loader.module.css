@@ -14,7 +14,7 @@
   padding: clamp(2rem, 5vw, 4rem);
   overflow: hidden;
   isolation: isolate;
-  background: radial-gradient(circle, #1a1a1a, #110f01, #060606);}
+  background: radial-gradient(circle, #1a1a1a, #272726, #060606);}
 .overlayGradient {
   position: absolute;
   inset: 0;

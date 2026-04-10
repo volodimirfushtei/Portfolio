@@ -18,7 +18,7 @@
 .dotGridWrap {
   position: absolute;
   inset: 0;
-  z-index: 1;
+  z-index: 0;
   pointer-events: none;
   opacity: 0.28;
 }
@@ -36,13 +36,10 @@
 
   background-size: cover;
   background-position: center;
-  opacity: 0.5;
+  opacity: 0.4;
   will-change: transform, opacity;
   background-position: center;
-  &:hover {
-    opacity: 1;
-    box-shadow: 0 8px 8px var(--color-secondary);
-  }
+
 }
 
 /* ═══════════════════════════════════════════
@@ -318,10 +315,10 @@
 
 /* Primary — Glassmorphic */
 .primaryButton {
-  background: var(--glass-bg);
+  background: var(--color-button-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  color: var(--color-text);
+  color: var(--color-button-text);
   padding: 1.1rem 2.2rem;
   border-radius: 99px;
   font-family: var(--font-mono);

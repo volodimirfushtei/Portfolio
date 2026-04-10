@@ -1,24 +1,16 @@
 /* Overlay.module.css */
-.overlayContainer {
+
+
+.blinds {
   position: fixed;
   inset: 0;
-  z-index: 9999;
-  pointer-events: none; /* Let clicks pass through while animating */
-  display: flex; /* Helps ensure things stretch, though left-positioning is used */
-  box-shadow: var(--color-shadow);
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Beautiful dark slate curtain columns */
-.column {
-  position: absolute;
-  top: 0;
-  width: 20%; /* slight overlap */
-  height: 100vh;
-  background: var(--color-secondary);
-  will-change: transform;
-
-
-  opacity: 0.8;
-  
-  
+.line {
+  flex: 1;
+  background: #131313;
+  transform-origin: top;
 }
