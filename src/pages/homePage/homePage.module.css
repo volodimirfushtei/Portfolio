@@ -1,104 +1,260 @@
-/* homePage.module.css */
+/* homePage.module.css — Mobile First Premium Design */
 
-/* ── Section base ── */
+/* ═══════════════════════════════════════════
+   CSS VARIABLES
+═══════════════════════════════════════════ */
+:root {
+  --section-padding-mobile: 3rem 0;
+  --section-padding-tablet: 4rem 0;
+  --section-padding-desktop: 8rem 0;
+  --section-padding-large: 12rem 0;
+}
+
+/* ═══════════════════════════════════════════
+   CONTAINER
+═══════════════════════════════════════════ */
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--color-text, #ffffff);
+  width: 100%;
+  min-height: 100vh;
+  background: transparent;
+  overflow-x: hidden;
+  z-index: 1;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+.scrollContainer {
+  position: relative;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* ═══════════════════════════════════════════
+   SECTION BASE
+═══════════════════════════════════════════ */
 .section {
   position: relative;
-  padding: clamp(4rem, 4vw, 8rem) 0;
-  margin-bottom: 0;
-  transition: background 1.5s ease-in-out;
-  width: 100vw;
+  padding: var(--section-padding-mobile);
+  width: 100%;
   max-width: 100%;
+  background: transparent;
   z-index: 10;
-  background: transparent; /* inherit page gradient from container */
 }
+
+@media (min-width: 768px) {
+  .section {
+    padding: var(--section-padding-tablet);
+  }
+}
+
+@media (min-width: 1024px) {
+  .section {
+    padding: var(--section-padding-desktop);
+  }
+}
+
+@media (min-width: 1440px) {
+  .section {
+    padding: var(--section-padding-large);
+  }
+}
+
+/* ═══════════════════════════════════════════
+   HERO SECTION WRAPPER
+═══════════════════════════════════════════ */
+.heroSectionWrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  z-index: 5;
+}
+
+/* ═══════════════════════════════════════════
+   3D CANVAS CONTAINER (Fixed Background)
+═══════════════════════════════════════════ */
 .canvasContainer {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 1; /* Float above content */
+  z-index: 0;
   pointer-events: none;
-  background: transparent; /* Let users click through to the web content */
+  background: transparent;
 }
-.canvas {
+
+/* Canvas Fallback / Loading State */
+.canvasFallback {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  background: var;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  color: var(--color-text, #ffffff);
+  font-family: var(--font-mono, monospace);
+  font-size: 0.875rem;
+  z-index: 1;
 }
+
+.loadingSpinner {
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-top-color: var(--color-accent, #ed0c4c);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Canvas Error */
+.canvasErrorContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: var(--color-page-gradient, linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%));
+}
+
 .canvasError {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  width: 100%;
-  height: 100%;
-  background-color: var(--color-overlay);
+  gap: 1.5rem;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(16px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .canvasErrorText {
-  color: #fd5c5c;
-  font-size: 30px;
+  color: var(--color-accent, #ed0c4c);
+  font-size: 1.25rem;
   text-align: center;
+  font-family: var(--font-mono, monospace);
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .canvasErrorText {
+    font-size: 1.5rem;
+  }
 }
 
 .canvasErrorBtn {
-  color: #afaeae;
-  font-size: 20px;
+  color: var(--color-text, #ffffff);
+  font-size: 0.875rem;
   text-align: center;
   cursor: pointer;
-  padding: 0.3rem 0.6rem;
-  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  border-radius: 99px;
   transition: all 0.3s ease;
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border, rgba(255, 255, 255, 0.2));
+  background: transparent;
+  font-family: var(--font-mono, monospace);
 }
 
-/* ── Page container ── */
-.container {
-  /* Single unified gradient for the whole page */
-  background: transparent;
-  background-attachment: fixed; /* gradient stays fixed while content scrolls */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: var(--color-text);
-  height: auto;
-  width: 100%;
-  position: relative;
-  overflow: auto;
-  overflow-x: clip;
-  z-index: 1;
+.canvasErrorBtn:hover {
+  background: var(--color-accent, #ed0c4c);
+  border-color: var(--color-accent, #ed0c4c);
+  transform: translateY(-2px);
 }
+
+/* ═══════════════════════════════════════════
+   MAIN CONTENT
+═══════════════════════════════════════════ */
 .main {
+  position: relative;
   width: 100%;
-  overflow-x: clip;
-  padding: 0;
   background: transparent;
+  z-index: 10;
 }
-/* ── Certificate section — transparent to show gradient ── */
+
+/* ═══════════════════════════════════════════
+   CARUSEL SECTION
+═══════════════════════════════════════════ */
+.carusel {
+  background: transparent;
+  padding: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════════
+   CTA SECTION
+═══════════════════════════════════════════ */
+.ctaSection {
+  position: relative;
+  width: 100%;
+  background: transparent;
+  padding: 2rem 0;
+}
+
+/* ═══════════════════════════════════════════
+   CERTIFICATE SECTION
+═══════════════════════════════════════════ */
 .sertificate {
   background: transparent;
+  position: relative;
+  width: 100%;
 }
 
-/* ── Content layout ── */
+/* ═══════════════════════════════════════════
+   STICKY SECTION
+═══════════════════════════════════════════ */
+.stickySection {
+  position: relative;
+  width: 100%;
+  background: transparent;
+}
+
+/* ═══════════════════════════════════════════
+   CONTENT LAYOUT
+═══════════════════════════════════════════ */
 .content {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  max-width: 100%;
+  max-width: 1400px;
   margin: 0 auto;
   gap: 2rem;
 }
 
 .textContent {
   flex: 1;
-  min-width: 300px;
+  min-width: 280px;
   padding: 2rem;
 }
 
-/* ── Typography ── */
+@media (max-width: 768px) {
+  .textContent {
+    padding: 1rem;
+    text-align: center;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   TYPOGRAPHY
+═══════════════════════════════════════════ */
 .title {
   font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: 700;
@@ -107,29 +263,34 @@
 }
 
 .name {
-  color: var(--color-title);
+  color: var(--color-title, #ffffff);
 }
 
 .paragraph {
-  font-size: 1.2rem;
-  color: var(--color-text);
+  font-size: clamp(0.875rem, 2vw, 1.2rem);
+  color: var(--color-secondary, #94a3b8);
   margin-bottom: 2rem;
   max-width: 600px;
 }
 
-/* ── Button ── */
+@media (max-width: 768px) {
+  .paragraph {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   BUTTON
+═══════════════════════════════════════════ */
 .button {
-  background: linear-gradient(
-    135deg,
-    var(--color-accent),
-    var(--color-accent-hover)
-  );
+  background: linear-gradient(135deg, var(--color-accent, #ed0c4c), var(--color-accent-hover, #ff6b6b));
   color: white;
   border: none;
   padding: 0.8rem 2rem;
   font-size: 1rem;
   font-weight: 500;
-  border-radius: 8px;
+  border-radius: 99px;
   cursor: pointer;
   transition: all 0.3s ease;
   margin-bottom: 2rem;
@@ -137,65 +298,85 @@
 
 .button:hover {
   transform: translateY(-3px);
-  box-shadow: var(--color-shadow);
+  box-shadow: 0 10px 20px rgba(237, 12, 76, 0.3);
 }
 
-/* ── Image wrapper ── */
+@media (max-width: 768px) {
+  .button {
+    margin: 0 auto 2rem;
+    display: block;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   IMAGE WRAPPER
+═══════════════════════════════════════════ */
 .imageWrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   flex: 1;
-  min-width: 300px; /* виправлено: було 400px — на планшеті виходило за межі */
-  border: 4px solid var(--color-border);
+  min-width: 280px;
+  border: 1px solid var(--color-border, rgba(255, 255, 255, 0.1));
   border-radius: 20px;
   overflow: hidden;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+@media (max-width: 768px) {
+  .imageWrapper {
+    max-width: 100%;
+    margin-top: 1rem;
+  }
 }
 
 .profileImage {
-  max-width: 100%;
-  height: 500px;
+  width: 100%;
+  height: auto;
+  max-height: 500px;
   object-fit: cover;
-  display: block; /* виправлено: прибирає inline-відступ знизу зображення */
-  box-shadow: var(--color-shadow);
+  display: block;
   transition: transform 0.5s ease;
 }
 
-/* виправлено: ::before на img не працює — img є replaced element і не має псевдоелементів */
-/* Якщо потрібен оверлей — загортайте img у div і вішайте ::before на нього */
+@media (max-width: 768px) {
+  .profileImage {
+    height: auto;
+    max-height: 400px;
+  }
+}
+
+@media (max-width: 480px) {
+  .profileImage {
+    max-height: 320px;
+  }
+}
 
 .profileImage:hover {
-  transform: scale(1.01);
-  box-shadow: var(--color-shadow);
+  transform: scale(1.02);
 }
 
-/* ── Projects ── */
-
-/* ── Skills ── */
-
-/* ── Image badge ── */
+/* ═══════════════════════════════════════════
+   IMAGE BADGE
+═══════════════════════════════════════════ */
 .imageBadge {
+  position: absolute;
   bottom: 1rem;
   right: 1rem;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   padding: 0.5rem 1rem;
-  background: var(--color-surface);
-  color: var(--color-text);
-  box-shadow: var(--color-shadow);
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  color: var(--color-text, #ffffff);
+  border-radius: 99px;
+  font-family: var(--font-mono, monospace);
 }
 
-/* ── Animations ── */
-.animate_bounce {
-  animation: bounce 1s infinite;
-}
-
-/* виправлено: @keyframes bounce оголошено двічі — видалено дублікат */
+/* ═══════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════ */
 @keyframes bounce {
-  0%,
-  20%,
-  50%,
-  80%,
-  100% {
+  0%, 20%, 50%, 80%, 100% {
     transform: translateY(0);
   }
   40% {
@@ -206,68 +387,25 @@
   }
 }
 
-/* ── Scroll ── */
-.scrollContainer {
-  color: var(--color-text);
-  background: var(--color-header);
+.animate_bounce {
+  animation: bounce 1s infinite;
 }
 
-.scrollArrow {
-  color: var(--color-text);
-}
-
-/* ── Carousel ── */
-.carusel {
-  background: transparent;
-  padding: 0;
-}
-
-/* ── Tablet: 481px – 768px ── */
-@media (max-width: 768px) {
-  .container {
-    padding: 0;
-    height: auto;
-  }
-
-  .section {
-    padding: 0;
-  }
+/* ═══════════════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+═══════════════════════════════════════════ */
+/* Tablet: 768px+ */
+@media (min-width: 768px) {
   .content {
-    flex-direction: column;
+    flex-direction: row;
   }
-
+  
   .textContent {
-    order: 1;
-    text-align: center;
-    padding: 1rem;
-    min-width: unset;
-    width: 100%;
-  }
-
-  .imageWrapper {
-    order: 2;
-    margin-top: 1rem;
-    max-width: 500px;
-    width: 100%;
-    min-width: unset;
-  }
-
-  .button {
-    margin: 0 auto 2rem;
-    display: block;
-  }
-
-  .paragraph {
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .profileImage {
-    height: 420px;
+    text-align: left;
   }
 }
 
-/* ── Mobile: ≤ 480px ── */
+/* Mobile: ≤ 480px */
 @media (max-width: 480px) {
   .skillsSection {
     margin: 0.5rem auto;
@@ -275,8 +413,7 @@
   }
 
   .imageWrapper {
-    max-width: 100%;
-    border-radius: 12px;
+    border-radius: 16px;
   }
 
   .title {
@@ -284,9 +421,7 @@
   }
 
   .paragraph {
-    font-size: 1rem;
-    margin-left: auto;
-    margin-right: auto;
+    font-size: 0.9rem;
   }
 
   .textContent {
@@ -295,28 +430,17 @@
 
   .button {
     margin: 0 auto 1rem;
-    display: block;
+    width: 100%;
+    max-width: 280px;
   }
 
   .imageBadge {
-    font-size: 0.8rem;
-    padding: 0.4rem 0.8rem;
-  }
-
-  .profileImage {
-    height: 320px;
-  }
-
-  .carusel {
-    padding: 0;
-  }
-
-  .button:hover {
-    transform: none; /* прибираємо hover-ефект на touch */
+    font-size: 0.75rem;
+    padding: 0.35rem 0.75rem;
   }
 }
 
-/* ── Small mobile: ≤ 360px ── */
+/* Small mobile: ≤ 360px */
 @media (max-width: 360px) {
   .textContent {
     padding: 0.5rem;
@@ -327,14 +451,35 @@
   }
 
   .paragraph {
-    font-size: 0.95rem;
-  }
-
-  .profileImage {
-    height: 260px;
+    font-size: 0.85rem;
   }
 
   .carusel {
     padding: 0 0.5rem;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   REDUCED MOTION
+═══════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .loadingSpinner {
+    animation: none;
+  }
+  
+  .button:hover {
+    transform: none;
+  }
+  
+  .profileImage:hover {
+    transform: none;
   }
 }

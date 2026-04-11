@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Typewriter } from "react-simple-typewriter";
@@ -13,7 +13,7 @@ const HeroSection = () => {
   const sectionRef = useRef(null);
   const bgRef = useRef(null);
   const noiseRef = useRef(null);
-  const gridRef = useRef(null);
+  const gridRefs = useRef([]);
   const textRef = useRef(null);
   const eyebrowRef = useRef(null);
   const titleRef = useRef(null);
@@ -25,19 +25,35 @@ const HeroSection = () => {
   const scrollLineRef = useRef(null);
   const taglineRef = useRef(null);
 
+  const [isMobile, setIsMobile] = useState(false);
+
   // Magnetic refs
   const magneticPrimary = useMagnetic(0.3);
   const magneticSecondary = useMagnetic(0.3);
 
+  // Перевірка на мобільний пристрій
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   useEffect(() => {
     const ctx = gsap.context(() => {
       /* ── 1. Scanline loop on the noise layer ── */
-      gsap.to(noiseRef.current, {
-        backgroundPositionY: "100%",
-        duration: 18,
-        ease: "none",
-        repeat: -1,
-      });
+      if (noiseRef.current) {
+        gsap.to(noiseRef.current, {
+          backgroundPositionY: "100%",
+          duration: 18,
+          ease: "none",
+          repeat: -1,
+        });
+      }
 
       /* ── 2. Master entry timeline ── */
       const tl = gsap.timeline({
@@ -46,21 +62,29 @@ const HeroSection = () => {
       });
 
       // Background pan up
-      tl.fromTo(
-        bgRef.current,
-        { yPercent: 8, opacity: 0 },
-        { yPercent: 0, opacity: 1, duration: 1.6 },
-      )
-        // Grid fade
-        .fromTo(
-          gridRef.current,
-          { opacity: 0 },
-          { opacity: 1, duration: 1 },
-          "-=1.2",
-        )
+      if (bgRef.current) {
+        tl.fromTo(
+          bgRef.current,
+          { yPercent: 8, opacity: 0 },
+          { yPercent: 0, opacity: 1, duration: 1.6 },
+        );
+      }
 
-        // Eyebrow clip reveal
-        .fromTo(
+      // Grid fade
+      gridRefs.current.forEach(grid => {
+        if (grid) {
+          tl.fromTo(
+            grid,
+            { opacity: 0 },
+            { opacity: 0.2, duration: 1 },
+            "-=1.2",
+          );
+        }
+      });
+
+      // Eyebrow clip reveal
+      if (eyebrowRef.current) {
+        tl.fromTo(
           eyebrowRef.current,
           { clipPath: "inset(0 100% 0 0)", opacity: 0 },
           {
@@ -70,10 +94,12 @@ const HeroSection = () => {
             ease: "power3.out",
           },
           "-=0.8",
-        )
+        );
+      }
 
-        // Title lines stagger up
-        .fromTo(
+      // Title lines stagger up
+      if (titleRef.current) {
+        tl.fromTo(
           titleRef.current.querySelectorAll(`.${styles.titleLine} > span`),
           { y: "110%", opacity: 0 },
           {
@@ -84,10 +110,12 @@ const HeroSection = () => {
             ease: "expo.out",
           },
           "-=0.5",
-        )
+        );
+      }
 
-        // Tagline shimmer in
-        .fromTo(
+      // Tagline shimmer in
+      if (taglineRef.current) {
+        tl.fromTo(
           taglineRef.current,
           { opacity: 0, letterSpacing: "0.5em" },
           {
@@ -97,125 +125,159 @@ const HeroSection = () => {
             ease: "power2.out",
           },
           "-=0.6",
-        )
+        );
+      }
 
-        // Subtitle
-        .fromTo(
+      // Subtitle
+      if (subtitleRef.current) {
+        tl.fromTo(
           subtitleRef.current,
           { opacity: 0, y: 16 },
           { opacity: 1, y: 0, duration: 0.7 },
           "-=0.5",
-        )
+        );
+      }
 
-        // Buttons
-        .fromTo(
+      // Buttons
+      if (buttonsRef.current && buttonsRef.current.children) {
+        tl.fromTo(
           buttonsRef.current.children,
           { opacity: 0, y: 20, scale: 0.96 },
           { opacity: 1, y: 0, scale: 1, stagger: 0.1, duration: 0.55 },
           "-=0.4",
-        )
+        );
+      }
 
-        // Media panel slide in
-        .fromTo(
+      // Media panel slide in (зменшуємо ефект для кращої видимості)
+      if (mediaRef.current) {
+        tl.fromTo(
           mediaRef.current,
-          { opacity: 0, x: 60, clipPath: "inset(0 0 0 30%)" },
+          { opacity: 0, x: 30, clipPath: "inset(0 0 0 20%)" },
           {
             opacity: 1,
             x: 0,
             clipPath: "inset(0 0 0 0%)",
-            duration: 1.2,
+            duration: 1.0,
             ease: "expo.out",
           },
-          "-=1.0",
-        )
+          "-=0.8",
+        );
+      }
 
-        // Corner badge
-        .fromTo(
+      // Corner badge
+      if (cornerRef.current) {
+        tl.fromTo(
           cornerRef.current,
           { opacity: 0, y: -10 },
           { opacity: 1, y: 0, duration: 0.5 },
           "-=0.6",
-        )
+        );
+      }
 
-        // Scroll indicator draw
-        .fromTo(
+      // Scroll indicator draw
+      if (scrollLineRef.current) {
+        tl.fromTo(
           scrollLineRef.current,
           { scaleY: 0 },
           { scaleY: 1, transformOrigin: "top", duration: 0.8 },
         );
+      }
 
-      /* ── 3. Scroll parallax ── */
+      /* ── 3. Scroll parallax (зменшуємо для кращої видимості) ── */
       const scrollTl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top+=50 top",
+          start: "top+=80 top",
           end: "bottom top",
-          scrub: 1.2,
+          scrub: 1.0,
         },
       });
 
-      scrollTl
-        .to(bgRef.current, { yPercent: 25, opacity: 0.3, ease: "none" }, 0)
-        .to(textRef.current, { yPercent: 35, opacity: 0.3, ease: "none" }, 0)
-        .to(
+      if (bgRef.current) {
+        scrollTl.to(bgRef.current, { yPercent: 15, opacity: 0.4, ease: "none" }, 0);
+      }
+      if (textRef.current) {
+        scrollTl.to(textRef.current, { yPercent: 20, opacity: 0.4, ease: "none" }, 0);
+      }
+      if (mediaRef.current) {
+        scrollTl.to(
           mediaRef.current,
-          { yPercent: 14, scale: 1.04, opacity: 0.3, ease: "none" },
+          { yPercent: 8, scale: 1.02, opacity: 0.4, ease: "none" },
           0,
         );
+      }
 
       /* ── 4. Scroll indicator fade ── */
-      gsap.to(scrollIndicatorRef.current, {
-        opacity: 0,
-        pointerEvents: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top+=80 top",
-          end: "top+=280 top",
-          scrub: 0.6,
-        },
-      });
+      if (scrollIndicatorRef.current) {
+        gsap.to(scrollIndicatorRef.current, {
+          opacity: 0,
+          pointerEvents: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top+=80 top",
+            end: "top+=280 top",
+            scrub: 0.6,
+          },
+        });
+      }
 
       /* ── 5. Scroll line pulse loop ── */
-      gsap.to(scrollLineRef.current, {
-        opacity: 0,
-        y: 20,
-        duration: 2,
-        repeat: -1,
-        ease: "power2.inOut",
-        delay: 1.5, // Wait for entry to finish
-      });
+      if (scrollLineRef.current) {
+        gsap.to(scrollLineRef.current, {
+          opacity: 0,
+          y: 20,
+          duration: 2,
+          repeat: -1,
+          ease: "power2.inOut",
+          delay: 1.5,
+        });
+      }
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
+  // Функція для додавання grid refs
+  const addToGridRefs = (el) => {
+    if (el && !gridRefs.current.includes(el)) {
+      gridRefs.current.push(el);
+    }
+  };
+
   return (
     <section ref={sectionRef} className={styles.hero}>
-      {/* DotGrid background */}
-      <div className={styles.dotGridWrap} aria-hidden="true">
-        <DotGrid
-          dotSize={2}
-          gap={10}
-          baseColor="#838383ff"
-          activeColor="#e8f53c"
-          proximity={120}
-          shockRadius={250}
-          shockStrength={5}
-          resistance={750}
-          returnDuration={1.5}
-        />
-      </div>
+      {/* DotGrid background - тільки на десктопі */}
+      {!isMobile && (
+        <div className={styles.dotGridWrap}>
+          <DotGrid
+            dotSize={2}
+            gap={10}
+            baseColor="#838383ff"
+            activeColor="#e8f53c"
+            proximity={120}
+            shockRadius={250}
+            shockStrength={5}
+            resistance={750}
+            returnDuration={1.5}
+          />
+        </div>
+      )}
 
       {/* ── Background ── */}
+      <div ref={bgRef} className={styles.gradientBackground} aria-hidden="true" />
+
+      {/* ── Grid елементи ── */}
       <div
-        ref={bgRef}
-        className={styles.gradientBackground}
+        ref={addToGridRefs}
+        className={styles.gridBlur1}
+        aria-hidden="true"
+      />
+      <div
+        ref={addToGridRefs}
+        className={styles.gridBlur2}
         aria-hidden="true"
       />
 
-      {/* ── Grid ── */}
-      <div ref={gridRef} className="absolute top-60 left-10 opacity-50 md:right-40 w-72 h-72 bg-gradient-to-br from-blue-200 to-purple-200 rounded-full blur-[100px] opacity-20 pointer-events-none "></div>
-      <div ref={gridRef} className="absolute bottom-10 right-50 opacity-50 md:right-40 w-52 h-52 bg-gradient-to-br from-blue-200 to-purple-200 rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
       {/* ── Corner index badge ── */}
       <div ref={cornerRef} className={styles.cornerBadge} aria-hidden="true">
         <span className={styles.cornerBadgeNum}>01</span>
@@ -223,22 +285,11 @@ const HeroSection = () => {
       </div>
 
       {/* ── Vertical scroll indicator ── */}
-      <div
-        ref={scrollIndicatorRef}
-        className={styles.scrollIndicator}
-        aria-hidden="true"
-      >
+      <div ref={scrollIndicatorRef} className={styles.scrollIndicator} aria-hidden="true">
         <span className={styles.scrollText}>Scroll</span>
         <div className={styles.scrollLineContainer}>
           <div ref={scrollLineRef} className={styles.scrollLine} />
-
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 14 14"
-            fill="none"
-            aria-hidden="true"
-          >
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
             <path
               d="M2 12L12 2M12 2H4M12 2V10"
               stroke="currentColor"
@@ -264,7 +315,7 @@ const HeroSection = () => {
               <span className={styles.eyebrowDot} />
             </div>
 
-            {/* Giant title — each line in its own clip container */}
+            {/* Giant title */}
             <h1 ref={titleRef} className={styles.title}>
               <span className={styles.titleLine}>
                 <span className={styles.titleAccent}>The best</span>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react"
+import { useEffect, useRef } from "react"
 import s from "./Overlay.module.css"
 import { gsap } from "gsap"
 

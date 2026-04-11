@@ -12,77 +12,122 @@
   justify-content: center;
   overflow: hidden;
   isolation: isolate;
-  padding: clamp(5rem, 6vw, 6rem) 0;
+  padding: clamp(4rem, 8vw, 8rem) 0;
   background: transparent;
-  z-index: -1;
 }
 
-
-
-
-
 /* ═══════════════════════════════════════════
-   PARALLAX BACKGROUND IMAGE
+   BACKGROUND ELEMENTS
 ═══════════════════════════════════════════ */
 .background {
   position: absolute;
   inset: 0;
   height: 120%;
   top: -10%;
-  background: url("/images/scott_webb.jpg") center / cover no-repeat;
-  z-index:0;
+  background: url("/images/scott_webb.jpg") center/cover no-repeat;
+  z-index: 0;
   will-change: transform;
-  opacity: 0.55;
+  opacity: 0.4;
 }
 
-.background::after {
-  content: "";
+@media (min-width: 768px) {
+  .background {
+    opacity: 0.55;
+  }
+}
+
+.overlay {
   position: absolute;
   inset: 0;
   background: var(--color-overlay);
-  z-index: 1;
+  z-index:0;
+  pointer-events: none;
+}
+
+.noise {
+  position: absolute;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px;
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 2;
+  animation: grainShift 0.2s steps(2) infinite;
+}
+
+@keyframes grainShift {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-2%, -1%); }
+  50% { transform: translate(1%, 2%); }
+  75% { transform: translate(-1%, 1%); }
+  100% { transform: translate(2%, -2%); }
 }
 
 
 
-
+@media (min-width: 768px) {
+  .gridBg {
+    background-size: 50px 50px;
+  }
+}
 
 /* ═══════════════════════════════════════════
    CORNER BADGE
 ═══════════════════════════════════════════ */
 .cornerBadge {
   position: absolute;
-  top: clamp(2rem, 5vw, 4rem);
-  right: clamp(1.5rem, 4vw, 3rem);
+  top: clamp(1.5rem, 5vw, 4rem);
+  right: clamp(1rem, 4vw, 3rem);
   z-index: 20;
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
   gap: 0.3rem;
   pointer-events: none;
 }
 
+@media (min-width: 768px) {
+  .cornerBadge {
+    display: flex;
+  }
+}
+
 .cornerBadgeNum {
   font-family: var(--font-display, "Bebas Neue", sans-serif);
-  font-size: 2.8rem;
+  font-size: 2rem;
   line-height: 1;
-  color: var(--color-text);
+  color: var(--color-text, #ffffff);
   opacity: 0.22;
+}
+
+@media (min-width: 1024px) {
+  .cornerBadgeNum {
+    font-size: 2.8rem;
+  }
 }
 
 .cornerBadgeLabel {
   font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 0.7rem;
+  font-size: 0.6rem;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: var(--color-secondary);
+  color: var(--color-secondary, #94a3b8);
   opacity: 0.38;
   writing-mode: vertical-rl;
   transform: rotate(180deg);
 }
 
+@media (min-width: 1024px) {
+  .cornerBadgeLabel {
+    font-size: 0.7rem;
+  }
+}
+
 /* ═══════════════════════════════════════════
-   INNER LAYOUT — ГОРИЗОНТАЛЬНА СТРУКТУРА
+   INNER LAYOUT
 ═══════════════════════════════════════════ */
 .inner {
   position: relative;
@@ -90,11 +135,19 @@
   width: 100%;
   max-width: 1600px;
   margin: 0 auto;
-  padding: 0 clamp(1rem, 2vw, 4rem);
-  display: grid;
-  grid-template-columns: 1.4fr 1.6fr; /* Ліва колонка (заголовок) менша, права (контент) більша */
-  gap: clamp(1rem, 2vw, 2rem);
-  align-items: start;
+  padding: 0 clamp(1rem, 4vw, 4rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2rem, 5vw, 4rem);
+}
+
+@media (min-width: 1024px) {
+  .inner {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: clamp(3rem, 5vw, 5rem);
+    align-items: start;
+  }
 }
 
 /* ═══════════════════════════════════════════
@@ -103,41 +156,116 @@
 .header {
   display: flex;
   flex-direction: column;
-  position: sticky;
-  top: 120px; /* Для паралакс ефекту */
-  max-width: 600px;
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .header {
+    position: sticky;
+    top: 120px;
+  }
 }
 
 /* Eyebrow */
 .eyebrow {
   display: flex;
   align-items: center;
-  gap: 0.85rem;
+  justify-content: center;
+  gap: 0.75rem;
   margin-bottom: 2rem;
   overflow: hidden;
   flex-wrap: wrap;
 }
 
+@media (min-width: 768px) {
+  .eyebrow {
+    justify-content: flex-start;
+    gap: 0.85rem;
+  }
+}
+
+.eyebrowLine {
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--color-accent, #ed0c4c);
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+
+@media (min-width: 768px) {
+  .eyebrowLine {
+    width: 32px;
+  }
+}
 
 .eyebrowText {
   font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 0.8rem;
-  letter-spacing: 0.3em;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--color-secondary);
-  white-space: nowrap;
+  color: var(--color-secondary, #94a3b8);
+  text-align: center;
 }
 
+@media (min-width: 768px) {
+  .eyebrowText {
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-align: left;
+  }
+}
 
+@media (min-width: 1024px) {
+  .eyebrowText {
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+  }
+}
+
+.eyebrowDot {
+  display: none;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-accent, #ed0c4c);
+  animation: blink 2.4s ease-in-out infinite;
+}
+
+@media (min-width: 768px) {
+  .eyebrowDot {
+    display: block;
+  }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
 
 /* Title */
 .title {
   font-family: var(--font-display, "Bebas Neue", sans-serif);
-  font-size: clamp(3.5rem, 8vw, 16rem);
+  font-size: clamp(3rem, 10vw, 8rem);
   font-weight: 400;
-  line-height: 0.88;
+  line-height: 0.9;
   letter-spacing: -0.02em;
   margin: 0 0 1.5rem;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: clamp(3.5rem, 8vw, 12rem);
+    text-align: left;
+  }
+}
+
+@media (min-width: 1024px) {
+  .title {
+    font-size: clamp(4rem, 8vw, 16rem);
+    line-height: 0.88;
+  }
 }
 
 .titleLine {
@@ -151,9 +279,9 @@
   display: block;
   background: linear-gradient(
     120deg,
-    var(--color-text, #f5f5f0) 0%,
-    var(--color-secondary, #d0d0c8) 50%,
-    var(--color-text, #f5f5f0) 100%
+    var(--color-text, #ffffff) 0%,
+    var(--color-secondary, #94a3b8) 50%,
+    var(--color-text, #ffffff) 100%
   );
   background-size: 200% auto;
   -webkit-background-clip: text;
@@ -163,144 +291,126 @@
 }
 
 @keyframes shimmer {
-  0%   { background-position: 0% center; }
+  0% { background-position: 0% center; }
   100% { background-position: 200% center; }
 }
 
 .titlePlain {
   display: block;
-  color: var(--color-title, #f5f5f0);
+  color: var(--color-title, #ffffff);
 }
 
 /* Divider */
 .divider {
-  width: 100%;
+  width: 60px;
   height: 1px;
-  background: var(--color-border, rgba(232, 243, 60, 0.15));
-  margin-bottom: 1.5rem;
+  background: var(--color-border, rgba(255, 255, 255, 0.1));
+  margin: 0 auto 1.5rem;
   transform-origin: left;
+}
+
+@media (min-width: 768px) {
+  .divider {
+    width: 100%;
+    margin: 0 0 1.5rem;
+  }
 }
 
 /* Location wrap */
 .locationWrap {
   display: inline-flex;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .locationWrap {
+    justify-content: flex-start;
+  }
 }
 
 /* ═══════════════════════════════════════════
    CONTENT COLUMNS (ПРАВА КОЛОНКА)
 ═══════════════════════════════════════════ */
-.content {
+.columns {
   display: flex;
   flex-direction: column;
   gap: 2rem;
   width: 100%;
 }
 
-.columns {
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* Дві колонки всередині правої частини */
-  gap: clamp(2rem, 4vw, 4rem);
-  align-items: stretch;
+@media (min-width: 768px) {
+  .columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(1.5rem, 3vw, 3rem);
+    align-items: stretch;
+  }
 }
 
 .cardCol,
 .tableCol {
   min-width: 0;
   width: 100%;
-}
-
-/* ═══════════════════════════════════════════
-   ДОДАТКОВІ СТИЛІ ДЛЯ КАРТОК
-═══════════════════════════════════════════ */
-.cardCol :global(.cardTech) {
-  height: 100%;
-}
-
-.tableCol :global(.experienceTable) {
   height: 100%;
 }
 
 /* ═══════════════════════════════════════════
    RESPONSIVE
 ═══════════════════════════════════════════ */
-@media (max-width: 1200px) {
+/* Tablet */
+@media (max-width: 1024px) and (min-width: 769px) {
   .inner {
-    grid-template-columns: 1fr 1.5fr;
-    gap: 4rem;
+    padding: 0 2rem;
+  }
+  
+  .title {
+    font-size: clamp(3rem, 6vw, 5rem);
   }
 }
 
-@media (max-width: 1024px) {
-  .inner {
-    grid-template-columns: 1fr; /* Вертикальне розташування */
-    gap: 3rem;
-  }
-
-  .header {
-    position: static;
-    max-width: 100%;
-  }
-
-  .columns {
-    grid-template-columns: 1fr 1fr; /* Залишаємо дві колонки для контенту */
-  }
-
-  .cornerBadge {
-    top: 2rem;
-    right: 1.5rem;
-  }
-}
-
+/* Mobile */
 @media (max-width: 768px) {
-  .expertise { 
-    padding: 4rem 0; 
+  .expertise {
+    padding: 4rem 0;
   }
   
-  .cornerBadge { 
-    display: none; 
-  }
-  
-  .title { 
-    font-size: clamp(3rem, 14vw, 5rem); 
-  }
-
-  .columns {
-    grid-template-columns: 1fr; /* Одна колонка на мобільному */
-    gap: 2rem;
-  }
-
   .inner {
     padding: 0 1.5rem;
+    gap: 2rem;
+  }
+  
+  .title {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+  }
+  
+  .columns {
+    gap: 1.5rem;
   }
 }
 
+/* Small Mobile */
 @media (max-width: 480px) {
-  .expertise { 
-    padding: 3rem 0; 
+  .expertise {
+    padding: 3rem 0;
   }
   
-  .eyebrowDot { 
-    display: none; 
-  }
-
-  .eyebrow {
-    gap: 0.5rem;
-  }
-
-  .eyebrowText {
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    margin-left: 10px;
-  }
-  .title {
-    font-size: clamp(3rem, 14vw, 5rem); 
-    line-height: 1;
-    letter-spacing: -0.02em;
-    text-align: center;
-  }
-
   .inner {
     padding: 0 1rem;
+    gap: 1.5rem;
+  }
+  
+  .eyebrowText {
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+  }
+  
+  .title {
+    font-size: clamp(2rem, 7vw, 3.5rem);
+    margin-bottom: 1rem;
+  }
+  
+  .divider {
+    margin-bottom: 1rem;
   }
 }
 
@@ -318,15 +428,13 @@
   .background {
     transform: none !important;
   }
+  
+  .noise {
+    animation: none;
+    opacity: 0.02;
+  }
 }
 
 /* ═══════════════════════════════════════════
-   HIGH CONTRAST MODE
+   DARK MODE SUPPORT
 ═══════════════════════════════════════════ */
-@media (forced-colors: active) {
-  .titleAccent {
-   
-    forced-color-adjust: none;
-
-  }
-}

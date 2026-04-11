@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, useMemo } from "react";
+import { useRef, useEffect, useState, useMemo, useCallback } from "react";
 import { motion, useAnimation } from "framer-motion";
 import styles from "./ControllerSkills.module.css";
 
@@ -102,24 +102,28 @@ const techItems = [
   },
 ];
 
-// Fixed: Use motion.div for 3D transforms
-const TechCard = ({ tech, style, index }) => {
+// Компонент картки технології
+const TechCard = ({ tech, index }) => {
   return (
     <motion.div
       className={styles.card}
-      style={style}
       initial={{ opacity: 0, y: 30, rotateX: 30 }}
       whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-      viewport={{ once: true }}
+      viewport={{ once: true, margin: "-50px" }}
       transition={{
         duration: 0.8,
-        delay: (index % 16) * 0.05,
+        delay: (index % techItems.length) * 0.03,
         ease: [0.22, 1, 0.36, 1]
+      }}
+      whileHover={{
+        y: -8,
+        scale: 1.05,
+        transition: { duration: 0.2 }
       }}
     >
       <div className={styles.glare} />
       <div className={styles.cardContent}>
-        <i className={tech.icon} style={{ color: tech.color }} />
+        <i className={`${tech.icon} ${styles.icon}`} style={{ color: tech.color }} />
         <div className={styles.info}>
           <span className={styles.name}>{tech.name}</span>
           <span className={styles.desc}>{tech.description}</span>
@@ -129,22 +133,52 @@ const TechCard = ({ tech, style, index }) => {
   );
 };
 
-const ControllerSkills = () => {
+const ControllerSkills = ({ items }) => {
   const sectionRef = useRef(null);
   const [isInView, setIsInView] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
-  const marqueeItems = useMemo(() => {
-    return [...techItems, ...techItems, ...techItems];
+  // Перевірка на мобільний пристрій
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
+
+  // Використовуємо передані items або за замовчуванням techItems
+  const skillsToUse = items && items.length > 0 ? items : techItems;
+
+  // Створюємо масив для безкінечного скролу
+  const marqueeItems = useMemo(() => {
+    // На мобільних менше копій для кращої продуктивності
+    const copies = isMobile ? 2 : 3;
+    return [...Array(copies)].flatMap(() => [...skillsToUse]);
+  }, [skillsToUse, isMobile]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => setIsInView(entry.isIntersecting),
-      { threshold: 0.1 }
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.1, rootMargin: "50px" }
     );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+      observer.disconnect();
+    };
   }, []);
 
   const headerVariants = {
@@ -156,14 +190,20 @@ const ControllerSkills = () => {
     }
   };
 
+  // Анімація для треку
+  const trackAnimation = {
+    animate: isInView && !isPaused ? {
+      x: ["0%", isMobile ? "-50%" : "-33.333%"]
+    } : {}
+  };
+
   return (
     <section ref={sectionRef} className={styles.section}>
-      <div className={styles.glare} />
       <motion.div
         className={styles.header}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true }}
+        viewport={{ once: true, margin: "-100px" }}
         variants={headerVariants}
       >
         <span className={styles.eyebrowLine} />
@@ -173,9 +213,9 @@ const ControllerSkills = () => {
       <div className={styles.track}>
         <motion.div
           className={styles.inner}
-          animate={isInView && !isPaused ? { x: ["0%", "-33.333%"] } : {}}
+          {...trackAnimation}
           transition={{
-            duration: 40,
+            duration: isMobile ? 30 : 40,
             repeat: Infinity,
             repeatType: "loop",
             ease: "linear"
@@ -183,18 +223,13 @@ const ControllerSkills = () => {
           onHoverStart={() => setIsPaused(true)}
           onHoverEnd={() => setIsPaused(false)}
         >
-          {marqueeItems.map((tech, index) => {
-            const originalIndex = index % techItems.length;
-            const depth = originalIndex * -15;
-
-            return (
-              <TechCard
-                key={`${tech.name}-${index}`}
-                tech={tech}
-
-              />
-            );
-          })}
+          {marqueeItems.map((tech, index) => (
+            <TechCard
+              key={`${tech.name}-${index}`}
+              tech={tech}
+              index={index}
+            />
+          ))}
         </motion.div>
       </div>
     </section>

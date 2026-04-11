@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import styles from "./Expertise.module.css";
 
 import CardTech from "../CardTech/CardTech";
@@ -8,16 +8,28 @@ import LocationBadge from "../Location/Location";
 
 const Expertise = () => {
   const sectionRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"],
   });
 
-  /* ── Parallax values ── */
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
-  const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
-  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "5%"]);
+  /* ── Parallax values (зменшуємо на мобільних) ── */
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", isMobile ? "5%" : "10%"]);
+  const bgScale = useTransform(scrollYProgress, [0, 1], [1, isMobile ? 1.05 : 1.1]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", isMobile ? "2%" : "5%"]);
 
   /* ── Stagger variants ── */
   const titleContainer = {
@@ -52,13 +64,13 @@ const Expertise = () => {
     <section ref={sectionRef} id="expertise" className={styles.expertise}>
       {/* ── Background elements ── */}
       <div className={styles.noise} aria-hidden="true" />
-      <div className={styles.gridBg} aria-hidden="true" />
-      <motion.div 
-        className={styles.background} 
+
+      <motion.div
+        className={styles.background}
         style={{ y: bgY, scale: bgScale }}
-        aria-hidden="true" 
+        aria-hidden="true"
       />
-      
+      <div className={styles.overlay} aria-hidden="true" />
 
       {/* ── Corner section index ── */}
       <div className={styles.cornerBadge} aria-hidden="true">
@@ -68,27 +80,27 @@ const Expertise = () => {
 
       {/* ── Main content ── */}
       <motion.div className={styles.inner} style={{ y: contentY }}>
-        
+
         {/* Section header */}
         <header className={styles.header}>
-          <motion.div 
+          <motion.div
             className={styles.eyebrow}
             initial={{ clipPath: "inset(0 100% 0 0)", opacity: 0 }}
             whileInView={{ clipPath: "inset(0 0% 0 0)", opacity: 1 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            
+            <span className={styles.eyebrowLine} />
             <span className={styles.eyebrowText}>Skills & Technologies · 2025</span>
-            
+            <span className={styles.eyebrowDot} />
           </motion.div>
 
-          <motion.h2 
+          <motion.h2
             className={styles.title}
             variants={titleContainer}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
           >
             <span className={styles.titleLine}>
               <motion.span variants={titleLine} className={styles.titleAccent}>My</motion.span>
@@ -98,19 +110,19 @@ const Expertise = () => {
             </span>
           </motion.h2>
 
-          <motion.div 
+          <motion.div
             className={styles.divider}
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, delay: 0.3 }}
           />
 
-          <motion.div 
+          <motion.div
             className={styles.locationWrap}
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, delay: 0.5 }}
           >
             <LocationBadge location="Located in Ivano-Frankivsk" />
@@ -118,12 +130,12 @@ const Expertise = () => {
         </header>
 
         {/* Content columns */}
-        <motion.div 
+        <motion.div
           className={styles.columns}
           variants={columnsVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
         >
           <div className={styles.cardCol}>
             <CardTech />

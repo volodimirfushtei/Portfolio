@@ -382,11 +382,13 @@ html.lenis body {
   );
 
   /* Overlays */
-  --color-overlay: linear-gradient(
-    to bottom,
-    oklch(0.9658 0.0066 106.52 / 0.78) 0%,
-    oklch(0.9161 0.0134 106.66 / 0.99) 100%
-  );
+  --color-overlay:  linear-gradient(
+  to bottom,
+  oklch(100% 0.00011 271.152 / 0.3) 0%,
+  oklch(92.327% 0.00793 106.763 / 0.5) 30%,
+  oklch(90.975% 0.0001 271.152 / 0.8) 60%,
+  oklch(90.337% 0.00125 107.674 / 0.95) 100%
+);
 
   /* Grid */
   --color-grid:
@@ -443,17 +445,7 @@ html.lenis body {
   );
 
   /* Page-wide gradient background */
-  --color-page-gradient:
-    linear-gradient(90deg, oklch(0 0 0 / 0) 44.86%, oklch(0 0 0 / 0.69) 100%),
-    linear-gradient(0deg, oklch(0 0 0 / 0.5) 0%, oklch(0 0 0 / 0.5) 100%),
-    conic-gradient(
-      from 137deg at 100% 100%,
-      oklch(0.7625 0.092 242.98) 24.23077deg,
-      oklch(0.538 0.1807 262.5 / 0) 129.60001deg,
-      oklch(0.5708 0.2031 264.1) 180deg,
-      oklch(0.456 0.1225 254.65 / 0) 357.12193deg
-    ),
-    oklch(0 0 0);
+  --color-page-gradient: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
 
   /* Borders & shadows */
   --color-border: oklch(1 0 0 / 0.05);
