@@ -140,11 +140,12 @@ const HeroMedia = () => {
       {/* ── BG image ── */}
       <img
         ref={imageRef}
-        src="/images/preview.png"
+        src="/images/preview.webp"
         alt="Creative Process"
         className={styles.image}
         fetchPriority="high"
         decoding="async"
+        loading="eager"
       />
 
       {/* ── Cinematic gradient overlay ── */}

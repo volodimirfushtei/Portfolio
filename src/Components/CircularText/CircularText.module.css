@@ -1,5 +1,8 @@
-/* CircularText.module.css */
+/* CircularText.module.css — Premium rotating text */
 
+/* ═══════════════════════════════════════════
+   WRAPPER
+═══════════════════════════════════════════ */
 .wrap {
   position: relative;
   width: 100px;
@@ -7,63 +10,128 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
 }
 
+@media (min-width: 768px) {
+  .wrap {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .wrap {
+    width: 140px;
+    height: 140px;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   SVG
+═══════════════════════════════════════════ */
 .svg {
-  position: absolute;
-  inset: 0;
   width: 100%;
   height: 100%;
+  display: block;
   will-change: transform;
 }
 
+/* ═══════════════════════════════════════════
+   TEXT
+═══════════════════════════════════════════ */
 .text {
-  font-size: 0.9rem;
-  font-family: "DM Mono", monospace;
-  letter-spacing: 0.18em;
+  font-family: var(--font-mono, "DM Mono", monospace);
+  font-size: 10px;
+  letter-spacing: 2px;
+  fill: var(--color-accent, #ed0c4c);
   text-transform: uppercase;
-  fill: var(--color-title);
 }
 
-/* Center dot */
+@media (min-width: 768px) {
+  .text {
+    font-size: 11px;
+    letter-spacing: 3px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .text {
+    font-size: 12px;
+    letter-spacing: 4px;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   CENTER DOT
+═══════════════════════════════════════════ */
 .centerDot {
   position: absolute;
-  width: 36px;
-  height: 36px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 6px;
+  background: var(--color-accent, #ed0c4c);
   border-radius: 50%;
-  background: var(--color-accent);
-  box-shadow: var(--color-shadow);
   pointer-events: none;
-  will-change: transform;
+  transition: transform 0.3s ease;
 }
-.logo{
-  position: absolute;
- 
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--color-accent);
-  box-shadow: var(--color-shadow);
-  pointer-events: none;
-  will-change: transform;
+
+@media (min-width: 768px) {
+  .centerDot {
+    width: 8px;
+    height: 8px;
+  }
 }
-/* ── Mobile ── */
+
+.wrap:hover .centerDot {
+  transform: translate(-50%, -50%) scale(1.5);
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
 @media (max-width: 768px) {
   .wrap {
-    width: 90px;
-    height: 90px;
+    width: 80px;
+    height: 80px;
   }
-
+  
+  .text {
+    font-size: 8px;
+    letter-spacing: 1px;
+  }
+  
   .centerDot {
-    width: 28px;
-    height: 28px;
+    width: 5px;
+    height: 5px;
   }
 }
 
-/* ── Reduced motion ── */
-@media (prefers-reduced-motion: reduce) {
-  .svg {
-    animation: none !important;
+@media (max-width: 480px) {
+  .wrap {
+    width: 70px;
+    height: 70px;
   }
+  
+  .text {
+    font-size: 7px;
+    letter-spacing: 1px;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   REDUCED MOTION
+═══════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  .wrap:hover .centerDot {
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* ═══════════════════════════════════════════
+   ANIMATION PAUSE ON HOVER (опціонально)
+═══════════════════════════════════════════ */
+.wrap:hover .svg {
+  animation-play-state: paused;
 }

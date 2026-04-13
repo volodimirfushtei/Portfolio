@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, forwardRef, useState, useLayoutEffect, useCallback } from 'react'
-import { Environment, PerspectiveCamera } from '@react-three/drei'
+import { Environment } from '@react-three/drei/core/Environment'
+import { PerspectiveCamera } from '@react-three/drei/core/PerspectiveCamera'
 import { useFrame, useThree } from '@react-three/fiber'
 import { Iphone } from '../Iphone/Iphone'
 import gsap from 'gsap'

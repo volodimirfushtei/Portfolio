@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState, useMemo, useCallback } from "react";
 import { motion, useAnimation } from "framer-motion";
 import styles from "./ControllerSkills.module.css";
-
+import { Sparkles } from "../Sparkles/Sparkles.jsx";
 // Масив технологій
 const techItems = [
   {
@@ -231,6 +231,16 @@ const ControllerSkills = ({ items }) => {
             />
           ))}
         </motion.div>
+
+      </div>
+      <div className='absolute bottom-0 z-2 h-[400px] w-screen overflow-hidden mask-[radial-gradient(100%_50%,white,transparent)] before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_bottom_center,#3273ff,transparent_90%)] before:opacity-40 after:absolute'>
+        <Sparkles
+          density={1800}
+          speed={1.2}
+          color='#48b6ff'
+          direction='top'
+          className='absolute inset-x-0 bottom-0 h-full w-full '
+        />
       </div>
     </section>
   );

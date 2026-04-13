@@ -11,7 +11,7 @@ export default function Carousel() {
   const containerRef = useRef(null);
   const progressRef = useRef(null);
   const slideRefs = useRef([]);
-  
+
 
   const slides = useMemo(
     () => [
@@ -51,8 +51,7 @@ export default function Carousel() {
     const container = containerRef.current;
     if (!container) return;
 
-    // Вимикаємо стандартні ScrollTrigger та застосовуємо свої
-    ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+
 
     const ctx = gsap.context(() => {
       /* ── Update progress bar based on scroll position ── */

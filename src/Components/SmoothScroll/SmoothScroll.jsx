@@ -22,8 +22,10 @@ const SmoothScroll = ({ children }) => {
       smoothTouch: false,
       touchMultiplier: 2,
       infinite: false,
+      lerp: 0.1,
+      syncTouch: true,
     });
-    
+
     lenisRef.current = lenis;
 
     // Sync Lenis with GSAP ScrollTrigger

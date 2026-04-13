@@ -47,7 +47,7 @@ const CardTech = () => {
         <div className={`${styles.side} ${styles.front}`}>
           <div className={styles.avatarWrap}>
             <img
-              src="/images/preview.png"
+              src="/images/preview.webp"
               alt="Volodymyr Fushtei"
               className={styles.avatar}
               loading="eager"
@@ -71,7 +71,7 @@ const CardTech = () => {
         {/* ── Back ── */}
         <div className={`${styles.side} ${styles.back}`}>
           <div className={styles.backContent}>
-            
+
 
             <p className={styles.flipMessage}>
               {manualFlip

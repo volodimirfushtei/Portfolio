@@ -1,12 +1,10 @@
-import React, { useState, useEffect, useRef, Suspense } from 'react'
+import React, { useState, useEffect, useRef, Suspense, lazy } from 'react'
 import styles from './homePage.module.css'
-
 import ControllerSkills from '../../Components/ControllerSkills/ControllerSkills.jsx'
 import Footer from '../../Components/Footer/Footer.jsx'
 import Expertise from '../../Components/Expertise/Expertise'
 import Carusel from '../../Components/Carusel/Carusel.jsx'
 import HeroSection from '../../Components/HeroSection/HeroSection.jsx'
-import FadeInAnimate from '../../Components/FadeInAnimate/FadeInAnimate.jsx'
 import Sertificate from '../../Components/Sertificate/Sertificate.jsx'
 import CtaSection from '../../Components/CtaSection/CtaSection.jsx'
 import ScrollToTopBtn from '../../Components/ScrollToTopBtn/ScrollTotopBtn.jsx'
@@ -14,14 +12,18 @@ import StickyZoomSection from '../../Components/StickyZoomSection/StickyZoomSect
 import { Canvas } from '@react-three/fiber'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import Model from '../../Components/Model/Model.jsx'
+
 import NoiseOverlay from '../../Components/NoiseOverlay/NoiseOverlay.jsx'
+import { Preload } from '@react-three/drei'
+const Model = lazy(() => import('../../Components/Model/Model.jsx'))
 
 gsap.registerPlugin(ScrollTrigger)
 
 const HomePage = () => {
   const [progress, setProgress] = useState(0)
-  const [canvasError, setCanvasError] = useState(false)
+  const canvasRef = useRef(null);
+  const [canvasKey, setCanvasKey] = useState(0); // Ключ для перезагрузки Canvas
+  const [contextLost, setContextLost] = useState(false);
   const [retryKey, setRetryKey] = useState(0)
   const sectionRef = useRef(null)
   const [isMobile, setIsMobile] = useState(false)
@@ -54,31 +56,75 @@ const HomePage = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Обробка помилок Canvas
-  const handleContextLost = () => {
-    console.warn('Canvas context lost')
-    setCanvasError(true)
 
-    setTimeout(() => {
-      setCanvasError(false)
-    }, 100)
-  }
 
-  if (canvasError) {
+  // ✅ ФІКС 1: Обробка WebGL Context Lost
+  useEffect(() => {
+    const canvas = canvasRef.current?.querySelector('canvas');
+    if (!canvas) return;
+
+    let lostContextCount = 0;
+
+    const handleContextLost = (e) => {
+      console.warn('🔴 Canvas WebGL context lost');
+      e.preventDefault();
+
+      setContextLost(true);
+      lostContextCount++;
+
+      // Якщо контекст втрачено 3+ разів - показуємо fallback
+      if (lostContextCount >= 3) {
+        console.error('Canvas context lost too many times, showing fallback');
+        return;
+      }
+    };
+
+    const handleContextRestored = () => {
+      console.log('✅ Canvas WebGL context restored');
+      setContextLost(false);
+
+      // Перезавантажуємо Canvas компонент
+      setCanvasKey(prev => prev + 1);
+    };
+
+    // ✅ ФІКС 2: Реєструємо обробники
+    canvas.addEventListener('webglcontextlost', handleContextLost);
+    canvas.addEventListener('webglcontextrestored', handleContextRestored);
+
+    return () => {
+      canvas.removeEventListener('webglcontextlost', handleContextLost);
+      canvas.removeEventListener('webglcontextrestored', handleContextRestored);
+    };
+  }, []);
+
+  // ✅ ФІКС 3: Fallback для мобільних або при помилці
+  if (contextLost) {
     return (
-      <div className={styles.canvasErrorContainer}>
-        <div className={styles.canvasError}>
-          <p className={styles.canvasErrorText}>3D scene is loading...</p>
-          <button
-            className={styles.canvasErrorBtn}
-            onClick={() => setRetryKey(prev => prev + 1)}
-          >
-            Reload page
-          </button>
+      <section className={styles.section}>
+        <div style={{
+          width: '100%',
+          height: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          background: 'linear-gradient(135deg, #0d0d0d, #1a1a1a)',
+          color: '#f5f5f0',
+          fontSize: '18px',
+          textAlign: 'center',
+          padding: '20px'
+        }}>
+          <div>
+            <p>Canvas відновлюється...</p>
+            <p style={{ fontSize: '12px', marginTop: '10px', opacity: 0.7 }}>
+              Якщо це займає довго, перезагрузите сторінку
+            </p>
+          </div>
         </div>
-      </div>
-    )
+      </section>
+    );
   }
+
+
 
   const skills = [
     { src: '/icons/react.svg', alt: 'React', name: 'React', description: 'Library', color: '#61dafb', icon: 'ri-reactjs-line' },
@@ -121,24 +167,32 @@ const HomePage = () => {
                 }
               >
                 <Canvas
-                  key={retryKey}
-                  onCreated={handleContextLost}
-                  style={{ background: 'transparent' }}
-                  shadows
+                  key={canvasKey}
+                  dpr={[1, 1.5]} // ← Максимум 1.5, не більше
+                  performance={{ min: 0.5, max: 1 }} // ← Адаптивна якість
                   gl={{
-                    powerPreference: 'high-performance',
                     antialias: true,
+                    powerPreference: 'high-performance',
+                    failIfMajorPerformanceCaveat: false,
                     alpha: true,
-                    depth: true,
-                    stencil: false,
+                    // ✅ ФІКС 4: Дозволи браузеру відновлювати контекст
                     preserveDrawingBuffer: false,
+                    // ✅ ФІКС 5: Оптимізація для старих пристроїв
+                    precision: 'mediump',
+                    // ✅ ФІКС 6: Локальна очистка
+                    logarithmicDepthBuffer: false,
                   }}
-                  dpr={[1, 2]}
+                  camera={{ position: [0, 0, 5] }}
+                  onCreated={(state) => {
+                    console.log('✅ Canvas created');
+
+                    // ✅ ФІКС 7: Налаштування для стабільності
+                    state.gl.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                    state.gl.outputColorSpace = 'srgb';
+                  }}
                 >
-                  <ambientLight intensity={0.3} />
-                  <pointLight position={[5, 5, 5]} intensity={1} />
-                  <pointLight position={[-5, 2, 3]} intensity={0.5} />
-                  <pointLight position={[10, 10, 10]} intensity={0.5} />
+                  {/* ✅ ФІКС 8: Додай Preload для оптимізації */}
+                  <Preload all />
                   <Model progress={progress} />
                 </Canvas>
               </Suspense>
@@ -148,9 +202,9 @@ const HomePage = () => {
           <main className={styles.main}>
             {/* Expertise Section */}
             <section id="expertise" className={styles.section}>
-              <FadeInAnimate direction="top" delay={0.2} duration={1}>
-                <Expertise />
-              </FadeInAnimate>
+
+              <Expertise />
+
             </section>
 
             {/* Skills Section */}
@@ -161,9 +215,9 @@ const HomePage = () => {
             {/* Projects Section */}
             <section id="projects" className={styles.section}>
               <div className={styles.carusel}>
-                <FadeInAnimate direction="top" delay={0.6} duration={1}>
-                  <Carusel />
-                </FadeInAnimate>
+
+                <Carusel />
+
               </div>
 
               <section id="cta" className={styles.ctaSection}>
@@ -172,9 +226,9 @@ const HomePage = () => {
 
               {/* Certificate Section */}
               <section id="certificate" className={styles.sertificate}>
-                <FadeInAnimate direction="left" delay={0.8} duration={1}>
-                  <Sertificate />
-                </FadeInAnimate>
+
+                <Sertificate />
+
               </section>
 
               <section className={styles.stickySection}>

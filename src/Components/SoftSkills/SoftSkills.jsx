@@ -1,8 +1,9 @@
-import React, { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+
 import styles from "./SoftSkills.module.css";
-gsap.registerPlugin(ScrollTrigger);
+
+
+
 export default function SoftSkills() {
   const skills = [
     {
@@ -43,60 +44,12 @@ export default function SoftSkills() {
     },
   ];
 
-  const ref = useRef(null);
-  const blocksRef = useRef([]);
-  useEffect(() => {
-    if (gsap && ScrollTrigger) {
-      const blocks = gsap.utils.toArray(".block", ref.current);
-      gsap.fromTo(
-        blocks,
-        { opacity: 0, y: 50 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "power3.out",
-          stagger: 0.3, // по черзі
-          scrollTrigger: {
-            trigger: ref.current,
-            start: "top 80%",
-            toggleActions: "play none none reverse",
-          },
-        },
-      );
-
-      // Анімація пунктів списку всередині кожного блоку
-      blocks.forEach((block) => {
-        const items = block.querySelectorAll("li");
-        gsap.fromTo(
-          items,
-          { opacity: 0, x: -20 },
-          {
-            opacity: 1,
-            x: 0,
-            duration: 0.5,
-            ease: "power2.out",
-            stagger: 0.15,
-            scrollTrigger: {
-              trigger: block,
-              start: "top 85%",
-              toggleActions: "play none none reverse",
-            },
-          },
-        );
-      });
-    }
-  }, []);
 
   return (
-    <section ref={ref} className={styles.section}>
+    <section className={styles.section}>
       <div className={styles.grid}>
         {skills.map((skill, i) => (
-          <div
-            key={skill.title}
-            className={styles.block}
-            ref={(el) => (blocksRef.current[i] = el)}
-          >
+          <div key={skill.title} className={styles.block}>
             <span className={styles.num}>{String(i + 1).padStart(2, "0")}</span>
 
             <div className={styles.blockHeader}>

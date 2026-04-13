@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from "react";
 import gsap from "gsap";
-import DotGrid from "./../DotGrid/DotGrid";
 import styles from "./TestError.module.css";
 
 const errorTypes = [
@@ -56,19 +55,6 @@ const TestError = () => {
     <section ref={sectionRef} className={styles.section}>
       {/* DotGrid background */}
       <div className={styles.noise} />
-      <div className={styles.dotGridWrap} aria-hidden="true">
-        <DotGrid
-          dotSize={2}
-          gap={10}
-          baseColor="#e8f53c"
-          activeColor="#e8f53c"
-          proximity={120}
-          shockRadius={250}
-          shockStrength={5}
-          resistance={750}
-          returnDuration={1.5}
-        />
-      </div>
 
       {/* Card */}
       <div ref={cardRef} className={styles.card}>

@@ -337,7 +337,7 @@
 
 .getStartedChar:hover {
   transform: translateY(-10px);
-  filter: drop-shadow(0 10px 20px rgba(237, 12, 76, 0.3));
+  filter: drop-shadow(0 10px 20px var(--color-accent));
 }
 
 /* ═══════════════════════════════════════════

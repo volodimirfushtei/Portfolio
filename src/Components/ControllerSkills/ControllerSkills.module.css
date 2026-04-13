@@ -8,8 +8,8 @@
   padding: 4rem 0;
   overflow: hidden;
   position: relative;
-}
 
+}
 @media (max-width: 768px) {
   .section {
     padding: 2rem 0;

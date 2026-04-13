@@ -4,7 +4,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Typewriter } from "react-simple-typewriter";
 import styles from "./HeroSection.module.css";
 import HeroMedia from "../HeroMedia/HeroMedia";
-import DotGrid from "../DotGrid/DotGrid";
 import { useMagnetic } from "../../hooks/useMagnetic";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -25,23 +24,9 @@ const HeroSection = () => {
   const scrollLineRef = useRef(null);
   const taglineRef = useRef(null);
 
-  const [isMobile, setIsMobile] = useState(false);
-
   // Magnetic refs
   const magneticPrimary = useMagnetic(0.3);
   const magneticSecondary = useMagnetic(0.3);
-
-  // Перевірка на мобільний пристрій
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -246,26 +231,8 @@ const HeroSection = () => {
 
   return (
     <section ref={sectionRef} className={styles.hero}>
-      {/* DotGrid background - тільки на десктопі */}
-      {!isMobile && (
-        <div className={styles.dotGridWrap}>
-          <DotGrid
-            dotSize={2}
-            gap={10}
-            baseColor="#838383ff"
-            activeColor="#e8f53c"
-            proximity={120}
-            shockRadius={250}
-            shockStrength={5}
-            resistance={750}
-            returnDuration={1.5}
-          />
-        </div>
-      )}
-
       {/* ── Background ── */}
       <div ref={bgRef} className={styles.gradientBackground} aria-hidden="true" />
-
       {/* ── Grid елементи ── */}
       <div
         ref={addToGridRefs}
@@ -277,7 +244,6 @@ const HeroSection = () => {
         className={styles.gridBlur2}
         aria-hidden="true"
       />
-
       {/* ── Corner index badge ── */}
       <div ref={cornerRef} className={styles.cornerBadge} aria-hidden="true">
         <span className={styles.cornerBadgeNum}>01</span>

@@ -28,14 +28,14 @@
   overflow-x: hidden;
   isolation: isolate;
   background: transparent;
+scroll-behavior: smooth;
+scrollbar-width: none;
 }
 
 /* ═══════════════════════════════════════════
    DOT GRID (приховуємо на мобільних)
 ═══════════════════════════════════════════ */
-.dotGridWrap {
-  display: none;
-}
+
 
 @media (min-width: 768px) {
   .dotGridWrap {
@@ -243,6 +243,8 @@
   height: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 /* ═══════════════════════════════════════════
@@ -252,7 +254,7 @@
   position: relative;
   z-index: 10;
   width: 100%;
-  max-width: 1600px;
+  max-width: 90%;
   margin: 0 auto;
   padding: var(--hero-padding-top) var(--hero-padding-x) var(--hero-padding-bottom);
   display: flex;
@@ -285,6 +287,11 @@
   .content {
     --hero-padding-x: 5rem;
     --hero-gap: 8rem;
+    max-width: 1800px;
+    gap: 20rem;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
   }
 }
 
@@ -434,7 +441,7 @@
 
 @media (min-width: 1280px) {
   .title {
-    --title-font-size: 8rem;
+    --title-font-size: 6.5rem;
     margin-right: -4rem;
   }
 }
@@ -734,7 +741,12 @@
     margin: 0;
   }
 }
-
+@media (min-width: 1280px) {
+  .mediaContainer {
+    max-width: 100%;
+    margin: 0;
+  }
+}
 /* ═══════════════════════════════════════════
    REDUCED MOTION
 ═══════════════════════════════════════════ */

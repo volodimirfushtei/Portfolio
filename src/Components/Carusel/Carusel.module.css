@@ -24,7 +24,7 @@
 ═══════════════════════════════════════════ */
 .wrapper {
   position: relative;
-  z-index: 0;
+
   width: 100%;
   min-height: auto;
   display: flex;
@@ -127,6 +127,7 @@
 .slider {
   position: relative;
   width: 100%;
+  z-index: 100;
   height: var(--slider-height-mobile);
   overflow-y: auto;
   overflow-x: hidden;
@@ -163,9 +164,7 @@
   }
 }
 
-.slider::-webkit-scrollbar {
-  display: none;
-}
+
 
 /* ═══════════════════════════════════════════
    PROGRESS BAR
@@ -207,6 +206,7 @@
 .slide {
   position: relative;
   width: 100%;
+  z-index: 100;
   height: var(--slider-height-mobile);
   scroll-snap-align: start;
   scroll-snap-stop: always;
