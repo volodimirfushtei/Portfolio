@@ -8,7 +8,6 @@ const Overlay = () => {
   useEffect(() => {
     const ctx = gsap.context(() => {
       const lines = blindsRef.current.querySelectorAll(`.${s.line}`)
-
       gsap.fromTo(
         lines,
         {

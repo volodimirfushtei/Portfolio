@@ -7,7 +7,7 @@
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: #181818;
+  background: #000;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -15,7 +15,131 @@
   overflow: hidden;
   isolation: isolate;
 }
+/* Додати для fade out ефекту */
+.fadeOut {
+  position: absolute;
+  inset: 0;
+  background: black;
+  z-index: 100;
+  pointer-events: none;
+}
 
+/* Logo Wrapper */
+.logo {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  text-decoration: none;
+  color: var(--color-accent, #ed0c4c);
+}
+
+/* Slides Wrapper */
+.slidesWrapper {
+  position: absolute;
+  bottom: 120px;
+  right: 40px;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.75rem;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .slidesWrapper {
+    bottom: 100px;
+    right: 20px;
+  }
+}
+
+.slidesContainer {
+  display: flex;
+  gap: 1rem;
+}
+
+.previewSlide {
+  position: relative;
+  width: 80px;
+  height: 120px;
+  border-radius: 8px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+@media (min-width: 768px) {
+  .previewSlide {
+    width: 100px;
+    height: 150px;
+  }
+}
+
+.previewOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+}
+
+.previewNumber {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  font-family: var(--font-mono, 'DM Mono', monospace);
+  font-size: 0.7rem;
+  color: var(--color-accent, #ed0c4c);
+  z-index: 2;
+}
+
+.slidesHint {
+  font-family: var(--font-mono, 'DM Mono', monospace);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+}
+
+/* Анімація для імені */
+.nameSpan {
+  display: inline-block;
+}
+
+/* Анімація для цифр */
+.digit {
+  display: inline-block;
+}
+
+/* Покращена анімація для штор */
+.curtain {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  will-change: transform;
+}
+
+.curtainsContainer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.curtain {
+  flex: 1;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+}
 /* ═══════════════════════════════════════════
    CURTAINS
 ═══════════════════════════════════════════ */
@@ -46,7 +170,7 @@
   display: flex;
   justify-content: space-between;
   padding: 2rem clamp(1.5rem, 4vw, 4rem);
-  font-family: var(--font-mono, "DM Mono", monospace);
+  font-family: var(--font-mono, 'DM Mono', monospace);
   font-size: 0.7rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -81,7 +205,7 @@
 }
 
 .developerName {
-  font-family: var(--font-display, "Bebas Neue", sans-serif);
+  font-family: var(--font-display, 'Bebas Neue', sans-serif);
   font-size: clamp(2.5rem, 8vw, 6rem);
   font-weight: 400;
   letter-spacing: -0.02em;
@@ -116,7 +240,7 @@
   display: flex;
   align-items: baseline;
   gap: 0.1rem;
-  font-family: var(--font-body, "DM Mono", monospace);
+  font-family: var(--font-body, 'DM Mono', monospace);
   font-size: clamp(2rem, 6vw, 4rem);
   font-weight: 300;
   color: var(--color-accent, #ed0c4c);
@@ -136,7 +260,7 @@
 
 /* Tagline */
 .tagline {
-  font-family: var(--font-mono, "DM Mono", monospace);
+  font-family: var(--font-mono, 'DM Mono', monospace);
   font-size: 0.75rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -172,7 +296,7 @@
 .trackLabels {
   display: flex;
   justify-content: space-between;
-  font-family: var(--font-mono, "DM Mono", monospace);
+  font-family: var(--font-mono, 'DM Mono', monospace);
   font-size: 0.6rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -191,7 +315,7 @@
   align-items: center;
   gap: 1rem;
   padding: 2rem clamp(1.5rem, 4vw, 4rem);
-  font-family: var(--font-mono, "DM Mono", monospace);
+  font-family: var(--font-mono, 'DM Mono', monospace);
   font-size: 0.65rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -218,22 +342,22 @@
     padding: 1.5rem 1rem;
     font-size: 0.6rem;
   }
-  
+
   .bottomBar {
     padding: 1.5rem 1rem;
     font-size: 0.55rem;
     flex-direction: column;
     gap: 0.5rem;
   }
-  
+
   .trackWrap {
     max-width: 280px;
   }
-  
+
   .counterWrap {
     font-size: clamp(1.8rem, 5vw, 3rem);
   }
-  
+
   .tagline {
     font-size: 0.65rem;
   }
@@ -244,24 +368,24 @@
     padding: 1rem 0.75rem;
     font-size: 0.5rem;
   }
-  
+
   .bottomBar {
     padding: 1rem 0.75rem;
     font-size: 0.45rem;
   }
-  
+
   .trackWrap {
     max-width: 220px;
   }
-  
+
   .counterWrap {
     font-size: clamp(1.5rem, 4vw, 2.5rem);
   }
-  
+
   .tagline {
     font-size: 0.55rem;
   }
-  
+
   .developerName {
     font-size: clamp(2rem, 6vw, 3rem);
   }
@@ -274,7 +398,7 @@
   .fill {
     transition: none;
   }
-  
+
   .statusDot {
     animation: none !important;
   }

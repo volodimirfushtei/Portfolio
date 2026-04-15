@@ -41,7 +41,6 @@
     "remixicon": "^4.9.1",
     "slick-carousel": "^1.8.1",
     "three": "^0.179.1",
-    "vanta": "^0.5.24",
     "vite-plugin-pwa": "^0.16.4"
   },
   "devDependencies": {

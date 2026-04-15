@@ -170,13 +170,13 @@
    PROGRESS BAR
 ═══════════════════════════════════════════ */
 .progressTrack {
-  position: sticky;
+  position:  sticky;
   top: 50%;
   right: 8px;
-  width: 2px;
+  width: 4px;
   height: 60px;
   background: rgba(255, 255, 255, 0.1);
-  z-index: 10;
+  z-index: 1100;
   margin-left: auto;
   margin-right: 8px;
   transform: translateY(-50%);
@@ -206,7 +206,7 @@
 .slide {
   position: relative;
   width: 100%;
-  z-index: 100;
+  z-index: 2;
   height: var(--slider-height-mobile);
   scroll-snap-align: start;
   scroll-snap-stop: always;
@@ -240,7 +240,7 @@
 .slideImgWrap {
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: -1;
 }
 
 .slideImage {
@@ -271,7 +271,7 @@
   position: absolute;
   inset: 0;
   background: var(--color-overlay);
-  z-index: 1;
+  z-index: 0;
 }
 
 /* ═══════════════════════════════════════════
@@ -584,21 +584,6 @@
   }
 }
 
-/* ═══════════════════════════════════════════
-   REDUCED MOTION
-═══════════════════════════════════════════ */
-@media (prefers-reduced-motion: reduce) {
-  .scrollHint {
-    animation: none;
-  }
-  
-  .slideImage {
-    transition: none;
-  }
-  
-  .slide:hover .slideImage {
-    transform: none;
-  }
-}
+
 
 

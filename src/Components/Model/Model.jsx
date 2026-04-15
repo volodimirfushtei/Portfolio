@@ -1,11 +1,11 @@
-import React, { useRef, useEffect, forwardRef, useState, useLayoutEffect, useCallback } from 'react'
-import { Environment } from '@react-three/drei/core/Environment'
+import React, { useRef, useEffect, forwardRef, useState, useLayoutEffect, lazy } from 'react'
+
 import { PerspectiveCamera } from '@react-three/drei/core/PerspectiveCamera'
 import { useFrame, useThree } from '@react-three/fiber'
 import { Iphone } from '../Iphone/Iphone'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
+const Environment = lazy(() => import('@react-three/drei').then(m => ({ default: m.Environment })))
 gsap.registerPlugin(ScrollTrigger)
 
 const Model = forwardRef(({ progress }, ref) => {

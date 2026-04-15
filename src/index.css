@@ -1,10 +1,5 @@
 @import 'tailwindcss';
 
-@import 'bootstrap/dist/css/bootstrap.min.css';
-@import 'bootstrap-icons/font/bootstrap-icons.css';
-@import 'slick-carousel/slick/slick.css';
-@import 'slick-carousel/slick/slick-theme.css';
-
 /* ────────────────────────────────────────────
    KEYFRAMES
 ──────────────────────────────────────────── */
@@ -383,13 +378,13 @@ html.lenis body {
   );
 
   /* Overlays */
-  --color-overlay:  linear-gradient(
-  to bottom,
-  oklch(100% 0.00011 271.152 / 0.48) 0%,
-  oklch(92.327% 0.00793 106.763 / 0.68) 30%,
-  oklch(90.975% 0.0001 271.152 / 0.86) 60%,
-  oklch(90.337% 0.00125 107.674 / 0.95) 100%
-);
+  --color-overlay: linear-gradient(
+    to bottom,
+    oklch(100% 0.00011 271.152 / 0.48) 0%,
+    oklch(92.327% 0.00793 106.763 / 0.68) 30%,
+    oklch(90.975% 0.0001 271.152 / 0.86) 60%,
+    oklch(90.337% 0.00125 107.674 / 0.95) 100%
+  );
 
   /* Grid */
   --color-grid:

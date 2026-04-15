@@ -18,7 +18,8 @@
   
   <!-- Meta theme-color для мобільних браузерів -->
   <meta name="theme-color" content="#000000" />
-  
+
+<meta name="renderer" content="webkit">
   <!-- Для iOS Safari -->
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -55,6 +56,21 @@
   
   <!-- Viewport -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+  <!-- Critical Preloads -->
+  <link rel="preload" as="image" href="/images/wyss.jpg" fetchpriority="high" />
+  <link rel="preload" as="image" href="/images/business.jpg" fetchpriority="high" />
+  <link rel="preload" as="image" href="/images/happyt.jpg" fetchpriority="high" />
+  <link rel="preload" as="image" href="/images/Camper.jpg" fetchpriority="high" />
+
+  <!-- Inline Critical CSS -->
+  <style>
+    :root { --color-background: #181818; }
+    body { background-color: var(--color-background); margin: 0; }
+    #root { min-height: 100vh; }
+    /* Hide scrollbar during loading */
+    body.loading { overflow: hidden; }
+  </style>
 </head>
 <body>
   <div id="root"></div>

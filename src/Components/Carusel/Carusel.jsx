@@ -98,29 +98,12 @@ export default function Carousel() {
           scrollTrigger: {
             trigger: slide,
             scroller: container,
-            start: "top 75%",
-            end: "top 25%",
-            toggleActions: "play none none reverse",
-            onEnter: () => {
-              // Додаткова логіка при вході слайда
-            },
+            start: "top 80%",
+            end: "bottom 20%",
+
+            toggleActions: "play reverse play reverse",
           },
         });
-
-        // Image fade and scale
-        if (img) {
-          tl.fromTo(
-            img,
-            { scale: 1.15, opacity: 0.5 },
-            {
-              scale: 1,
-              opacity: 1,
-              duration: 1.2,
-              ease: "power3.out",
-            },
-            0,
-          );
-        }
 
         // Overlay fade
         if (overlay) {
@@ -222,7 +205,6 @@ export default function Carousel() {
 
     return () => {
       ctx.revert();
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, [slides]);
 

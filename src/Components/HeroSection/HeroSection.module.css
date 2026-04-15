@@ -104,7 +104,7 @@ scrollbar-width: none;
   z-index: -1;
   pointer-events: none;
   background: var(--color-grid);
-  opacity: 0.3;
+  opacity: 0.8;
   will-change: transform, opacity;
 }
 
