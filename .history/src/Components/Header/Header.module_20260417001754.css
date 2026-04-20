@@ -1,0 +1,104 @@
+.header {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+
+  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.05);
+
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+
+  transition:
+    transform 0.4s ease,
+    opacity 0.4s ease;
+  z-index: 1000;
+}
+
+.hidden {
+  transform: translate(-50%, -100%);
+  opacity: 0;
+}
+
+/* container */
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+}
+
+/* nav */
+.nav {
+  display: flex;
+  gap: 12px;
+}
+
+.link {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  text-transform: uppercase;
+
+  transition: 0.3s;
+}
+
+.link:hover {
+  background: var(--color-surface-hover);
+}
+
+.active {
+  background: var(--color-accent);
+  color: #000;
+}
+
+/* burger */
+.burger {
+  display: none;
+}
+
+.burger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--color-text);
+  margin: 4px 0;
+}
+
+/* mobile */
+.mobile {
+  position: fixed;
+  inset: 0;
+  background: var(--color-overlay);
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition: 0.4s;
+}
+
+.mobileOpen {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobileLink {
+  display: block;
+  padding: 20px;
+  font-size: 24px;
+}
+
+/* responsive */
+@media (max-width: 1024px) {
+  .nav {
+    display: none;
+  }
+
+  .burger {
+    display: block;
+  }
+}
+
+/* За замовчуванням меню приховане але в DOM */

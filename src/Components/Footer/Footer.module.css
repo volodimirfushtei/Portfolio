@@ -9,8 +9,8 @@
   color: var(--color-text, #ffffff);
   overflow: hidden;
   isolation: isolate;
-  min-height: 100vh;
-  padding: clamp(4rem, 8vw, 8rem) clamp(1.5rem, 5vw, 3rem);
+ min-height: 100vh;
+  padding: 3rem clamp(1.5rem, 5vw, 3rem);
   transform-style: preserve-3d;
   perspective: 1000px;
 }
@@ -290,7 +290,7 @@
   line-height: 1;
   letter-spacing: -0.02em;
   text-align: center;
-  margin: 4rem auto;
+  margin: 2rem auto;
   padding: 2rem 0;
   overflow: hidden;
   z-index: 2;
@@ -355,7 +355,7 @@
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--color-secondary, #94a3b8);
-  padding-top: 3rem;
+  padding-top: 1rem;
   margin-top: 2rem;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
   text-align: center;

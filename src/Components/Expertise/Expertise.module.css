@@ -24,7 +24,7 @@
   inset: 0;
   height: 120%;
   top: -10%;
-  background: url("/images/scott_webb.jpg") center/cover no-repeat;
+  background: var(--font-grid);
   z-index: 0;
   will-change: transform;
   opacity: 0.4;
@@ -36,13 +36,7 @@
   }
 }
 
-.overlay {
-  position: absolute;
-  inset: 0;
-  background: var(--color-overlay);
-  z-index:0;
-  pointer-events: none;
-}
+
 
 .noise {
   position: absolute;
@@ -133,7 +127,7 @@
   position: relative;
   z-index: 10;
   width: 100%;
-  max-width: 1600px;
+  max-width: 1800px;
   margin: 0 auto;
   padding: 0 clamp(1rem, 4vw, 4rem);
   display: flex;
@@ -201,7 +195,7 @@
 
 .eyebrowText {
   font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 0.65rem;
+  font-size: 0.85rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--color-secondary, #94a3b8);
@@ -210,7 +204,7 @@
 
 @media (min-width: 768px) {
   .eyebrowText {
-    font-size: 0.7rem;
+    font-size: 0.85rem;
     letter-spacing: 0.25em;
     text-align: left;
   }
@@ -218,7 +212,7 @@
 
 @media (min-width: 1024px) {
   .eyebrowText {
-    font-size: 0.75rem;
+    font-size: 0.85rem;
     letter-spacing: 0.3em;
   }
 }
@@ -380,7 +374,7 @@
   }
   
   .title {
-    font-size: clamp(2.5rem, 8vw, 4rem);
+    font-size: clamp(2.5rem, 5vw, 4rem);
   }
   
   .columns {
@@ -405,7 +399,7 @@
   }
   
   .title {
-    font-size: clamp(2rem, 7vw, 3.5rem);
+    font-size: clamp(2rem, 4vw, 3.5rem);
     margin-bottom: 1rem;
   }
   

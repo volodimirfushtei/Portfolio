@@ -1,0 +1,341 @@
+/* Location.module.css — Awwwards editorial dark */
+
+/* ═══════════════════════════════════════════
+   BADGE
+═══════════════════════════════════════════ */
+.badge {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0.9rem 0.4rem 0.45rem;
+  border: 1px solid var(--color-border, rgba(255, 255, 255, 0.1));
+  background: var(--color-overlay, rgba(255, 255, 255, 0.05));
+  cursor: default;
+  position: relative;
+  user-select: none;
+  border-radius: 999px;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  backdrop-filter: blur(4px);
+}
+
+.badge:hover {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: var(--color-accent, #ed0c4c);
+  transform: translateY(-2px);
+}
+
+/* ═══════════════════════════════════════════
+   PIN
+═══════════════════════════════════════════ */
+.pinWrap {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.pin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-accent, #e8f53c);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 8px rgba(232, 245, 60, 0.5);
+}
+
+.pinInner {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #080808;
+}
+
+/* Ripple effects */
+.ripple,
+.ripple2 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid var(--color-accent, #e8f53c);
+  animation: ripple 2s ease-out infinite;
+  z-index: 1;
+  opacity: 0;
+}
+
+.ripple2 {
+  animation-delay: 0.9s;
+}
+
+@keyframes ripple {
+  0% {
+    width: 8px;
+    height: 8px;
+    opacity: 0.7;
+  }
+  100% {
+    width: 28px;
+    height: 28px;
+    opacity: 0;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   TEXT
+═══════════════════════════════════════════ */
+.text {
+  font-family: var(--font-mono, 'DM Mono', monospace);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-secondary, #94a3b8);
+  white-space: nowrap;
+  line-height: 1.2;
+  transition: color 0.3s ease;
+}
+
+.badge:hover .text {
+  color: var(--color-text, #ffffff);
+}
+
+/* ═══════════════════════════════════════════
+   TOOLTIP
+═══════════════════════════════════════════ */
+.tooltip {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: transparent;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(232, 245, 60, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-family: var(--font-mono, 'DM Mono', monospace);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(245, 245, 240, 0.8);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  pointer-events: none;
+  z-index: 100;
+  animation: fadeUp 0.2s ease;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* Tooltip arrow */
+.tooltip::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid rgba(232, 245, 60, 0.2);
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Tooltip dot */
+.tooltipDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4ade80;
+  flex-shrink: 0;
+  animation: blink 1.8s ease-in-out infinite;
+  box-shadow: 0 0 4px #4ade80;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.8);
+  }
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+/* Tablet */
+@media (max-width: 768px) {
+  .badge {
+    gap: 0.5rem;
+    padding: 0.35rem 0.8rem 0.35rem 0.4rem;
+  }
+
+  .text {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+  }
+
+  .pinWrap {
+    width: 16px;
+    height: 16px;
+  }
+
+  .pin {
+    width: 7px;
+    height: 7px;
+  }
+
+  .pinInner {
+    width: 2.5px;
+    height: 2.5px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .badge {
+    gap: 0.45rem;
+    padding: 0.3rem 0.7rem 0.3rem 0.35rem;
+  }
+
+  .text {
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+  }
+
+  .pinWrap {
+    width: 14px;
+    height: 14px;
+  }
+
+  .pin {
+    width: 6px;
+    height: 6px;
+  }
+
+  .pinInner {
+    width: 2px;
+    height: 2px;
+  }
+
+  .ripple,
+  .ripple2 {
+    width: 6px;
+    height: 6px;
+  }
+
+  @keyframes ripple {
+    0% {
+      width: 6px;
+      height: 6px;
+      opacity: 0.7;
+    }
+    100% {
+      width: 22px;
+      height: 22px;
+      opacity: 0;
+    }
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 360px) {
+  .badge {
+    gap: 0.35rem;
+    padding: 0.25rem 0.6rem 0.25rem 0.3rem;
+  }
+
+  .text {
+    font-size: 0.55rem;
+    letter-spacing: 0.06em;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   TOUCH DEVICES (відключаємо hover ефекти)
+═══════════════════════════════════════════ */
+@media (hover: none) and (pointer: coarse) {
+  .badge:hover {
+    transform: none;
+  }
+
+  .tooltip {
+    display: none;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   REDUCED MOTION
+═══════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  .ripple,
+  .ripple2,
+  .tooltipDot,
+  .badge {
+    animation: none;
+    transition: none;
+  }
+
+  .badge:hover {
+    transform: none;
+  }
+
+  @keyframes ripple {
+    0%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════
+   DARK MODE SUPPORT
+═══════════════════════════════════════════ */
+@media (prefers-color-scheme: dark) {
+  .badge {
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  .badge:hover {
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .tooltip {
+    background: rgba(0, 0, 0, 0.95);
+  }
+}

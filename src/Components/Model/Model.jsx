@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, forwardRef, useState,  lazy } from 'react'
+import React, { useRef, useEffect, forwardRef, useState, lazy } from 'react'
 
 import { PerspectiveCamera } from '@react-three/drei/core/PerspectiveCamera'
 import { useFrame, useThree } from '@react-three/fiber'
@@ -130,7 +130,13 @@ const Model = forwardRef(({ progress }, ref) => {
       </group>
     )
   }
-
+  if (contextLost) {
+    return (
+      <div className="webgl-fallback">
+        <p>3D context lost. Reloading...</p>
+      </div>
+    );
+  }
   return (
     <>
       <PerspectiveCamera

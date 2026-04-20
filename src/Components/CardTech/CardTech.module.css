@@ -9,6 +9,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 18px; 
+  border: 1px solid var(--color-border);
+  box-shadow: 0 0 10px var(--color-secondary);
   perspective: 2000px; /* Increased for deeper tilt */
 }
 
@@ -17,13 +20,14 @@
   position: relative;
   width: 100%;
   max-width: 480px;
-  height: 480px;
-
+  height: 580px;
+border-radius: 10px;
   transform-style: preserve-3d;
   transition: transform 0.85s cubic-bezier(0.76, 0, 0.24, 1);
   border-radius: 0; /* Clean editorial corners */
   cursor: pointer;
   background: transparent;
+   transform: translateZ(0);
   outline: none;
 }
 
@@ -35,15 +39,15 @@
 .side {
   position: absolute;
   inset: 0;
-
+  will-change: transform;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
+  border-radius: 18px; 
   padding: clamp(2rem, 5vw, 3.5rem);
 
-  background: transparent;
+  background: var(--color-page-gradient);
  
 
   -webkit-backface-visibility: hidden;
@@ -309,5 +313,25 @@
 
   .avatarRing {
     animation: none;
+  }
+}
+.front {
+  pointer-events: auto;
+}
+
+.back {
+  pointer-events: none;
+}
+
+.flipped .front {
+  pointer-events: none;
+}
+
+.flipped .back {
+  pointer-events: auto;
+}
+@media (hover: none) {
+  .card:hover * {
+    transform: none !important;
   }
 }

@@ -1,10 +1,13 @@
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 import styles from "./Expertise.module.css";
-
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import CardTech from "../CardTech/CardTech";
 import ExperienceTable from "../ExperienceTable/ExperienceTable";
 import LocationBadge from "../Location/Location";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Expertise = () => {
   const sectionRef = useRef(null);
@@ -21,15 +24,101 @@ const Expertise = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
+  useEffect(() => {
+    const ctx = gsap.context(() => {
 
-  /* ── Parallax values (зменшуємо на мобільних) ── */
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", isMobile ? "5%" : "10%"]);
-  const bgScale = useTransform(scrollYProgress, [0, 1], [1, isMobile ? 1.05 : 1.1]);
-  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", isMobile ? "2%" : "5%"]);
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 75%",
+          end: "bottom 20%",
+          toggleActions: "play none none reverse",
+        }
+      });
+
+      // BACKGROUND subtle reveal
+      tl.fromTo(
+        `.${styles.background}`,
+        { opacity: 0, scale: 1.05 },
+        { opacity: 0.5, scale: 1, duration: 1.2, ease: "power3.out" },
+        0
+      );
+
+      // HEADER (Apple keynote feel)
+      tl.fromTo(
+        `.${styles.eyebrow}`,
+        { opacity: 0, y: 20, filter: "blur(10px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.8 },
+        0.1
+      );
+
+      tl.fromTo(
+        `.${styles.titleLine}`,
+        { y: 80, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1.2,
+          stagger: 0.08,
+          ease: "power4.out",
+        },
+        0.2
+      );
+
+      tl.fromTo(
+        `.${styles.divider}`,
+        { scaleX: 0, opacity: 0 },
+        { scaleX: 1, opacity: 1, duration: 0.8, ease: "power3.out" },
+        0.4
+      );
+
+      tl.fromTo(
+        `.${styles.locationWrap}`,
+        { opacity: 0, x: -20 },
+        { opacity: 1, x: 0, duration: 0.8 },
+        0.5
+      );
+
+      // LEFT + RIGHT COLUMN SPLIT REVEAL
+      tl.fromTo(
+        `.${styles.cardCol}`,
+        { opacity: 0, x: -40, scale: 0.98 },
+        { opacity: 1, x: 0, scale: 1, duration: 1, ease: "power3.out" },
+        0.6
+      );
+
+      tl.fromTo(
+        `.${styles.tableCol}`,
+        { opacity: 0, x: 40, scale: 0.98 },
+        { opacity: 1, x: 0, scale: 1, duration: 1, ease: "power3.out" },
+        0.6
+      );
+
+      // CORNER BADGE (subtle float-in)
+      tl.fromTo(
+        `.${styles.cornerBadge}`,
+        { opacity: 0, y: -20 },
+        { opacity: 1, y: 0, duration: 1 },
+        0.3
+      );
+
+      // PARALLAX SCROLL FEEL (Apple-like depth)
+      gsap.to(sectionRef.current, {
+        backgroundPosition: "50% 20%",
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
+        }
+      });
+
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
 
   /* ── Stagger variants ── */
   const titleContainer = {
@@ -67,10 +156,8 @@ const Expertise = () => {
 
       <motion.div
         className={styles.background}
-        style={{ y: bgY, scale: bgScale }}
         aria-hidden="true"
       />
-      <div className={styles.overlay} aria-hidden="true" />
 
       {/* ── Corner section index ── */}
       <div className={styles.cornerBadge} aria-hidden="true">
@@ -79,7 +166,7 @@ const Expertise = () => {
       </div>
 
       {/* ── Main content ── */}
-      <motion.div className={styles.inner} style={{ y: contentY }}>
+      <motion.div className={styles.inner} >
 
         {/* Section header */}
         <header className={styles.header}>

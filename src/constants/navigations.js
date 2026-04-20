@@ -1,10 +1,10 @@
 // constants/navigation.js
 export const NAV_ITEMS = [
-  { path: "/", icon: "ri-home-line", label: "Home" },
-  { path: "/projects", icon: "ri-briefcase-line", label: "Projects" },
-  { path: "/tech", icon: "ri-code-line", label: "Tech" },
-  { path: "/contacts", icon: "ri-contacts-line", label: "Contacts" },
-  { path: "/error", icon: "ri-error-warning-line", label: "Test Error" },
+  { path: "/", label: "Home" },
+  { path: "/projects", label: "Projects" },
+  { path: "/tech", label: "Tech" },
+  { path: "/contacts", label: "Contacts" },
+  { path: "/error", label: "Test Error" },
 ];
 
 export const SOCIAL_LINKS = [

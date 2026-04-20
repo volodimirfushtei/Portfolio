@@ -48,17 +48,13 @@ img {
   max-width: 100%;
   display: block;
 }
-
-/* Buttons */
-button {
-  font: inherit;
-  cursor: pointer;
-  background: none;
-  border: none;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6{
+  font-family: "Bebas Neue", sans-serif;
+  
 }
 
-/* Custom selection */
-::selection {
-  background-color: var(--color-accent);
-  color: var(--color-button-text);
-}

@@ -1,0 +1,225 @@
+/* ─────────────────────────────────────────────
+   HEADER BASE
+──────────────────────────────────────────── */
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+
+  backdrop-filter: blur(10px);
+  background: rgba(10, 10, 10, 0.6);
+
+  transition:
+    transform 0.4s ease,
+    opacity 0.4s ease;
+  will-change: transform;
+}
+
+.headerHidden {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+.scrolled {
+  background: rgba(10, 10, 10, 0.85);
+}
+
+/* ───────────────────────────────────────────── */
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 40px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logoText {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+/* ─────────────────────────────────────────────
+   RIGHT
+──────────────────────────────────────────── */
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* ─────────────────────────────────────────────
+   DESKTOP NAV
+──────────────────────────────────────────── */
+
+.desktopNav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.link {
+  position: relative;
+  font-size: 14px;
+  text-decoration: none;
+  color: white;
+  opacity: 0.7;
+  transition: 0.3s;
+}
+
+.link:hover {
+  opacity: 1;
+}
+
+.active {
+  opacity: 1;
+}
+
+/* underline animation */
+.link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0%;
+  height: 1px;
+  background: #e8f53c;
+  transition: width 0.3s ease;
+}
+
+.link:hover::after {
+  width: 100%;
+}
+
+/* ─────────────────────────────────────────────
+   CTA
+──────────────────────────────────────────── */
+
+.cta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  background: #e8f53c;
+  color: black;
+
+  padding: 6px 10px;
+  border-radius: 20px;
+  text-decoration: none;
+
+  transition: transform 0.3s ease;
+}
+
+.cta:hover {
+  transform: scale(1.05);
+}
+
+.cta img {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+}
+
+/* ─────────────────────────────────────────────
+   BURGER
+──────────────────────────────────────────── */
+
+.burger {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.burger span {
+  width: 20px;
+  height: 2px;
+  background: white;
+  transition: 0.3s;
+}
+
+.burger.open span:nth-child(1) {
+  transform: rotate(45deg) translateY(6px);
+}
+
+.burger.open span:nth-child(2) {
+  transform: rotate(-45deg) translateY(-6px);
+}
+
+/* ─────────────────────────────────────────────
+   MOBILE MENU
+──────────────────────────────────────────── */
+
+.mobileMenu {
+  position: fixed;
+  inset: 0;
+  background: #0b0c10;
+
+  transform: translateY(-100%);
+  opacity: 0;
+
+  transition: 0.5s ease;
+  pointer-events: none;
+}
+
+.mobileMenuOpen {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobileNav {
+  display: flex;
+  flex-direction: column;
+  padding: 100px 40px;
+  gap: 20px;
+}
+
+.mobileLink {
+  font-size: 28px;
+  color: white;
+  text-decoration: none;
+
+  transform: translateY(20px);
+  opacity: 0;
+}
+
+/* stagger animation */
+.mobileMenuOpen .mobileLink {
+  transform: translateY(0);
+  opacity: 1;
+  transition: 0.5s ease;
+}
+
+.mobileMenuOpen .mobileLink:nth-child(1) {
+  transition-delay: 0.1s;
+}
+.mobileMenuOpen .mobileLink:nth-child(2) {
+  transition-delay: 0.2s;
+}
+.mobileMenuOpen .mobileLink:nth-child(3) {
+  transition-delay: 0.3s;
+}
+
+/* ─────────────────────────────────────────────
+   RESPONSIVE
+──────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .desktopNav {
+    display: none;
+  }
+
+  .burger {
+    display: flex;
+  }
+}
+
+/* За замовчуванням меню приховане але в DOM */

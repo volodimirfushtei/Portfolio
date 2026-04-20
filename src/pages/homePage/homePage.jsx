@@ -7,7 +7,6 @@ import Carusel from '../../Components/Carusel/Carusel.jsx'
 import HeroSection from '../../Components/HeroSection/HeroSection.jsx'
 import Sertificate from '../../Components/Sertificate/Sertificate.jsx'
 import CtaSection from '../../Components/CtaSection/CtaSection.jsx'
-import ScrollToTopBtn from '../../Components/ScrollToTopBtn/ScrollTotopBtn.jsx'
 import StickyZoomSection from '../../Components/StickyZoomSection/StickyZoomSection.jsx'
 import { Canvas } from '@react-three/fiber'
 import { gsap } from 'gsap'
@@ -24,9 +23,10 @@ const HomePage = () => {
   const canvasRef = useRef(null);
   const [canvasKey, setCanvasKey] = useState(0); // Ключ для перезагрузки Canvas
   const [contextLost, setContextLost] = useState(false);
-  const [retryKey, setRetryKey] = useState(0)
   const sectionRef = useRef(null)
   const [isMobile, setIsMobile] = useState(false)
+
+
 
   // Перевірка на мобільний пристрій
   useEffect(() => {
@@ -50,6 +50,7 @@ const HomePage = () => {
         Math.max(0, -rect.top / (rect.height - window.innerHeight))
       )
       setProgress(scrollProgress)
+
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
@@ -58,7 +59,7 @@ const HomePage = () => {
 
 
 
-  // ✅ ФІКС 1: Обробка WebGL Context Lost
+  //  Обробка WebGL Context Lost
   useEffect(() => {
     const canvas = canvasRef.current?.querySelector('canvas');
     if (!canvas) return;
@@ -66,7 +67,7 @@ const HomePage = () => {
     let lostContextCount = 0;
 
     const handleContextLost = (e) => {
-      console.warn('🔴 Canvas WebGL context lost');
+      console.warn(' Canvas WebGL context lost');
       e.preventDefault();
 
       setContextLost(true);
@@ -87,7 +88,7 @@ const HomePage = () => {
       setCanvasKey(prev => prev + 1);
     };
 
-    // ✅ ФІКС 2: Реєструємо обробники
+    //  Реєструємо обробники
     canvas.addEventListener('webglcontextlost', handleContextLost);
     canvas.addEventListener('webglcontextrestored', handleContextRestored);
 
@@ -97,7 +98,7 @@ const HomePage = () => {
     };
   }, []);
 
-  // ✅ ФІКС 3: Fallback для мобільних або при помилці
+  //  Fallback для мобільних або при помилці
   if (contextLost) {
     return (
       <section className={styles.section}>
@@ -145,16 +146,13 @@ const HomePage = () => {
 
   return (
     <>
-      <div id="scroll-container" className={styles.scrollContainer}>
-        <NoiseOverlay />
-
+      <div id="scroll-container" className={styles.gridBg}>
         <div className={styles.container} ref={sectionRef}>
-          <ScrollToTopBtn />
+
 
           <section className={styles.heroSectionWrapper}>
             <HeroSection />
           </section>
-
           {/* 3D Canvas - тільки на десктопі */}
           {!isMobile && (
             <div className={styles.canvasContainer}>
@@ -198,7 +196,6 @@ const HomePage = () => {
               </Suspense>
             </div>
           )}
-
           <main className={styles.main}>
             {/* Expertise Section */}
             <section id="expertise" className={styles.section}>
@@ -215,28 +212,21 @@ const HomePage = () => {
             {/* Projects Section */}
             <section id="projects" className={styles.section}>
               <div className={styles.carusel}>
-
                 <Carusel />
-
               </div>
-
               <section id="cta" className={styles.ctaSection}>
                 <CtaSection />
               </section>
 
               {/* Certificate Section */}
               <section id="certificate" className={styles.sertificate}>
-
                 <Sertificate />
-
               </section>
-
               <section className={styles.stickySection}>
                 <StickyZoomSection />
               </section>
             </section>
           </main>
-
           <Footer />
         </div>
       </div>

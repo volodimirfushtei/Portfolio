@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import { motion, useInView } from "framer-motion";
-import { gsap } from "gsap";
+import gsap from "gsap";
 import styles from "./CtaSection.module.css";
 
 const listItems = [
@@ -29,7 +29,26 @@ const CtaSection = () => {
   const sectionRef = useRef(null);
   const buttonRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
+  const trackRef = useRef(null);
 
+  useEffect(() => {
+    const track = trackRef.current;
+
+    const totalWidth = track.scrollWidth / 2;
+
+    const tween = gsap.to(track, {
+      x: -totalWidth,
+      duration: 20,
+      ease: "none",
+      repeat: -1,
+    });
+
+    // hover pause
+    track.addEventListener("mouseenter", () => tween.pause());
+    track.addEventListener("mouseleave", () => tween.resume());
+
+    return () => tween.kill();
+  }, []);
   const isInView = useInView(sectionRef, {
     once: false,
     margin: "-100px",
@@ -46,11 +65,11 @@ const CtaSection = () => {
   // GSAP Magnetic Effect
   const handleMouseMove = useCallback((e) => {
     if (isMobile || !buttonRef.current) return;
-    
+
     const rect = buttonRef.current.getBoundingClientRect();
     const x = e.clientX - (rect.left + rect.width / 2);
     const y = e.clientY - (rect.top + rect.height / 2);
-    
+
     gsap.to(buttonRef.current, {
       x: x * 0.3,
       y: y * 0.3,
@@ -61,7 +80,7 @@ const CtaSection = () => {
 
   const handleMouseLeave = useCallback(() => {
     if (isMobile || !buttonRef.current) return;
-    
+
     gsap.to(buttonRef.current, {
       x: 0,
       y: 0,
@@ -90,14 +109,15 @@ const CtaSection = () => {
 
   return (
     <section ref={sectionRef} className={styles.section}>
-      {/* ── Visual Overlays ── */}
+      {/* Visual Overlays */}
       <div className={styles.noise} aria-hidden="true" />
       <div className={styles.scanlines} aria-hidden="true" />
-      
-      {/* ── Marquee (Subtle Background) ── */}
-      <div className={styles.marqueeWrap} aria-hidden="true">
+
+      {/* Marquee (Subtle Background) */}
+      <div className={styles.marqueeWrap} aria-hidden="true" >
         <motion.div
           className={styles.row}
+          ref={trackRef}
           animate={{ x: ["0%", "-50%"] }}
           transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
         >
@@ -107,6 +127,7 @@ const CtaSection = () => {
         </motion.div>
         <motion.div
           className={styles.row}
+          ref={trackRef}
           animate={{ x: ["-50%", "0%"] }}
           transition={{ duration: 70, repeat: Infinity, ease: "linear" }}
         >
@@ -142,16 +163,16 @@ const CtaSection = () => {
           </motion.p>
 
           {/* Magnetic Button */}
-          <motion.div 
-            className={styles.buttonWrapper} 
+          <motion.div
+            className={styles.buttonWrapper}
             variants={itemVariants}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            whileHover={{ scale: 1.05 }}  
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-           data-cursor="hover"
-                data-cursor-type="link"
-                data-cursor-text="Let's work together"
+            data-cursor="hover"
+            data-cursor-type="link"
+            data-cursor-text="Let's work together"
           >
             <a
               href="https://webflow.com/templates/designers/brandbes"
@@ -159,8 +180,6 @@ const CtaSection = () => {
               rel="noopener noreferrer"
               className={styles.button}
               ref={buttonRef}
-              
-
             >
               <span className={styles.buttonText}>Experience Excellence</span>
               <span className={styles.buttonArrow}>→</span>

@@ -62,13 +62,22 @@ const HeroMedia = () => {
           { scaleX: 1, duration: 0.6, ease: "power2.out" },
           "-=0.5"
         )
-        // Content stagger
-        .fromTo(
-          contentRef.current.querySelectorAll("[data-reveal]"),
-          { y: 40, opacity: 0 },
-          { y: 0, opacity: 1, stagger: 0.12, duration: 0.8 },
-          "-=0.4"
-        );
+      // Content stagger
+      gsap.fromTo(
+        contentRef.current.querySelectorAll("[data-reveal]"),
+        {
+          y: 60,
+          opacity: 0,
+          filter: "blur(10px)",
+        },
+        {
+          y: 0,
+          opacity: 1,
+          filter: "blur(0px)",
+          stagger: 0.08,
+          duration: 1,
+        }
+      );
 
       // Counter animation
       if (counterRef.current) {
@@ -143,9 +152,13 @@ const HeroMedia = () => {
         src="/images/preview.webp"
         alt="Creative Process"
         className={styles.image}
-        fetchPriority="high"
+        fetchpriority="high"
         decoding="async"
         loading="eager"
+        data-scroll
+
+        data-lag="0.1"
+
       />
 
       {/* ── Cinematic gradient overlay ── */}

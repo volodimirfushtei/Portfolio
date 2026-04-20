@@ -1,0 +1,397 @@
+/* CtaSection.module.css — Awwwards Editorial Premium */
+
+.section {
+  position: relative;
+  width: 100%;
+  min-height: 80vh;
+  padding: clamp(6rem, 12vw, 12rem) 0;
+  background: transparent;
+  overflow: hidden;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+}
+
+/* ═══════════════════════════════════════════
+   NOISE / SCANLINE LAYER
+═══════════════════════════════════════════ */
+.noise {
+  position: absolute;
+  inset: -60%;
+  width: 220%;
+  height: 220%;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 220px 220px;
+  opacity: 0.025;
+}
+
+.scanlines {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.03) 0px,
+    rgba(0, 0, 0, 0.03) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+}
+
+/* ═══════════════════════════════════════════
+   MARQUEE BACKGROUND
+═══════════════════════════════════════════ */
+.marqueeWrap {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%) rotate(-4deg) scale(1.1);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 2vw, 2rem);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.5;
+}
+
+.row {
+  display: flex;
+  gap: clamp(1rem, 2vw, 2rem);
+  will-change: transform;
+}
+
+.image {
+  width: clamp(240px, 20vw, 400px);
+  height: clamp(160px, 15vw, 280px);
+  object-fit: cover;
+  flex-shrink: 0;
+  filter: grayscale(2);
+  border-radius: 16px;
+  border: 1px solid var(--color-border, rgba(255, 255, 255, 0.1));
+}
+
+.marqueeOverlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at center,
+    transparent 0%,
+    transparent 80%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+  z-index: 3;
+}
+
+/* ═══════════════════════════════════════════
+   CONTAINER
+═══════════════════════════════════════════ */
+.container {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 clamp(1.5rem, 4vw, 5rem);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* ═══════════════════════════════════════════
+   EYEBROW
+═══════════════════════════════════════════ */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 2.5rem;
+}
+
+.eyebrowLine {
+  display: block;
+  width: 36px;
+  height: 1px;
+  background: var(--color-accent, #c0a080);
+}
+
+.eyebrowText {
+  font-family: var(--font-mono, 'DM Mono', monospace);
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-secondary, #a0a0a0);
+}
+
+/* ═══════════════════════════════════════════
+   HEADING
+═══════════════════════════════════════════ */
+.heading {
+  font-family: var(--font-display, 'Bebas Neue', sans-serif);
+  font-size: clamp(3.5rem, 10vw, 9rem);
+  font-weight: 400;
+  line-height: 0.85;
+  letter-spacing: -0.01em;
+  color: var(--color-title, #ffffff);
+  margin: 0 0 2rem;
+  text-transform: uppercase;
+}
+
+.headingAccent {
+  display: block;
+  background: linear-gradient(
+    120deg,
+    var(--color-text, #f5f5f0) 0%,
+    var(--color-secondary, #d0d0c8) 50%,
+    var(--color-text, #f5f5f0) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 6s linear infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   SUBHEADING
+═══════════════════════════════════════════ */
+.subheading {
+  font-family: var(--font-mono, 'DM Mono', monospace);
+  font-size: clamp(0.85rem, 1.2vw, 1.1rem);
+  color: var(--color-secondary, #a0a0a0);
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  margin: 0 0 3.5rem;
+  max-width: 540px;
+  opacity: 0.8;
+}
+
+.highlight {
+  color: var(--color-text, #ffffff);
+  font-weight: 500;
+}
+
+/* ═══════════════════════════════════════════
+   CTA BUTTON
+═══════════════════════════════════════════ */
+.buttonWrapper {
+  position: relative;
+  z-index: 20;
+  cursor: pointer;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.2rem 2.8rem;
+  background: var(--color-button-bg, #ffffff);
+  color: var(--color-button-text, #000000);
+  font-family: var(--font-mono, 'DM Mono', monospace);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 0;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.4s ease;
+}
+
+.button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-button-text, #000000);
+  transform: translateX(-101%);
+  transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+  z-index: 0;
+}
+
+.button:hover::before {
+  transform: translateX(0);
+}
+
+.button:hover {
+  color: var(--color-button-bg, #ffffff);
+}
+
+.buttonText,
+.buttonArrow {
+  position: relative;
+  z-index: 1;
+  transition: transform 0.3s ease;
+}
+
+.button:hover .buttonArrow {
+  transform: translateX(4px);
+}
+
+/* ═══════════════════════════════════════════
+   LIST / TAGS
+═══════════════════════════════════════════ */
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(0.5rem, 1vw, 1rem);
+  list-style: none;
+  padding: 0;
+  margin: 4rem 0 0;
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 1.25rem;
+  border: 1px solid var(--color-border, rgba(255, 255, 255, 0.1));
+  background: var(--color-overlay, rgba(0, 0, 0, 0.3));
+  font-family: var(--font-mono, 'DM Mono', monospace);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: var(--color-secondary, #a0a0a0);
+  transition: all 0.3s ease;
+  cursor: default;
+  backdrop-filter: blur(4px);
+}
+
+.listItem:hover {
+  border-color: var(--color-accent, #c0a080);
+  color: var(--color-text, #ffffff);
+  background: var(--color-surface, rgba(0, 0, 0, 0.5));
+  transform: translateY(-2px);
+}
+
+.listItem i {
+  font-size: 0.9rem;
+  color: var(--color-accent, #c0a080);
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+═══════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .section {
+    min-height: auto;
+    padding: 8rem 0;
+  }
+
+  .marqueeWrap {
+    opacity: 0.08;
+  }
+}
+
+@media (max-width: 768px) {
+  .heading {
+    font-size: clamp(3rem, 14vw, 5rem);
+  }
+
+  .subheading {
+    margin-bottom: 2.5rem;
+  }
+
+  .list {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .listItem {
+    width: 100%;
+    max-width: 320px;
+    justify-content: center;
+  }
+
+  .button {
+    padding: 1rem 2rem;
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 6rem 0;
+  }
+
+  .eyebrow {
+    margin-bottom: 1.5rem;
+  }
+
+  .heading {
+    margin-bottom: 1.5rem;
+  }
+
+  .subheading {
+    font-size: 0.8rem;
+    margin-bottom: 2rem;
+  }
+
+  .button {
+    padding: 0.9rem 1.8rem;
+  }
+
+  .list {
+    margin: 3rem 0 0;
+  }
+
+  .listItem {
+    padding: 0.6rem 1rem;
+    font-size: 0.65rem;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   ACCESSIBILITY & REDUCED MOTION
+═══════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  .row,
+  .headingAccent,
+  .button::before,
+  .buttonArrow,
+  .listItem {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+
+  .button:hover .buttonArrow {
+    transform: none;
+  }
+}
+
+/* Focus styles for accessibility */
+.button:focus-visible {
+  outline: 2px solid var(--color-accent, #c0a080);
+  outline-offset: 4px;
+}
+
+.listItem:focus-visible {
+  outline: 2px solid var(--color-accent, #c0a080);
+  outline-offset: 2px;
+}
+
+/* Custom cursor hint for desktop */
+@media (hover: hover) {
+  .buttonWrapper {
+    cursor: none;
+  }
+}

@@ -11,12 +11,35 @@
   padding:  0;
   height: 100%;
   border-radius: 8px;
-  padding: clamp(1rem, 2vw, 2rem) clamp(1rem, 2vw, 2rem);
-  background: transparent;
+  padding: clamp(1rem, 2vw, 1rem) clamp(1rem, 2vw, 1rem);
+  background: var(--color-page-gradient);
+  border-radius: 18px; 
+  border: 1px solid var(--color-border);
+  box-shadow: 0 0 20px var(--color-secondary);
 }
+.section::before {
+  content: "";
+  position: absolute;
+  width: 500px;
+  height: 500px;
 
+  background: radial-gradient(
+    circle,
+    rgba(232, 243, 60, 0.08),
+    transparent
+  );
+
+  top: 20%;
+  left: 30%;
+  filter: blur(80px);
+  pointer-events: none;
+}
 .inner {
   position: relative;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
   z-index: 1;
   width: 100%;
   height: 100%;
@@ -31,10 +54,10 @@
 
 .grid {
 
-  display: grid;
+ display: grid;
   grid-template-columns: repeat(3, 1fr);
-  
-  background: transparent;
+  row-gap: 20px;
+  column-gap: 10px;
   
 }
 
@@ -43,19 +66,27 @@
 ═══════════════════════════════════ */
 
 .cell {
-  position: relative;
-  padding: clamp(1rem, 2vw, 2rem);
-  background: transparent;
+   position: relative;
+  padding: clamp(1.2rem, 2vw, 2rem);
+  
+
+  background: var(--color-page-gradient);
+  backdrop-filter: blur(12px);
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 240px; /* Lock height to 240px (2 rows = 480px total) */
+
+  height: 220px;
+  border-radius: 9px; 
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform, box-shadow;
+
+  border: 1px solid rgba(255, 255, 255, 0.06);
   overflow: hidden;
-  transition: all 0.3s ease;
-  will-change: transform, opacity;
-  border-right: 1px solid var(--color-border);
 }
+
 
 .cell:hover {
   transform: translateY(-2px);
@@ -66,27 +97,23 @@
 ═══════════════════════════════════ */
 
 .cellIndex {
-  position: absolute;
-  top: 0.85rem;
-  right: 1rem;
-  font-family: "DM Mono", monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.18em;
-  color: var(--color-secondary, #d0d0c8);
-  opacity: 0.4;
-  transition: opacity 0.3s ease;
+  font-size: 0.9rem;
+  opacity: 0.25;
+  letter-spacing: 0.2em;
 }
 
 .cell:hover .cellIndex {
-  opacity: 0.8;
+  opacity: 0.6;
 }
+
+
 
 /* ═══════════════════════════════════
    COUNTER
 ═══════════════════════════════════ */
 
 .valueWrap {
-  margin-bottom: 1rem;
+  margin-bottom: 2.6rem;
   display: flex;
   justify-content: center;
   align-items: baseline;
@@ -100,7 +127,7 @@
 
 .counterNum {
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  font-size: clamp(3.5rem, 6vw, 6.5rem);
   line-height: 0.9;
   color: var(--color-title, #f5f5f0);
   transition: all 0.3s ease;
@@ -132,8 +159,8 @@
 
 .label {
   font-family: var(--font-mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.28em;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--color-secondary, #d0d0c8);
   text-align: center;

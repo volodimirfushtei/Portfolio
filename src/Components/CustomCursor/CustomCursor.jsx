@@ -7,11 +7,10 @@ const CustomCursor = () => {
   const location = useLocation();
   const cursorX = useMotionValue(0);
   const cursorY = useMotionValue(0);
-  
-  // Premium smooth config
-  const springConfig = { damping: 28, stiffness: 200, mass: 0.5 };
-  const springX = useSpring(cursorX, springConfig);
-  const springY = useSpring(cursorY, springConfig);
+
+
+  const smoothX = useSpring(cursorX, { stiffness: 300, damping: 25 });
+  const smoothY = useSpring(cursorY, { stiffness: 300, damping: 25 });
 
   const [ripples, setRipples] = useState([]);
   const [hoverText, setHoverText] = useState("");
@@ -64,7 +63,7 @@ const CustomCursor = () => {
         if (el.hasAttribute("data-cursor-listener")) return;
         el.setAttribute("data-cursor-listener", "true");
 
-        const text = el.getAttribute("data-cursor-text") || ""; 
+        const text = el.getAttribute("data-cursor-text") || "";
 
         el.addEventListener("mouseenter", () => {
           setIsHovering(true);
@@ -106,8 +105,8 @@ const CustomCursor = () => {
       <motion.div
         className={`${styles.cursor} ${isHovering ? styles.hovering : ""} ${isHidden ? styles.hidden : ""}`}
         style={{
-          x: springX,
-          y: springY,
+          x: smoothX,
+          y: smoothY,
         }}
       >
         <div className={styles.cursorTextInner}>
@@ -118,7 +117,7 @@ const CustomCursor = () => {
           )}
         </div>
       </motion.div>
-      
+
       {ripples.map((r) => (
         <motion.div
           key={r.id}
@@ -126,11 +125,11 @@ const CustomCursor = () => {
           initial={{ scale: 0.5, opacity: 1 }}
           animate={{ scale: 3.5, opacity: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          style={{ 
-            left: 0, 
-            top: 0, 
-            x: r.x, 
-            y: r.y 
+          style={{
+            left: 0,
+            top: 0,
+            x: r.x,
+            y: r.y
           }}
         />
       ))}

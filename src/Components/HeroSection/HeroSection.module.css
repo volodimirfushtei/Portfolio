@@ -8,7 +8,7 @@
   --hero-padding-bottom: 4rem;
   --hero-padding-x: 1rem;
   --hero-gap: 2rem;
-  --title-font-size: 3rem;
+  --title-font-size: 5rem;
   --title-line-height: 1;
   --eyebrow-gap: 0.5rem;
   --button-padding: 0.85rem 1.2rem;
@@ -402,7 +402,7 @@ scrollbar-width: none;
 
 /* ── Title ── */
 .title {
-  font-family: var(--font-display, "Bebas Neue", sans-serif);
+  font-family: var(--font-body, "Bebas Neue", sans-serif);
   font-size: var(--title-font-size);
   font-weight: 400;
   line-height: var(--title-line-height);
@@ -435,7 +435,7 @@ scrollbar-width: none;
 
 @media (min-width: 1024px) {
   .title {
-    --title-font-size: 5.5rem;
+    font-size: clamp(4rem, 8vw, 16rem);
   }
 }
 
@@ -731,6 +731,8 @@ scrollbar-width: none;
   position: relative;
   width: 100%;
   max-width: 500px;
+  border-radius: 18px; 
+  box-shadow: 0 0 20px var(--color-secondary);
   margin: 0 auto;
   z-index: 8;
 }

@@ -1,0 +1,496 @@
+/* homePage.module.css — Mobile First Premium Design */
+
+/* ═══════════════════════════════════════════
+   CSS VARIABLES
+═══════════════════════════════════════════ */
+:root {
+  --section-padding-mobile: 3rem 0;
+  --section-padding-tablet: 4rem 0;
+  --section-padding-desktop: 8rem 0;
+  --section-padding-large: 12rem 0;
+}
+
+/* ═══════════════════════════════════════════
+   CONTAINER
+═══════════════════════════════════════════ */
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--color-text, #ffffff);
+  width: 100%;
+  min-height: 100vh;
+  background: var(--color-gradient);
+  overflow-x: hidden;
+  z-index: 1;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+.scrollContainer {
+  position: relative;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* ═══════════════════════════════════════════
+   SECTION BASE
+═══════════════════════════════════════════ */
+.section {
+  position: relative;
+  padding: var(--section-padding-mobile);
+  width: 100%;
+  max-width: 100%;
+  background: transparent;
+  z-index: 10;
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: var(--section-padding-tablet);
+  }
+}
+
+@media (min-width: 1024px) {
+  .section {
+    padding: var(--section-padding-desktop);
+  }
+}
+
+@media (min-width: 1440px) {
+  .section {
+    padding: var(--section-padding-large);
+  }
+}
+
+/* ═══════════════════════════════════════════
+   HERO SECTION WRAPPER
+═══════════════════════════════════════════ */
+.heroSectionWrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  z-index: 5;
+}
+
+/* ═══════════════════════════════════════════
+   3D CANVAS CONTAINER (Fixed Background)
+═══════════════════════════════════════════ */
+.canvasContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  background: transparent;
+}
+
+/* Canvas Fallback / Loading State */
+.canvasFallback {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  color: var(--color-text, #ffffff);
+  font-family: var(--font-mono, monospace);
+  font-size: 0.875rem;
+  z-index: 1;
+}
+
+.loadingSpinner {
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-top-color: var(--color-accent, #ed0c4c);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Canvas Error */
+.canvasErrorContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: var(
+    --color-page-gradient,
+    linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%)
+  );
+}
+
+.canvasError {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(16px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.canvasErrorText {
+  color: var(--color-accent, #ed0c4c);
+  font-size: 1.25rem;
+  text-align: center;
+  font-family: var(--font-mono, monospace);
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .canvasErrorText {
+    font-size: 1.5rem;
+  }
+}
+
+.canvasErrorBtn {
+  color: var(--color-text, #ffffff);
+  font-size: 0.875rem;
+  text-align: center;
+  cursor: pointer;
+  padding: 0.75rem 1.5rem;
+  border-radius: 99px;
+  transition: all 0.3s ease;
+  border: 1px solid var(--color-border, rgba(255, 255, 255, 0.2));
+  background: transparent;
+  font-family: var(--font-mono, monospace);
+}
+
+.canvasErrorBtn:hover {
+  background: var(--color-accent, #ed0c4c);
+  border-color: var(--color-accent, #ed0c4c);
+  transform: translateY(-2px);
+}
+
+/* ═══════════════════════════════════════════
+   MAIN CONTENT
+═══════════════════════════════════════════ */
+.main {
+  position: relative;
+  width: 100%;
+  background: transparent;
+  z-index: 10;
+}
+
+/* ═══════════════════════════════════════════
+   CARUSEL SECTION
+═══════════════════════════════════════════ */
+.carusel {
+  background: transparent;
+  padding: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════════
+   CTA SECTION
+═══════════════════════════════════════════ */
+.ctaSection {
+  position: relative;
+  width: 100%;
+  background: transparent;
+  padding: 2rem 0;
+}
+
+/* ═══════════════════════════════════════════
+   CERTIFICATE SECTION
+═══════════════════════════════════════════ */
+.sertificate {
+  background: transparent;
+  position: relative;
+  width: 100%;
+}
+
+/* ═══════════════════════════════════════════
+   STICKY SECTION
+═══════════════════════════════════════════ */
+.stickySection {
+  position: relative;
+  width: 100%;
+  background: transparent;
+}
+
+/* ═══════════════════════════════════════════
+   CONTENT LAYOUT
+═══════════════════════════════════════════ */
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1400px;
+  margin: 0 auto;
+  gap: 2rem;
+}
+
+.textContent {
+  flex: 1;
+  min-width: 280px;
+  padding: 2rem;
+}
+
+@media (max-width: 768px) {
+  .textContent {
+    padding: 1rem;
+    text-align: center;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   TYPOGRAPHY
+═══════════════════════════════════════════ */
+.title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.name {
+  color: var(--color-title, #ffffff);
+}
+
+.paragraph {
+  font-size: clamp(0.875rem, 2vw, 1.2rem);
+  color: var(--color-secondary, #94a3b8);
+  margin-bottom: 2rem;
+  max-width: 600px;
+}
+
+@media (max-width: 768px) {
+  .paragraph {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   BUTTON
+═══════════════════════════════════════════ */
+.button {
+  background: linear-gradient(
+    135deg,
+    var(--color-accent, #ed0c4c),
+    var(--color-accent-hover, #ff6b6b)
+  );
+  color: white;
+  border: none;
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 99px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 2rem;
+}
+
+.button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(237, 12, 76, 0.3);
+}
+
+@media (max-width: 768px) {
+  .button {
+    margin: 0 auto 2rem;
+    display: block;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   IMAGE WRAPPER
+═══════════════════════════════════════════ */
+.imageWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  min-width: 280px;
+  border: 1px solid var(--color-border, rgba(255, 255, 255, 0.1));
+  border-radius: 20px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+@media (max-width: 768px) {
+  .imageWrapper {
+    max-width: 100%;
+    margin-top: 1rem;
+  }
+}
+
+.profileImage {
+  width: 100%;
+  height: auto;
+  max-height: 500px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+@media (max-width: 768px) {
+  .profileImage {
+    height: auto;
+    max-height: 400px;
+  }
+}
+
+@media (max-width: 480px) {
+  .profileImage {
+    max-height: 320px;
+  }
+}
+
+.profileImage:hover {
+  transform: scale(1.02);
+}
+
+/* ═══════════════════════════════════════════
+   IMAGE BADGE
+═══════════════════════════════════════════ */
+.imageBadge {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  color: var(--color-text, #ffffff);
+  border-radius: 99px;
+  font-family: var(--font-mono, monospace);
+}
+
+/* ═══════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════ */
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-30px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
+}
+
+.animate_bounce {
+  animation: bounce 1s infinite;
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+═══════════════════════════════════════════ */
+/* Tablet: 768px+ */
+@media (min-width: 768px) {
+  .content {
+    flex-direction: row;
+  }
+
+  .textContent {
+    text-align: left;
+  }
+}
+
+/* Mobile: ≤ 480px */
+@media (max-width: 480px) {
+  .skillsSection {
+    margin: 0.5rem auto;
+    max-width: 100%;
+  }
+
+  .imageWrapper {
+    border-radius: 16px;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .paragraph {
+    font-size: 0.9rem;
+  }
+
+  .textContent {
+    padding: 0.75rem;
+  }
+
+  .button {
+    margin: 0 auto 1rem;
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .imageBadge {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.75rem;
+  }
+}
+
+/* Small mobile: ≤ 360px */
+@media (max-width: 360px) {
+  .textContent {
+    padding: 0.5rem;
+  }
+
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .paragraph {
+    font-size: 0.85rem;
+  }
+
+  .carusel {
+    padding: 0 0.5rem;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   REDUCED MOTION
+═══════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .loadingSpinner {
+    animation: none;
+  }
+
+  .button:hover {
+    transform: none;
+  }
+
+  .profileImage:hover {
+    transform: none;
+  }
+}

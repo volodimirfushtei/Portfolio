@@ -1,17 +1,16 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, lazy } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Typewriter } from "react-simple-typewriter";
 import styles from "./HeroSection.module.css";
-import HeroMedia from "../HeroMedia/HeroMedia";
-import { useMagnetic } from "../../hooks/useMagnetic";
 
+const HeroMedia = lazy(() => import("../HeroMedia/HeroMedia.jsx"));
 gsap.registerPlugin(ScrollTrigger);
 
 const HeroSection = () => {
   const sectionRef = useRef(null);
   const bgRef = useRef(null);
-  const noiseRef = useRef(null);
+
   const gridRefs = useRef([]);
   const textRef = useRef(null);
   const eyebrowRef = useRef(null);
@@ -24,203 +23,7 @@ const HeroSection = () => {
   const scrollLineRef = useRef(null);
   const taglineRef = useRef(null);
 
-  // Magnetic refs
-  const magneticPrimary = useMagnetic(0.3);
-  const magneticSecondary = useMagnetic(0.3);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      /* ── 1. Scanline loop on the noise layer ── */
-      if (noiseRef.current) {
-        gsap.to(noiseRef.current, {
-          backgroundPositionY: "100%",
-          duration: 18,
-          ease: "none",
-          repeat: -1,
-        });
-      }
-
-      /* ── 2. Master entry timeline ── */
-      const tl = gsap.timeline({
-        defaults: { ease: "power4.out" },
-        delay: 0.1,
-      });
-
-      // Background pan up
-      if (bgRef.current) {
-        tl.fromTo(
-          bgRef.current,
-          { yPercent: 8, opacity: 0 },
-          { yPercent: 0, opacity: 1, duration: 1.6 },
-        );
-      }
-
-      // Grid fade
-      gridRefs.current.forEach(grid => {
-        if (grid) {
-          tl.fromTo(
-            grid,
-            { opacity: 0 },
-            { opacity: 0.2, duration: 1 },
-            "-=1.2",
-          );
-        }
-      });
-
-      // Eyebrow clip reveal
-      if (eyebrowRef.current) {
-        tl.fromTo(
-          eyebrowRef.current,
-          { clipPath: "inset(0 100% 0 0)", opacity: 0 },
-          {
-            clipPath: "inset(0 0% 0 0)",
-            opacity: 1,
-            duration: 0.9,
-            ease: "power3.out",
-          },
-          "-=0.8",
-        );
-      }
-
-      // Title lines stagger up
-      if (titleRef.current) {
-        tl.fromTo(
-          titleRef.current.querySelectorAll(`.${styles.titleLine} > span`),
-          { y: "110%", opacity: 0 },
-          {
-            y: "0%",
-            opacity: 1,
-            stagger: 0.08,
-            duration: 1.0,
-            ease: "expo.out",
-          },
-          "-=0.5",
-        );
-      }
-
-      // Tagline shimmer in
-      if (taglineRef.current) {
-        tl.fromTo(
-          taglineRef.current,
-          { opacity: 0, letterSpacing: "0.5em" },
-          {
-            opacity: 1,
-            letterSpacing: "0.02em",
-            duration: 0.9,
-            ease: "power2.out",
-          },
-          "-=0.6",
-        );
-      }
-
-      // Subtitle
-      if (subtitleRef.current) {
-        tl.fromTo(
-          subtitleRef.current,
-          { opacity: 0, y: 16 },
-          { opacity: 1, y: 0, duration: 0.7 },
-          "-=0.5",
-        );
-      }
-
-      // Buttons
-      if (buttonsRef.current && buttonsRef.current.children) {
-        tl.fromTo(
-          buttonsRef.current.children,
-          { opacity: 0, y: 20, scale: 0.96 },
-          { opacity: 1, y: 0, scale: 1, stagger: 0.1, duration: 0.55 },
-          "-=0.4",
-        );
-      }
-
-      // Media panel slide in (зменшуємо ефект для кращої видимості)
-      if (mediaRef.current) {
-        tl.fromTo(
-          mediaRef.current,
-          { opacity: 0, x: 30, clipPath: "inset(0 0 0 20%)" },
-          {
-            opacity: 1,
-            x: 0,
-            clipPath: "inset(0 0 0 0%)",
-            duration: 1.0,
-            ease: "expo.out",
-          },
-          "-=0.8",
-        );
-      }
-
-      // Corner badge
-      if (cornerRef.current) {
-        tl.fromTo(
-          cornerRef.current,
-          { opacity: 0, y: -10 },
-          { opacity: 1, y: 0, duration: 0.5 },
-          "-=0.6",
-        );
-      }
-
-      // Scroll indicator draw
-      if (scrollLineRef.current) {
-        tl.fromTo(
-          scrollLineRef.current,
-          { scaleY: 0 },
-          { scaleY: 1, transformOrigin: "top", duration: 0.8 },
-        );
-      }
-
-      /* ── 3. Scroll parallax (зменшуємо для кращої видимості) ── */
-      const scrollTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top+=80 top",
-          end: "bottom top",
-          scrub: 1.0,
-        },
-      });
-
-      if (bgRef.current) {
-        scrollTl.to(bgRef.current, { yPercent: 15, opacity: 0.4, ease: "none" }, 0);
-      }
-      if (textRef.current) {
-        scrollTl.to(textRef.current, { yPercent: 20, opacity: 0.4, ease: "none" }, 0);
-      }
-      if (mediaRef.current) {
-        scrollTl.to(
-          mediaRef.current,
-          { yPercent: 8, scale: 1.02, opacity: 0.4, ease: "none" },
-          0,
-        );
-      }
-
-      /* ── 4. Scroll indicator fade ── */
-      if (scrollIndicatorRef.current) {
-        gsap.to(scrollIndicatorRef.current, {
-          opacity: 0,
-          pointerEvents: "none",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top+=80 top",
-            end: "top+=280 top",
-            scrub: 0.6,
-          },
-        });
-      }
-
-      /* ── 5. Scroll line pulse loop ── */
-      if (scrollLineRef.current) {
-        gsap.to(scrollLineRef.current, {
-          opacity: 0,
-          y: 20,
-          duration: 2,
-          repeat: -1,
-          ease: "power2.inOut",
-          delay: 1.5,
-        });
-      }
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
 
   // Функція для додавання grid refs
   const addToGridRefs = (el) => {
@@ -230,19 +33,25 @@ const HeroSection = () => {
   };
 
   return (
-    <section ref={sectionRef} className={styles.hero}>
+    <section ref={sectionRef} className={styles.hero} >
       {/* ── Background ── */}
-      <div ref={bgRef} className={styles.gradientBackground} aria-hidden="true" />
+      <div ref={bgRef} className={styles.gradientBackground} aria-hidden="true" data-scroll data-speed="0.2" data-lag="0.2" />
       {/* ── Grid елементи ── */}
       <div
         ref={addToGridRefs}
         className={styles.gridBlur1}
         aria-hidden="true"
+        data-scroll
+        data-speed="0.2"
+        data-lag="0.2"
       />
       <div
         ref={addToGridRefs}
         className={styles.gridBlur2}
         aria-hidden="true"
+        data-scroll
+        data-speed="0.2"
+        data-lag="0.2"
       />
       {/* ── Corner index badge ── */}
       <div ref={cornerRef} className={styles.cornerBadge} aria-hidden="true">
@@ -271,7 +80,7 @@ const HeroSection = () => {
       <div className={styles.heroInner}>
         <div className={styles.content}>
           {/* LEFT — Text column */}
-          <div ref={textRef} className={styles.textContent}>
+          <div ref={textRef} className={styles.textContent} data-scroll data-speed="0.4" data-lag="0.2">
             {/* Eyebrow */}
             <div ref={eyebrowRef} className={styles.eyebrow}>
               <span className={styles.eyebrowLine} />
@@ -385,6 +194,9 @@ const HeroSection = () => {
 
           {/* RIGHT — Media column */}
           <div
+            data-scroll
+            data-speed="0.5"
+            data-lag="0.2"
             data-cursor="hover"
             data-cursor-text="Interactive media"
             data-cursor-type="media"

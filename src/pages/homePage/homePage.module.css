@@ -6,7 +6,7 @@
 :root {
   --section-padding-mobile: 3rem 0;
   --section-padding-tablet: 4rem 0;
-  --section-padding-desktop: 8rem 0;
+  --section-padding-desktop: 12rem 0;
   --section-padding-large: 12rem 0;
 }
 
@@ -21,17 +21,20 @@
   color: var(--color-text, #ffffff);
   width: 100%;
   min-height: 100vh;
-  background: transparent;
+  background: var(--color-page-gradient);
   overflow-x: hidden;
   z-index: 1;
   scroll-behavior: smooth;
   scrollbar-width: none;
+
+  transition: opacity 0.3s ease;
 }
 
-.scrollContainer {
+.gridBg {
   position: relative;
   width: 100%;
   overflow-x: hidden;
+  
 }
 
 /* ═══════════════════════════════════════════
@@ -39,7 +42,7 @@
 ═══════════════════════════════════════════ */
 .section {
   position: relative;
-  padding: var(--section-padding-mobile);
+  padding: var(--section-padding-desktop);
   width: 100%;
   max-width: 100%;
   background: transparent;
@@ -129,7 +132,10 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: var(--color-page-gradient, linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%));
+  background: var(
+    --color-page-gradient,
+    linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%)
+  );
 }
 
 .canvasError {
@@ -284,7 +290,11 @@
    BUTTON
 ═══════════════════════════════════════════ */
 .button {
-  background: linear-gradient(135deg, var(--color-accent, #ed0c4c), var(--color-accent-hover, #ff6b6b));
+  background: linear-gradient(
+    135deg,
+    var(--color-accent, #ed0c4c),
+    var(--color-accent-hover, #ff6b6b)
+  );
   color: white;
   border: none;
   padding: 0.8rem 2rem;
@@ -376,7 +386,11 @@
    ANIMATIONS
 ═══════════════════════════════════════════ */
 @keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
     transform: translateY(0);
   }
   40% {
@@ -399,7 +413,7 @@
   .content {
     flex-direction: row;
   }
-  
+
   .textContent {
     text-align: left;
   }
@@ -470,15 +484,15 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  
+
   .loadingSpinner {
     animation: none;
   }
-  
+
   .button:hover {
     transform: none;
   }
-  
+
   .profileImage:hover {
     transform: none;
   }

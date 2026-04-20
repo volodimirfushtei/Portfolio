@@ -7,12 +7,8 @@ const Certificate = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [isMobile, setIsMobile] = useState(false);
   const cardRef = useRef(null);
- const { scrollYProgress } = useScroll({
-    target: cardRef,
-    offset: ["start start", "end start"],
- });
- const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  
+
+
   // Responsive Check
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 1024);
@@ -35,17 +31,17 @@ const Certificate = () => {
   // GSAP Magnetic Tilt (Subtle)
   const handleMouseMove = useCallback((e) => {
     if (isMobile || !cardRef.current) return;
-    
+
     const rect = cardRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    
+
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    
+
     const rotateX = (y - centerY) / 20;
     const rotateY = (centerX - x) / 20;
-    
+
     gsap.to(cardRef.current, {
       rotateX: rotateX,
       rotateY: rotateY,
@@ -56,7 +52,7 @@ const Certificate = () => {
 
   const handleMouseLeave = useCallback(() => {
     if (isMobile || !cardRef.current) return;
-    
+
     gsap.to(cardRef.current, {
       rotateX: 0,
       rotateY: 0,
@@ -73,7 +69,7 @@ const Certificate = () => {
 
       <div className={styles.wrapper}>
         {/* Info Column */}
-        <div className={styles.infoContainer}>
+        <div className={styles.infoContainer} data-scroll data-speed="0.2" data-scroll-delay="0.2">
           <motion.div
             className={styles.infoSubtitle}
             initial={{ opacity: 0, y: 20 }}
@@ -84,7 +80,7 @@ const Certificate = () => {
             <span className={styles.infoSubtitleText}>Ivano-Frankivsk, Ukraine</span>
           </motion.div>
 
-          <motion.h2 
+          <motion.h2
             className={styles.infoTitle}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -112,12 +108,14 @@ const Certificate = () => {
 
         {/* Card Column */}
         <div className={styles.cardContainer} data-cursor="hover"
-                data-cursor-type="link"
-                data-cursor-text="GOIT sertificate"  >
+          data-cursor-type="link"
+          data-scroll
+          data-speed="0.4"
+          data-scroll-delay="0.2"
+          data-cursor-text="GOIT sertificate"  >
           <motion.div
             className={styles.card}
-            ref={cardRef}
-            style={{ y: bgY}}  
+
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             initial={{ opacity: 0, scale: 0.95 }}
@@ -159,8 +157,8 @@ const Certificate = () => {
               download
               className={styles.downloadButton}
               data-cursor="hover"
-                data-cursor-type="link"
-                data-cursor-text="Download Sertificate" 
+              data-cursor-type="link"
+              data-cursor-text="Download Sertificate"
             >
               <span className={styles.downloadText}>Download PDF</span>
               <span className={styles.downloadIcon}>→</span>

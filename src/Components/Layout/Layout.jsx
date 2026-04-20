@@ -1,32 +1,61 @@
 import { Outlet } from "react-router-dom";
 
 import { AnimatePresence, motion } from "framer-motion";
-
+import ScrollToTopBtn from "../ScrollToTopBtn/ScrollToTopBtn";
 import Header from "../Header/Header";
-
+import { ScrollSmoother } from "gsap/ScrollSmoother";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLayoutEffect } from "react";
+import { useRef } from "react";
+import gsap from "gsap";
 import s from "./Layout.module.css";
 
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
 
 
- 
 
 const Layout = () => {
+
+  const wrapperRef = useRef();
+  const contentRef = useRef();
+
+  const isTouch = matchMedia("(hover: none)").matches;
+
+  if (isTouch) return;
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      const smoother = ScrollSmoother.create({
+        wrapper: " #smooth-wrapper",
+        content: "#smooth-content",
+        smooth: 1.2,
+        effects: true,
+      });
+      return () => ctx.revert();
+    });
+  }, []);
+
+
+
+
   return (
     <div className={s.layoutContainer}>
       <Header />
-
-      <motion.main
+      <ScrollToTopBtn />
+      <main
         className={`${s.mainContent} `}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.3 }}
+
       >
-        <AnimatePresence mode="wait">
-          
-          <Outlet key={location.pathname} />
-        </AnimatePresence>
-      </motion.main>
+        <div ref={wrapperRef} id="smooth-wrapper" className="wrapper overflow-hidden">
+          <div ref={contentRef} id="smooth-content" className="content will-change-transform">
+            <AnimatePresence mode="wait">
+
+              <Outlet key={location.pathname} />
+            </AnimatePresence>
+          </div>
+        </div>
+      </main>
     </div>
   );
 };
