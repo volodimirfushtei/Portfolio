@@ -83,7 +83,12 @@
   text-transform: uppercase;
   color: var(--color-secondary);
 }
-
+.headingLine {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 2.5rem;
+}
 .pageTitle {
   font-family: var(--font-display);
   font-size: clamp(3.5rem, 8vw, 6.5rem);

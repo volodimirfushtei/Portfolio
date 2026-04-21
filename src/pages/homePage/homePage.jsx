@@ -154,48 +154,7 @@ const HomePage = () => {
             <HeroSection />
           </section>
           {/* 3D Canvas - тільки на десктопі */}
-          {!isMobile && (
-            <div className={styles.canvasContainer}>
-              <Suspense
-                fallback={
-                  <div className={styles.canvasFallback}>
-                    <div className={styles.loadingSpinner} />
-                    <p>Loading 3D Model...</p>
-                  </div>
-                }
-              >
-                <Canvas
-                  key={canvasKey}
-                  dpr={[1, 1.5]} // ← Максимум 1.5, не більше
-                  performance={{ min: 0.5, max: 1 }} // ← Адаптивна якість
-                  gl={{
-                    antialias: true,
-                    powerPreference: 'high-performance',
-                    failIfMajorPerformanceCaveat: false,
-                    alpha: true,
-                    // ✅ ФІКС 4: Дозволи браузеру відновлювати контекст
-                    preserveDrawingBuffer: false,
-                    // ✅ ФІКС 5: Оптимізація для старих пристроїв
-                    precision: 'mediump',
-                    // ✅ ФІКС 6: Локальна очистка
-                    logarithmicDepthBuffer: false,
-                  }}
-                  camera={{ position: [0, 0, 5] }}
-                  onCreated={(state) => {
-                    console.log('✅ Canvas created');
 
-                    // ✅ ФІКС 7: Налаштування для стабільності
-                    state.gl.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-                    state.gl.outputColorSpace = 'srgb';
-                  }}
-                >
-                  {/* ✅ ФІКС 8: Додай Preload для оптимізації */}
-                  <Preload all />
-                  <Model progress={progress} />
-                </Canvas>
-              </Suspense>
-            </div>
-          )}
           <main className={styles.main}>
             {/* Expertise Section */}
             <section id="expertise" className={styles.section}>

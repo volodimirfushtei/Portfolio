@@ -95,7 +95,7 @@ const ContactsPage = () => {
           },
           "-=0.8"
         )
-        // ✅ ФІКС 2: Правильний селектор для CSS модулів
+
         .from(
           `.${styles.textSection} .${styles.article}`,
           {
@@ -107,7 +107,7 @@ const ContactsPage = () => {
           },
           "-=0.6"
         )
-        // ✅ ФІКС 3: Правильний селектор для соціальних посилань
+
         .from(
           `.${styles.socials} a`,
           {

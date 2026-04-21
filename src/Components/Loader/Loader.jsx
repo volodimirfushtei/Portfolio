@@ -3,9 +3,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import styles from "./Loader.module.css";
 import NoiseOverlay from "../NoiseOverlay/NoiseOverlay";
 import Logo from "../Logo/Logo";
-
+import gsap from "gsap";
 const images = [
-  {id: 0,
+  {
+    id: 0,
     srcSmall: "/images/sity-portrait.webp",
     src: "/images/sity.jpg",
     srcMedium: "/images/sity-portrait-medium.webp",
@@ -33,7 +34,7 @@ const images = [
     alt: "Editorial Design",
   },
 
-  
+
 ];
 
 const Loader = ({ onComplete }) => {
@@ -44,45 +45,64 @@ const Loader = ({ onComplete }) => {
   const [showName, setShowName] = useState(false);
 
   useEffect(() => {
-    let currentProgress = 0;
-    let intervals = [];
+    const tl = gsap.timeline({
+      defaults: { ease: "power4.out" }
+    });
 
-    const runStep = (target, speed) => {
-      return new Promise((resolve) => {
-        const interval = setInterval(() => {
-          currentProgress += 1;
-          setProgress(Math.min(currentProgress, target));
+    // Progress counter
+    let obj = { value: 0 };
 
-          if (currentProgress >= target) {
-            clearInterval(interval);
-            resolve();
-          }
-        }, speed);
-        intervals.push(interval);
-      });
-    };
+    tl.to(obj, {
+      value: 100,
+      duration: 4,
+      ease: "power2.out",
+      onUpdate: () => {
+        setProgress(Math.floor(obj.value));
+      }
+    }, 0);
 
-    const runLoading = async () => {
-      await runStep(30, 18);
-      await new Promise(r => setTimeout(r, 200));
-      setShowName(true);
+    // Name reveal
+    tl.to(`.${styles.nameSpan}`, {
+      y: 0,
+      opacity: 1,
+      stagger: 0.12,
+      duration: 1.2
+    }, 0.6);
 
-      await runStep(65, 12);
-      await new Promise(r => setTimeout(r, 200));
-      setShowLogo(true);
+    // Logo cinematic pop
+    tl.fromTo(`.${styles.logo}`,
+      { scale: 0.6, opacity: 0, rotate: -10 },
+      { scale: 1, opacity: 1, rotate: 0, duration: 1.2 }
+      , 1.2);
 
-      await runStep(85, 22);
-      await new Promise(r => setTimeout(r, 200));
-      setShowSlides(true);
+    // Slides reveal
+    tl.fromTo(`.${styles.previewSlide}`,
+      { x: 80, opacity: 0, scale: 0.9 },
+      { x: 0, opacity: 1, scale: 1, stagger: 0.1, duration: 0.8 }
+      , 2);
 
-      await runStep(100, 8);
-    };
+    // Curtains cinematic exit (🔥 важливо)
+    tl.to(`.${styles.curtain}`, {
+      y: "-120%",
+      duration: 1.4,
+      stagger: {
+        each: 0.08,
+        from: "random"
+      },
+      ease: "power4.inOut"
+    }, 3.5);
 
-    runLoading();
+    // Fade out overlay
+    tl.to(`.${styles.overlay}`, {
+      opacity: 0,
+      duration: 1,
+      onComplete: () => {
+        setIsLoading(false);
+        onComplete?.();
+      }
+    }, 4.2);
 
-    return () => {
-      intervals.forEach(clearInterval);
-    };
+    return () => tl.kill();
   }, []);
 
   useEffect(() => {
@@ -149,28 +169,28 @@ const Loader = ({ onComplete }) => {
                   animate={showSlides ? { opacity: 1, x: 0 } : {}}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
-                        <picture>
-        <source
-          media="(max-width: 480px)"
-          srcSet={img.srcSmall}
-          width="140"
-          height="278"
-        />
-        <source
-          media="(max-width: 768px)"
-          srcSet={img.srcMedium}
-          width="280"
-          height="556"
-        />
-        <img
-          src={img.src}
-          alt={img.alt}
-          className={styles.previewImage}
-          loading="lazy"
-          width="600"
-          height="905"
-        />
-      </picture>
+                  <picture>
+                    <source
+                      media="(max-width: 480px)"
+                      srcSet={img.srcSmall}
+                      width="140"
+                      height="278"
+                    />
+                    <source
+                      media="(max-width: 768px)"
+                      srcSet={img.srcMedium}
+                      width="280"
+                      height="556"
+                    />
+                    <img
+                      src={img.src}
+                      alt={img.alt}
+                      className={styles.previewImage}
+                      loading="lazy"
+                      width="600"
+                      height="905"
+                    />
+                  </picture>
                   <div className={styles.previewOverlay} />
                   <span className={styles.previewNumber}>0{index + 1}</span>
                 </motion.div>

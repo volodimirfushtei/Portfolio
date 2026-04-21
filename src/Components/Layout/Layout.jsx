@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 
-import { AnimatePresence, motion } from "framer-motion";
-import ScrollToTopBtn from "../ScrollToTopBtn/ScrollToTopBtn";
+import { AnimatePresence } from "framer-motion";
+import ScrollToTopBtn from "../ScrollToTopBtn/ScrollTotopBtn";
 import Header from "../Header/Header";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
 import { ScrollTrigger } from "gsap/ScrollTrigger";

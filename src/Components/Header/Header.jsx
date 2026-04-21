@@ -42,7 +42,7 @@ const Header = () => {
   // Анімація хедера
   useEffect(() => {
     if (!headerRef.current) return;
-    
+
     gsap.to(headerRef.current, {
       y: hidden ? -120 : 0,
       duration: 0.4,
@@ -58,13 +58,13 @@ const Header = () => {
     }
   }, [location.pathname]);
 
- const toggleMenu = useCallback(() => {
-  setMenuOpen(prev => {
-    const next = !prev;
-    document.body.style.overflow = next ? "hidden" : "";
-    return next;
-  });
-}, []);
+  const toggleMenu = useCallback(() => {
+    setMenuOpen(prev => {
+      const next = !prev;
+      document.body.style.overflow = next ? "hidden" : "";
+      return next;
+    });
+  }, []);
 
   return (
     <header
@@ -84,16 +84,18 @@ const Header = () => {
             <NavLink
               key={item.path}
               to={item.path}
-              className={({ isActive }) => 
+              className={({ isActive }) =>
                 `${styles.navLink} ${isActive ? styles.active : ""}`
               }
             >
               {item.label}
             </NavLink>
           ))}
-          
+
           <Link to="/contacts" className={styles.ctaBtn}>
-            <img src="/images/preview.webp" alt="" className={styles.ctaPhoto} />
+            <img src="/images/preview.webp" alt=""
+              fetchpriority="high"
+              decoding="async" className={styles.ctaPhoto} />
             <div className={styles.ctaText}>
               <span>Grab 15 minutes</span>
               <span className={styles.ctaStatus}>Open and ready</span>
@@ -105,7 +107,7 @@ const Header = () => {
         <div className={styles.rightSection}>
           <ToggleTheme />
           <FullscreenButton />
-          
+
           {/* Burger Button */}
           <button
             className={`${styles.burger} ${menuOpen ? styles.open : ""}`}
@@ -125,7 +127,7 @@ const Header = () => {
             <NavLink
               key={item.path}
               to={item.path}
-              className={({ isActive }) => 
+              className={({ isActive }) =>
                 `${styles.mobileNavLink} ${isActive ? styles.active : ""}`
               }
               onClick={toggleMenu}
