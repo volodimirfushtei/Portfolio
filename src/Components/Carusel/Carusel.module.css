@@ -68,10 +68,17 @@
   font-size: 0.85rem;
   font-family: var(--font-mono);
   letter-spacing: 0.05em;
+  transition: all 0.3s ease;
+}
+ .plus:hover {
+  transform: rotate(90deg);
+  border-color: var(--color-accent);
+  
 }
 
 .plus {
-  opacity: 0.6;
+  transition: all 0.3s ease;
+  font-size: 16px;
 }
 
 /* content */

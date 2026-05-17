@@ -4,6 +4,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import { MoveUpRight, MessageCircle, Users, Lightbulb } from "lucide-react";
+import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -70,7 +71,12 @@ export default function SoftSkills() {
         }
       );
     });
+
+
+
   }, []);
+
+
 
 
   return (

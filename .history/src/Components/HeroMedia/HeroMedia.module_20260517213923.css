@@ -1,0 +1,266 @@
+/* HeroMedia.module.css — Mobile First Awwwards Premium */
+
+/* ═══════════════════════════════════════
+   CSS VARIABLES (Mobile базові значення)
+═══════════════════════════════════════ */
+:root {
+  --media-height-mobile: 340px;
+  --media-height-tablet: 460px;
+  --media-height-desktop: 660px;
+  --media-height-large: 700px;
+  --stat-font-size-mobile: 2rem;
+  --stat-font-size-tablet: 2.8rem;
+  --stat-font-size-desktop: 3.5rem;
+  --heading-font-size-mobile: 1.2rem;
+  --heading-font-size-tablet: 1.6rem;
+  --heading-font-size-desktop: 2rem;
+  --content-padding-mobile: 0.75rem 1rem 1rem;
+  --content-padding-tablet: 1rem 1.5rem 1.5rem;
+  --content-padding-desktop: 1.25rem 1.75rem 1.75rem;
+}
+
+.mediaContainer {
+  position: relative;
+  width: 100%;
+  height: clamp(340px, 70vh, 680px);
+  overflow: hidden;
+  border-radius: 24px;
+  isolation: isolate;
+  margin-top: 12px;
+}
+
+/* IMAGE */
+.image {
+  position: absolute;
+  inset: -5%;
+  width: 110%;
+  height: 110%;
+  object-fit: cover;
+  will-change: transform;
+}
+
+/* OVERLAY */
+.overlay {
+  position: absolute;
+  inset: -5%;
+  z-index: 2;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.18));
+}
+
+/* GRAIN */
+.grain {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.12) 1px,
+    transparent 1px
+  );
+  background-size: 4px 4px;
+}
+
+/* FRAME */
+.accentFrame {
+  position: absolute;
+  inset: 20px;
+  z-index: 4;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  pointer-events: none;
+}
+
+/* CIRCLE */
+.circleWrap {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+}
+
+/* STAT */
+.stat {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+}
+
+.statNum {
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 700;
+  color: #ff3d6e;
+  line-height: 1;
+}
+
+.statSuffix {
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  color: #ff3d6e;
+}
+
+.statLabel {
+  position: absolute;
+  left: 0;
+  bottom: -18px;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* CONTENT */
+.content {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 10;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.12);
+  transform-origin: left;
+}
+
+.contentInner {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  padding: 24px;
+}
+
+.textBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.heading {
+  margin: 0;
+  font-size: clamp(1.4rem, 3vw, 2.4rem);
+  line-height: 0.95;
+  color: white;
+}
+
+/* ACTIONS */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* BADGE */
+.badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: white;
+}
+
+.badgeDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ff3d6e;
+}
+
+/* BUTTON */
+.hireBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  text-decoration: none;
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: 0.3s ease;
+}
+
+.hireBtn:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.hireBtnIcon {
+  transition: transform 0.3s ease;
+}
+
+.hireBtn:hover .hireBtnIcon {
+  transform: translate(3px, -3px);
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .mediaContainer {
+    border-radius: 18px;
+  }
+
+  .accentFrame {
+    display: none;
+  }
+
+  .circleWrap {
+    transform: scale(0.75);
+    top: 12px;
+    right: 12px;
+  }
+
+  .stat {
+    top: 14px;
+    left: 14px;
+  }
+
+  .contentInner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 18px;
+  }
+
+  .actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .badge {
+    display: none;
+  }
+
+  .hireBtn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE BREAKPOINTS SUMMARY
+═══════════════════════════════════════ */
+/* 
+  Mobile: 0 - 480px (базові стилі)
+  Mobile L: 480px+ (показуємо badge)
+  Tablet S: 640px+ (збільшуємо відступи)
+  Tablet: 768px+ (повний досвід)
+  Desktop: 1024px+ (максимальні розміри)
+*/
