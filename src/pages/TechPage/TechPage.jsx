@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import gsap from "gsap/dist/gsap";
 import styles from "./TechPage.module.css";
-
+import { useOverlay } from "../../Components/OverlayProvider/OverlayProvider";
 const techStack = [
   {
     name: "React",
@@ -125,7 +125,8 @@ const TechnologyPage = () => {
   const headerRef = useRef(null);
   const gridRef = useRef(null);
   const cardRefs = useRef([]);
-
+    const { finished } = useOverlay();
+const tl = useRef(null);
   const totalPages = Math.ceil(techStack.length / PER_PAGE);
   const current = useMemo(() => techStack.slice(
     (currentPage - 1) * PER_PAGE,
@@ -180,9 +181,12 @@ const TechnologyPage = () => {
 
   /* ── Header reveal ── */
   useEffect(() => {
+     if (!finished) return;
+
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline();
-      tl.from(`.${styles.eyebrow}`, { opacity: 0, x: -20, duration: 1, ease: "power3.out" })
+     tl.current = gsap.timeline();
+
+      tl.current.from(`.${styles.eyebrow}`, { opacity: 0, x: -20, duration: 1, ease: "power3.out" })
         .from(`.${styles.heading} span`, {
           y: 100,
           rotateX: -90,
@@ -192,17 +196,23 @@ const TechnologyPage = () => {
           ease: "power4.out"
         }, "-=0.7")
         .from(`.${styles.subheading}`, { opacity: 0, y: 20, duration: 0.8, ease: "power3.out" }, "-=0.5");
+
+
     }, wrapperRef);
+   
     return () => ctx.revert();
-  }, []);
+
+  }, [finished]);
 
   /* ── Grid reveal on page change ── */
   useEffect(() => {
+     if (!finished) return;
     if (!gridRef.current) return;
     const containers = gridRef.current.querySelectorAll(`.${styles.cardContainer}`);
     
     const ctx = gsap.context(() => {
-      gsap.from(containers, {
+      const gridTl = gsap.timeline();
+      gridTl.from(containers, {
         opacity: 0,
         y: 40,
         scale: 0.95,
@@ -212,8 +222,10 @@ const TechnologyPage = () => {
         clearProps: "all"
       });
     }, gridRef);
+    
     return () => ctx.revert();
-  }, [currentPage]);
+    
+  }, [currentPage, finished]);
 
   const handlePage = useCallback((page) => {
     setCurrentPage(page);

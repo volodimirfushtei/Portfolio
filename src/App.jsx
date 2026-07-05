@@ -10,7 +10,7 @@ import Layout from "./Components/Layout/Layout.jsx";
 import Overlay from "./Components/Overlay/Overlay.jsx";
 import ScrollToTop from "./Components/ScrollToTop/ScrollToTop.jsx";
 import CustomCursor from "./Components/CustomCursor/CustomCursor.jsx";
-import SmoothScroll from "./Components/SmoothScroll/SmoothScroll.jsx";
+
 import { AnimatePresence } from "framer-motion";
 /* ── Lazy pages ── */
 const Home = lazy(() => import("./pages/homePage/homePage.jsx"));
@@ -138,7 +138,7 @@ useEffect(() => {
             <div style={{ minHeight: "100vh", background: "#000" }} />
           }
         >
-          <SmoothScroll>
+          
             <AnimatePresence mode="wait">
         {showOverlay && <Overlay />}
     </AnimatePresence>
@@ -152,7 +152,7 @@ useEffect(() => {
                 <Route path="*" element={<NotFound />} />
               </Route>
             </Routes>
-          </SmoothScroll>
+          
         </Suspense>
 
         <Toaster

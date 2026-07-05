@@ -16,23 +16,24 @@ const Layout = () => {
   const wrapperRef = useRef()
   const contentRef = useRef()
 
-  const isTouch = matchMedia('(hover: none)').matches
+  
+useLayoutEffect(() => {
+  const ctx = gsap.context(() => {
+    ScrollSmoother.create({
+      wrapper: "#smooth-wrapper",
+      content: "#smooth-content",
+      smooth: 1.2,
+      effects: true,
+      normalizeScroll: true,
+      ignoreMobileResize: true,
+    });
+  }, wrapperRef);
 
-  if (isTouch) return
-
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      const smoother = ScrollSmoother.create({
-        wrapper: '#smooth-wrapper',
-        content: '#smooth-content',
-        smooth: 1.2,
-        effects: true,
-        normalizeScroll: true,
-        ignoreMobileResize: true,
-      })
-      return () => ctx.revert()
-    })
-  }, [])
+  return () => {
+    ScrollSmoother.get()?.kill();
+    ctx.revert();
+  };
+}, []);
 
   return (
     <div className={s.layoutContainer}>
@@ -50,7 +51,7 @@ const Layout = () => {
             className="content will-change-transform"
           >
             <AnimatePresence mode="wait">
-              <Outlet key={location.pathname} />
+              <Outlet/>
             </AnimatePresence>
           </div>
         </div>

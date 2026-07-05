@@ -10,7 +10,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear()
   const footerRef = useRef(null)
   const lettersRef = useRef([])
-  const getStartedRef = useRef(null)
+ 
 
   const setRef = (el, i) => {
     if (el) {
@@ -28,22 +28,24 @@ const Footer = () => {
           lettersRef.current,
           {
             opacity: 0,
-            y: 80,
-            filter: "blur(10px)",
+            yPercent: 120,
+            rotateX: -90,
+            transformPerspective: 1000,
+            transformOrigin: '50% 100%',
+            filter: 'blur(8px)',
           },
           {
             opacity: 1,
             y: 0,
-            filter: "blur(0px)",
             stagger: 0.05,
-            ease: "power3.out",
+            ease: 'power3.out',
             scrollTrigger: {
               trigger: footerRef.current,
               start: 'top 80%',
               end: 'top 30%',
               scrub: 1,
-            }
-          }
+            },
+          },
         )
       }
 
@@ -58,14 +60,14 @@ const Footer = () => {
           opacity: 1,
           y: 0,
           duration: 1,
-          ease: "power3.out",
+          ease: 'power3.out',
           scrollTrigger: {
             trigger: footerRef.current,
             start: 'top 90%',
             end: 'top 70%',
             scrub: 1,
-          }
-        }
+          },
+        },
       )
     }, footerRef)
 
@@ -177,19 +179,19 @@ const Footer = () => {
         <div className={styles.column}>
           <h4>Quick Links</h4>
           <ul className={styles.linkList}>
-  {quickLinks.map((link, index) => (
-    <li key={index} className={styles.linkItem}>
-      <svg className={styles.icon} width={20} height={20}>
-        <use href={`/sprite.svg#${link.icon}`} />
-      </svg>
-      {link.url ? (
-        <a href={link.url}>{link.name}</a>
-      ) : (
-        <span>{link.name}</span>
-      )}
-    </li>
-  ))}
-</ul>
+            {quickLinks.map((link, index) => (
+              <li key={index} className={styles.linkItem}>
+                <svg className={styles.icon} width={20} height={20}>
+                  <use href={`/sprite.svg#${link.icon}`} />
+                </svg>
+                {link.url ? (
+                  <a href={link.url}>{link.name}</a>
+                ) : (
+                  <span>{link.name}</span>
+                )}
+              </li>
+            ))}
+          </ul>
         </div>
 
         {/* Колонка 3 - Контакти */}
@@ -215,7 +217,10 @@ const Footer = () => {
       </div>
 
       {/* GET STARTED текст */}
-      <div ref={getStartedRef} className={styles.getStarted} aria-label="Get Started">
+      <div
+        className={styles.getStarted}
+        aria-label="Get Started"
+      >
         {'GET STARTED'.split('').map((char, i) => (
           <span
             key={i}
@@ -261,7 +266,7 @@ const socialLinks = [
   {
     icon: 'icon-discord-brand',
     label: 'Discord',
-    url: 'https://discord.gg/'
+    url: 'https://discord.gg/',
   },
 ]
 
