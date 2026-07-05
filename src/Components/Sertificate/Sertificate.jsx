@@ -69,7 +69,7 @@ const Certificate = () => {
 
       <div className={styles.wrapper}>
         {/* Info Column */}
-        <div className={styles.infoContainer} data-scroll data-speed="0.2" data-scroll-delay="0.2">
+        <div className={styles.infoContainer} >
           <div
             className={styles.infoSubtitle}
             
@@ -104,8 +104,6 @@ const Certificate = () => {
         <div className={styles.cardContainer} data-cursor="hover"
           data-cursor-type="link"
           data-scroll
-          data-speed="0.4"
-          data-scroll-delay="0.2"
           data-cursor-text="GOIT sertificate"  >
           <div
             className={styles.card}

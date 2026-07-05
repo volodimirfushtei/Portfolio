@@ -3,14 +3,15 @@ import gsap from "gsap/dist/gsap";
 import styles from "./projectsPage.module.css";
 import { db } from "../../firebase";
 import { onSnapshot, collection } from "firebase/firestore";
-import AnimatedPage from "../../Components/AnimatedPage/AnimatedPage";
+import { useOverlay } from "../../Components/OverlayProvider/OverlayProvider";
 
 const ProjectPage = () => {
   const pageRef = useRef(null);
   const headerRef = useRef(null);
   const gridRef = useRef(null);
   const cardRefs = useRef([]);
-
+const tl = useRef();
+const { visible } = useOverlay();
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -152,10 +153,13 @@ const ProjectPage = () => {
   useEffect(() => {
     if (loading || !headerRef.current) return;
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline();
-      tl.from(`.${styles.eyebrow}`, { opacity: 0, x: -20, duration: 1, ease: "power3.out" })
+      tl.current = gsap.timeline({
+      paused: true,
+    });
+      tl.current.from(`.${styles.eyebrow}`, { opacity: 0, x: -20, duration: 1, ease: "power3.out" })
         .from(`.${styles.heading} span`, { y: 100, rotateX: -90, opacity: 0, stagger: 0.1, duration: 1.2, ease: "power4.out" }, "-=0.7")
         .from(`.${styles.subheading}`, { opacity: 0, y: 20, duration: 0.8, ease: "power3.out" }, "-=0.5");
+        tl.current.play();
     }, pageRef);
     return () => ctx.revert();
   }, [loading]);
@@ -165,6 +169,9 @@ const ProjectPage = () => {
     const containers = gridRef.current.querySelectorAll(`.${styles.cardContainer}`);
     if (!containers.length) return;
     const ctx = gsap.context(() => {
+      tl.current = gsap.timeline({
+      paused: true,
+    });
       gsap.from(containers, {
         opacity: 0,
         y: 60,
@@ -174,9 +181,17 @@ const ProjectPage = () => {
         ease: "power3.out",
         clearProps: "all"
       });
+      tl.current.play();
     }, gridRef);
     return () => ctx.revert();
+
+    
   }, [paginated, loading]);
+  useEffect(() => {
+  if (!visible) {
+    tl.current?.play();
+  }
+}, [visible]);
 
   const handlePageChange = useCallback((page) => {
     setCurrentPage(page);
@@ -200,7 +215,7 @@ const ProjectPage = () => {
   }
 
   return (
-    <AnimatedPage>
+    
       <div ref={pageRef} className={styles.page}>
         <div className={styles.noise} aria-hidden="true" />
         <div className={styles.scanlines} aria-hidden="true" />
@@ -318,7 +333,7 @@ const ProjectPage = () => {
           )}
         </div>
       </div>
-    </AnimatedPage>
+   
   );
 };
 

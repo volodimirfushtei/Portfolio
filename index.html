@@ -45,7 +45,7 @@
       property="og:url"
       content="https://portfolio-ten-kappa-67.vercel.app/"
     />
-
+    <link rel="canonical" href="https://portfolio-ten-kappa-67.vercel.app/" />
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
 
@@ -55,26 +55,15 @@
     <!-- Fonts (optimized) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
     <link
-      rel="preload"
-      as="style"
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono&family=Inter:wght@100..900&display=swap"
-      onload="this.rel = 'stylesheet'"
+      rel="stylesheet"
     />
-
-    <noscript>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono&family=Inter:wght@100..900&display=swap"
-        rel="stylesheet"
-      />
-    </noscript>
-
     <!-- Critical CSS -->
     <style>
       body {
         margin: 0;
-        background: #181818;
+        background: oklch(16.376% 0.00002 271.152);
       }
 
       #root {
@@ -87,5 +76,16 @@
     <div id="root"></div>
 
     <script type="module" src="/src/main.jsx"></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Volodymyr Fushtei",
+        "jobTitle": "Frontend Developer",
+        "url": "https://portfolio-ten-kappa-67.vercel.app/",
+        "image": "https://portfolio-ten-kappa-67.vercel.app/images/tech-stack-card.png",
+        "sameAs": ["https://github.com/...", "https://linkedin.com/in/..."]
+      }
+    </script>
   </body>
 </html>

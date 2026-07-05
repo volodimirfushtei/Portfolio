@@ -1,9 +1,9 @@
 
 import "./App.css";
-import { useState, useEffect, lazy, Suspense } from "react";
+import { useState, useEffect, lazy, Suspense,useRef } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-import { OverlayProvider } from "./Components/OverlayProvider/OverlayProvider";
+import  {OverlayProvider}  from "./Components/OverlayProvider/OverlayProvider.jsx";
 import ErrorBoundary from "./Components/ErrorBoundary/ErrorBoundary.jsx";
 import Loader from "./Components/Loader/Loader.jsx";
 import Layout from "./Components/Layout/Layout.jsx";
@@ -11,7 +11,7 @@ import Overlay from "./Components/Overlay/Overlay.jsx";
 import ScrollToTop from "./Components/ScrollToTop/ScrollToTop.jsx";
 import CustomCursor from "./Components/CustomCursor/CustomCursor.jsx";
 import SmoothScroll from "./Components/SmoothScroll/SmoothScroll.jsx";
-
+import { AnimatePresence } from "framer-motion";
 /* ── Lazy pages ── */
 const Home = lazy(() => import("./pages/homePage/homePage.jsx"));
 const Contacts = lazy(() => import("./pages/contactsPage/contactsPage.jsx"));
@@ -63,6 +63,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
   const [showOverlay, setShowOverlay] = useState(false)
+  const firstRender = useRef(true);
   useEffect(() => {
     // ── Перевірка на touch device ──
     setIsTouchDevice(
@@ -73,55 +74,58 @@ function App() {
     document.body.classList.add("loading");
 
     let isMounted = true;
-    let loadTimer;
+    
+    // Safety backup fallback timer (max 8 seconds loading)
+    const loadTimer = setTimeout(() => {
+      if (!isMounted) return;
+      console.warn("[App] Loading safety timeout reached");
+      setLoading(false);
+      document.body.classList.remove("loading");
+    }, 8000);
 
     // ── Preload критичних сторінок ──
     preload()
-      .then(() => {
-        // ── Перевірка: компонент все ще змонтований? ──
-        if (!isMounted) return;
-
-        // ── Мінімальний час показу Loader для анімації ──
-        loadTimer = setTimeout(() => {
-          if (!isMounted) return;
-
-          setLoading(false);
-          document.body.classList.remove("loading");
-        }, 3800);
-      })
       .catch((error) => {
-        // ── Обробка помилок завантаження ──
-        if (!isMounted) return;
-
         console.error("[App] Preload error:", error);
-        setLoading(false);
-        document.body.classList.remove("loading");
       });
 
     // ── Cleanup функція ──
     return () => {
       isMounted = false;
-
-      if (loadTimer) {
-        clearTimeout(loadTimer);
-      }
-
+      clearTimeout(loadTimer);
       document.body.classList.remove("loading");
     };
   }, []);
-  useEffect(() => {
-    if (loading) return
-    setShowOverlay(true)
+ 
 
-    const timer = setTimeout(() => {
-      setShowOverlay(false)
-    }, 1600)
+useEffect(() => {
+  if (loading) return;
 
-    return () => clearTimeout(timer)
-  }, [location.pathname])
+  if (firstRender.current) {
+    firstRender.current = false;
+    return;
+  }
+
+  setShowOverlay(true);
+
+  const timer = setTimeout(() => {
+    setShowOverlay(false);
+  }, 2600);
+
+  return () => clearTimeout(timer);
+
+}, [location.pathname]);
+
+  const handleLoaderComplete = () => {
+    setLoading(false);
+    document.body.classList.remove('loading');
+  };
+
   // ── Показуємо Loader під час завантаження ──
   if (loading) {
-    return <Loader />;
+    return (
+      <Loader onComplete={handleLoaderComplete} minDuration={3000} />
+    );
   }
 
   return (
@@ -135,7 +139,9 @@ function App() {
           }
         >
           <SmoothScroll>
-            {showOverlay && <Overlay />}
+            <AnimatePresence mode="wait">
+        {showOverlay && <Overlay />}
+    </AnimatePresence>
             <Routes location={location} key={location.pathname}>
               <Route path="/" element={<Layout />}>
                 <Route index element={<Home />} />

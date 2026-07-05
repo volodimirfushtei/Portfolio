@@ -1,33 +1,42 @@
-import { useEffect, useRef } from "react"
-import s from "./Overlay.module.css"
-import { gsap } from "gsap"
+import { useEffect, useRef } from 'react'
+import s from './Overlay.module.css'
+import { gsap } from 'gsap'
 
 const Overlay = () => {
   const blindsRef = useRef(null)
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      const lines = blindsRef.current.querySelectorAll(`.${s.line}`)
-      gsap.fromTo(
-        lines,
-        {
-          scaleY: 1,
-        },
-        {
-          scaleY: 0,
-          stagger: 0.08,
-          ease: "power4.inOut",
-          duration: 1.2,
-        }
-      )
-    }, blindsRef)
+    const lines = blindsRef.current.querySelectorAll(`.${s.line}`)
 
-    return () => ctx.revert()
+    const tl = gsap.timeline()
+
+    // Phase 1: Strips sweep in from bottom (cover the page)
+    tl.fromTo(
+      lines,
+      { scaleY: 0, transformOrigin: 'bottom' },
+      {
+        scaleY: 1,
+        duration: 0.35,
+        stagger: { each: 0.04, from: 'start' },
+        ease: 'power3.inOut',
+      }
+    )
+
+    // Phase 2: Strips retract upward (reveal the new page)
+    tl.to(lines, {
+      scaleY: 0,
+      transformOrigin: 'top',
+      duration: 0.35,
+      stagger: { each: 0.04, from: 'end' },
+      ease: 'power3.inOut',
+    }, '+=0.03')
+
+    return () => tl.kill()
   }, [])
 
   return (
     <div ref={blindsRef} className={s.blinds}>
-      {[...Array(12)].map((_, i) => (
+      {[...Array(16)].map((_, i) => (
         <div key={i} className={s.line} />
       ))}
     </div>

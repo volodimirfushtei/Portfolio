@@ -1,0 +1,165 @@
+
+import "./App.css";
+import { useState, useEffect, lazy, Suspense } from "react";
+import { Route, Routes, useLocation } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
+import { OverlayProvider } from "./Components/OverlayProvider/OverlayProvider";
+import ErrorBoundary from "./Components/ErrorBoundary/ErrorBoundary.jsx";
+import Loader from "./Components/Loader/Loader.jsx";
+import Layout from "./Components/Layout/Layout.jsx";
+import Overlay from "./Components/Overlay/Overlay.jsx";
+import ScrollToTop from "./Components/ScrollToTop/ScrollToTop.jsx";
+import CustomCursor from "./Components/CustomCursor/CustomCursor.jsx";
+import SmoothScroll from "./Components/SmoothScroll/SmoothScroll.jsx";
+
+/* ── Lazy pages ── */
+const Home = lazy(() => import("./pages/homePage/homePage.jsx"));
+const Contacts = lazy(() => import("./pages/contactsPage/contactsPage.jsx"));
+const Projects = lazy(() => import("./pages/projectsPage/projectsPage.jsx"));
+const Tech = lazy(() => import("./pages/TechPage/TechPage.jsx"));
+const NotFound = lazy(() => import("./pages/NotFoundPage/NotFoundPage.jsx"));
+const TestError = lazy(() => import("./Components/TestError/TestError.jsx"));
+
+/* ── Preload критичних сторінок ── */
+const preload = () =>
+  Promise.all([
+    import("./pages/homePage/homePage.jsx"),
+    import("./pages/contactsPage/contactsPage.jsx"),
+    import("./pages/projectsPage/projectsPage.jsx"),
+    import("./pages/TechPage/TechPage.jsx"),
+  ]);
+
+/* ── Toast styles ── */
+const toastStyle = {
+  base: {
+    borderRadius: "0",
+    background: "#0d0d0d",
+    color: "#f5f5f0",
+    fontSize: "0.78rem",
+    fontFamily: '"DM Mono", monospace',
+    letterSpacing: "0.06em",
+    padding: "0.85rem 1.25rem",
+    border: "1px solid rgba(245,245,240,0.08)",
+    boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
+  },
+  success: {
+    background: "#0d0d0d",
+    border: "1px solid #e8f53c",
+    color: "#e8f53c",
+  },
+  error: {
+    background: "var(--color-surface)",
+    border: "1px solid #ff4b4b",
+    color: "#ff4b4b",
+  },
+  loading: {
+    background: "#0d0d0d",
+    border: "1px solid rgba(245,245,240,0.2)",
+  },
+};
+
+function App() {
+  const location = useLocation();
+  const [loading, setLoading] = useState(true);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const [showOverlay, setShowOverlay] = useState(false)
+  useEffect(() => {
+    // ── Перевірка на touch device ──
+    setIsTouchDevice(
+      "ontouchstart" in window || navigator.maxTouchPoints > 0
+    );
+
+    // ── Додаємо клас завантаження ──
+    document.body.classList.add("loading");
+
+    let isMounted = true;
+    let loadTimer;
+
+    // ── Preload критичних сторінок ──
+    preload()
+      .then(() => {
+        // ── Перевірка: компонент все ще змонтований? ──
+        if (!isMounted) return;
+
+        // ── Мінімальний час показу Loader для анімації ──
+        loadTimer = setTimeout(() => {
+          if (!isMounted) return;
+
+          setLoading(false);
+          document.body.classList.remove("loading");
+        }, 3800);
+      })
+      .catch((error) => {
+        // ── Обробка помилок завантаження ──
+        if (!isMounted) return;
+
+        console.error("[App] Preload error:", error);
+        setLoading(false);
+        document.body.classList.remove("loading");
+      });
+
+    // ── Cleanup функція ──
+    return () => {
+      isMounted = false;
+
+      if (loadTimer) {
+        clearTimeout(loadTimer);
+      }
+
+      document.body.classList.remove("loading");
+    };
+  }, []);
+  useEffect(() => {
+    if (loading) return
+    setShowOverlay(true)
+
+    const timer = setTimeout(() => {
+      setShowOverlay(false)
+    }, 1600)
+
+    return () => clearTimeout(timer)
+  }, [location.pathname])
+  // ── Показуємо Loader під час завантаження ──
+
+
+  return (
+    <OverlayProvider>
+      <ErrorBoundary>
+        {!isTouchDevice && <CustomCursor />}
+        <ScrollToTop />
+        <Suspense
+          fallback={
+            <div style={{ minHeight: "100vh", background: "#000" }} />
+          }
+        >
+          <SmoothScroll>
+            {showOverlay && <Overlay />}
+            <Routes location={location} key={location.pathname}>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<Home />} />
+                <Route path="contacts" element={<Contacts />} />
+                <Route path="projects" element={<Projects />} />
+                <Route path="tech" element={<Tech />} />
+                <Route path="error" element={<TestError />} />
+                <Route path="*" element={<NotFound />} />
+              </Route>
+            </Routes>
+          </SmoothScroll>
+        </Suspense>
+
+        <Toaster
+          position="top-right"
+          gutter={8}
+          toastOptions={{
+            style: toastStyle.base,
+            success: { style: { ...toastStyle.base, ...toastStyle.success } },
+            error: { style: { ...toastStyle.base, ...toastStyle.error } },
+            loading: { style: { ...toastStyle.base, ...toastStyle.loading } },
+          }}
+        />
+      </ErrorBoundary>
+    </OverlayProvider>
+  );
+}
+
+export default App;

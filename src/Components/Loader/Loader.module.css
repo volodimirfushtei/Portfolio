@@ -6,85 +6,27 @@
 .overlay {
   position: fixed;
   inset: 0;
-  z-index: 9999;
-  background: #111;
+  z-index: 9;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background: linear-gradient(
+    to bottom,
+    oklch(14.958% 0.00002 271.152 / 0.25),
+    oklch(10.668% 0.00001 271.152 / 0.3256)
+  );
   align-items: center;
   overflow: hidden;
   isolation: isolate;
 }
 /* Додати для fade out ефекту */
-.fadeOut {
-  position: absolute;
-  inset: 0;
-  background: black;
-  z-index: 100;
-  pointer-events: none;
-}
-.previewSlide {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
-  overflow: hidden;
-  background: #111;
-}
 
-.previewImage {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s ease;
-}
-
-.previewSlide:hover .previewImage {
-  transform: scale(1.05);
-}
-
-.previewOverlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
-  pointer-events: none;
-}
-
-.previewNumber {
-  position: absolute;
-  bottom: 16px;
-  left: 16px;
-  color: white;
-  font-size: 14px;
-  font-weight: 600;
-  z-index: 2;
-}
-
-.slidesContainer {
-  display: flex;
-  gap: 20px;
-  margin-bottom: 20px;
-}
-
-.slidesWrapper {
-  position: absolute;
-  bottom: 40px;
-  right: 40px;
-  z-index: 20;
-  max-width: 400px;
-}
-
-.slidesHint {
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 12px;
-  text-align: right;
-  letter-spacing: 1px;
-}
 /* Logo Wrapper */
-.logo {
+.logoWrap {
   position: absolute;
-  top: 40px;
-  left: 40px;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 20;
   display: flex;
   align-items: center;
@@ -92,19 +34,22 @@
   text-decoration: none;
   color: var(--color-accent, #ed0c4c);
 }
-
-/* Slides Wrapper */
-.slidesWrapper {
-  position: absolute;
-  bottom: 120px;
-  right: 40px;
-  z-index: 20;
+.bottomBar {
+  position: relative;
+  z-index: 10;
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.75rem;
-  pointer-events: none;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem clamp(1.5rem, 4vw, 4rem);
+  font-family: var(--font-mono, 'DM Mono', monospace);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.8);
 }
+/* Slides Wrapper */
 
 @media (max-width: 768px) {
   .slidesWrapper {
@@ -134,12 +79,6 @@
     width: 100px;
     height: 150px;
   }
-}
-
-.previewOverlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
 }
 
 .previewNumber {
@@ -224,13 +163,15 @@
   z-index: 10;
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
   padding: 2rem clamp(1.5rem, 4vw, 4rem);
   font-family: var(--font-mono, 'DM Mono', monospace);
-  font-size: 0.7rem;
+  font-size: 1.2rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .brandName {
@@ -372,10 +313,10 @@
   gap: 1rem;
   padding: 2rem clamp(1.5rem, 4vw, 4rem);
   font-family: var(--font-mono, 'DM Mono', monospace);
-  font-size: 0.65rem;
+  font-size: 0.9rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .statusText {
@@ -458,13 +399,4 @@
   .statusDot {
     animation: none !important;
   }
-}
-.progress {
-  position: absolute;
-  bottom: 40px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: var(--color-accent);
-  transform-origin: left;
 }

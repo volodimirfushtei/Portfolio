@@ -1,0 +1,281 @@
+import { useEffect, useState, useRef } from "react";
+import { AnimatePresence, color, motion } from "framer-motion";
+import styles from "./Loader.module.css";
+import NoiseOverlay from "../NoiseOverlay/NoiseOverlay";
+import Logo from "../Logo/Logo";
+import gsap from "gsap";
+const images = [
+  {
+    id: 0,
+   color: "oklch(73% 0.022 265)",
+    alt: "Technology",
+  },
+  {
+    id: 1,
+    color: "oklch(97% 0.004 90)",
+    alt: "UI Design",
+  },
+  {
+    id: 2,
+    color: "oklch(85% 0.01 265)",
+    alt: "Web Development",
+  },
+  {
+    id: 3,
+    color: "oklch(70% 0.015 265)",
+    alt: "Editorial Design",
+  },
+
+
+];
+
+const Loader = ({ onComplete }) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [progress, setProgress] = useState(0);
+  const [showLogo, setShowLogo] = useState(false);
+  const [showSlides, setShowSlides] = useState(false);
+  const [showName, setShowName] = useState(false);
+
+  useEffect(() => {
+    const tl = gsap.timeline({
+      defaults: { ease: "power4.out" }
+    });
+
+    // Progress counter
+    let obj = { value: 0 };
+
+    tl.to(obj, {
+      value: 100,
+      duration: 4,
+      ease: "power2.out",
+      onUpdate: () => {
+        setProgress(Math.floor(obj.value));
+      }
+    }, 0);
+
+    // Name reveal
+    tl.to(`.${styles.nameSpan}`, {
+      y: 0,
+      opacity: 1,
+      stagger: 0.12,
+      duration: 1.2
+    }, 0.6);
+
+
+    // Slides reveal
+    tl.fromTo(`.${styles.previewSlide}`,
+      { x: 80, opacity: 0, scale: 0.9 },
+      { x: 0, opacity: 1, scale: 1, stagger: 0.1, duration: 0.8 }
+      , 2);
+
+    // Curtains cinematic exit (🔥 важливо)
+    tl.to(`.${styles.curtain}`, {
+      y: "-120%",
+      duration: 1.4,
+      stagger: {
+        each: 0.08,
+        from: "random"
+      },
+      ease: "power4.inOut"
+    }, 3.5);
+
+    // Fade out overlay
+    tl.to(`.${styles.overlay}`, {
+      opacity: 0,
+      duration: 1,
+      onComplete: () => {
+        setIsLoading(false);
+        onComplete?.();
+      }
+    }, 4.2);
+
+    return () => tl.kill();
+  }, []);
+
+  useEffect(() => {
+    if (progress >= 100) {
+      const timer = setTimeout(() => {
+        setIsLoading(false);
+        if (onComplete) onComplete();
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [progress, onComplete]);
+
+  const digits = String(Math.min(progress, 100)).padStart(3, "0").split("");
+
+  return (
+    <div>
+      {isLoading && (
+        <motion.div
+          className={styles.overlay}
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <NoiseOverlay />
+
+          {/* Curtain panels - залишаємо без змін */}
+          <div className={styles.curtainsContainer}>
+            {images.map((img) => (
+              <motion.div
+                key={img.id}
+                className={styles.curtain}
+                style={{ backgroundImage: `linear-gradient(${img.color})` }}
+                initial={{ y: 0 }}
+                animate={progress >= 100 ? { y: "-100%" } : {}}
+                transition={{ duration: 0.8, delay: img.id * 0.08 }}
+              />
+            ))}
+          </div>
+          <motion.div
+            className={styles.slidesWrapper}
+            initial={{ opacity: 0, x: 100 }}
+            animate={showSlides ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6 }}
+          >
+            <div className={styles.slidesContainer}>
+              {images.slice(0, 3).map((img, index) => (  // Додано slice(0,3)
+                <motion.div
+                  key={img.id}
+                  className={styles.previewSlide}  // Змінено з curtain на previewSlide
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={showSlides ? { opacity: 1, x: 0 } : {}}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                >
+                  <picture>
+                    <source
+                      media="(max-width: 480px)"
+                      srcSet={img.srcSmall}
+                      width="140"
+                      height="278"
+                    />
+                    <source
+                      media="(max-width: 768px)"
+                      srcSet={img.srcMedium}
+                      width="280"
+                      height="556"
+                    />
+                    <img
+                      src={img.src}
+                      alt={img.alt}
+                      className={styles.previewImage}
+                      loading="lazy"
+                      width="600"
+                      height="905"
+                    />
+                  </picture>
+                  <div className={styles.previewOverlay} />
+                  <span className={styles.previewNumber}>0{index + 1}</span>
+                </motion.div>
+              ))}
+            </div>
+            <p className={styles.slidesHint}>Loading portfolio projects...</p>
+          </motion.div>
+
+          {/* Top bar */}
+          <div className={styles.topBar}>
+            <span className={styles.brandName}>VF / PORTFOLIO</span>
+            <span className={styles.year}>2026</span>
+          </div>
+
+          {/* Center content */}
+          <div className={styles.center}>
+            <div className={styles.nameWrap}>
+              <h1 className={styles.developerName}>
+                <div className={styles.nameMask}>
+                  <motion.span
+                    className={`${styles.nameSpan} ${styles.firstName}`}
+                    initial={{ y: 40, opacity: 0 }}
+                    animate={showName ? { y: 0, opacity: 1 } : {}}
+                    transition={{ duration: 0.6, delay: 0.1 }}
+                  >
+                    VOLODYMYR
+                  </motion.span>
+                </div>
+                <div className={styles.nameMask}>
+                  <motion.span
+                    className={`${styles.nameSpan} ${styles.lastName}`}
+                    initial={{ y: 40, opacity: 0 }}
+                    animate={showName ? { y: 0, opacity: 1 } : {}}
+                    transition={{ duration: 0.6, delay: 0.25 }}
+                  >
+                    FUSHTEI
+                  </motion.span>
+                </div>
+              </h1>
+            </div>
+
+            <div className={styles.counterWrap}>
+              {digits.map((d, i) => (
+                <motion.span
+                  key={`${i}-${d}`}
+                  className={styles.digit}
+                  initial={{ scale: 0.5, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.3, delay: i * 0.05 }}
+                >
+                  {d}
+                </motion.span>
+              ))}
+              <span className={styles.pct}>%</span>
+            </div>
+
+            <motion.p
+              className={styles.tagline}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              {progress < 40 && "Digital Genesis"}
+              {progress >= 40 && progress < 70 && "Compiling Visions"}
+              {progress >= 70 && progress < 100 && "Loading Portfolio"}
+              {progress >= 100 && "Ready"}
+            </motion.p>
+          </div>
+
+          {/* Progress track */}
+          <div className={styles.trackWrap}>
+            <div className={styles.track}>
+              <motion.div
+                className={styles.fill}
+                initial={{ width: 0 }}
+                animate={{ width: `${progress}%` }}
+                transition={{ duration: 0.1 }}
+              />
+            </div>
+            <div className={styles.trackLabels}>
+              <span className={styles.trackLabel}>System.load</span>
+              <span className={styles.trackLabel}>Verified</span>
+            </div>
+          </div>
+
+          {/* Bottom bar */}
+          <div className={styles.bottomBar}>
+            <span className={styles.statusText}>
+              Frontend Engineer / Crafting Digital Excellence
+            </span>
+            <motion.span
+              className={styles.statusDot}
+              animate={{ opacity: [1, 0.3, 1] }}
+              transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+            />
+          </div>
+
+          {/* Fade out overlay */}
+          {progress >= 100 && (
+            <motion.div
+              className={styles.fadeOut}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 1 }}
+            />
+          )}
+        </motion.div>
+      )}
+    </div>
+  );
+};
+
+export default Loader;

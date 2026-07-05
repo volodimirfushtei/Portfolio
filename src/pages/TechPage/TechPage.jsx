@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import gsap from "gsap/dist/gsap";
 import styles from "./TechPage.module.css";
-import AnimatedPage from "../../Components/AnimatedPage/AnimatedPage";
 
 const techStack = [
   {
@@ -222,7 +221,7 @@ const TechnologyPage = () => {
   }, []);
 
   return (
-    <AnimatedPage>
+    
       <section ref={wrapperRef} className={styles.wrapper} id="tech">
         {/* Visual Overlays */}
         
@@ -307,7 +306,7 @@ const TechnologyPage = () => {
           )}
         </div>
       </section>
-    </AnimatedPage>
+  
   );
 };
 

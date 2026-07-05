@@ -1,24 +1,23 @@
-// components/AnimatedPage/AnimatedPage.jsx
 import { motion } from "framer-motion";
+import { useOverlay } from "../OverlayProvider/OverlayProvider";
 
-const animation = {
-  initial: { opacity: 0, y: 50 },
-  animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: 50 },
-  transition: { duration: 0.5, ease: "easeOut" },
-};
+ const AnimatedPage = ({ children }) => {
+  const { visible } = useOverlay();
 
-const AnimatedPage = ({ children }) => {
   return (
     <motion.div
-      initial={animation.initial}
-      animate={animation.animate}
-      exit={animation.exit}
-      transition={animation.transition}
+      initial={{ opacity: 0, y: 50 }}
+      animate={
+        visible
+          ? { opacity: 0, y: 50 }
+          : { opacity: 1, y: 0 }
+      }
+      transition={{
+        duration: 0.5,
+        ease: "easeOut",
+      }}
     >
       {children}
     </motion.div>
   );
 };
-
-export default AnimatedPage;

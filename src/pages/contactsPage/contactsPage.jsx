@@ -2,14 +2,14 @@ import React, { useEffect, useRef } from 'react'
 import styles from './contactsPage.module.css'
 import ContactForm from '../../Components/ContactForm/ContactForm'
 import gsap from 'gsap/dist/gsap'
-import AnimatedPage from '../../Components/AnimatedPage/AnimatedPage'
+
 
 const ContactsPage = () => {
   const containerRef = useRef(null)
   const headerRef = useRef(null)
   const contentRef = useRef(null)
   const bgRef = useRef(null)
-
+const tl = useRef(null);
   const socialItems = [
     {
       icon: 'icon-facebook',
@@ -46,10 +46,11 @@ const ContactsPage = () => {
     }
 
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline()
-
+  tl.current = gsap.timeline({
+      paused: true,
+    });
       // Background entry
-      tl.fromTo(
+      tl.current.fromTo(
         bgRef.current,
         {
           scale: 1.4,
@@ -77,7 +78,7 @@ const ContactsPage = () => {
       })
 
       // Header reveal
-      tl.from(
+      tl.current.from(
         `.${styles.eyebrow}`,
         {
           opacity: 0,
@@ -133,6 +134,7 @@ const ContactsPage = () => {
           },
           '-=0.8',
         )
+        tl.current.play();
     }, containerRef)
 
     // ✅ Cleanup при розмонтуванні
@@ -140,95 +142,92 @@ const ContactsPage = () => {
   }, [])
 
   return (
-    <AnimatedPage>
-      <div className={styles.contactsPage} ref={containerRef}>
-        {/* Visual Overlays */}
-        <div className={styles.noise} aria-hidden="true" />
-        <div className={styles.scanlines} aria-hidden="true" />
-        <div className={styles.bg} ref={bgRef} aria-hidden="true" />
+    
+    <div className={styles.contactsPage} ref={containerRef}>
+      {/* Visual Overlays */}
+      <div className={styles.noise} aria-hidden="true" />
+      <div className={styles.scanlines} aria-hidden="true" />
+      <div className={styles.bg} ref={bgRef} aria-hidden="true" />
 
-        <div className={styles.container}>
-          {/* Header */}
-          <header ref={headerRef} className={styles.header}>
-            <div className={styles.eyebrow}>
-              <span className={styles.eyebrowLine} />
-              <span className={styles.eyebrowText}>Open for opportunities</span>
+      <div className={styles.container}>
+        {/* Header */}
+        <header ref={headerRef} className={styles.header}>
+          <div className={styles.eyebrow}>
+            <span className={styles.eyebrowLine} />
+            <span className={styles.eyebrowText}>Open for opportunities</span>
+          </div>
+          <h1 className={styles.pageTitle}>
+            <div className={styles.headingLine}>
+              <span>Let's</span>{' '}
+              <span className={styles.pageTitleAccent}>Connect</span>
             </div>
-            <h1 className={styles.pageTitle}>
-              <div className={styles.headingLine}>
-                <span>Let's</span>{' '}
-                <span className={styles.pageTitleAccent}>Connect</span>
-              </div>
-            </h1>
-          </header>
+          </h1>
+        </header>
 
-          <div className={styles.formsContainer} ref={contentRef}>
-            <div className={styles.textSection}>
-              <div className={styles.glassBox}>
-                <article className={styles.article}>
-                  <h3 className={styles.title}>
-                    <svg
-                      className={styles.icon}
-                      aria-hidden="true"
-                      width={24}
-                      height={24}
-                    >
-                      <use href={`/sprite.svg#icon-mail`} />
-                    </svg>
-                    Get in Touch
-                  </h3>
-                  <p className={styles.description}>
-                    Drop me a line or follow my digital journey through social
-                    media. I'm always open to discussing new projects, creative
-                    ideas, or opportunities to be part of your vision.
-                  </p>
-                </article>
-
-                <article className={styles.article}>
-                  <h3 className={styles.title}>
-                    <svg
-                      className={styles.icon}
-                      aria-hidden="true"
-                      width={24}
-                      height={24}
-                    >
-                      <use href={`/sprite.svg#icon-react`} />
-                    </svg>
-                    Modern Execution
-                  </h3>
-                  <p className={styles.description}>
-                    Every interaction is crafted with precision, utilizing the
-                    latest technologies to ensure a seamless and engaging user
-                    experience.
-                  </p>
-                </article>
-
-                <article className={styles.article}>
-                  <h3 className={styles.title}>
-                    <svg
-                      className={styles.icon}
-                      aria-hidden="true"
-                      width={24}
-                      height={24}
-                    >
-                      <use href={`/sprite.svg#icon-discord`} />
-                    </svg>
-                    Collaboration
-                  </h3>
-                  <p className={styles.description}>
-                    I believe in the power of collective creativity. Let's
-                    combine our strengths to build something that truly stands
-                    out in the digital landscape.
-                  </p>
-                </article>
-                <div>
-                  <ul
-                    className={styles.socials}
-                    aria-label="Social media links"
+        <div className={styles.formsContainer} ref={contentRef}>
+          <div className={styles.textSection}>
+            <div className={styles.glassBox}>
+              <article className={styles.article}>
+                <h3 className={styles.title}>
+                  <svg
+                    className={styles.icon}
+                    aria-hidden="true"
+                    width={24}
+                    height={24}
                   >
-                    {socialItems.map((item, index) => (
-                      <li
-                        key={index}
+                    <use href={`/sprite.svg#icon-mail`} />
+                  </svg>
+                  Get in Touch
+                </h3>
+                <p className={styles.description}>
+                  Drop me a line or follow my digital journey through social
+                  media. I'm always open to discussing new projects, creative
+                  ideas, or opportunities to be part of your vision.
+                </p>
+              </article>
+
+              <article className={styles.article}>
+                <h3 className={styles.title}>
+                  <svg
+                    className={styles.icon}
+                    aria-hidden="true"
+                    width={24}
+                    height={24}
+                  >
+                    <use href={`/sprite.svg#icon-react`} />
+                  </svg>
+                  Modern Execution
+                </h3>
+                <p className={styles.description}>
+                  Every interaction is crafted with precision, utilizing the
+                  latest technologies to ensure a seamless and engaging user
+                  experience.
+                </p>
+              </article>
+
+              <article className={styles.article}>
+                <h3 className={styles.title}>
+                  <svg
+                    className={styles.icon}
+                    aria-hidden="true"
+                    width={24}
+                    height={24}
+                  >
+                    <use href={`/sprite.svg#icon-discord`} />
+                  </svg>
+                  Collaboration
+                </h3>
+                <p className={styles.description}>
+                  I believe in the power of collective creativity. Let's combine
+                  our strengths to build something that truly stands out in the
+                  digital landscape.
+                </p>
+              </article>
+              <div>
+                <ul className={styles.socials} aria-label="Social media links">
+                  {socialItems.map((item, index) => (
+                    <li key={index}>
+                      <a
                         href={item.url}
                         className={styles.socialLink}
                         aria-label={item.label}
@@ -237,59 +236,60 @@ const ContactsPage = () => {
                       >
                         <svg
                           className={styles.icon}
-                          aria-hidden="true"
                           width={24}
                           height={24}
+                          aria-hidden="true"
                         >
                           <use href={`/sprite.svg#${item.icon}`} />
                         </svg>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            </div>
-
-            <div>
-              <ContactForm key="ContactForm" />
             </div>
           </div>
 
-          <footer className={styles.infoContainer}>
-            <p className={styles.copyright}>
-              <svg
-                className={styles.icon}
-                aria-hidden="true"
-                width={24}
-                height={24}
-              >
-                <use href={`/sprite.svg#icon-copyright`} />
-              </svg>
-              2025 Volodymyr Fushtey
-              <svg
-                className={styles.icon}
-                aria-hidden="true"
-                width={24}
-                height={24}
-              >
-                <use href={`/sprite.svg#icon-heart`} />
-              </svg>
-            </p>
-            <p className={styles.copyright}>
-              Build with dedication{' '}
-              <svg
-                className={styles.icon}
-                aria-hidden="true"
-                width={24}
-                height={24}
-              >
-                <use href={`/sprite.svg#icon-discord`} />
-              </svg>
-            </p>
-          </footer>
+          <div>
+            <ContactForm key="ContactForm" />
+          </div>
         </div>
+
+        <footer className={styles.infoContainer}>
+          <p className={styles.copyright}>
+            <svg
+              className={styles.icon}
+              aria-hidden="true"
+              width={24}
+              height={24}
+            >
+              <use href={`/sprite.svg#icon-copyright`} />
+            </svg>
+            2025 Volodymyr Fushtey
+            <svg
+              className={styles.icon}
+              aria-hidden="true"
+              width={24}
+              height={24}
+            >
+              <use href={`/sprite.svg#icon-heart`} />
+            </svg>
+          </p>
+          <p className={styles.copyright}>
+            Build with dedication{' '}
+            <svg
+              className={styles.icon}
+              aria-hidden="true"
+              width={24}
+              height={24}
+            >
+              <use href={`/sprite.svg#icon-discord`} />
+            </svg>
+          </p>
+        </footer>
       </div>
-    </AnimatedPage>
+    </div>
+   
   )
 }
 

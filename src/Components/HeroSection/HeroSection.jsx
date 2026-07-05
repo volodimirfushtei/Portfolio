@@ -135,7 +135,7 @@ const HeroSection = () => {
                 className={styles.primaryButton}
                 aria-label="Start a project"
               >
-                <span>Start a project</span>
+                <span className={styles.primaryButtonText}>Start a project</span>
                 <svg
                   className={styles.btnArrowIcon}
                   width="14"
@@ -191,9 +191,7 @@ const HeroSection = () => {
 
           {/* RIGHT — Media column */}
           <div
-            data-scroll
-            data-speed="0.5"
-            data-lag="0.2"
+           
             data-cursor="hover"
             data-cursor-text="Interactive media"
             data-cursor-type="media"
