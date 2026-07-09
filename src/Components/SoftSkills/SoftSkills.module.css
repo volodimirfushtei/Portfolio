@@ -1,3 +1,5 @@
+
+
 .section {
   padding: clamp(1.5rem, 4vw, 4rem) clamp(1rem, 5vw, 3rem);
   width: 100%;
@@ -19,7 +21,7 @@
 
 .eyebrow {
   font-family: var(--font-mono);
-  font-size: var(--font-size-xs);
+  font-size: var(--font-xs);
   text-transform: uppercase;
   letter-spacing: 0.3em;
   color: var(--color-accent);
@@ -128,30 +130,65 @@
   height: 120%;
   object-fit: cover;
 
-  transform: translateZ(0);
-  transition: transform 0.6s ease;
+  transform:scale(1.15);
+
+transition:transform 1.8s;
+  
 }
 
 .card:hover .bg {
-  transform: scale(1.15) translateY(-10px);
+  transform: scale(1) translateY(-10px);
+}
+.card:hover .title{
+
+transform:translateY(-8px);
+
 }
 
+.card:hover li{
+
+transform:translateX(10px);
+
+}
+
+.card:hover svg{
+
+transform:rotate(45deg);
+
+}
 /* OVERLAY */
 .overlay {
   position: absolute;
   inset: 0;
-  background: var(--gradient-accent);
+    background:
+linear-gradient(
+180deg,
+transparent,
+rgba(0,0,0,.7)
+),
+
+linear-gradient(
+90deg,
+rgba(0,0,0,.45),
+transparent
+);
   transition: opacity var(--transition-base);
   opacity: 0.12;
 }
 
 .card:hover .overlay {
-  background: linear-gradient(
-    to bottom,
-    oklch(0 0 0 / 0.3) 0%,
-    oklch(0 0 0 / 0.6) 30%,
-    var(--color-background) 100%
-  );
+  background:
+linear-gradient(
+180deg,
+transparent,
+rgba(0,0,0,.9)
+),
+
+linear-gradient(
+90deg,
+rgba(0,0,0,.95),
+transparent
+);
 }
 
 /* CONTENT */
@@ -175,7 +212,7 @@
 
 .num {
   font-family: var(--font-mono);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-3xl);
   letter-spacing: 0.1em;
   opacity: 0.6;
 }

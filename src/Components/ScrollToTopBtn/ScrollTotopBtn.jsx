@@ -94,7 +94,14 @@ const ScrollToTopBtn = () => {
                 cx="30"
                 cy="30"
                 r={radius}
-              />
+              /><circle
+  className={styles.progressCircle}
+  cx="30"
+  cy="30"
+  r={radius}
+  strokeDasharray={circumference}
+  strokeDashoffset={strokeDashoffset}
+/>
             
             </svg>
 

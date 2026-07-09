@@ -43,11 +43,21 @@ const Header = () => {
   useEffect(() => {
     if (!headerRef.current) return;
 
-    gsap.to(headerRef.current, {
-      y: hidden ? -120 : 0,
-      duration: 0.4,
-      ease: "power2.inOut",
-    });
+    gsap.to(headerRef.current,{
+  y:hidden?-120:0,
+  opacity:hidden?0:1,
+  duration:0.8,
+  ease:"expo.out"
+})
+
+// gsap.fromTo(headerRef.current,{
+//     clipPath:"inset(0 0 100% 0)",
+// },{
+//     clipPath:"inset(0 0 0 0)",
+//     duration:1,
+//     ease:"expo.inOut"
+// })
+
   }, [hidden]);
 
   // Закриваємо меню при зміні сторінки

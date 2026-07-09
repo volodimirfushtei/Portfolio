@@ -43,15 +43,18 @@
 /* 🔥 Accordion */
 .accordion {
   display: flex;
+  margin: 1rem auto;
   flex-direction: column;
   gap: 0.6rem;
 }
 
 .item {
+ 
+  width: 100%;
   border: 1px solid var(--color-border);
-  border-radius: 14px;
+  border-radius: 8px;
   overflow: hidden;
-  background: var(--color-page-gradient);
+  background: var(--color-surface);
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -65,7 +68,7 @@
   display: flex;
   justify-content: space-between;
   padding: 1rem 1.2rem;
-  font-size: 0.85rem;
+  font-size: 1.2rem;
   font-family: var(--font-mono);
   letter-spacing: 0.05em;
   transition: all 0.3s ease;
@@ -78,7 +81,7 @@
 
 .plus {
   transition: all 0.3s ease;
-  font-size: 16px;
+  font-size: 24px;
 }
 
 /* content */
@@ -90,7 +93,7 @@
 
 .content p {
   padding: 0 1.2rem 1.2rem;
-  font-size: 0.8rem;
+  font-size: 1.2rem;
   line-height: 1.6;
   opacity: 0.7;
 }

@@ -29,30 +29,57 @@ const CtaSection = () => {
   const sectionRef = useRef(null);
   const buttonRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
-  const trackRef = useRef(null);
-
+  const topTrackRef = useRef(null);
+const bottomTrackRef  = useRef(null);
+const marqueeWrapRef = useRef(null);
   useEffect(() => {
-    const track = trackRef.current;
+    const top = topTrackRef.current;
+    const bottom = bottomTrackRef.current;
+ if (!top || !bottom) return;
+ const topWidth = top.scrollWidth / 2;
+    const bottomWidth = bottom.scrollWidth / 2;
 
-    const totalWidth = track.scrollWidth / 2;
-
-    const tween = gsap.to(track, {
-      x: -totalWidth,
-      duration: 20,
+     const tl = gsap.context(() => {
+    gsap.to(top, {
+      x: -topWidth,
+      duration: 250,
       ease: "none",
       repeat: -1,
     });
 
-    // hover pause
-    track.addEventListener("mouseenter", () => tween.pause());
-    track.addEventListener("mouseleave", () => tween.resume());
-
-    return () => tween.kill();
-  }, []);
-  const isInView = useInView(sectionRef, {
-    once: false,
-    margin: "-100px",
+    gsap.fromTo(
+      bottom,
+      {
+        x: -bottomWidth,
+      },
+      {
+        x: 0,
+        duration: 280,
+        ease: "none",
+        repeat: -1,
+      }
+    );
   });
+gsap.to(marqueeWrapRef.current, {
+  rotate: -12,
+  scrollTrigger: {
+    trigger: sectionRef.current,
+    start: "top bottom",
+    end: "bottom top",
+    scrub: 1,
+
+  },
+    y: -20,
+    duration: 4,
+    ease: "sine.inOut",
+    repeat: -1,
+    yoyo: true
+});
+  return () => tl.revert();
+
+  
+  }, []);
+ 
 
   // Responsive Check
   useEffect(() => {
@@ -114,27 +141,27 @@ const CtaSection = () => {
       <div className={styles.scanlines} aria-hidden="true" />
 
       {/* Marquee (Subtle Background) */}
-      <div className={styles.marqueeWrap} aria-hidden="true" >
-        <motion.div
+      <div className={styles.marqueeWrap} aria-hidden="true" ref={marqueeWrapRef}>
+        <div
           className={styles.row}
-          ref={trackRef}
-          animate={{ x: ["0%", "-50%"] }}
+          ref={topTrackRef}
+          
           transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
         >
           {marqueeImages.map((src, i) => (
             <img key={`m1-${i}`} src={src} alt="" className={styles.image} loading="lazy" />
           ))}
-        </motion.div>
-        <motion.div
+        </div>
+        <div
           className={styles.row}
-          ref={trackRef}
-          animate={{ x: ["-50%", "0%"] }}
+          ref={bottomTrackRef}
+         
           transition={{ duration: 70, repeat: Infinity, ease: "linear" }}
         >
           {marqueeImages.map((src, i) => (
             <img key={`m2-${i}`} src={src} alt="" className={styles.image} loading="lazy" />
           ))}
-        </motion.div>
+        </div>
         <div className={styles.marqueeOverlay} />
       </div>
 

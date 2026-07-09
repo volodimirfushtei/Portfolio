@@ -23,32 +23,23 @@ export default function LocationBadge({
   const shouldShowTooltip = showTooltip && isHovered && !isMobile;
 
   return (
-    <div
-      className={styles.badge}
-      aria-label={`Location: ${location}`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      role="status"
-    >
-      {/* Pin */}
-      <div className={styles.pinWrap} aria-hidden="true">
-        <div className={styles.pin}>
-          <div className={styles.pinInner} />
-        </div>
-        <div className={styles.ripple} />
-        <div className={styles.ripple2} />
-      </div>
+    <div className={styles.location}>
 
-      {/* Text */}
-      <span className={styles.text}>{location}</span>
-
-      {/* Tooltip */}
-      {shouldShowTooltip && (
-        <div className={styles.tooltip} role="tooltip">
-          <span className={styles.tooltipDot} />
-          <span>Current location</span>
-        </div>
-      )}
+    <div className={styles.status}>
+        <span className={styles.dot}/>
+        <span>Available</span>
     </div>
+
+    <div className={styles.info}>
+        <span className={styles.city}>
+            Ivano-Frankivsk
+        </span>
+
+        <span className={styles.country}>
+            Ukraine
+        </span>
+    </div>
+
+</div>
   );
 }

@@ -1,57 +1,95 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState ,useLayoutEffect} from "react";
 import styles from "./ExperienceTable.module.css";
+import Counter from "../Counter/Counter";
+import gsap from "gsap";
 
 const STATS = [
-  { value: 3, suffix: "+", label: "Years Experience", index: "01" },
-  { value: 15, suffix: "+", label: "Projects Completed", index: "02" },
-  { value: 12, suffix: "+", label: "Happy Clients", index: "03" },
-  { value: 20, suffix: "+", label: "Technologies", index: "04" },
-  { value: 3, suffix: "+", label: "Languages", index: "05" },
-  { value: 4, suffix: "+", label: "Certifications", index: "06" },
+  { value: 3, suffix: "+", title: "Years", subtitle: "Experience" },
+  { value: 15, suffix: "+", title: "Projects", subtitle: "Completed" },
+  { value: 12, suffix: "+", title: "Happy", subtitle: "Clients" },
+  { value: 20, suffix: "+", title: "Modern", subtitle: "Technologies" },
+  { value: 3, suffix: "+", title: "Languages", subtitle: "Spoken" },
+  { value: 4, suffix: "+", title: "Professional", subtitle: "Certificates" },
 ];
 
-import Counter from "../Counter/Counter.jsx";
-
-const ExperienceTable = () => {
+export default function ExperienceTable() {
   const sectionRef = useRef(null);
-  const [startCount, setStartCount] = useState(false);
+  const titleRef = useRef(null);
+  const [start, setStart] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setStartCount(true);
-          observer.disconnect(); // запускаємо лише один раз
+          setStart(true);
+          observer.disconnect();
         }
       },
-      { threshold: 0.5 } // 50% секції в viewport
+      { threshold: 0.4 }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
+    observer.observe(sectionRef.current);
 
     return () => observer.disconnect();
   }, []);
+  
+useLayoutEffect(() => {
+  const ctx = gsap.context(() => {
+  gsap.from(titleRef.current, {
+  y: 80,
+  opacity: 0,
+ 
+  duration: 1.2,
+  ease: "power3.out",
+});
+gsap.to(titleRef.current, {
+  opacity: 1,
+  filter: "blur(0px)",
+  duration: 1.2,
+  eas: "power3.out",
+});
+
+return () => ctx.revert();
+
+  });
+}, []);
+
+
 
   return (
     <section ref={sectionRef} className={styles.section}>
-      <div className={styles.inner}>
-        <div className={styles.grid}>
-          {STATS.map((stat) => (
-            <div key={stat.label} className={styles.cell}>
-              <span className={styles.cellIndex}>{stat.index}</span>
-              <div className={styles.valueWrap}>
-                <Counter value={stat.value} suffix={stat.suffix} start={startCount} />
-              </div>
-              <p className={styles.label}>{stat.label}</p>
-              <span className={styles.accentBar} />
+      <div className={styles.header}>
+        <span className={styles.caption}>Experience</span>
+
+        <h2 className={styles.title} ref={titleRef}>
+          Building products
+          <br />
+          with modern technologies.
+        </h2>
+      </div>
+
+      <div className={styles.grid}>
+        {STATS.map((item, index) => (
+          <article className={styles.card} key={item.title}>
+            <span className={styles.index}>
+              {(index + 1).toString().padStart(2, "0")}
+            </span>
+
+            <div className={styles.number}>
+              <Counter
+                value={item.value}
+                suffix={item.suffix}
+                start={start}
+              />
             </div>
-          ))}
-        </div>
+
+            <div className={styles.text}>
+              <h3>{item.title}</h3>
+              <p>{item.subtitle}</p>
+            </div>
+          </article>
+        ))}
       </div>
     </section>
   );
-};
-
-export default ExperienceTable;
+}

@@ -3,55 +3,39 @@
 /* ═══════════════════════════════════════════
    BADGE
 ═══════════════════════════════════════════ */
-.badge {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 1000;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.4rem 0.9rem 0.4rem 0.45rem;
-  border: 1px solid var(--color-border, rgba(255, 255, 255, 0.1));
-  background: var(--color-overlay, rgba(255, 255, 255, 0.05));
-  cursor: default;
-  position: relative;
-  user-select: none;
-  border-radius: 999px;
-  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-  backdrop-filter: blur(4px);
-}
+.location{
 
-.badge:hover {
-  background: rgba(255, 255, 255, 0.03);
-  border-color: var(--color-accent, #ed0c4c);
-  transform: translateY(-2px);
+    display:flex;
+    align-items:center;
+    gap:1rem;
+
+    padding:14px 20px;
+
+    border:1px solid var(--color-border);
+
+    border-radius:999px;
+
+    background:var(--color-surface);
+
+    backdrop-filter:blur(18px);
 }
 
 /* ═══════════════════════════════════════════
    PIN
 ═══════════════════════════════════════════ */
-.pinWrap {
-  position: relative;
-  width: 18px;
-  height: 18px;
-  flex-shrink: 0;
-}
+.dot{
 
-.pin {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--color-accent, #e8f53c);
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 8px rgba(232, 245, 60, 0.5);
+    width:10px;
+    height:10px;
+
+    border-radius:50%;
+
+    background:#38d66b;
+
+    box-shadow:
+        0 0 0 6px rgba(56,214,107,.12);
+
+    animation:pulse 2.8s infinite;
 }
 
 .pinInner {
@@ -61,167 +45,61 @@
   background: #080808;
 }
 
-/* Ripple effects */
-.ripple,
-.ripple2 {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  border: 1px solid var(--color-accent, #e8f53c);
-  animation: ripple 2s ease-out infinite;
-  z-index: 1;
-  opacity: 0;
+
+.city{
+
+    font-weight:600;
+
+    color:var(--color-title);
 }
 
-.ripple2 {
-  animation-delay: 0.9s;
+.country{
+
+    color:var(--color-text-secondary);
+margin-left: 5px;
+    font-size:.85rem;
 }
 
-@keyframes ripple {
-  0% {
-    width: 8px;
-    height: 8px;
-    opacity: 0.7;
-  }
-  100% {
-    width: 28px;
-    height: 28px;
-    opacity: 0;
-  }
+
+.status{
+
+    display:flex;
+    align-items:center;
+    gap:.6rem;
+
+    font-size:.72rem;
+
+    text-transform:uppercase;
+
+    letter-spacing:.18em;
+
+    color:var(--color-accent);
 }
 
-/* ═══════════════════════════════════════════
-   TEXT
-═══════════════════════════════════════════ */
-.text {
-  font-family: var(--font-mono, 'DM Mono', monospace);
-  font-size: 0.7rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--color-secondary, #94a3b8);
-  white-space: nowrap;
-  line-height: 1.2;
-  transition: color 0.3s ease;
+.location{
+
+transition:
+background .35s,
+border-color .35s,
+transform .35s;
 }
 
-.badge:hover .text {
-  color: var(--color-text, #ffffff);
-}
+.location:hover{
 
-/* ═══════════════════════════════════════════
-   TOOLTIP
-═══════════════════════════════════════════ */
-.tooltip {
-  position: absolute;
-  bottom: calc(100% + 12px);
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--color-overlay);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(232, 245, 60, 0.2);
-  padding: 0.5rem 1rem;
-  border-radius: 99px;
-  font-family: var(--font-mono, 'DM Mono', monospace);
-  font-size: 0.65rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgba(245, 245, 240, 0.8);
-  white-space: nowrap;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  pointer-events: none;
-  z-index: 100;
-  animation: fadeUp 0.2s ease;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-}
+transform:translateY(-2px);
 
-/* Tooltip arrow */
-.tooltip::before {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  border-top: 6px solid rgba(232, 245, 60, 0.2);
+border-color:var(--color-accent);
 }
-
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateX(-50%) translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-}
-
-/* Tooltip dot */
-.tooltipDot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #4ade80;
-  flex-shrink: 0;
-  animation: blink 1.8s ease-in-out infinite;
-  box-shadow: 0 0 4px #4ade80;
-}
-
-@keyframes blink {
-  0%,
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.4;
-    transform: scale(0.8);
-  }
-}
-
-/* ═══════════════════════════════════════════
-   RESPONSIVE
-═══════════════════════════════════════════ */
-/* Tablet */
 @media (max-width: 768px) {
-  .badge {
+  .location {
     gap: 0.5rem;
     padding: 0.35rem 0.8rem 0.35rem 0.4rem;
-  }
-
-  .text {
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
-  }
-
-  .pinWrap {
-    width: 16px;
-    height: 16px;
-  }
-
-  .pin {
-    width: 7px;
-    height: 7px;
-  }
-
-  .pinInner {
-    width: 2.5px;
-    height: 2.5px;
   }
 }
 
 /* Mobile */
 @media (max-width: 480px) {
-  .badge {
+  .location {
     gap: 0.45rem;
     padding: 0.3rem 0.7rem 0.3rem 0.35rem;
   }

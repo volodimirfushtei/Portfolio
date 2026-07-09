@@ -66,11 +66,13 @@ export default function SoftSkills() {
           y: 0,
           scale: 1,
           opacity: 1,
+          filter: "blur(2px) brightness(0.95)",
         },
         {
           y: (i + 1) * 80,              // менший рух
           scale: 1 - i * 0.06,          // сильніший depth
           opacity: 1 - i * 0.15,        // легке згасання
+          filter: "none",
           ease: "none",
           scrollTrigger: {
             trigger: `.${styles.grid}`,

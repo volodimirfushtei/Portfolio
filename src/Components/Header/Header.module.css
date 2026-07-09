@@ -10,28 +10,54 @@
 /* Header */
 .header {
   position: fixed;
-  top: 0;
+  top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  width: 100%;
+  width:min(1500px,95vw);
+border-radius:999px;
+border:1px solid var(--color-border);
   height: var(--header-height);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  background: transparent;
-
-  border-radius: 16px;
-
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+      background-color: rgba(255, 255, 255, 0);
+    backdrop-filter: blur(10px);
   transition:
     transform 0.4s ease,
     opacity 0.4s ease;
   z-index: 1000;
 }
+.header::after{
+content:"";
+position:absolute;
+inset:0;
+border-radius:999px;
+background:url("/images/texture_broken.webp");
+opacity:.08;
+mix-blend-mode:overlay;
+pointer-events:none;
+
+}
+
+.header::before{
+content:"";
+position:absolute;
+left:50%;
+bottom:-40px;
+width:300px;
+border-radius:999px;
+height:80px;
+transform:translateX(-50%);
+filter:blur(60px);
+background:rgba(255,255,255,.05);
+
+}
+
 
 .header.scrolled {
   height: var(--header-scrolled-height);
   background: var(--color-background-scrolled);
   border-bottom: 2px solid var(--color-border);
+  border-radius:999px;
 }
 
 .header.hidden {

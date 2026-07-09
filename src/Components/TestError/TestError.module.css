@@ -22,7 +22,7 @@
   height: 100%;
   z-index: 1;
   pointer-events: none;
-  background: url('/images/texture_broken.png') center/cover no-repeat;
+  background: url('/images/texture_broken.webp') center/cover no-repeat;
   opacity: 0.425;
 }
 

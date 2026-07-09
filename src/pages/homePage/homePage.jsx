@@ -16,17 +16,13 @@ import HeroSection from '../../Components/HeroSection/HeroSection.jsx'
 import Sertificate from '../../Components/Sertificate/Sertificate.jsx'
 import CtaSection from '../../Components/CtaSection/CtaSection.jsx'
 import StickyZoomSection from '../../Components/StickyZoomSection/StickyZoomSection.jsx'
-
+import ExperienceTable from '../../Components/ExperienceTable/ExperienceTable.jsx'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 const Model = lazy(() => import('../../Components/Model/Model.jsx'))
 
 gsap.registerPlugin(ScrollTrigger)
-
-// Компонент fallback для Canvas
-
-// Компонент помилки Canvas
 
 const HomePage = () => {
   const [scrollProgress, setScrollProgress] = useState(0)
@@ -60,7 +56,29 @@ const HomePage = () => {
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+useEffect(() => {
+  const ctx = gsap.context(() => {
 
+    const sections = gsap.utils.toArray(`.${styles.fadeSection}`);
+
+    sections.forEach((section) => {
+      gsap.to(section, {
+        "--fade": "15%",
+        ease: "none",
+        scrollTrigger: {
+          trigger: section,
+          start: "top bottom",
+          end: "top center",
+          scrub: true,
+        },
+      });
+    });
+
+  }, sectionRef);
+
+  return () => ctx.revert();
+
+}, []);
   // Мемоізація skills
   const skills = useMemo(
     () => [
@@ -165,41 +183,51 @@ const HomePage = () => {
   )
 
   return (
-    <div id="scroll-container" className={styles.gridBg}>
-      <div className={styles.container} ref={sectionRef}>
-        <section className={styles.heroSectionWrapper} id="hero">
-          <HeroSection />
+    <div className={styles.container} ref={sectionRef}>
+      <section className={styles.heroSectionWrapper} id="hero">
+        <HeroSection />
+      </section>
+      <section
+        id="expertise"
+        className={`${styles.section} ${styles.fadeSection}`}
+      >
+        <Expertise />
+      </section>
+      <div className={`${styles.section} ${styles.fadeSection}`}>
+            <ExperienceTable />
+          </div>
+      <section
+        id="skills"
+        className={`${styles.ControllerSkills} ${styles.fadeSection}`}
+      >
+        <ControllerSkills items={skills} />
+      </section>
+
+      <section
+        id="projects"
+        className={`${styles.section} ${styles.fadeSection}`}
+      >
+        <div className={styles.carusel}>
+          <Carusel />
+        </div>
+
+        <section id="cta" className={`${styles.section} ${styles.fadeSection}`}>
+          <CtaSection />
         </section>
 
-        <main className={styles.main}>
-          <section id="expertise" className={styles.section}>
-            <Expertise />
-          </section>
-          <section id="skills" className={styles.section}>
-            <ControllerSkills items={skills} />
-          </section>
+        <section
+          id="certificate"
+          className={`${styles.section} ${styles.fadeSection}`}
+        >
+          <Sertificate />
+        </section>
 
-          <section id="projects" className={styles.section}>
-            <div className={styles.carusel}>
-              <Carusel />
-            </div>
+        <section className={`${styles.stickySection} ${styles.fadeSection}`}>
+          <StickyZoomSection />
+        </section>
+      </section>
 
-            <section id="cta" className={styles.ctaSection}>
-              <CtaSection />
-            </section>
-
-            <section id="certificate" className={styles.sertificate}>
-              <Sertificate />
-            </section>
-
-            <section className={styles.stickySection}>
-              <StickyZoomSection />
-            </section>
-          </section>
-        </main>
-
-        <Footer />
-      </div>
+      <Footer />
     </div>
   )
 }

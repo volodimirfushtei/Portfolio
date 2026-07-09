@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import {  useLayoutEffect,useRef } from "react";
 import styles from "./CardTech.module.css";
-
+import { gsap } from "gsap";
 const techStack = [
   { name: "React", icon: "ri-reactjs-line" },
   { name: "Next.js", icon: "ri-nextjs-line" },
@@ -11,91 +11,83 @@ const techStack = [
 ];
 
 const CardTech = () => {
-  const [isFlipped, setIsFlipped] = useState(false);
-  const [manualFlip, setManualFlip] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const profileCardRef = useRef(null);
+useLayoutEffect(() => {
+  const ctx = gsap.context(() => {
+  gsap.from(profileCardRef.current, {
+  y: 80,
+  opacity: 0,
+ 
+  duration: 1.2,
+  ease: "power3.out",
+});
+gsap.to(profileCardRef.current, {
+  opacity: 1,
+  filter: "blur(0px)",
+  duration: 1.2,
+  eas: "power3.out",
+});
 
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener("resize", check, { passive: true });
-    return () => window.removeEventListener("resize", check);
-  }, []);
+return () => ctx.revert();
 
-  useEffect(() => {
-    if (manualFlip || isMobile) return;
-    const id = setInterval(() => setIsFlipped((p) => !p), 6000);
-    return () => clearInterval(id);
-  }, [manualFlip, isMobile]);
-
-  const handleFlip = () => {
-    setIsFlipped((p) => !p);
-    setManualFlip(true);
-  };
-
+  });
+}, []);
   return (
-    <div className={styles.cardTech}>
-      <div
-        className={`${styles.card} ${isFlipped ? styles.flipped : ""}`}
-        onClick={handleFlip}
-        role="button"
-        tabIndex={0}
-        aria-label={isFlipped ? "Show profile" : "Show tech stack"}
-        onKeyDown={(e) => e.key === "Enter" && handleFlip()}
-      >
-        {/* ── Front ── */}
-        <div className={`${styles.side} ${styles.front}`}>
-          <div className={styles.avatarWrap}>
-            <img
-              src="/images/preview.webp"
-              alt="Volodymyr Fushtei"
-              className={styles.avatar}
-              loading="eager"
-            />
-            <div className={styles.avatarRing} aria-hidden />
-          </div>
-
-          <div className={styles.textBlock}>
-            <p className={styles.subtitle}>Freelance Web Developer</p>
-            <h2 className={styles.title}>
-              <span className={styles.highlight}>Volodymyr</span> Fushtei
-            </h2>
-          </div>
-
-          <div className={styles.flipHint} aria-hidden>
-            <i className="ri-arrow-left-right-line" />
-            {isMobile ? " Tap to view skills" : " Click to flip"}
-          </div>
-        </div>
-
-        {/* ── Back ── */}
-        <div className={`${styles.side} ${styles.back}`}>
-          <div className={styles.backContent}>
-
-
-            <p className={styles.flipMessage}>
-              {manualFlip
-                ? "Tap to flip back"
-                : isMobile
-                  ? "Tap to view profile"
-                  : "Auto-flips every 6s"}
-            </p>
-
-            <div className={styles.techGrid}>
-              {techStack.map((tech) => (
-                <div key={tech.name} className={styles.techItem}>
-                  <i
-                    className={`${tech.icon} ${styles.techIcon}`}
-                    aria-hidden
-                  />
-                  <span>{tech.name}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
+    <section className={styles.profileCard} ref={profileCardRef}>
+  <div className={styles.profileHeader}>
+    <div className={styles.avatarWrap}>
+      <img
+        src="/images/preview.webp"
+        alt="Volodymyr Fushtei"
+        className={styles.avatar}
+      />
     </div>
+
+    <div className={styles.info}>
+      <span className={styles.status}>
+        Available for freelance
+      </span>
+
+      <h2 className={styles.name}>
+        Volodymyr Fushtei
+      </h2>
+
+      <p className={styles.role}>
+        Full Stack Developer
+      </p>
+    </div>
+  </div>
+
+  <p className={styles.bio}>
+    Building modern web experiences with React,
+    Next.js, Node.js and motion-driven interfaces.
+  </p>
+
+  <div className={styles.techStack}>
+    <span>React</span>
+    <span>Next.js</span>
+    <span>Node.js</span>
+    <span>MongoDB</span>
+    <span>GSAP</span>
+    <span>Framer Motion</span>
+    <span>Three.js</span>
+  </div>
+
+  <div className={styles.actions}>
+    <a
+      href="https://github.com/volodimirfushtei"
+      target="_blank"
+      rel="noreferrer"
+      className={styles.primaryBtn}
+    >
+      View GitHub
+    </a>
+
+    <button className={styles.secondaryBtn}>
+      Download CV
+    </button>
+  </div>
+</section>
   );
 };
 

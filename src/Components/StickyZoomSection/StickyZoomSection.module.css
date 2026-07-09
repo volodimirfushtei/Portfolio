@@ -33,11 +33,17 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: var(--color-overlay);
+  background: 
+linear-gradient(
+180deg,
+transparent,
+rgba(0,0,0,.08),
+transparent
+);;
   border-radius: 8px;
   transition: transform 0.45s cubic-bezier(0.76, 0, 0.24, 1);
   z-index: 1;
-  opacity: 0.5;
+ mix-blend-mode:lighten;
 }
 /* Text Overlays */
 .textBg,
@@ -47,7 +53,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   font-family: var(--font-primary, 'Bebas Neue', sans-serif);
-  font-size: clamp(4rem, 15vw, 18rem);
+  
   font-weight: 700;
   letter-spacing: 0.05em;
   white-space: nowrap;
@@ -56,42 +62,49 @@
 }
 
 .textBg {
-  color: var(--color-secondary); /* Muted background color */
-  z-index: 0;
+  color: var(--color-accent); /* Muted background color */
+  z-index: 5;
+  font-size: clamp(4rem, 18vw, 24rem);
 }
 
 .textFg {
-  color: var(--color-title);
+  color: var(--color-text);
   z-index: 10;
+  font-size: clamp(6rem, 18vw, 28rem);
+mix-blend-mode:difference;
   text-shadow: var(--color-shadow);
 }
 
 /* Image */
 .imageWrap {
   position: relative;
-  width: 560px;
-  height: 480px;
+  width: 800px;
+  aspect-ratio: 4/3;
   overflow: hidden;
   border-radius: 8px;
+  
   transition: box-shadow var(--transition-base) ease;
   pointer-events: auto;
-  box-shadow: 0 0 0 2px var(--color-accent);
+  box-shadow:
+
+0 10px 60px rgba(0,0,0,.35);
+
+border:1px solid var(--color-border);
 }
 
 .imageWrap::after {
   content: '';
   position: absolute;
   inset: 0;
-
+  background: transparent;
+  border-radius: 8px;
   pointer-events: none;
   opacity: 1;
-  transition: opacity var(--transition-base) ease;
+  
   z-index: var(--z-overlay, 2);
 }
 
-.imageWrap:hover::after {
-  opacity: 0.5;
-}
+
 
 .imageWrap img {
   position: absolute;
@@ -103,18 +116,16 @@
   display: block;
   will-change: transform;
   transform-origin: center center;
-  transition: transform var(--transition-slow) ease;
+ border:4px solid var(--color-border);
 }
 
-.imageWrap:hover img {
-  border: 1px solid var(--color-accent);
-}
+
 
 /* CTA */
 .cta {
   position: absolute;
-  width: 200px;
-  height: 200px;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
   left: 50%;
   transform: translateX(-50%);
@@ -138,7 +149,11 @@
   /* Pilzl shape for premium feel */
   z-index: var(--z-cta, 20);
   bottom: 15%; /* Float higher off bottom edge */
-  box-shadow: var(--color-shadow);
+  box-shadow:
+
+0 10px 60px rgba(0,0,0,.35);
+
+border:1px solid var(--color-border);
   transition: all var(--transition-base) cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -298,7 +313,7 @@
    Z-INDEX
    ============================================ */
 :root {
-  --z-overlay: 2;
+  --z-overlay: 1;
   --z-content: 3;
   --z-cta: 20;
 }

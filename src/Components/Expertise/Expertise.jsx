@@ -1,162 +1,124 @@
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { useRef, useEffect, useState } from "react";
-import styles from "./Expertise.module.css";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import CardTech from "../CardTech/CardTech";
-import ExperienceTable from "../ExperienceTable/ExperienceTable";
-import LocationBadge from "../Location/Location";
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
+import { useRef, useEffect, useState } from 'react'
+import styles from './Expertise.module.css'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import CardTech from '../CardTech/CardTech'
 
-gsap.registerPlugin(ScrollTrigger);
+import LocationBadge from '../Location/Location'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const Expertise = () => {
   const sectionRef = useRef(null);
-  const [isMobile, setIsMobile] = useState(false);
+  const backgroundRef = useRef(null);
+const eyebrowRef = useRef(null)
+const titleRef = useRef(null)
+const dividerRef = useRef(null)
+const locationRef = useRef(null)
+const badgeRef = useRef(null)
+const cardRef = useRef(null)
+const accentTitleRef = useRef(null)
+const plainTitleRef = useRef(null)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
+      setIsMobile(window.innerWidth <= 768)
+    }
 
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
 
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 75%",
-          end: "bottom 20%",
-          toggleActions: "play none none reverse",
-        }
-      });
-
-      // BACKGROUND subtle reveal
-      tl.fromTo(
-        `.${styles.background}`,
-        { opacity: 0, scale: 1.05 },
-        { opacity: 0.5, scale: 1, duration: 1.2, ease: "power3.out" },
-        0
-      );
-
-      // HEADER (Apple keynote feel)
-      tl.fromTo(
-        `.${styles.eyebrow}`,
-        { opacity: 0, y: 20, filter: "blur(10px)" },
-        { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.8 },
-        0.1
-      );
-
-      tl.fromTo(
-        `.${styles.titleLine}`,
-        { y: 80, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1.2,
-          stagger: 0.08,
-          ease: "power4.out",
+          start: 'top 75%',
+          end: 'bottom 20%',
+          toggleActions: 'play none none reverse',
         },
-        0.2
-      );
+      })
 
-      tl.fromTo(
-        `.${styles.divider}`,
-        { scaleX: 0, opacity: 0 },
-        { scaleX: 1, opacity: 1, duration: 0.8, ease: "power3.out" },
-        0.4
-      );
+     tl.from(backgroundRef.current,{
+    opacity:0,
+    scale:1.08,
+    duration:1.2
+})
 
-      tl.fromTo(
-        `.${styles.locationWrap}`,
-        { opacity: 0, x: -20 },
-        { opacity: 1, x: 0, duration: 0.8 },
-        0.5
-      );
+.from(badgeRef.current,{
+    autoAlpha:0,
+    y:-20,
+    duration:.6
+},"<")
 
-      // LEFT + RIGHT COLUMN SPLIT REVEAL
-      tl.fromTo(
-        `.${styles.cardCol}`,
-        { opacity: 0, x: -40, scale: 0.98 },
-        { opacity: 1, x: 0, scale: 1, duration: 1, ease: "power3.out" },
-        0.6
-      );
+.from(eyebrowRef.current,{
+    autoAlpha:0,
+    y:24,
+    filter:"blur(10px)",
+    duration:.6
+},"-=.3")
 
-      tl.fromTo(
-        `.${styles.tableCol}`,
-        { opacity: 0, x: 40, scale: 0.98 },
-        { opacity: 1, x: 0, scale: 1, duration: 1, ease: "power3.out" },
-        0.6
-      );
+.from(titleRef.current,{
+    autoAlpha:0,
+    y:80,
+    duration:1,
+    ease:"power4.out"
+},"-=.3")
 
-      // CORNER BADGE (subtle float-in)
-      tl.fromTo(
-        `.${styles.cornerBadge}`,
-        { opacity: 0, y: -20 },
-        { opacity: 1, y: 0, duration: 1 },
-        0.3
-      );
+.from(dividerRef.current,{
+    scaleX:0,
+    transformOrigin:"left center",
+    duration:.6
+},"-=.6")
+
+.from(locationRef.current,{
+    autoAlpha:0,
+    x:-30,
+    duration:.6
+},"-=.4")
+
+.from(cardRef.current,{
+    autoAlpha:0,
+    x:-50,
+    duration:1
+},"-=.3")
 
       // PARALLAX SCROLL FEEL (Apple-like depth)
       gsap.to(sectionRef.current, {
-        backgroundPosition: "50% 20%",
-        ease: "none",
+        backgroundPosition: '50% 20%',
+        ease: 'none',
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top bottom",
-          end: "bottom top",
+          start: 'top bottom',
+          end: 'bottom top',
           scrub: true,
-        }
-      });
+        },
+      })
+    }, sectionRef)
 
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
+    return () => ctx.revert()
+  }, [])
 
 
-  /* ── Stagger variants ── */
-  const titleContainer = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2
-      }
-    }
-  };
 
-  const titleLine = {
-    hidden: { y: "110%" },
-    visible: {
-      y: 0,
-      transition: { duration: 1, ease: [0.16, 1, 0.3, 1] }
-    }
-  };
 
-  const columnsVariants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: "easeOut", delay: 0.4 }
-    }
-  };
+
+ 
 
   return (
     <section ref={sectionRef} id="expertise" className={styles.expertise}>
       {/* ── Background elements ── */}
       <div className={styles.noise} aria-hidden="true" />
 
-      <motion.div
+      <div
         className={styles.background}
         aria-hidden="true"
+        ref={backgroundRef}
       />
 
       {/* ── Corner section index ── */}
@@ -166,76 +128,46 @@ const Expertise = () => {
       </div>
 
       {/* ── Main content ── */}
-      <motion.div className={styles.inner} >
-
+      <div className={styles.inner}>
         {/* Section header */}
         <header className={styles.header}>
-          <motion.div
-            className={styles.eyebrow}
-            initial={{ clipPath: "inset(0 100% 0 0)", opacity: 0 }}
-            whileInView={{ clipPath: "inset(0 0% 0 0)", opacity: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
+          <div className={styles.eyebrow}>
             <span className={styles.eyebrowLine} />
-            <span className={styles.eyebrowText}>Skills & Technologies · 2025</span>
+            <span className={styles.eyebrowText}>
+              Skills & Technologies · 2025
+            </span>
             <span className={styles.eyebrowDot} />
-          </motion.div>
+          </div>
 
-          <motion.h2
-            className={styles.title}
-            variants={titleContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-          >
+          <h2 className={styles.title} ref={titleRef}>
             <span className={styles.titleLine}>
-              <motion.span variants={titleLine} className={styles.titleAccent}>My</motion.span>
+              <span ref={accentTitleRef}  className={styles.titleAccent}>
+                My
+              </span>
             </span>
             <span className={styles.titleLine}>
-              <motion.span variants={titleLine} className={styles.titlePlain}>Expertise</motion.span>
+              <span ref={plainTitleRef}  className={styles.titlePlain}>
+                Expertise
+              </span>
             </span>
-          </motion.h2>
+          </h2>
 
-          <motion.div
-            className={styles.divider}
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-          />
+          <div className={styles.divider} ref={dividerRef}/>
 
-          <motion.div
-            className={styles.locationWrap}
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-          >
+          <div className={styles.locationWrap} ref={locationRef}>
             <LocationBadge location="Located in Ivano-Frankivsk" />
-          </motion.div>
+          </div>
         </header>
 
         {/* Content columns */}
-        <motion.div
-          className={styles.columns}
-          variants={columnsVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          <div className={styles.cardCol}>
+        
+          <div className={styles.cardCol} ref={cardRef} >
             <CardTech />
           </div>
-
-          <div className={styles.tableCol}>
-            <ExperienceTable />
-          </div>
-        </motion.div>
-
-      </motion.div>
+        
+      </div>
     </section>
-  );
-};
+  )
+}
 
-export default Expertise;
+export default Expertise

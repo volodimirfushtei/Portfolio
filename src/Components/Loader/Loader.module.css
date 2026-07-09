@@ -17,6 +17,7 @@
   );
   align-items: center;
   overflow: hidden;
+   clip-path: inset(0 0 0 0);
   isolation: isolate;
 }
 /* Додати для fade out ефекту */

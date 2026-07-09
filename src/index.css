@@ -78,6 +78,7 @@ body {
 html {
   scrollbar-width: thin;
   scrollbar-color: var(--color-border) transparent;
+
 }
 
 html::-webkit-scrollbar {
@@ -275,16 +276,18 @@ html::-webkit-scrollbar-thumb:hover {
     oklch(90.367% 0.00206 257.421 / 0.65),
     oklch(88.232% 0.00437 15.976 / 0.96)
   );
-  --color-grid:
-    linear-gradient(
-      90deg,
-      transparent 0%,
-      transparent 49.5%,
-      var(--color-border) 50%,
-      transparent 50.5%,
-      transparent 100%
-    ),
-    /* Glass */ --glass-bg: oklch(1 0 0 / 0.8);
+--color-grid:
+linear-gradient(
+90deg,
+transparent 0%,
+transparent 49.5%,
+var(--color-border) 50%,
+transparent 50.5%,
+transparent 100%
+);
+
+--glass-bg: rgba(255,255,255,.08);
+--glass-border: rgba(255,255,255,.1);
   --glass-border: oklch(0.2 0.02 260 / 0.08);
 
   /* Gradients */
@@ -338,15 +341,17 @@ html::-webkit-scrollbar-thumb:hover {
     oklch(10.668% 0.00001 271.152 / 0.96)
   );
   --color-grid:
-    linear-gradient(
-      90deg,
-      transparent 0%,
-      transparent 49.5%,
-      var(--color-border) 50%,
-      transparent 50.5%,
-      transparent 100%
-    ),
-    /* Glass */ --glass-bg: oklch(0.17 0.01 260 / 0.7);
+linear-gradient(
+90deg,
+transparent 0%,
+transparent 49.5%,
+var(--color-border) 50%,
+transparent 50.5%,
+transparent 100%
+);
+
+--glass-bg: rgba(255,255,255,.08);
+--glass-border: rgba(255,255,255,.1);
   --glass-border: oklch(0.9 0.02 260 / 0.1);
 
   /* Gradients */
@@ -379,8 +384,8 @@ html::-webkit-scrollbar-thumb:hover {
   --color-surface-hover: oklch(0.33 0.03 260);
   --color-overlay: linear-gradient(
     to bottom,
-    oklch(50.569% 0.15789 269.723 / 0.65),
-    oklch(20.699% 0.08668 264.217 / 0.96)
+    oklch(45.37% 0.07669 272.786 / 0.65),
+    oklch(22.639% 0.03822 269.845 / 0.96)
   );
   --color-grid:
     linear-gradient(
@@ -390,8 +395,8 @@ html::-webkit-scrollbar-thumb:hover {
       var(--color-accent) 50%,
       transparent 50.5%,
       transparent 100%
-    ),
-    --color-page-gradient: linear-gradient(
+    );
+  --color-page-gradient: linear-gradient(
         135deg,
         oklch(17.859% 0.07415 260.331),
         oklch(0.17 0.01 301)
@@ -457,7 +462,18 @@ html::-webkit-scrollbar-thumb:hover {
     oklch(88.531% 0.0001 271.152 / 0.65),
     oklch(95.213% 0.00011 271.152 / 0.96)
   );
+--color-grid:
+linear-gradient(
+90deg,
+transparent 0%,
+transparent 49.5%,
+var(--color-border) 50%,
+transparent 50.5%,
+transparent 100%
+);
 
+--glass-bg: rgba(255,255,255,.08);
+--glass-border: rgba(255,255,255,.1);
   /* Glass */
   --glass-bg: oklch(1 0 0 / 0.7);
   --glass-border: oklch(0 0 0 / 0.08);
@@ -505,6 +521,18 @@ html::-webkit-scrollbar-thumb:hover {
   --color-border: oklch(1 0 0 / 0.08);
   --color-shadow: 0 8px 30px oklch(0 0 0 / 0.7);
 
+--color-grid:
+linear-gradient(
+90deg,
+transparent 0%,
+transparent 49.5%,
+var(--color-border) 50%,
+transparent 50.5%,
+transparent 100%
+);
+
+--glass-bg: rgba(255,255,255,.08);
+--glass-border: rgba(255,255,255,.1);
   /* Glass */
   --glass-bg: oklch(0.18 0 0 / 0.7);
   --glass-border: oklch(1 0 0 / 0.08);

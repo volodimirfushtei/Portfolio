@@ -10,7 +10,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear()
   const footerRef = useRef(null)
   const lettersRef = useRef([])
- 
+  const smokeRef = useRef(null)
 
   const setRef = (el, i) => {
     if (el) {
@@ -69,6 +69,15 @@ const Footer = () => {
           },
         },
       )
+     gsap.to(smokeRef.current,{
+    yPercent:-5,
+    xPercent: 15,
+    ease:"none",
+    scrollTrigger:{
+        trigger:footerRef.current,
+        scrub:2
+    }
+})
     }, footerRef)
 
     // 3D ефект при русі миші (тільки на десктопі)
@@ -142,7 +151,7 @@ const Footer = () => {
         width: '100%',
         height: '100%',
       }}
-    >
+    ><div ref={smokeRef} className={styles.smoke}/>
       {/* Градієнтні ефекти */}
       <div className={styles.gradientTop} aria-hidden="true" />
       <div className={styles.gradientBottom} aria-hidden="true" />
@@ -219,9 +228,9 @@ const Footer = () => {
       {/* GET STARTED текст */}
       <div
         className={styles.getStarted}
-        aria-label="Get Started"
+        aria-label="BUILDING FUTURE"
       >
-        {'GET STARTED'.split('').map((char, i) => (
+        {'BUILDING FUTURE'.split('').map((char, i) => (
           <span
             key={i}
             ref={(el) => setRef(el, i)}

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import {useLayoutEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./StickyZoomSection.module.css";
@@ -11,16 +11,19 @@ export default function StickyZoomSection() {
   const textBgRef = useRef(null);
   const textFgRef = useRef(null);
   const ctaRef = useRef(null);
-
-  useEffect(() => {
-    if (!sectionRef.current || !zoomRef.current || !ctaRef.current) return;
+const imageRef = useRef(null);
+  useLayoutEffect(() => {
+    if (!sectionRef.current || !zoomRef.current || !ctaRef.current || !imageRef.current) return;
 
     const ctx = gsap.context(() => {
       // Встановлюємо початкові значення
-      gsap.set(zoomRef.current, { scale: 0.1 });
-      gsap.set(textBgRef.current, { opacity: 0, scale: 0.8 });
-      gsap.set(textFgRef.current, { opacity: 0, scale: 1, y: 50 });
-      gsap.set(ctaRef.current, { opacity: 0, y: 24 });
+      gsap.set(zoomRef.current, { scale: 1,rotateY:12});
+      gsap.set(imageRef.current,{
+    scale:1.15
+});
+      gsap.set(textBgRef.current, { opacity: 0, scale: 0.8, });
+      gsap.set(textFgRef.current, { opacity: 0, scale: 0.6, y: 40 , autoAlpha:0,});
+      gsap.set(ctaRef.current, { opacity: 0, y: 24, autoAlpha:0, });
 
       // Створюємо ScrollTrigger
       const tl = gsap.timeline({
@@ -28,7 +31,7 @@ export default function StickyZoomSection() {
           trigger: sectionRef.current,
           start: "top top",
           end: "+=300%", // Longer distance for dramatic effect
-          scrub: 1.5,
+          scrub: 1,
           pin: true,
           pinSpacing: true,
           anticipatePin: 1,
@@ -40,7 +43,7 @@ export default function StickyZoomSection() {
       tl.to(
         textBgRef.current,
         {
-          opacity: 0.2, // Subtle background text
+          opacity: 0.65, // Subtle background text
           scale: 1,
           duration: 1,
           ease: "power2.out",
@@ -51,31 +54,26 @@ export default function StickyZoomSection() {
           zoomRef.current,
           {
             scale: 1,
+            rotateY:0,
             duration: 1.5,
             ease: "power2.inOut",
           },
           0
         )
+        
         .to(
           textFgRef.current,
           {
             opacity: 1,
             scale: 1,
             y: 0,
+            autoAlpha:1,
             duration: 0.8,
             ease: "power3.out",
           },
-          1
+          
         )
-        .to(
-          zoomRef.current,
-          {
-            scale: 1.8, // Massive scale to envelope the screen
-            duration: 1.5,
-            ease: "power2.in",
-          },
-          "+=0.5"
-        )
+        
         .to(
           textBgRef.current,
           { opacity: 0, duration: 0.5 },
@@ -91,21 +89,51 @@ export default function StickyZoomSection() {
           {
             opacity: 1,
             y: 0,
+            autoAlpha:1,
             duration: 0.8,
-            ease: "power2.out",
+             ease:"back.out(1.4)"
           },
           "-=0.5"
         );
+        tl.to(
+          imageRef.current,
+          {
+            scale: 1, // Massive scale to envelope the screen
+            duration: 1,
+            ease: "power2.in",
+          },
+          "+=0.5"
+        );
+         tl.to(
+          textFgRef.current,
+          {
+          y:200,
+          opacity:0,
+            duration: 2.5,
+            ease: "power2.in",
+          },
+          "+=0.5"
+        );
+
+         tl.to(
+          zoomRef.current,
+          {
+        
+          scale:0.8,
+          rotateY:-12,
+          opacity:0,
+            duration: 1,
+            ease: "power2.in",
+          },
+          "+=0.5"
+        );
+
+        
     }, sectionRef);
 
     return () => {
-      // Правильне очищення
-      ctx.revert();
-      ScrollTrigger.getAll().forEach((trigger) => {
-        if (trigger.vars && trigger.vars.trigger === sectionRef.current) {
-          trigger.kill();
-        }
-      });
+     
+      ctx.revert()
     };
   }, []);
 
@@ -119,7 +147,7 @@ export default function StickyZoomSection() {
 
         <div ref={zoomRef} className={styles.zoom}>
           <div className={styles.imageWrap}>
-           <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="github" />
+           <img src="/images/Camper.jpg" alt="github" ref={imageRef} />
           </div>
         </div>
 
