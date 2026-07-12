@@ -9,19 +9,19 @@ export const NAV_ITEMS = [
 
 export const SOCIAL_LINKS = [
   {
-    icon: "ri-github-fill",
+    icon: "url('/icons/github_unsplash.svg')",
     label: "GitHub",
     url: "https://github.com/volodimirfushtei",
   },
   {
-    icon: "ri-linkedin-fill",
+    icon: "url('/icons/linkedin_unsplash.svg')",
     label: "LinkedIn",
     url: "https://linkedin.com/in/yourprofile",
   },
   {
-    icon: "ri-slack-fill",
+    icon: "url('/icons/slack_unsplash.svg')",
     label: "Slack",
     url: "https://random-x1r5268.slack.com/team/U07UCAKB1RV",
   },
-  { icon: "ri-discord-fill", label: "Discord", url: "#" },
+  { icon: "url('/icons/discord_unsplash.svg')", label: "Discord", url: "#" },
 ];

@@ -25,9 +25,9 @@ const Model = lazy(() => import('../../Components/Model/Model.jsx'))
 gsap.registerPlugin(ScrollTrigger)
 
 const HomePage = () => {
-  const [scrollProgress, setScrollProgress] = useState(0)
-  const sectionRef = useRef(null)
-  const [isMobile, setIsMobile] = useState(false)
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+const sectionRef = useRef(null);
 
   // Перевірка на мобільний пристрій
   useEffect(() => {
@@ -185,13 +185,13 @@ useEffect(() => {
   return (
     <div className={styles.container} ref={sectionRef}>
       <section className={styles.heroSectionWrapper} id="hero">
-        <HeroSection />
+        <HeroSection   />
       </section>
-      <section
+      <section 
         id="expertise"
         className={`${styles.section} ${styles.fadeSection}`}
       >
-        <Expertise />
+        <Expertise    />
       </section>
       <div className={`${styles.section} ${styles.fadeSection}`}>
             <ExperienceTable />

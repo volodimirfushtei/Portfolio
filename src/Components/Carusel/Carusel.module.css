@@ -1,119 +1,569 @@
+/* ═══════════════════════════════════════════
+   Panel.module.css — Premium Edition
+   Оптимальні розміри та позиціювання
+═══════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════
+   1. PANEL (Mobile First)
+═══════════════════════════════════════════ */
 .panel {
   position: relative;
   flex-direction: column;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; /* ← змінено з center на flex-start */
   width: 100%;
   height: 100%;
-
-  border-radius: 12px;
+  min-height: 400px;
   overflow: hidden;
-}
-
-.panel h2 {
-  font-size: 6rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-}
-
-.panel h3 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-}
-
-.panel p {
-  font-size: 1rem;
-  font-weight: 400;
-  margin-bottom: 1rem;
-}
-
-.title {
-  font-size: 1.8rem;
-  margin-bottom: 0.5rem;
-}
-
-.subtitle {
-  font-size: 0.85rem;
-  opacity: 0.6;
-  margin-bottom: 2rem;
-}
-
-/* 🔥 Accordion */
-.accordion {
-  display: flex;
-  margin: 1rem auto;
-  flex-direction: column;
-  gap: 0.6rem;
-}
-
-.item {
- 
-  width: 100%;
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  overflow: hidden;
-  background: var(--color-surface);
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.item:hover {
-  border-color: var(--color-border);
-  box-shadow: 0 0 10px var(--color-border);
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  padding: 1rem 1.2rem;
-  font-size: 1.2rem;
-  font-family: var(--font-mono);
-  letter-spacing: 0.05em;
-  transition: all 0.3s ease;
-}
- .plus:hover {
-  transform: rotate(90deg);
-  border-color: var(--color-accent);
+  padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3rem);
   
 }
 
-.plus {
-  transition: all 0.3s ease;
-  font-size: 24px;
+/* ═══════════════════════════════════════════
+   2. TYPOGRAPHY (Mobile First)
+═══════════════════════════════════════════ */
+.panel h2 {
+  font-size: clamp(3rem, 10vw, 7rem);
+  font-weight: 800;
+  margin-bottom: 1rem;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--color-text), var(--color-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-/* content */
+.panel h3 {
+  font-size: clamp(1.3rem, 3vw, 2rem);
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--color-title);
+}
+
+.panel p {
+  font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+  font-weight: 400;
+  margin-bottom: 1rem;
+  line-height: 1.8;
+  color: var(--color-secondary);
+}
+
+.title {
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--color-title);
+  letter-spacing: -0.01em;
+}
+
+.subtitle {
+  font-size: clamp(0.85rem, 1.2vw, 1.05rem);
+  opacity: 0.7;
+  margin-bottom: 2.5rem;
+  color: var(--color-secondary);
+  line-height: 1.6;
+  max-width: 90%;
+}
+
+/* ═══════════════════════════════════════════
+   3. ACCORDION (Mobile First)
+═══════════════════════════════════════════ */
+.accordion {
+  display: flex;
+  margin: 0 auto; /* ← змінено відступи */
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 60%;
+  max-width: 100%;
+}
+
+/* ── 3.1 Accordion Item ── */
+.item {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--color-surface);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  padding: 1px;
+  background: linear-gradient(135deg, transparent, var(--color-accent), transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.item:hover::before {
+  opacity: 0.3;
+}
+
+.item:hover {
+  border-color: var(--color-accent);
+  transform: translateX(4px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* ── 3.2 Active State ── */
+.active {
+  border-color: var(--color-accent);
+  background: rgba(102, 126, 234, 0.04);
+  box-shadow: 0 4px 30px rgba(102, 126, 234, 0.08);
+}
+
+.active::before {
+  opacity: 0.5;
+}
+
+/* ── 3.3 Header ── */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: clamp(1rem, 2.5vw, 1.5rem) clamp(1.2rem, 3vw, 1.8rem);
+  font-size: clamp(1rem, 2vw, 1.4rem);
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  transition: all 0.3s ease;
+  gap: 0.75rem;
+  user-select: none;
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.header:hover {
+  color: var(--color-accent);
+}
+
+/* ── 3.4 Plus Icon ── */
+.plus {
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  font-size: clamp(22px, 3vw, 28px);
+  flex-shrink: 0;
+  line-height: 1;
+  color: var(--color-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.plus:hover {
+  transform: rotate(90deg) scale(1.1);
+  color: var(--color-accent);
+  background: rgba(102, 126, 234, 0.08);
+}
+
+/* ── 3.5 Content ── */
 .content {
   height: 0;
   overflow: hidden;
   opacity: 0;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .content p {
-  padding: 0 1.2rem 1.2rem;
-  font-size: 1.2rem;
-  line-height: 1.6;
-  opacity: 0.7;
+  padding: 0 clamp(1.2rem, 3vw, 1.8rem) clamp(1.2rem, 3vw, 1.8rem);
+  font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+  line-height: 1.8;
+  opacity: 0.8;
+  margin: 0;
+  color: var(--color-secondary);
 }
 
-/* active */
-.active {
-  border-color: var(--color-accent);
+/* ── 3.6 Expanded Content ── */
+.item.active .content {
+  height: auto;
+  opacity: 1;
 }
 
-/* 🔥 Glow box */
+.item.active .plus {
+  transform: rotate(45deg);
+  color: var(--color-accent);
+  background: rgba(102, 126, 234, 0.1);
+}
+
+/* ═══════════════════════════════════════════
+   4. GLOW BOX (Mobile First)
+═══════════════════════════════════════════ */
 .glowBox {
-  margin-top: 2rem;
-  padding: 1.5rem;
+  margin-top: 2.5rem;
+  padding: clamp(1.2rem, 3vw, 2rem);
   border-radius: 16px;
   background: radial-gradient(
     circle at top left,
-    rgba(232, 243, 60, 0.15),
+    rgba(102, 126, 234, 0.08),
     transparent 70%
   );
   border: 1px solid var(--color-border);
-  font-size: 0.85rem;
-  opacity: 0.8;
+  font-size: clamp(0.85rem, 1.2vw, 1rem);
+  opacity: 0.85;
+  text-align: left;
+  width: 100%;
+  max-width: 100%;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.glowBox::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(102, 126, 234, 0.03), transparent 70%);
+  pointer-events: none;
+}
+
+.glowBox:hover {
+  opacity: 1;
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 40px rgba(102, 126, 234, 0.06);
+}
+
+.glowBox p {
+  margin: 0;
+  line-height: 1.7;
+  color: var(--color-secondary);
+  position: relative;
+  z-index: 1;
+}
+
+/* ═══════════════════════════════════════════
+   5. RESPONSIVE BREAKPOINTS
+═══════════════════════════════════════════ */
+
+/* ── 5.1 Tablet (768px+) ── */
+@media (min-width: 768px) {
+  .panel {
+    padding: clamp(2.5rem, 5vw, 4rem) clamp(2rem, 4vw, 3.5rem);
+    min-height: 500px;
+    border-radius: 20px;
+  }
+
+  .panel h2 {
+    font-size: clamp(4rem, 8vw, 6rem);
+  }
+
+  .accordion {
+    gap: 0.85rem;
+  }
+
+  .header {
+    padding: 1.2rem 1.5rem;
+    font-size: 1.2rem;
+  }
+
+  .content p {
+    padding: 0 1.5rem 1.5rem;
+    font-size: 1.05rem;
+  }
+
+  .glowBox {
+    padding: 1.8rem;
+  }
+}
+
+/* ── 5.2 Laptop (1024px+) ── */
+@media (min-width: 1024px) {
+  .panel {
+    padding: clamp(3rem, 5vw, 5rem) clamp(2.5rem, 5vw, 4rem);
+    border-radius: 24px;
+  }
+
+  .panel h2 {
+    font-size: clamp(5rem, 9vw, 7rem);
+  }
+
+  .title {
+    font-size: 2.2rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    max-width: 80%;
+  }
+
+  .header {
+    font-size: 1.3rem;
+    padding: 1.2rem 1.8rem;
+  }
+
+  .content p {
+    font-size: 1.1rem;
+    padding: 0 1.8rem 1.8rem;
+  }
+
+  .plus {
+    font-size: 26px;
+    width: 36px;
+    height: 36px;
+  }
+
+  .glowBox {
+    font-size: 0.95rem;
+    padding: 2rem;
+    border-radius: 20px;
+  }
+
+  .item {
+    border-radius: 14px;
+  }
+}
+
+/* ── 5.3 Wide Screen (1440px+) ── */
+@media (min-width: 1440px) {
+  .panel {
+    padding: clamp(4rem, 6vw, 6rem) clamp(3rem, 6vw, 5rem);
+    min-height: 600px;
+  }
+
+  .panel h2 {
+    font-size: clamp(6rem, 10vw, 8rem);
+  }
+
+  .accordion {
+    gap: 1rem;
+    max-width: 90%;
+  }
+
+  .header {
+    font-size: 1.5rem;
+    padding: 1.5rem 2rem;
+  }
+
+  .content p {
+    font-size: 1.2rem;
+    padding: 0 2rem 2rem;
+  }
+
+  .plus {
+    font-size: 30px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .glowBox {
+    font-size: 1rem;
+    padding: 2.5rem;
+  }
+}
+
+/* ── 5.4 Mobile Small (≤ 480px) ── */
+@media (max-width: 480px) {
+  .panel {
+    padding: 1.5rem 1rem;
+    min-height: 350px;
+    border-radius: 12px;
+  }
+
+  .panel h2 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .title {
+    font-size: 1.3rem;
+  }
+
+  .subtitle {
+    font-size: 0.8rem;
+    max-width: 100%;
+    margin-bottom: 1.5rem;
+  }
+
+  .accordion {
+    gap: 0.5rem;
+    margin: 0.5rem auto 1rem 0;
+  }
+
+  .header {
+    padding: 0.8rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .plus {
+    font-size: 18px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .content p {
+    font-size: 0.85rem;
+    padding: 0 1rem 1rem;
+  }
+
+  .glowBox {
+    padding: 1rem;
+    font-size: 0.8rem;
+    margin-top: 1.5rem;
+    border-radius: 12px;
+  }
+
+  .item {
+    border-radius: 8px;
+  }
+
+  .item:hover {
+    transform: translateX(2px);
+  }
+}
+
+/* ═══════════════════════════════════════════
+   6. REDUCED MOTION
+═══════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .item {
+    transition: none;
+  }
+
+  .item:hover {
+    transform: none;
+  }
+
+  .plus {
+    transition: none;
+  }
+
+  .plus:hover {
+    transform: none;
+  }
+
+  .content {
+    transition: none;
+  }
+
+  .glowBox {
+    transition: none;
+  }
+
+  .glowBox:hover {
+    transform: none;
+  }
+
+  .item::before {
+    transition: none;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   7. ACCESSIBILITY — FOCUS
+═══════════════════════════════════════════ */
+.item:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.header:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* ═══════════════════════════════════════════
+   8. DARK / LIGHT MODE SUPPORT
+═══════════════════════════════════════════ */
+@media (prefers-color-scheme: light) {
+  .panel {
+    background: rgba(255, 255, 255, 0.6);
+  }
+
+  .item {
+    background: #ffffff;
+    border-color: rgba(0, 0, 0, 0.06);
+  }
+
+  .item:hover {
+    border-color: var(--color-accent);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  }
+
+  .active {
+    background: rgba(102, 126, 234, 0.04);
+  }
+
+  .glowBox {
+    background: radial-gradient(
+      circle at top left,
+      rgba(102, 126, 234, 0.05),
+      transparent 70%
+    );
+    border-color: rgba(0, 0, 0, 0.06);
+  }
+
+  .glowBox:hover {
+    border-color: var(--color-accent);
+  }
+
+  .plus {
+    background: rgba(0, 0, 0, 0.02);
+  }
+
+  .plus:hover {
+    background: rgba(102, 126, 234, 0.06);
+  }
+}
+
+/* ═══════════════════════════════════════════
+   9. ANIMATIONS — ENTRANCE
+═══════════════════════════════════════════ */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .item {
+    animation: slideInLeft 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .item:nth-child(1) { animation-delay: 0.05s; }
+  .item:nth-child(2) { animation-delay: 0.1s; }
+  .item:nth-child(3) { animation-delay: 0.15s; }
+  .item:nth-child(4) { animation-delay: 0.2s; }
+
+  .glowBox {
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: 0.3s;
+    opacity: 0;
+  }
 }

@@ -10,16 +10,14 @@ import LocationBadge from '../Location/Location'
 gsap.registerPlugin(ScrollTrigger)
 
 const Expertise = () => {
-  const sectionRef = useRef(null);
+  
   const backgroundRef = useRef(null);
 const eyebrowRef = useRef(null)
 const titleRef = useRef(null)
 const dividerRef = useRef(null)
 const locationRef = useRef(null)
-const badgeRef = useRef(null)
 const cardRef = useRef(null)
-const accentTitleRef = useRef(null)
-const plainTitleRef = useRef(null)
+const sectionRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
@@ -35,6 +33,7 @@ const plainTitleRef = useRef(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -45,16 +44,14 @@ const plainTitleRef = useRef(null)
       })
 
      tl.from(backgroundRef.current,{
-    opacity:0,
+    opacity: 0,
+  autoAlpha: 0,
     scale:1.08,
+    ease: "power4.out",
     duration:1.2
 })
 
-.from(badgeRef.current,{
-    autoAlpha:0,
-    y:-20,
-    duration:.6
-},"<")
+
 
 .from(eyebrowRef.current,{
     autoAlpha:0,
@@ -88,17 +85,7 @@ const plainTitleRef = useRef(null)
     duration:1
 },"-=.3")
 
-      // PARALLAX SCROLL FEEL (Apple-like depth)
-      gsap.to(sectionRef.current, {
-        backgroundPosition: '50% 20%',
-        ease: 'none',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: true,
-        },
-      })
+      
     }, sectionRef)
 
     return () => ctx.revert()
@@ -106,19 +93,15 @@ const plainTitleRef = useRef(null)
 
 
 
-
-
- 
-
   return (
     <section ref={sectionRef} id="expertise" className={styles.expertise}>
       {/* ── Background elements ── */}
-      <div className={styles.noise} aria-hidden="true" />
+      <div className={styles.noise} aria-hidden="true"ref={backgroundRef} />
 
       <div
         className={styles.background}
         aria-hidden="true"
-        ref={backgroundRef}
+        
       />
 
       {/* ── Corner section index ── */}
@@ -131,8 +114,8 @@ const plainTitleRef = useRef(null)
       <div className={styles.inner}>
         {/* Section header */}
         <header className={styles.header}>
-          <div className={styles.eyebrow}>
-            <span className={styles.eyebrowLine} />
+          <div className={styles.eyebrow} ref={eyebrowRef}>
+            
             <span className={styles.eyebrowText}>
               Skills & Technologies · 2025
             </span>
@@ -141,18 +124,18 @@ const plainTitleRef = useRef(null)
 
           <h2 className={styles.title} ref={titleRef}>
             <span className={styles.titleLine}>
-              <span ref={accentTitleRef}  className={styles.titleAccent}>
+              <span  className={styles.titleAccent}>
                 My
               </span>
             </span>
-            <span className={styles.titleLine}>
-              <span ref={plainTitleRef}  className={styles.titlePlain}>
+            
+              <span   className={styles.titlePlain}>
                 Expertise
-              </span>
+              
             </span>
           </h2>
 
-          <div className={styles.divider} ref={dividerRef}/>
+          
 
           <div className={styles.locationWrap} ref={locationRef}>
             <LocationBadge location="Located in Ivano-Frankivsk" />

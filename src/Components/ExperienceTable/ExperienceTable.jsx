@@ -2,7 +2,11 @@ import { useRef, useEffect, useState ,useLayoutEffect} from "react";
 import styles from "./ExperienceTable.module.css";
 import Counter from "../Counter/Counter";
 import gsap from "gsap";
+import SplitText from "gsap/SplitText";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(SplitText);
 const STATS = [
   { value: 3, suffix: "+", title: "Years", subtitle: "Experience" },
   { value: 15, suffix: "+", title: "Projects", subtitle: "Completed" },
@@ -35,26 +39,32 @@ export default function ExperienceTable() {
   
 useLayoutEffect(() => {
   const ctx = gsap.context(() => {
-  gsap.from(titleRef.current, {
-  y: 80,
-  opacity: 0,
- 
-  duration: 1.2,
-  ease: "power3.out",
-});
-gsap.to(titleRef.current, {
-  opacity: 1,
-  filter: "blur(0px)",
-  duration: 1.2,
-  eas: "power3.out",
-});
+    gsap.from(titleRef.current, {
+      y: 80,
+      opacity: 0,
+      duration: 1.2,
+      ease: "power3.out",
+    });
+  }, sectionRef);
 
-return () => ctx.revert();
-
-  });
+  return () => ctx.revert();
 }, []);
 
+ useLayoutEffect(() => {
+     
+      document.fonts.ready.then(() => {
+  gsap.set(".title", { opacity: 1 });
+  let split = SplitText.create(titleRef.current, { type: "words", aria: "hidden" });
 
+  gsap.from(split.words, {
+    opacity: 0,
+    duration: 2,
+    ease: "sine.out",
+    stagger: 0.1,
+  });
+});
+     
+    }, []);
 
   return (
     <section ref={sectionRef} className={styles.section}>

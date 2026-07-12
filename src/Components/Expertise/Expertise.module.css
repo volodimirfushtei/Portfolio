@@ -1,417 +1,556 @@
-/* Expertise.module.css — Awwwards Editorial Premium */
+/* ═══════════════════════════════════════════
+   Expertise.module.css — Premium Awwwards Style
+   Оптимізовано | Адаптивно | Анімовано
+═══════════════════════════════════════════ */
 
+/* ═══════════════════════════════════════════
+   1. CSS VARIABLES
+═══════════════════════════════════════════ */
+.expertise {
+  --section-padding: clamp(4rem, 10vh, 12rem);
+  --inner-gap: clamp(3rem, 8vw, 10rem);
+  --title-size: clamp(2.5rem, 10vw, 8rem);
+  --columns-gap: clamp(2.5rem, 6vw, 6rem);
+}
 
+/* ═══════════════════════════════════════════
+   2. SECTION WRAPPER
+═══════════════════════════════════════════ */
 .expertise {
   position: relative;
   width: 100%;
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
-
   align-items: center;
+  justify-content: center;
+  background: transparent;
   overflow: hidden;
   isolation: isolate;
-  padding: clamp(4rem, 8vw, 8rem) 0;
-  background: transparent;
+  padding: clamp(6rem, 12vw, 12rem) 2rem;
+  z-index: 1;
+  
 }
 
+/* ═══════════════════════════════════════════
+   3. BACKGROUND EFFECTS
+═══════════════════════════════════════════ */
 
-.background {
+/* ── 3.1 Gradient Background ── */
+.gradientBg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ── 3.2 Grid Pattern ── */
+.gridPattern {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.5;
+}
+
+@media (min-width: 768px) {
+  .gridPattern {
+    background-size: 60px 60px;
+    opacity: 0.8;
+  }
+}
+
+/* ── 3.3 Noise Texture ── */
+.noise {
   position: absolute;
   inset: 0;
   height: 120%;
   top: -10%;
-  background: var(--color-grid) ;
- background-size: 40px 40px;
-  z-index: 0;
+  background: url("/images/grunge_texture.webp") no-repeat center center/cover;
   will-change: transform;
-  opacity: 0.6;
-}
-
-
-
-
-
-.noise {
-  position: absolute;
-  inset: -50%;
-  width: 200%;
-  height: 200%;
-  background-image: url("/images/texture.webp/");
-  background-repeat: repeat;
-  background-size: 200px;
-  opacity: 0.03;
+  opacity: 0.035;
   pointer-events: none;
-  z-index: 2;
-  animation: grainShift 0.2s steps(2) infinite;
+  z-index: 0;
 }
 
-@keyframes grainShift {
-  0% { transform: translate(0, 0); }
-  25% { transform: translate(-2%, -1%); }
-  50% { transform: translate(1%, 2%); }
-  75% { transform: translate(-1%, 1%); }
-  100% { transform: translate(2%, -2%); }
+@keyframes noiseShift {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  25% {
+    transform: translate(-5%, -5%);
+  }
+
+  50% {
+    transform: translate(5%, 5%);
+  }
+
+  75% {
+    transform: translate(-5%, 5%);
+  }
+
+  100% {
+    transform: translate(5%, -5%);
+  }
 }
 
+/* ── 3.4 Blur Orbs ── */
+.blurOrb1,
+.blurOrb2 {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.15;
+  animation: orbFloat 20s ease-in-out infinite alternate;
+}
 
+.blurOrb1 {
+  width: 300px;
+  height: 300px;
+  top: -10%;
+  right: -10%;
+  background: radial-gradient(circle, rgba(102, 126, 234, 0.2), transparent 70%);
+  animation-delay: 0s;
+}
+
+.blurOrb2 {
+  width: 250px;
+  height: 250px;
+  bottom: -10%;
+  left: -10%;
+  background: radial-gradient(circle, rgba(118, 75, 162, 0.15), transparent 70%);
+  animation-delay: -10s;
+}
 
 @media (min-width: 768px) {
-  .gridBg {
-    background-size: 50px 50px;
+  .blurOrb1 {
+    width: 400px;
+    height: 400px;
+  }
+
+  .blurOrb2 {
+    width: 350px;
+    height: 350px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .blurOrb1 {
+    width: 500px;
+    height: 500px;
+  }
+
+  .blurOrb2 {
+    width: 450px;
+    height: 450px;
+  }
+}
+
+@keyframes orbFloat {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate(30px, -20px) scale(1.1);
+  }
+
+  66% {
+    transform: translate(-20px, 30px) scale(0.9);
+  }
+
+  100% {
+    transform: translate(20px, 20px) scale(1.05);
   }
 }
 
 /* ═══════════════════════════════════════════
-   CORNER BADGE
+   4. CORNER BADGE
 ═══════════════════════════════════════════ */
 .cornerBadge {
-  position: absolute;
-  top: clamp(1.5rem, 5vw, 4rem);
-  right: clamp(1rem, 4vw, 3rem);
-  z-index: 20;
-  display: none;
+  position: fixed;
+  top: clamp(1.5rem, 7vh, 4rem);
+  right: clamp(1rem, 3vw, 3rem);
+  z-index: 100;
+  display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.3rem;
+  gap: 0.25rem;
+  opacity: 0.2;
+  transition: opacity 0.4s ease;
   pointer-events: none;
 }
 
-@media (min-width: 768px) {
-  .cornerBadge {
-    display: flex;
-  }
+.cornerBadge:hover {
+  opacity: 0.8;
 }
 
 .cornerBadgeNum {
-  font-family: var(--font-display, "Bebas Neue", sans-serif);
-  font-size: 2rem;
+  font-family: var(--font-display, 'Bebas Neue', sans-serif);
+  font-size: clamp(1.5rem, 2.5vw, 2.8rem);
   line-height: 1;
   color: var(--color-text, #ffffff);
-  opacity: 0.22;
-}
-
-@media (min-width: 1024px) {
-  .cornerBadgeNum {
-    font-size: 2.8rem;
-  }
+  letter-spacing: -0.02em;
 }
 
 .cornerBadgeLabel {
-  font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 0.6rem;
-  letter-spacing: 0.28em;
+  font-family: var(--font-mono, 'DM Mono', monospace);
+  font-size: clamp(0.5rem, 0.6vw, 0.65rem);
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--color-secondary, #94a3b8);
-  opacity: 0.38;
   writing-mode: vertical-rl;
   transform: rotate(180deg);
 }
 
-@media (min-width: 1024px) {
-  .cornerBadgeLabel {
-    font-size: 0.7rem;
+@media (max-width: 768px) {
+  .cornerBadge {
+    display: none;
   }
 }
 
 /* ═══════════════════════════════════════════
-   INNER LAYOUT
+   5. INNER LAYOUT
 ═══════════════════════════════════════════ */
 .inner {
   position: relative;
   z-index: 10;
-
-  width: min(100%, 1440px);
-  margin-inline: auto;
-  padding-inline: clamp(1.5rem, 5vw, 5rem);
-
-  display: flex;
-  flex-direction: column;
-  gap: clamp(4rem, 8vw, 8rem);
-}
-
-
-
-
-.header {
   width: 100%;
-  
-
+  max-width: 1440px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  align-items:center;
+  gap: var(--inner-gap);
+  padding: 0 clamp(1rem, 3vw, 3rem);
 }
 
 /* ═══════════════════════════════════════════
-   CONTENT
+   6. HEADER
 ═══════════════════════════════════════════ */
+.header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.5rem;
+}
 
-
-
-/* Eyebrow */
+/* ── 6.1 Eyebrow ── */
 .eyebrow {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  margin-bottom: 2rem;
-  overflow: hidden;
-  flex-wrap: wrap;
+  opacity: 0.7;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .eyebrow {
     justify-content: flex-start;
-    gap: 0.85rem;
   }
 }
 
-.eyebrowLine {
-  display: block;
-  width: 24px;
-  height: 1px;
-  background: var(--color-accent, #ed0c4c);
-  flex-shrink: 0;
-  opacity: 0.6;
-}
 
-@media (min-width: 768px) {
-  .eyebrowLine {
-    width: 32px;
-  }
-}
 
 .eyebrowText {
-  font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 0.85rem;
+  font-family: var(--font-mono, 'DM Mono', monospace);
+  font-size: clamp(0.55rem, 0.7vw, 0.7rem);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--color-secondary, #94a3b8);
-  text-align: center;
-}
-
-@media (min-width: 768px) {
-  .eyebrowText {
-    font-size: 0.85rem;
-    letter-spacing: 0.25em;
-    text-align: left;
-  }
-}
-
-@media (min-width: 1024px) {
-  .eyebrowText {
-    font-size: 0.85rem;
-    letter-spacing: 0.3em;
-  }
 }
 
 .eyebrowDot {
-  display: none;
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: var(--color-accent, #ed0c4c);
-  animation: blink 2.4s ease-in-out infinite;
+  background: var(--color-accent, #667eea);
+  animation: pulseDot 2s ease-in-out infinite;
 }
 
-@media (min-width: 768px) {
-  .eyebrowDot {
-    display: block;
+@keyframes pulseDot {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.2;
+    transform: scale(0.5);
   }
 }
 
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.2; }
-}
-
-/* Title */
+/* ── 6.2 Title ── */
 .title {
-  font-family: var(--font-display, "Bebas Neue", sans-serif);
-  font-size: clamp(3rem, 10vw, 8rem);
-  font-weight: 400;
+  font-family: var(--font-display, 'Bebas Neue', sans-serif);
+  font-size: var(--title-size);
+  font-weight: 700;
   line-height: 0.9;
   letter-spacing: -0.02em;
-  margin: 0 0 1.5rem;
-  text-align: center;
-    max-width:900px;
-}
-
-@media (min-width: 768px) {
-  .title {
-    font-size: clamp(3.5rem, 8vw, 12rem);
-    text-align: center;
-  }
-}
-
-@media (min-width: 1024px) {
-  .title {
-    font-size: clamp(4rem, 8vw, 16rem);
-    line-height: 0.88;
-       max-width:1000px;
-    margin-bottom:2rem;
-    
-
-  }
+  margin: 0;
+  text-transform: uppercase;
+  max-width: 900px;
 }
 
 .titleLine {
   display: block;
   overflow: hidden;
-  line-height: 1;
-  padding-bottom: 0.06em;
+  padding-bottom: 0.05em;
 }
 
 .titleAccent {
-  display: block;
-  background: linear-gradient(
-    120deg,
-    var(--color-text, #ffffff) 0%,
-    var(--color-secondary, #94a3b8) 50%,
-    var(--color-text, #ffffff) 100%
-  );
-  background-size: 200% auto;
+  display: inline-block;
+  background: linear-gradient(135deg,
+      #667eea 0%,
+      #764ba2 40%,
+      #ed0c4c 70%,
+      #667eea 100%);
+  background-size: 300% 100%;
   -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   background-clip: text;
-  color: transparent;
-  animation: shimmer 6s linear infinite;
+  animation: gradientShift 6s ease-in-out infinite;
 }
 
-@keyframes shimmer {
-  0% { background-position: 0% center; }
-  100% { background-position: 200% center; }
+@keyframes gradientShift {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 .titlePlain {
   display: block;
-  color: var(--color-title, #ffffff);
+  color: var(--color-text, #ffffff);
+  -webkit-text-fill-color: var(--color-text, #ffffff);
 }
 
-/* Divider */
-.divider {
-  width: 160px;
-  height: 1px;
-  background: var(--color-border, rgba(255, 255, 255, 0.1));
-  margin: 0 auto 1.5rem;
-  transform-origin: left;
-}
 
-@media (min-width: 768px) {
+
+@media (min-width: 1024px) {
   .divider {
-     width:220px;
-    height:1px;
-    margin:2rem auto;
+    width: 120px;
   }
 }
 
-/* Location wrap */
-.locationWrap{
-     width:100%;
-    display:flex;
-    justify-content:center;
-}
-
-
-
-
-
+/* ═══════════════════════════════════════════
+   7. COLUMNS
+═══════════════════════════════════════════ */
 .columns {
-   width:min(100%,900px);
-
-    margin-inline:auto;
-
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-
-    gap:5rem;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--columns-gap);
+  padding: 2rem 0;
 }
 
 .cardCol,
 .tableCol {
-   width:100%;
-    display:flex;
-    justify-content:center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 /* ═══════════════════════════════════════════
-   RESPONSIVE
+   8. RESPONSIVE BREAKPOINTS
 ═══════════════════════════════════════════ */
-/* Tablet */
-@media (max-width: 1024px) and (min-width: 769px) {
-  .inner {
-    padding: 0 2rem;
-  }
-  
-  .title {
-    font-size: clamp(3rem, 6vw, 5rem);
-  }
-}
 
-/* Mobile */
-@media (max-width: 768px) {
+/* ── 8.1 Tablet (768px - 1023px) ── */
+@media (min-width: 768px) and (max-width: 1023px) {
   .expertise {
-    padding: 4rem 0;
+    padding: 6rem 2rem;
   }
-  
+
   .inner {
     padding: 0 1.5rem;
-    gap: 2rem;
+    gap: 4rem;
   }
-  
+
   .title {
-    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-size: clamp(3.5rem, 8vw, 5rem);
   }
-  
+
   .columns {
-    gap: 1.5rem;
+    gap: 4rem;
+    padding: 1.5rem 0;
   }
 }
 
-/* Small Mobile */
+/* ── 8.2 Desktop (1024px - 1439px) ── */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .expertise {
+    padding: 8rem 3rem;
+  }
+
+  .title {
+    font-size: clamp(4rem, 8vw, 6rem);
+  }
+
+  .columns {
+    gap: 5rem;
+  }
+}
+
+/* ── 8.3 Large Screen (1440px+) ── */
+@media (min-width: 1440px) {
+  .title {
+    font-size: 8rem;
+  }
+
+  .columns {
+    gap: 6rem;
+  }
+}
+
+/* ── 8.4 Mobile (≤ 767px) ── */
+@media (max-width: 767px) {
+  .expertise {
+    padding: 4rem 1.5rem;
+    min-height: auto;
+  }
+
+  .inner {
+    padding: 0;
+    gap: 2.5rem;
+  }
+
+  .title {
+    font-size: clamp(2.5rem, 8vw, 3.5rem);
+    max-width: 100%;
+  }
+
+  .columns {
+    gap: 2.5rem;
+    padding: 1rem 0;
+  }
+
+  .divider {
+    width: 60px;
+  }
+
+  .blurOrb1,
+  .blurOrb2 {
+    display: none;
+  }
+}
+
+/* ── 8.5 Small Mobile (≤ 480px) ── */
 @media (max-width: 480px) {
   .expertise {
-    padding: 3rem 0;
+    padding: 3rem 1rem;
   }
-  
+
   .inner {
-    padding: 0 1rem;
-    gap: 1.5rem;
+    gap: 2rem;
   }
-  
+
+  .title {
+    font-size: clamp(2rem, 7vw, 2.8rem);
+  }
+
   .eyebrowText {
-    font-size: 0.6rem;
+    font-size: 0.5rem;
     letter-spacing: 0.15em;
   }
-  
-  .title {
-    font-size: clamp(2rem, 4vw, 3.5rem);
-    margin-bottom: 1rem;
+
+  .eyebrowLine {
+    width: 20px;
   }
-  
+
+  .columns {
+    gap: 2rem;
+    padding: 0.5rem 0;
+  }
+
   .divider {
-    margin-bottom: 1rem;
+    width: 40px;
   }
 }
 
 /* ═══════════════════════════════════════════
-   REDUCED MOTION
+   9. ACCESSIBILITY
 ═══════════════════════════════════════════ */
+
+/* ── 9.1 Reduced Motion ── */
 @media (prefers-reduced-motion: reduce) {
-  .scanlines, 
-  .eyebrowDot, 
-  .titleAccent,
-  .noise { 
-    animation: none !important; 
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
-  
-  .background {
-    transform: none !important;
+
+  .titleAccent {
+    animation: none !important;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
-  
+
+  .eyebrowDot {
+    animation: none !important;
+  }
+
+  .blurOrb1,
+  .blurOrb2 {
+    animation: none !important;
+  }
+
   .noise {
-    animation: none;
+    animation: none !important;
     opacity: 0.02;
   }
 }
 
+/* ── 9.2 High Contrast ── */
+@media (prefers-contrast: high) {
+  .expertise {
+    background: #000000;
+  }
+
+  .titlePlain {
+    color: #ffffff;
+    -webkit-text-fill-color: #ffffff;
+  }
+
+  .divider {
+    background: #ffffff;
+  }
+
+  .eyebrowLine {
+    background: #ffffff;
+  }
+
+  .eyebrowDot {
+    background: #ffffff;
+  }
+}
+
+/* ── 9.3 Focus States ── */
+.cardCol:focus-visible,
+.tableCol:focus-visible {
+  outline: 2px solid var(--color-accent, #667eea);
+  outline-offset: 4px;
+}

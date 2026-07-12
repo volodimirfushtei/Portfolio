@@ -4,9 +4,9 @@
    CSS VARIABLES
 ═══════════════════════════════════════════ */
 :root {
-  --section-padding-mobile: 3rem 0;
+  --section-padding-mobile: 4rem 0;
   --section-padding-tablet: 4rem 0;
-  --section-padding-desktop: 12rem 0;
+  --section-padding-desktop: 16rem 0;
   --section-padding-large: 12rem 0;
 }
 
@@ -51,7 +51,7 @@ pointer-events:none;
   padding: var(--section-padding-desktop);
   width: 100%;
   max-width: 100%;
-  background: transparent;
+  background: var(--color-page-gradient);
   z-index: 0;
 }
 .section {
@@ -73,6 +73,7 @@ pointer-events:none;
         transparent
     );
 }
+
 .ControllerSkills{
   width: 100%;
   height: 30vh;

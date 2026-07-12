@@ -1,29 +1,34 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
-
 import { gsap } from 'gsap'
 import styles from './Sertificate.module.css'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
+
 const Certificate = () => {
   const [currentTime, setCurrentTime] = useState(new Date())
   const [isMobile, setIsMobile] = useState(false)
+  const [isTablet, setIsTablet] = useState(false)
   const cardRef = useRef(null)
   const shineRef = useRef(null)
   const bgRef = useRef(null)
   const bg2Ref = useRef(null)
   const bg3Ref = useRef(null)
-
   const sectionRef = useRef(null)
-  // Responsive Check
+
+  // ── Responsive Check ──
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 1024)
+    const check = () => {
+      const width = window.innerWidth
+      setIsMobile(width < 768)
+      setIsTablet(width >= 768 && width < 1024)
+    }
     check()
     window.addEventListener('resize', check)
     return () => window.removeEventListener('resize', check)
   }, [])
 
-  // Time update
+  // ── Time update ──
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000)
     return () => clearInterval(timer)
@@ -34,7 +39,7 @@ const Certificate = () => {
     minute: '2-digit',
   })
 
-  // GSAP Magnetic Tilt (Subtle)
+  // ── GSAP Magnetic Tilt ──
   const handleMouseMove = useCallback(
     (e) => {
       if (isMobile || !cardRef.current) return
@@ -59,7 +64,18 @@ const Certificate = () => {
     [isMobile],
   )
 
-  //shine animation
+  const handleMouseLeave = useCallback(() => {
+    if (isMobile || !cardRef.current) return
+
+    gsap.to(cardRef.current, {
+      rotateX: 0,
+      rotateY: 0,
+      duration: 0.8,
+      ease: 'power2.out',
+    })
+  }, [isMobile])
+
+  // ── Shine Animation ──
   useEffect(() => {
     if (!shineRef.current) return
 
@@ -75,8 +91,8 @@ const Certificate = () => {
       repeatDelay: 2.5,
     })
   }, [])
-  //shine animation end
 
+  // ── Background Animations ──
   useEffect(() => {
     gsap.to(bgRef.current, {
       scale: 1.1,
@@ -85,6 +101,7 @@ const Certificate = () => {
       yoyo: true,
       ease: 'sine.inOut',
     })
+
     gsap.to(bgRef.current, {
       yPercent: -18,
       ease: 'none',
@@ -118,18 +135,6 @@ const Certificate = () => {
       },
     })
   }, [])
-
-  //handle mouse leave
-  const handleMouseLeave = useCallback(() => {
-    if (isMobile || !cardRef.current) return
-
-    gsap.to(cardRef.current, {
-      rotateX: 0,
-      rotateY: 0,
-      duration: 0.8,
-      ease: 'power2.out',
-    })
-  }, [isMobile])
 
   return (
     <section className={styles.section} ref={sectionRef}>
@@ -187,7 +192,6 @@ const Certificate = () => {
             onMouseLeave={handleMouseLeave}
             ref={cardRef}
           >
-            {' '}
             <div className={styles.shine}>
               <div ref={shineRef} className={styles.shineInner} />
             </div>

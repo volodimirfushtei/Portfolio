@@ -118,7 +118,7 @@ const HeroSection = () => {
             <p ref={subtitleRef} className={styles.subtitle}>
               <Typewriter
                 words={[
-                  "Transforming ideas into exceptional web experiences",
+                  "Transforming idease into exceptional web experiences",
                   "UI / UX Design & Prototyping",
                   "Motion & GSAP Animations",
                   "React & Next.js Applications",

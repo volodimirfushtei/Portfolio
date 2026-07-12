@@ -26,7 +26,7 @@ const Counter = ({ value, suffix, isInView }) => {
       if (!startTime) startTime = timestamp;
       const progress = Math.min((timestamp - startTime) / duration, 1);
 
-      // Easing function для плавності (easeOutQuad)
+      // easeing function для плавності (easeOutQuad)
       const easeOutQuad = 1 - (1 - progress) * (1 - progress);
       const currentValue = Math.floor(easeOutQuad * value);
 

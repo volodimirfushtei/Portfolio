@@ -16,14 +16,19 @@ const HeroMedia = () => {
   useEffect(() => {
     const ctx = gsap.context(() => {
       /* ── Entry timeline ── */
-      const tl = gsap.timeline({ defaults: { ease: 'power4.out' } })
+      const tl = gsap.timeline({
+    paused:false,
+    defaults:{
+        ease:"power4.out"
+    }
+});
 
       // Frame clip-path reveal
       tl.fromTo(
         containerRef.current,
-        { clipPath: 'inset(12% 12% 12% 12% round 24px)', opacity: 0 },
+        { clipPath:"inset(18% round 32px)", opacity: 0 },
         {
-          clipPath: 'inset(0% 0% 0% 0% round 24px)',
+          clipPath:"inset(0 round 32px)",
           opacity: 1,
           duration: 1.4,
         },
@@ -43,13 +48,7 @@ const HeroMedia = () => {
           '-=1',
         )
         // Overlay fade
-        .fromTo(
-          overlayRef.current,
-          { opacity: 0, filter: 'blur(20px)' },
-          { opacity: 1, filter: 'blur(0px)', duration: 1.5 },
-
-          '-=1.4',
-        )
+       
         // Accent frame
         .fromTo(
           frameRef.current,
@@ -91,6 +90,29 @@ const HeroMedia = () => {
         yoyo: true,
         ease: 'sine.inOut',
       })
+
+gsap.to(overlayRef.current, {
+  yPercent: -8,
+  scale: 1.1,
+  rotation: 1,
+  ease: "none",
+  scrollTrigger: {
+    trigger: containerRef.current,
+    start: "top bottom",
+    end: "bottom top",
+    scrub: 2,
+  },
+});
+gsap.to(overlayRef.current, {
+  x: 30,
+  y: -20,
+  duration: 12,
+  repeat: -1,
+  yoyo: true,
+  ease: "sine.inOut",
+});
+
+
     }, containerRef)
 
     /* ── Magnetic hover ── */

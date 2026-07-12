@@ -1,41 +1,114 @@
+/* ═══════════════════════════════════════════
+   ProfileCard.module.css — Awwwards Premium
+   Mobile First | Cinematic | Editorial
+═══════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════
+   1. CSS VARIABLES
+═══════════════════════════════════════════ */
+.profileCard {
+  --card-padding: clamp(1.25rem, 3vw, 2rem);
+  --card-radius: clamp(20px, 3vw, 32px);
+  --avatar-size: clamp(64px, 10vw, 96px);
+  --gap-sm: clamp(0.75rem, 1.5vw, 1rem);
+  --gap-md: clamp(1.25rem, 2.5vw, 1.75rem);
+  --gap-lg: clamp(1.5rem, 3vw, 2rem);
+  --transition-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ═══════════════════════════════════════════
+   2. PROFILE CARD (Mobile First)
+═══════════════════════════════════════════ */
 .profileCard {
   width: min(580px, 100%);
-  padding: 2rem;
-
-  border-radius: 32px;
-
+  padding: var(--card-padding);
+  border-radius: var(--card-radius);
   background:
     linear-gradient(
       180deg,
-      rgba(255,255,255,.06),
-      rgba(255,255,255,.02)
+      rgba(255, 255, 255, .06),
+      rgba(255, 255, 255, .02)
     );
-
-  border: 1px solid rgba(255,255,255,.08);
-
+  border: 1px solid var(--color-border);
   backdrop-filter: blur(24px);
-
-  box-shadow:
-    0 1px 0 rgba(255,255,255,.05) inset,
-    0 40px 120px rgba(0,0,0,.35);
-
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: var(--color-shadow);
   transition:
-    transform .5s cubic-bezier(.16,1,.3,1),
-    box-shadow .5s cubic-bezier(.16,1,.3,1);
+    transform .5s var(--transition-smooth),
+    box-shadow .5s var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
 }
 
+/* ── 2.1 Card Glow Effect ── */
+.profileCard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--card-radius);
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.08),
+    transparent 40%,
+    transparent 60%,
+    rgba(255, 255, 255, 0.04)
+  );
+  
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s var(--transition-smooth);
+}
+
+.profileCard:hover::before {
+  opacity: 1;
+}
+
+/* ── 2.2 Card Hover ── */
 .profileCard:hover {
-  transform: translateY(-6px);
-
+  transform: translateY(-6px) scale(1.005);
   box-shadow:
-    0 1px 0 rgba(255,255,255,.08) inset,
-    0 60px 160px rgba(0,0,0,.45);
+     0px 10px 40px var(--color-accent);
+   
 }
 
+/* ═══════════════════════════════════════════
+   3. PROFILE HEADER
+═══════════════════════════════════════════ */
+.profileHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-md);
+  flex-wrap: wrap;
+}
+
+/* ── 3.1 Avatar ── */
 .avatarWrap {
   position: relative;
-  width: 96px;
-  height: 96px;
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  flex-shrink: 0;
+}
+
+.avatarWrap::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.5s var(--transition-smooth);
+}
+.info{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+.profileCard:hover .avatarWrap::after {
+  opacity: 1;
 }
 
 .avatar {
@@ -43,129 +116,546 @@
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
-
-  border: 1px solid rgba(255,255,255,.1);
-
+  border: 1px solid rgba(255, 255, 255, .1);
   box-shadow:
-    0 0 0 1px rgba(255,255,255,.05),
-    0 20px 60px rgba(0,0,0,.35);
+    0 0 0 1px rgba(255, 255, 255, .05),
+    0 20px 60px rgba(0, 0, 0, .35);
+  transition: transform 0.5s var(--transition-smooth);
 }
 
-.profileHeader {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
+.profileCard:hover .avatar {
+  transform: scale(1.04);
 }
 
+/* ── 3.2 Status ── */
 .status {
   display: inline-flex;
   align-items: center;
   gap: .5rem;
-
-  font-size: .75rem;
+  font-size: .65rem;
   text-transform: uppercase;
   letter-spacing: .15em;
-
   color: var(--color-accent);
+  font-weight: 500;
 }
 
 .status::before {
   content: "";
-  width: 8px;
-  height: 8px;
-
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-
   background: #22c55e;
-
-  box-shadow:
-    0 0 12px #22c55e;
+  box-shadow: 0 0 12px #22c55e;
+  animation: pulseDot 2s ease-in-out infinite;
 }
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+/* ── 3.3 Name ── */
 .name {
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(1.5rem, 4vw, 3rem);
   line-height: 1;
-
   color: var(--color-title);
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
+/* ── 3.4 Role ── */
 .role {
-  margin-top: .5rem;
-
+  margin-top: .35rem;
   color: var(--color-text-secondary);
-
-  font-size: 1rem;
-}.bio {
-  margin-top: 2rem;
-
-  max-width: 60ch;
-
-  line-height: 1.7;
-
-  color: var(--color-text);
+  font-size: clamp(0.85rem, 1.2vw, 1rem);
+  font-weight: 400;
+  opacity: 0.7;
 }
 
+/* ═══════════════════════════════════════════
+   4. BIO
+═══════════════════════════════════════════ */
+.bio {
+  margin-top: var(--gap-md);
+  text-align: center;
+  max-width: 60ch;
+  line-height: 1.8;
+  color: var(--color-text);
+  font-size: clamp(0.9rem, 1.1vw, 1rem);
+  opacity: 0.85;
+}
+
+/* ═══════════════════════════════════════════
+   5. TECH STACK
+═══════════════════════════════════════════ */
 .techStack {
   display: flex;
   flex-wrap: wrap;
-  gap: .75rem;
-
-  margin-top: 2rem;
+  align-items: center;
+  justify-content: center;
+  gap: .6rem;
+  margin-top: var(--gap-md);
 }
 
 .techStack span {
-  padding: .7rem 1rem;
-
+  padding: .5rem 1rem;
   border-radius: 999px;
+  background: rgba(255, 255, 255, .04);
+  border: 1px solid var(--color-accent);
+  color: var(--color-text);
+  font-size: clamp(0.7rem, 0.9vw, 0.85rem);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  transition: all 0.35s var(--transition-smooth);
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+}
 
-  background:
-    rgba(255,255,255,.04);
-
-  border:
-    1px solid rgba(255,255,255,.06);
-
-  font-size: .85rem;
-
-  transition: .35s;
+/* ── 5.1 Tech Stack Hover Effect ── */
+.techStack span::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-accent);
+  opacity: 0;
+  transition: opacity 0.35s var(--transition-smooth);
+  border-radius: 999px;
 }
 
 .techStack span:hover {
-  transform: translateY(-2px);
-
+  transform: translateY(-3px) scale(1.02);
+  color: var(--color-secondary);
   border-color: var(--color-accent);
-
-  background:
-    rgba(255,255,255,.08);
+  background: rgba(255, 255, 255, .08);
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.15);
 }
 
+/* ═══════════════════════════════════════════
+   6. ACTIONS
+═══════════════════════════════════════════ */
 .actions {
   display: flex;
-  gap: 1rem;
-
-  margin-top: 2rem;
+  gap: var(--gap-sm);
+  margin-top: var(--gap-lg);
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
+/* ── 6.1 Buttons ── */
 .primaryBtn,
 .secondaryBtn {
-  height: 52px;
-
-  padding: 0 1.5rem;
-
+  height: clamp(44px, 6vw, 52px);
+  padding: 0 clamp(1.25rem, 2vw, 1.5rem);
   border-radius: 999px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
-  transition: .35s;
+  transition: all 0.35s var(--transition-smooth);
+  font-family: var(--font-mono, 'DM Mono', monospace);
+  font-size: clamp(0.65rem, 0.8vw, 0.75rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+  cursor: pointer;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+  flex: 1;
+  min-width: 140px;
 }
 
 .primaryBtn {
   background: var(--color-accent);
   color: #000;
+  border: none;
+}
+
+.primaryBtn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), transparent);
+  opacity: 0;
+  transition: opacity 0.35s var(--transition-smooth);
+}
+
+.primaryBtn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 30px rgba(102, 126, 234, 0.3);
+}
+
+.primaryBtn:hover::before {
+  opacity: 1;
+}
+
+.primaryBtn:active {
+  transform: scale(0.97);
 }
 
 .secondaryBtn {
-  border: 1px solid rgba(255,255,255,.08);
+  border: 1px solid rgba(255, 255, 255, .08);
   background: transparent;
   color: var(--color-text);
+}
+
+.secondaryBtn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-accent);
+  opacity: 0;
+  transition: opacity 0.35s var(--transition-smooth);
+  border-radius: 999px;
+}
+
+.secondaryBtn:hover {
+  transform: translateY(-2px) scale(1.02);
+  border-color: var(--color-accent);
+  color: #000;
+}
+
+.secondaryBtn:hover::before {
+  opacity: 0.12;
+}
+
+.secondaryBtn:active {
+  transform: scale(0.97);
+}
+
+/* ── 6.2 Button Icons (опціонально) ── */
+.btnIcon {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.35s var(--transition-smooth);
+}
+
+.primaryBtn:hover .btnIcon,
+.secondaryBtn:hover .btnIcon {
+  transform: translate(2px, -2px);
+}
+
+/* ═══════════════════════════════════════════
+   7. RESPONSIVE BREAKPOINTS
+═══════════════════════════════════════════ */
+
+/* ── 7.1 Mobile Small (≤ 480px) ── */
+@media (max-width: 480px) {
+  .profileCard {
+    padding: 1.25rem;
+    border-radius: 20px;
+  }
+
+  .profileHeader {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+  }
+
+  .avatarWrap {
+    width: 72px;
+    height: 72px;
+  }
+
+  .name {
+    font-size: 1.5rem;
+  }
+
+  .role {
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+  }
+
+  .bio {
+    margin-top: 1.25rem;
+    font-size: 0.85rem;
+    text-align: center;
+  }
+
+  .techStack {
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .techStack span {
+    font-size: 0.7rem;
+    padding: 0.4rem 0.75rem;
+  }
+
+  .actions {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .primaryBtn,
+  .secondaryBtn {
+    width: 100%;
+    min-width: unset;
+    height: 44px;
+    font-size: 0.65rem;
+  }
+
+  .status {
+    font-size: 0.6rem;
+  }
+
+  .status::before {
+    width: 5px;
+    height: 5px;
+  }
+}
+
+/* ── 7.2 Mobile Medium (481px - 768px) ── */
+@media (min-width: 481px) and (max-width: 768px) {
+  .profileCard {
+    padding: 1.5rem;
+  }
+
+  .profileHeader {
+    gap: 1rem;
+  }
+
+  .avatarWrap {
+    width: 80px;
+    height: 80px;
+  }
+
+  .name {
+    font-size: 1.75rem;
+  }
+
+  .bio {
+    font-size: 0.9rem;
+  }
+
+  .techStack {
+    gap: 0.5rem;
+  }
+
+  .techStack span {
+    padding: 0.45rem 0.85rem;
+    font-size: 0.75rem;
+  }
+
+  .actions {
+    flex-direction: row;
+  }
+
+  .primaryBtn,
+  .secondaryBtn {
+    flex: 1;
+    height: 46px;
+    font-size: 0.65rem;
+    min-width: 120px;
+  }
+}
+
+/* ── 7.3 Tablet (769px - 1024px) ── */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .profileCard {
+    width: min(500px, 100%);
+    padding: 1.75rem;
+  }
+
+  .avatarWrap {
+    width: 88px;
+    height: 88px;
+  }
+
+  .name {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+  }
+
+  .primaryBtn,
+  .secondaryBtn {
+    min-width: 160px;
+  }
+}
+
+/* ── 7.4 Desktop (1025px+) ── */
+@media (min-width: 1025px) {
+  .profileCard {
+    width: min(580px, 100%);
+    padding: 2rem;
+  }
+
+  .avatarWrap {
+    width: 96px;
+    height: 96px;
+  }
+
+  .name {
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+
+  .primaryBtn,
+  .secondaryBtn {
+    flex: 0 1 auto;
+    min-width: 160px;
+  }
+}
+
+/* ── 7.5 Wide Screen (1440px+) ── */
+@media (min-width: 1440px) {
+  .profileCard {
+    width: min(640px, 100%);
+    padding: 2.5rem;
+    border-radius: 36px;
+  }
+
+  .avatarWrap {
+    width: 112px;
+    height: 112px;
+  }
+
+  .name {
+    font-size: 3.5rem;
+  }
+
+  .bio {
+    font-size: 1.05rem;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   8. REDUCED MOTION
+═══════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .profileCard {
+    transition: none;
+  }
+
+  .profileCard:hover {
+    transform: none;
+  }
+
+  .avatar {
+    transition: none;
+  }
+
+  .profileCard:hover .avatar {
+    transform: none;
+  }
+
+  .techStack span {
+    transition: none;
+  }
+
+  .techStack span:hover {
+    transform: none;
+  }
+
+  .primaryBtn,
+  .secondaryBtn {
+    transition: none;
+  }
+
+  .primaryBtn:hover,
+  .secondaryBtn:hover {
+    transform: none;
+  }
+
+  .status::before {
+    animation: none;
+  }
+
+  .profileCard::before {
+    transition: none;
+  }
+
+  .avatarWrap::after {
+    transition: none;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   9. DARK / LIGHT MODE SUPPORT
+═══════════════════════════════════════════ */
+@media (prefers-color-scheme: light) {
+  .profileCard {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(0, 0, 0, .04),
+        rgba(0, 0, 0, .02)
+      );
+    border-color: rgba(0, 0, 0, .08);
+  }
+
+  .profileCard::before {
+    background: linear-gradient(
+      135deg,
+      rgba(0, 0, 0, 0.06),
+      transparent 40%,
+      transparent 60%,
+      rgba(0, 0, 0, 0.03)
+    );
+  }
+
+  .techStack span {
+    background: rgba(0, 0, 0, .04);
+    border-color: rgba(0, 0, 0, .06);
+  }
+
+  .techStack span:hover {
+    background: rgba(0, 0, 0, .08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  .secondaryBtn {
+    border-color: rgba(0, 0, 0, .08);
+    color: var(--color-text-dark, #1a1a1a);
+  }
+
+  .secondaryBtn:hover {
+    color: #000;
+  }
+
+  .status {
+    color: #059669;
+  }
+
+  .status::before {
+    background: #059669;
+    box-shadow: 0 0 12px #059669;
+  }
+
+  .profileCard:hover {
+    box-shadow:
+      rgba(0, 0, 0, 0.15) 0px 10px 40px,
+      rgba(15, 23, 42, 0.08) 0px 1px 0px inset;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   10. ACCESSIBILITY — FOCUS STATES
+═══════════════════════════════════════════ */
+.primaryBtn:focus-visible,
+.secondaryBtn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+.techStack span:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* ═══════════════════════════════════════════
+   11. UTILITY — SELECTION
+═══════════════════════════════════════════ */
+.profileCard ::selection {
+  background: var(--color-accent);
+  color: #000;
 }

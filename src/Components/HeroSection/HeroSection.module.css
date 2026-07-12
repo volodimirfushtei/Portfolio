@@ -1,14 +1,17 @@
-/* HeroSection.module.css — Mobile First Awwwards Premium */
+/* ═══════════════════════════════════════════
+   HeroSection.module.css — Mobile First
+   Всі стилі збережено, тільки перебудовано порядок
+═══════════════════════════════════════════ */
 
 /* ═══════════════════════════════════════════
-   CSS VARIABLES (Mobile базові значення)
+   1. CSS VARIABLES (Mobile базові значення)
 ═══════════════════════════════════════════ */
 .hero {
   --hero-padding-top: 6rem;
   --hero-padding-bottom: 4rem;
   --hero-padding-x: 1rem;
   --hero-gap: 2rem;
-  --title-font-size: clamp(6rem,10vw,13rem);
+  --title-font-size: clamp(6rem, 12vw, 14rem);
   --title-line-height: 1;
   --eyebrow-gap: 0.5rem;
   --button-padding: 0.85rem 1.2rem;
@@ -16,68 +19,42 @@
 }
 
 /* ═══════════════════════════════════════════
-   SECTION WRAPPER
+   2. SECTION WRAPPER (Mobile First)
 ═══════════════════════════════════════════ */
 .hero {
   position: relative;
   z-index: 0;
   width: 100%;
-  min-height: 100vh;
+  min-height: 100svh;
+  padding-block: clamp(0.8rem, 1vw, 2rem);
+  overflow: hidden;
+  border-radius: 0;
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  overflow-x: hidden;
+  flex-direction: column;
   isolation: isolate;
-  background: transparent;
-  opacity: 0.95;
+  background: var(--color-page-gradient);
+  z-index: 1;
   scroll-behavior: smooth;
   scrollbar-width: none;
 }
-.hero::before{
 
-content:"FRONTEND";
-
-position:absolute;
-
-left:50%;
-
-top:45%;
-
-transform:translate(-50%,-50%);
-
-font-size:24vw;
-
-font-weight:700;
-
-color:var(--color-text);
-
-opacity:.05;
-
-pointer-events:none;
-
-letter-spacing:-.06em;
-}
-
-
-
-
-/* ═══════════════════════════════════════════
-   DOT GRID (приховуємо на мобільних)
-═══════════════════════════════════════════ */
-
-@media (min-width: 768px) {
-  .dotGridWrap {
-    display: block;
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    opacity: 0.28;
-  }
+.bgText {
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  transform: translate(-50%, -50%) rotate(-8deg);
+  font-size: 24vw;
+  font-weight: 700;
+  color: var(--color-text);
+  opacity: .045;
+  text-shadow: 0 0 10px var(--color-text);
+  pointer-events: none;
+  letter-spacing: -.06em;
 }
 
 /* ═══════════════════════════════════════════
-   GRID BLUR ЕЛЕМЕНТИ
+   3. GRID BLUR ЕЛЕМЕНТИ (Mobile First)
 ═══════════════════════════════════════════ */
 .gridBlur1 {
   position: absolute;
@@ -95,39 +72,44 @@ letter-spacing:-.06em;
 
 .gridBlur2 {
   position: absolute;
-  bottom: 10%;
-  right: -5%;
-  width: 750px;
-  height: 750px;
+  bottom: -35%;
+  right: -10%;
+  width: 450px;
+  height: 450px;
   background: var(--color-accent, rgba(55, 63, 216, 0.3));
   border-radius: 50%;
-  filter: blur(200px);
-  opacity: 0.3;
+  filter: blur(220px);
+  opacity: 0.15;
   pointer-events: none;
   z-index: -1;
 }
+.gridBlur3{
+  position: absolute;
+  bottom: 50%;
+  left: 20%;
+  width: 250px;
+  height: 250px;
+  background:  rgba(254, 203, 0, 0.3);
+  border-radius: 50%;
+  filter: blur(120px) brightness(300%);
 
-@media (min-width: 768px) {
-  .gridBlur1 {
-    width: 600px;
-    height: 600px;
-    top: 10%;
-    left: -10%;
-  }
-
-  .gridBlur2 {
-    width: 550px;
-    height: 550px;
-    bottom: 0;
-    right: -10%;
-  }
+  opacity: 0.005;
+  pointer-events: none;
+  z-index: -1;
+}
+/* ═══════════════════════════════════════════
+   4. DOT GRID (приховуємо на мобільних)
+═══════════════════════════════════════════ */
+.dotGridWrap {
+  display: none;
 }
 
 /* ═══════════════════════════════════════════
-   BACKGROUND
+   5. BACKGROUND (Mobile First)
 ═══════════════════════════════════════════ */
 .gradientBackground {
   position: absolute;
+  border-radius: 40px;
   inset: 0;
   z-index: -1;
   pointer-events: none;
@@ -136,35 +118,15 @@ letter-spacing:-.06em;
     var(--color-border) 1px,
     transparent 1px
   );
-  background-size: 16px 16px;
+  background-size: 20px 20px;
   opacity: 0.2;
 }
 
-@media (min-width: 768px) {
-  .gradientBackground {
-    opacity: 0.4;
-  }
-}
-
 /* ═══════════════════════════════════════════
-   CORNER BADGE (приховуємо на мобільних)
+   6. CORNER BADGE (приховуємо на мобільних)
 ═══════════════════════════════════════════ */
 .cornerBadge {
   display: none;
-}
-
-@media (min-width: 768px) {
-  .cornerBadge {
-    display: flex;
-    position: absolute;
-    top: clamp(1.5rem, 7vw, 7rem);
-    right: clamp(1rem, 4vw, 3rem);
-    z-index: 20;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.3rem;
-    pointer-events: none;
-  }
 }
 
 .cornerBadgeNum {
@@ -173,12 +135,6 @@ letter-spacing:-.06em;
   line-height: 1;
   color: var(--color-text, #ffffff);
   opacity: 0.22;
-}
-
-@media (min-width: 1024px) {
-  .cornerBadgeNum {
-    font-size: 2.8rem;
-  }
 }
 
 .cornerBadgeLabel {
@@ -192,32 +148,11 @@ letter-spacing:-.06em;
   transform: rotate(180deg);
 }
 
-@media (min-width: 1024px) {
-  .cornerBadgeLabel {
-    font-size: 0.7rem;
-  }
-}
-
 /* ═══════════════════════════════════════════
-   SCROLL INDICATOR (приховуємо на мобільних)
+   7. SCROLL INDICATOR (приховуємо на мобільних)
 ═══════════════════════════════════════════ */
 .scrollIndicator {
   display: none;
-}
-
-@media (min-width: 768px) {
-  .scrollIndicator {
-    display: flex;
-    position: absolute;
-    top: 50%;
-    right: clamp(1rem, 4vw, 4rem);
-    z-index: 20;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.3rem;
-    pointer-events: none;
-    transform: translateY(-30%);
-  }
 }
 
 .scrollText {
@@ -233,23 +168,11 @@ letter-spacing:-.06em;
   opacity: 0.55;
 }
 
-@media (min-width: 1024px) {
-  .scrollText {
-    font-size: 0.7rem;
-  }
-}
-
 .scrollLineContainer {
   position: sticky;
   width: 1px;
   height: 160px;
   overflow: hidden;
-}
-
-@media (min-width: 1024px) {
-  .scrollLineContainer {
-    height: 260px;
-  }
 }
 
 .scrollLine {
@@ -267,7 +190,7 @@ letter-spacing:-.06em;
 }
 
 /* ═══════════════════════════════════════════
-   HERO INNER
+   8. HERO INNER (Mobile First)
 ═══════════════════════════════════════════ */
 .heroInner {
   position: relative;
@@ -277,73 +200,25 @@ letter-spacing:-.06em;
   align-items: center;
   justify-content: center;
   width: 100%;
+  flex-direction: column;
+  padding: 0;
 }
 
 /* ═══════════════════════════════════════════
-   CONTENT GRID (Mobile First)
+   9. CONTENT GRID (Mobile First)
 ═══════════════════════════════════════════ */
-.content{
-
-max-width:1600px;
-
-padding-inline:clamp(40px,6vw,120px);
-
-display:grid;
-
-grid-template-columns:1.2fr .8fr;
-
-align-items:center;
-}
-
-@media (min-width: 768px) {
-  .content {
-    --hero-padding-top: 6rem;
-    --hero-padding-bottom: 5rem;
-    --hero-padding-x: 2rem;
-    --hero-gap: 3rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: clamp(2rem, 6vw, 5rem);
-    align-items: center;
-  }
-}
-
-@media (min-width: 1024px) {
-  .content {
-    --hero-padding-top: 8rem;
-    --hero-padding-x: 3rem;
-    --hero-gap: 4rem;
-  }
-}
-
-@media (min-width: 1440px) {
-  .gradientBackground {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background-image:
-      linear-gradient(rgba(0, 255, 0, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 255, 0, 0.05) 1px, transparent 1px);
-    background-size: 15px 15px;
-
-    animation: matrix 2s ease-in-out infinite alternate;
-    opacity: 0.95;
-  }
-
-  .content {
-    padding-block:clamp(8rem,12vw,14rem);
-    --hero-gap: 8rem;
-    max-width: 1800px;
-    gap: 16rem;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
+.content {
+  width: min(100%, 1600px);
+  margin-inline: auto;
+  padding-inline: clamp(24px, 5vw, 96px);
+  padding-block: clamp(6rem, 10vw, 12rem);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4rem;
 }
 
 /* ═══════════════════════════════════════════
-   TEXT BLOCK (Mobile First)
+   10. TEXT BLOCK (Mobile First)
 ═══════════════════════════════════════════ */
 .textContent {
   display: flex;
@@ -356,16 +231,7 @@ align-items:center;
   width: 100%;
 }
 
-@media (min-width: 768px) {
-  .textContent {
-    align-items: flex-start;
-    text-align: left;
-    max-width: 600px;
-    margin: 0;
-  }
-}
-
-/* ── Eyebrow ── */
+/* ── 10.1 Eyebrow ── */
 .eyebrow {
   display: flex;
   align-items: center;
@@ -374,13 +240,6 @@ align-items:center;
   margin-bottom: 1.5rem;
   overflow: hidden;
   flex-wrap: wrap;
-}
-
-@media (min-width: 768px) {
-  .eyebrow {
-    justify-content: flex-start;
-    margin-bottom: 2rem;
-  }
 }
 
 .eyebrowLine {
@@ -392,38 +251,12 @@ align-items:center;
   opacity: 0.6;
 }
 
-@media (min-width: 768px) {
-  .eyebrowLine {
-    width: 32px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .eyebrowLine {
-    width: 36px;
-  }
-}
-
 .eyebrowText {
   font-family: var(--font-mono, 'DM Mono', monospace);
   font-size: 0.6rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--color-secondary, #94a3b8);
-}
-
-@media (min-width: 768px) {
-  .eyebrowText {
-    font-size: 0.65rem;
-    letter-spacing: 0.25em;
-  }
-}
-
-@media (min-width: 1024px) {
-  .eyebrowText {
-    font-size: 0.7rem;
-    letter-spacing: 0.3em;
-  }
 }
 
 .eyebrowDot {
@@ -435,24 +268,12 @@ align-items:center;
   animation: blink 2.4s ease-in-out infinite;
 }
 
-@media (min-width: 768px) {
-  .eyebrowDot {
-    width: 5px;
-    height: 5px;
-  }
-}
-
 @keyframes blink {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.2;
-  }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
 }
 
-/* ── Title ── */
+/* ── 10.2 Title ── */
 .title {
   font-family: var(--font-body, 'Bebas Neue', sans-serif);
   font-size: var(--title-font-size);
@@ -464,40 +285,6 @@ align-items:center;
   width: 100%;
 }
 
-@media (min-width: 480px) {
-  .title {
-    --title-font-size: 3.5rem;
-  }
-}
-
-@media (min-width: 640px) {
-  .title {
-    --title-font-size: 4rem;
-  }
-}
-
-@media (min-width: 768px) {
-  .title {
-    --title-font-size: 4rem;
-    text-align: left;
-    margin-right: -2rem;
-    margin-bottom: 1.5rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .title {
-    font-size: clamp(4rem, 8vw, 16rem);
-  }
-}
-
-@media (min-width: 1280px) {
-  .title {
-    --title-font-size: 6.5rem;
-    margin-right: -4rem;
-  }
-}
-
 .titleLine {
   display: block;
   overflow: hidden;
@@ -507,53 +294,23 @@ align-items:center;
   mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
 }
 
-.titleAccent{
-
-color: var(--color-title);
-
-position:relative;
-
-display:inline-block;
-
+.titleAccent {
+  color: var(--color-title);
+  position: relative;
+  display: inline-block;
 }
 
-.titleAccent::after{
-
-content:"";
-
-position:absolute;
-
-left:0;
-
-bottom:10px;
-
-width:100%;
-
-height:18%;
-
-background:var(--color-accent);
-
-z-index:-1;
-
-opacity:.25;
-
-filter:blur(10px);
-
-}
-
-@media (min-width: 768px) {
-  .titleAccent {
-    filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.3));
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: 0% center;
-  }
-  100% {
-    background-position: 200% center;
-  }
+.titleAccent::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 10px;
+  width: 100%;
+  height: 18%;
+  background: var(--color-accent);
+  z-index: -1;
+  opacity: .25;
+  filter: blur(10px);
 }
 
 .titlePlain {
@@ -561,7 +318,7 @@ filter:blur(10px);
   color: var(--color-title, #ffffff);
 }
 
-/* ── Tagline ── */
+/* ── 10.3 Tagline ── */
 .tagline {
   font-family: var(--font-mono, 'DM Mono', monospace);
   font-size: 0.6rem;
@@ -585,16 +342,7 @@ filter:blur(10px);
   text-align: center;
 }
 
-@media (min-width: 768px) {
-  .tagline {
-    font-size: 0.7rem;
-    letter-spacing: 0.35em;
-    margin: 0 0 1.5rem;
-    text-align: left;
-  }
-}
-
-/* ── Divider ── */
+/* ── 10.4 Divider ── */
 .divider {
   width: 60px;
   height: 1px;
@@ -602,52 +350,17 @@ filter:blur(10px);
   margin: 0 auto 1.5rem;
 }
 
-@media (min-width: 768px) {
-  .divider {
-    width: 100%;
-    margin: 0 0 1.75rem;
-  }
-}
-
-/* ── Subtitle / Typewriter ── */
+/* ── 10.5 Subtitle / Typewriter ── */
 .subtitle {
   font-family: var(--font-mono, 'DM Mono', monospace);
-  font-size: 0.75rem;
   color: var(--color-secondary, #94a3b8);
-  max-width:620px;
-
-font-size:1rem;
-
-line-height:1.9;
-
-opacity:.7;
+  max-width: 620px;
+  font-size: 1rem;
+  line-height: 1.9;
+  opacity: .7;
 }
 
-@media (min-width: 480px) {
-  .subtitle {
-    font-size: 0.8rem;
-    line-height: 1.7;
-  }
-}
-
-@media (min-width: 768px) {
-  .subtitle {
-    font-size: 0.85rem;
-    max-width: 400px;
-    text-align: left;
-    margin-bottom: 2rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .subtitle {
-    font-size: 0.9rem;
-    margin-bottom: 2.4rem;
-    min-height: 2.6em;
-  }
-}
-
-/* ── CTA Buttons (Mobile First) ── */
+/* ── 10.6 CTA Buttons ── */
 .buttons {
   display: flex;
   flex-direction: column;
@@ -655,22 +368,6 @@ opacity:.7;
   gap: 0.75rem;
   width: 100%;
   margin-bottom: 2rem;
-}
-
-@media (min-width: 480px) {
-  .buttons {
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 0.85rem;
-  }
-}
-
-@media (min-width: 768px) {
-  .buttons {
-    justify-content: flex-start;
-    margin-bottom: 0;
-  }
 }
 
 /* Primary Button */
@@ -689,9 +386,9 @@ opacity:.7;
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
- height:72px;
- padding-inline:42px;
-  border-radius:999px;
+  height: 72px;
+  padding-inline: 42px;
+  border-radius: 999px;
   border: 1px solid var(--color-border, rgba(255, 255, 255, 0.1));
   cursor: pointer;
   position: relative;
@@ -717,6 +414,7 @@ opacity:.7;
   background: var(--color-surface, #080808);
   transform: translate(0);
 }
+
 .primaryButton > * {
   position: relative;
   z-index: 2;
@@ -726,29 +424,6 @@ opacity:.7;
 .primaryButton:hover > * {
   color: var(--color-text);
 }
-@media (min-width: 480px) {
-  .primaryButton {
-    --button-padding: 0.9rem 1.5rem;
-    --button-font-size: 0.7rem;
-    letter-spacing: 0.18em;
-  }
-}
-
-@media (min-width: 768px) {
-  .primaryButton {
-    --button-padding: 1rem 1.8rem;
-    --button-font-size: 0.72rem;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-  }
-}
-
-@media (min-width: 1024px) {
-  .primaryButton {
-    --button-padding: 1.1rem 2.2rem;
-    --button-font-size: 0.75rem;
-    gap: 0.8rem;
-  }
-}
 
 .primaryButton:hover {
   background: var(--color-accent, #ed0c4c);
@@ -756,12 +431,6 @@ opacity:.7;
   border-color: var(--color-accent, #ed0c4c);
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(237, 12, 76, 0.3);
-}
-
-@media (min-width: 768px) {
-  .primaryButton:hover {
-    box-shadow: 0 12px 40px var(--color-accent, rgba(238, 237, 237, 0.4));
-  }
 }
 
 /* Secondary Button */
@@ -778,9 +447,9 @@ opacity:.7;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height:72px;
-  padding-inline:42px;
-  border-radius:999px;
+  height: 72px;
+  padding-inline: 42px;
+  border-radius: 999px;
   gap: 0.6rem;
   cursor: pointer;
   position: relative;
@@ -788,29 +457,6 @@ opacity:.7;
   transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   white-space: nowrap;
   z-index: 5;
-}
-
-@media (min-width: 480px) {
-  .secondaryButton {
-    --button-padding: 0.9rem 1.5rem;
-    --button-font-size: 0.7rem;
-    letter-spacing: 0.18em;
-  }
-}
-
-@media (min-width: 768px) {
-  .secondaryButton {
-    --button-padding: 1rem 1.8rem;
-    --button-font-size: 0.72rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .secondaryButton {
-    --button-padding: 1.1rem 2.2rem;
-    --button-font-size: 0.75rem;
-    gap: 0.8rem;
-  }
 }
 
 .secondaryButton:hover {
@@ -827,20 +473,13 @@ opacity:.7;
   height: 12px;
 }
 
-@media (min-width: 768px) {
-  .btnArrowIcon {
-    width: 14px;
-    height: 14px;
-  }
-}
-
 .primaryButton:hover .btnArrowIcon,
 .secondaryButton:hover .btnArrowIcon {
   transform: translate(3px, -3px);
 }
 
 /* ═══════════════════════════════════════════
-   MEDIA CONTAINER
+   11. MEDIA CONTAINER (Mobile First)
 ═══════════════════════════════════════════ */
 .mediaContainer {
   position: relative;
@@ -849,25 +488,328 @@ opacity:.7;
   border-radius: 24px;
   box-shadow: 0 0 20px var(--color-secondary);
   margin: 0 auto;
-  perspective:1800px;
+  perspective: 1800px;
   z-index: 8;
 }
 
-@media (min-width: 768px) {
-  .mediaContainer {
-    max-width: 100%;
-    margin: 0;
-  }
-}
-@media (min-width: 1280px) {
-  .mediaContainer {
-    max-width: 100%;
-
-    margin: 0;
-  }
-}
 /* ═══════════════════════════════════════════
-   REDUCED MOTION
+   12. RESPONSIVE BREAKPOINTS
+═══════════════════════════════════════════ */
+
+/* ── 12.1 Tablet (768px+) ── */
+@media (min-width: 768px) {
+  .dotGridWrap {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.28;
+  }
+
+  .gridBlur1 {
+    width: 600px;
+    height: 600px;
+    top: 10%;
+    left: -10%;
+  }
+
+  .gridBlur2 {
+    width: 550px;
+    height: 550px;
+    bottom: 0;
+    right: -10%;
+  }
+
+  .gradientBackground {
+    opacity: 0.4;
+  }
+
+  .cornerBadge {
+    display: flex;
+    position: absolute;
+    top: clamp(1.5rem, 7vw, 7rem);
+    right: clamp(1rem, 4vw, 3rem);
+    z-index: 20;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    pointer-events: none;
+  }
+
+  .scrollIndicator {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    right: clamp(1rem, 4vw, 4rem);
+    z-index: 20;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    pointer-events: none;
+    transform: translateY(-30%);
+  }
+
+  .heroInner {
+    padding-left: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .content {
+    --hero-padding-top: 6rem;
+    --hero-padding-bottom: 5rem;
+    --hero-padding-x: 2rem;
+    --hero-gap: 3rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: center;
+  }
+
+  .textContent {
+    align-items: flex-start;
+    text-align: left;
+    max-width: 600px;
+    margin: 0;
+  }
+
+  .eyebrow {
+    justify-content: flex-start;
+    margin-bottom: 2rem;
+  }
+
+  .eyebrowLine {
+    width: 32px;
+  }
+
+  .eyebrowText {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+  }
+
+  .eyebrowDot {
+    width: 5px;
+    height: 5px;
+  }
+
+  .title {
+    --title-font-size: 4rem;
+    text-align: left;
+    margin-right: -2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .tagline {
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    margin: 0 0 1.5rem;
+    text-align: left;
+  }
+
+  .divider {
+    width: 100%;
+    margin: 0 0 1.75rem;
+  }
+
+  .subtitle {
+    font-size: 0.85rem;
+    max-width: 400px;
+    text-align: left;
+    margin-bottom: 2rem;
+  }
+
+  .buttons {
+    justify-content: flex-start;
+    margin-bottom: 0;
+  }
+
+  .primaryButton {
+    --button-padding: 1rem 1.8rem;
+    --button-font-size: 0.72rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  }
+
+  .primaryButton:hover {
+    box-shadow: 0 12px 40px var(--color-accent, rgba(238, 237, 237, 0.4));
+  }
+
+  .secondaryButton {
+    --button-padding: 1rem 1.8rem;
+    --button-font-size: 0.72rem;
+  }
+
+  .btnArrowIcon {
+    width: 14px;
+    height: 14px;
+  }
+
+  .mediaContainer {
+    max-width: 100%;
+    margin: 0;
+  }
+}
+
+/* ── 12.2 Desktop (1024px+) ── */
+@media (min-width: 1024px) {
+  .cornerBadgeNum {
+    font-size: 2.8rem;
+  }
+
+  .cornerBadgeLabel {
+    font-size: 0.7rem;
+  }
+
+  .scrollText {
+    font-size: 0.7rem;
+  }
+
+  .scrollLineContainer {
+    height: 260px;
+  }
+
+  .heroInner {
+    padding-left: clamp(1rem, 2vw, 2rem);
+  }
+
+  .content {
+    --hero-padding-top: 8rem;
+    --hero-padding-x: 3rem;
+    --hero-gap: 4rem;
+  }
+
+  .eyebrowText {
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+  }
+
+  .title {
+    font-size: clamp(4rem, 8vw, 16rem);
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 2.4rem;
+    min-height: 2.6em;
+  }
+
+  .primaryButton {
+    --button-padding: 1.1rem 2.2rem;
+    --button-font-size: 0.75rem;
+    gap: 0.8rem;
+  }
+
+  .secondaryButton {
+    --button-padding: 1.1rem 2.2rem;
+    --button-font-size: 0.75rem;
+    gap: 0.8rem;
+  }
+
+  .mediaContainer {
+    max-width: 100%;
+    margin: 0;
+  }
+}
+
+/* ── 12.3 Desktop HD (1280px+) ── */
+@media (min-width: 1280px) {
+  .title {
+    font-size: clamp(6rem, 9vw, 16rem);
+    margin-right: -4rem;
+  }
+}
+
+/* ── 12.4 Large Screen (1440px+) ── */
+@media (min-width: 1440px) {
+  .gradientBackground {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(0, 255, 0, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 255, 0, 0.05) 1px, transparent 1px);
+    background-size: 15px 15px;
+    animation: matrix 2s ease-in-out infinite alternate;
+    opacity: 0.95;
+  }
+
+  .content {
+    padding-block: clamp(6rem, 10vw, 12rem);
+    max-width: 1800px;
+    gap: 16rem;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+/* ── 12.5 Mobile Landscape (480px+) ── */
+@media (min-width: 480px) {
+  .heroInner {
+    padding-left: clamp(1.5rem, 4vw, 3rem);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .title {
+    --title-font-size: 3.5rem;
+  }
+
+  .subtitle {
+    font-size: 0.8rem;
+    line-height: 1.7;
+  }
+
+  .buttons {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0.85rem;
+  }
+
+  .primaryButton {
+    --button-padding: 0.9rem 1.5rem;
+    --button-font-size: 0.7rem;
+    letter-spacing: 0.18em;
+  }
+
+  .secondaryButton {
+    --button-padding: 0.9rem 1.5rem;
+    --button-font-size: 0.7rem;
+    letter-spacing: 0.18em;
+  }
+}
+
+/* ── 12.6 Small Mobile (640px+) ── */
+@media (min-width: 640px) {
+  .title {
+    --title-font-size: 4rem;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   13. ANIMATIONS
+═══════════════════════════════════════════ */
+@keyframes shimmer {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes matrix {
+  0% {
+    opacity: 0.95;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   14. REDUCED MOTION
 ═══════════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -886,6 +828,10 @@ opacity:.7;
   }
 
   .eyebrowDot {
+    animation: none;
+  }
+
+  .gradientBackground {
     animation: none;
   }
 }

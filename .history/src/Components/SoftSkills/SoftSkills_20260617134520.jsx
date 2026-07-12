@@ -19,7 +19,7 @@ export default function SoftSkills() {
       title: "Communication",
       img: "/images/scott_webb.jpg",
       items: [
-        "Clear communication of ideas",
+        "Clear communication of idease",
         "Open to feedback",
         "Cross-team collaboration",
       ],

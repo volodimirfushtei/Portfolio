@@ -176,7 +176,7 @@ const ContactsPage = () => {
                   <p className={styles.description}>
                     Drop me a line or follow my digital journey through social
                     media. I'm always open to discussing new projects, creative
-                    ideas, or opportunities to be part of your vision.
+                    idease, or opportunities to be part of your vision.
                   </p>
                 </article>
 

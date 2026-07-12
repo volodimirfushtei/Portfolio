@@ -61,7 +61,7 @@ export default function Carousel() {
 
       {/* RIGHT */}
       <div className={styles.panel}>
-        <h2 className={styles.title}>What I Do</h2>
+        <h3 className={styles.title}>What I Do</h3>
         <p className={styles.subtitle}>
           Focused on modern UI, performance and interactive experiences.
         </p>
@@ -92,13 +92,7 @@ export default function Carousel() {
           ))}
         </div>
 
-        {/* 🔥 extra glow block */}
-        <div className={styles.glowBox}>
-          <p>
-            Crafting immersive interfaces with attention to motion, detail and
-            performance.
-          </p>
-        </div>
+        
       </div>
     </div>
   );

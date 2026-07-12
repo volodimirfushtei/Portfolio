@@ -1,22 +1,22 @@
 .section {
   position: relative;
-  padding: 20px 0;
+  padding: 80px 0;
   overflow: hidden;
   isolation: isolate;
  
 }
 .section::after {
-  content:"Tech apps";
+  content:"Technologies";
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 12rem;
+  transform: translate(-50%, -50%) rotate(15deg) ;
+  font-size: 24rem;
   font-weight: bold;
   color: var(--color-accent);
-  z-index: -1;
+  z-index: 1;
   pointer-events: none;
-  opacity: .05;
+  opacity: .018;
 }
 
 /* HEADER */
@@ -66,12 +66,12 @@ letter-spacing:.25em;
 
 .track::before {
   left: 0;
-  background: linear-gradient(to right, var(--color-background), transparent);
+  background: linear-gradient(to right, var(--color-shadow), transparent);
 }
 
 .track::after {
   right: 0;
-  background: linear-gradient(to left, var(--color-background), transparent);
+  background: linear-gradient(to left, var(--color-shadow), transparent);
 }
  
 /* INNER */

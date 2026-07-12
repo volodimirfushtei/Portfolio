@@ -19,10 +19,12 @@
     inset:-10%;
     background:url("/images/smoke.webp") center/cover no-repeat;
     background-size: 140%;
-    opacity:.25;
+    opacity:.35;
     z-index:10;
-    mix-blend-mode:screen;
+    filter:blur(12px);
+    mix-blend-mode:lighten;
     pointer-events:none;
+      will-change: transform;
 }
 /* Overlay для затемнення фону */
 .overlay {

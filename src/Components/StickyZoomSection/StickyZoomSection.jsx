@@ -120,7 +120,7 @@ const imageRef = useRef(null);
           {
         
           scale:0.8,
-          rotateY:-12,
+          rotateY:-100,
           opacity:0,
             duration: 1,
             ease: "power2.in",

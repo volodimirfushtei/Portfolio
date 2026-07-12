@@ -176,7 +176,7 @@ const ContactsPage = () => {
                   <p className={styles.description}>
                     Drop me a line or follow my digital journey through social
                     media. I'm always open to discussing new projects, creative
-                    ideas, or opportunities to be part of your vision.
+                    idease, or opportunities to be part of your vision.
                   </p>
                 </article>
 
@@ -220,7 +220,7 @@ Loader Overlay Synchronization
 Fix Curtain Display Issue
 CSS Theme Variables Correction and Suggestions
 Fix custom cursor hover animation
-Expo EAS Build Deployment Explanation
+Expo ease Build Deployment Explanation
 Fix 3D Marquee Animation Issues
 Color suggestions for scroll progress
 Experience Table Component Code Review
@@ -229,7 +229,7 @@ Experience Table Component Code Review
 HeroMedia GSAP animation fix
 Покращення візуалізації Hero секції
 Expo GraphQL Request DNS Error Fix
-Fix EAS Project Configuration Mismatch Error
+Fix ease Project Configuration Mismatch Error
 Сучасний дизайн для React Native
 Як зберегти закладки у Firefox
 ADB Devices Not Listed: Troubleshooting Guide
