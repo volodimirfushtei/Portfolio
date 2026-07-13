@@ -10,14 +10,13 @@ import LocationBadge from '../Location/Location'
 gsap.registerPlugin(ScrollTrigger)
 
 const Expertise = () => {
-  
-  const backgroundRef = useRef(null);
-const eyebrowRef = useRef(null)
-const titleRef = useRef(null)
-const dividerRef = useRef(null)
-const locationRef = useRef(null)
-const cardRef = useRef(null)
-const sectionRef = useRef(null);
+  const backgroundRef = useRef(null)
+  const eyebrowRef = useRef(null)
+  const titleRef = useRef(null)
+  const dividerRef = useRef(null)
+  const locationRef = useRef(null)
+  const cardRef = useRef(null)
+  const sectionRef = useRef(null)
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
@@ -33,7 +32,6 @@ const sectionRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -43,66 +41,76 @@ const sectionRef = useRef(null);
         },
       })
 
-     tl.from(backgroundRef.current,{
-    opacity: 0,
-  autoAlpha: 0,
-    scale:1.08,
-    ease: "power4.out",
-    duration:1.2
-})
+      tl.from(backgroundRef.current, {
+        opacity: 0,
+        autoAlpha: 0,
+        scale: 1.08,
+        ease: 'power4.out',
+        duration: 1.2,
+      })
 
+        .from(
+          eyebrowRef.current,
+          {
+            autoAlpha: 0,
+            y: 24,
+            filter: 'blur(10px)',
+            duration: 0.6,
+          },
+          '-=.3',
+        )
 
+        .from(
+          titleRef.current,
+          {
+            autoAlpha: 0,
+            y: 80,
+            duration: 1,
+            ease: 'power4.out',
+          },
+          '-=.3',
+        )
 
-.from(eyebrowRef.current,{
-    autoAlpha:0,
-    y:24,
-    filter:"blur(10px)",
-    duration:.6
-},"-=.3")
+        .from(
+          dividerRef.current,
+          {
+            scaleX: 0,
+            transformOrigin: 'left center',
+            duration: 0.6,
+          },
+          '-=.6',
+        )
 
-.from(titleRef.current,{
-    autoAlpha:0,
-    y:80,
-    duration:1,
-    ease:"power4.out"
-},"-=.3")
+        .from(
+          locationRef.current,
+          {
+            autoAlpha: 0,
+            x: -30,
+            duration: 0.6,
+          },
+          '-=.4',
+        )
 
-.from(dividerRef.current,{
-    scaleX:0,
-    transformOrigin:"left center",
-    duration:.6
-},"-=.6")
-
-.from(locationRef.current,{
-    autoAlpha:0,
-    x:-30,
-    duration:.6
-},"-=.4")
-
-.from(cardRef.current,{
-    autoAlpha:0,
-    x:-50,
-    duration:1
-},"-=.3")
-
-      
+        .from(
+          cardRef.current,
+          {
+            autoAlpha: 0,
+            x: -50,
+            duration: 1,
+          },
+          '-=.3',
+        )
     }, sectionRef)
 
     return () => ctx.revert()
   }, [])
 
-
-
   return (
     <section ref={sectionRef} id="expertise" className={styles.expertise}>
       {/* ── Background elements ── */}
-      <div className={styles.noise} aria-hidden="true"ref={backgroundRef} />
+      <div className={styles.noise} aria-hidden="true" ref={backgroundRef} />
 
-      <div
-        className={styles.background}
-        aria-hidden="true"
-        
-      />
+      <div className={styles.background} aria-hidden="true" />
 
       {/* ── Corner section index ── */}
       <div className={styles.cornerBadge} aria-hidden="true">
@@ -115,7 +123,6 @@ const sectionRef = useRef(null);
         {/* Section header */}
         <header className={styles.header}>
           <div className={styles.eyebrow} ref={eyebrowRef}>
-            
             <span className={styles.eyebrowText}>
               Skills & Technologies · 2025
             </span>
@@ -124,18 +131,11 @@ const sectionRef = useRef(null);
 
           <h2 className={styles.title} ref={titleRef}>
             <span className={styles.titleLine}>
-              <span  className={styles.titleAccent}>
-                My
-              </span>
+              <span className={styles.titleAccent}>My</span>
             </span>
-            
-              <span   className={styles.titlePlain}>
-                Expertise
-              
-            </span>
-          </h2>
 
-          
+            <span className={styles.titlePlain}>Expertise</span>
+          </h2>
 
           <div className={styles.locationWrap} ref={locationRef}>
             <LocationBadge location="Located in Ivano-Frankivsk" />
@@ -143,11 +143,10 @@ const sectionRef = useRef(null);
         </header>
 
         {/* Content columns */}
-        
-          <div className={styles.cardCol} ref={cardRef} >
-            <CardTech />
-          </div>
-        
+
+        <div className={styles.cardCol} ref={cardRef}>
+          <CardTech />
+        </div>
       </div>
     </section>
   )

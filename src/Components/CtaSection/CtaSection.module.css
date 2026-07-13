@@ -196,35 +196,39 @@ gap: 80px;
 .heading {
   font-family: var(--font-display, 'Bebas Neue', sans-serif);
   font-size: clamp(3.5rem, 10vw, 9rem);
-  font-weight: 400;
-  line-height: 0.85;
-  letter-spacing: -0.01em;
+  font-weight: 700;
+  line-height: 0.9;
+  max-width: 600px;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
   color: var(--color-title, #ffffff);
   margin: 0 0 2rem;
-  text-transform: uppercase;
+
 }
 
 .headingAccent {
-  display: block;
-  background: linear-gradient(
-    120deg,
-    var(--color-text, #f5f5f0) 0%,
-    var(--color-secondary, #d0d0c8) 50%,
-    var(--color-text, #f5f5f0) 100%
-  );
-  background-size: 200% auto;
+  display: inline-block;
+  background: linear-gradient(135deg,
+  #667eea 0%,
+  #764ba2 40%,
+  #ed0c4c 70%,
+  #667eea 100%);
+  background-size: 300% 100%;
   -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   background-clip: text;
-  color: transparent;
-  animation: shimmer 6s linear infinite;
+  animation: gradientShift 6s ease-in-out infinite;
 }
 
-@keyframes shimmer {
-  0% {
-    background-position: 0% center;
-  }
+@keyframes gradientShift {
+
+  0%,
   100% {
-    background-position: 200% center;
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
   }
 }
 

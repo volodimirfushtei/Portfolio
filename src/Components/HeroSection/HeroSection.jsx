@@ -64,21 +64,19 @@ const HeroSection = () => {
     start: "top top",
     end: "bottom top",
     scrub: true,
-    pin:true,
-    pinSpacing:true,
-    anticipatePin:1
+
   },
 });
 
 tl
   .to(gridBlur3Ref.current, {
-    scale: 1.8,
+    scale: 1.5,
     opacity: 1,
-    filter: "blur(160px) brightness(300%)",
+    filter: "blur(120px) brightness(300%)",
     ease: "none",
   }, 0)
 
-  .to(sectionRef.current, {
+  .to(sectionRef.current, { 
     scale: 0.92,
     // clipPath: "inset(24px round 40px)",
     borderRadius:'40px',
@@ -105,7 +103,7 @@ tl
   .to(contentRef.current, {
     y: -80,
     opacity: 0.85,
-    
+
     ease: "none",
   }, 0);
 

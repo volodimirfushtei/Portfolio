@@ -26,7 +26,7 @@
   z-index: 0;
   width: 100%;
   min-height: 100svh;
-  padding-block: clamp(0.8rem, 1vw, 2rem);
+  padding-block: clamp(0.8rem, 1vw, 1.6rem) 0rem;
   overflow: hidden;
   border-radius: 0;
   display: flex;
@@ -47,9 +47,11 @@
   font-size: 24vw;
   font-weight: 700;
   color: var(--color-text);
-  opacity: .045;
+  opacity: .15;
   text-shadow: 0 0 10px var(--color-text);
   pointer-events: none;
+  mix-blend-mode: soft-light;
+  backdrop-filter: blur(.3px);
   letter-spacing: -.06em;
 }
 
@@ -91,9 +93,8 @@
   height: 250px;
   background:  rgba(254, 203, 0, 0.3);
   border-radius: 50%;
-  filter: blur(120px) brightness(300%);
-
-  opacity: 0.005;
+  filter: blur(180px) brightness(100%);
+  opacity: 1;
   pointer-events: none;
   z-index: -1;
 }
@@ -208,9 +209,9 @@
    9. CONTENT GRID (Mobile First)
 ═══════════════════════════════════════════ */
 .content {
-  width: min(100%, 1600px);
+  width: min(100%, 1800px);
   margin-inline: auto;
-  padding-inline: clamp(24px, 5vw, 96px);
+  padding-inline: clamp(20px, 4vw, 80px);
   padding-block: clamp(6rem, 10vw, 12rem);
   display: grid;
   grid-template-columns: 1fr;
@@ -275,14 +276,41 @@
 
 /* ── 10.2 Title ── */
 .title {
-  font-family: var(--font-body, 'Bebas Neue', sans-serif);
-  font-size: var(--title-font-size);
-  font-weight: 400;
-  line-height: var(--title-line-height);
-  letter-spacing: -0.02em;
-  margin: 0 0 1rem;
-  text-align: center;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  margin: 0;
+  padding: 0;
+
+  font-family: var(--font-display, "Bebas Neue", sans-serif);
+  font-size: clamp(5rem, 10vw, 10rem);
+  font-weight: 700;
+  line-height: 0.82;
+  letter-spacing: 0.085rem;
+  text-transform: uppercase;
+
+  color: var(--color-text);
+
+  user-select: none;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+
+
+.titleLine{
+  display:block;
+
+  overflow:hidden;
+}
+
+.titleLine:nth-child(2){
+  margin-left:2.5rem;
+}
+
+.titleLine:nth-child(3){
+  margin-left:.8rem;
 }
 
 .titleLine {
@@ -295,9 +323,15 @@
 }
 
 .titleAccent {
-  color: var(--color-title);
-  position: relative;
   display: inline-block;
+
+  color: var(--color-secondary);
+
+  text-shadow:
+          0 0 18px rgba(255,255,255,.12),
+          0 18px 45px rgba(0,0,0,.45);
+
+  will-change: transform;
 }
 
 .titleAccent::after {
@@ -312,10 +346,24 @@
   opacity: .25;
   filter: blur(10px);
 }
+.titleLine:nth-child(2){
+  margin-left:3rem;
+}
 
+.titleLine:nth-child(3){
+  margin-left:1rem;
+}
+.titleAccent,
 .titlePlain {
-  display: block;
-  color: var(--color-title, #ffffff);
+  background: linear-gradient(
+          180deg,
+          #ffffff 0%,
+          #999999 45%,
+          #d9d9d9 100%
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* ── 10.3 Tagline ── */
@@ -484,8 +532,8 @@
 .mediaContainer {
   position: relative;
   width: 100%;
-  max-width: 500px;
-  border-radius: 24px;
+  max-width: 700px;
+
   box-shadow: 0 0 20px var(--color-secondary);
   margin: 0 auto;
   perspective: 1800px;
@@ -607,7 +655,7 @@
 
   .divider {
     width: 100%;
-    margin: 0 0 1.75rem;
+    margin: 0 0 1.5rem;
   }
 
   .subtitle {
@@ -615,11 +663,13 @@
     max-width: 400px;
     text-align: left;
     margin-bottom: 2rem;
+
   }
 
   .buttons {
     justify-content: flex-start;
     margin-bottom: 0;
+
   }
 
   .primaryButton {
@@ -712,7 +762,7 @@
 /* ── 12.3 Desktop HD (1280px+) ── */
 @media (min-width: 1280px) {
   .title {
-    font-size: clamp(6rem, 9vw, 16rem);
+    font-size: clamp(6rem, 10vw, 18rem);
     margin-right: -4rem;
   }
 }

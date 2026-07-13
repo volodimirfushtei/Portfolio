@@ -18,6 +18,7 @@
   overflow: hidden;
   min-height: 100vh;
   will-change: transform;
+  
 }
 
 .content {

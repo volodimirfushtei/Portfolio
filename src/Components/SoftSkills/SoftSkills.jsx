@@ -128,7 +128,7 @@ export default function SoftSkills() {
                   </div>
 
                   <div className={styles.mainContent}>
-                    <h3 className={styles.title}>{skill.title}</h3>
+                    <h3 className={styles.cardTitle}>{skill.title}</h3>
                     <div className={styles.listWrapper}>
                       <ul className={styles.list}>
                         {skill.items.map((item, idx) => (

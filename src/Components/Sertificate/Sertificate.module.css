@@ -10,7 +10,7 @@
   width: 100%;
   padding: clamp(4rem, 10vh, 8rem) clamp(1rem, 4vw, 4rem);
   overflow: hidden;
-  background: var(--color-page-gradient);;
+  background: transparent;
   isolation: isolate;
   min-height: 100vh;
   display: flex;
@@ -25,7 +25,6 @@
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
   background-size: 200px 200px;
   opacity: 0.03;
 }
@@ -33,7 +32,7 @@
 /* ═══════════════════════════════════════════
    3. BACKGROUND WORDS (Mobile First)
 ═══════════════════════════════════════════ */
-.bgWord,
+
 .bgWord2,
 .bgWord3 {
   position: absolute;
@@ -41,11 +40,41 @@
   pointer-events: none;
   font-weight: 700;
   color: var(--color-text, #ffffff);
-  opacity: 0.03;
+  opacity: 0.18;
   letter-spacing: -0.04em;
   white-space: nowrap;
 }
+.bgWord
+ {
+  position: absolute;
+  inset: auto;
+  z-index: 1;
 
+  pointer-events: none;
+  user-select: none;
+
+  font-size: clamp(8rem, 18vw, 22rem);
+  font-weight: 800;
+  line-height: .9;
+  letter-spacing: -.05em;
+  white-space: nowrap;
+
+  opacity: .06;
+
+  color: transparent;
+  -webkit-text-stroke: 1px var(--color-border);
+
+  background: var(--color-accent);
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  filter: blur(.4px);
+
+  mix-blend-mode: soft-light;
+
+  will-change: transform, opacity;
+}
 /* ── bgWord: CERTIFIED ── */
 .bgWord {
   font-size: clamp(6rem, 20vw, 18rem);

@@ -29,7 +29,7 @@
   overflow: hidden;
   isolation: isolate;
   padding: clamp(6rem, 12vw, 12rem) 2rem;
-  z-index: 1;
+  z-index: 2;
   
 }
 
@@ -294,7 +294,6 @@
 /* ── 6.2 Title ── */
 .title {
   font-family: var(--font-display, 'Bebas Neue', sans-serif);
-  font-size: var(--title-size);
   font-weight: 700;
   line-height: 0.9;
   letter-spacing: -0.02em;

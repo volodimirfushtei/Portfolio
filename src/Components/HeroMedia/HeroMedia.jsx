@@ -26,9 +26,9 @@ const HeroMedia = () => {
       // Frame clip-path reveal
       tl.fromTo(
         containerRef.current,
-        { clipPath:"inset(18% round 32px)", opacity: 0 },
+        {  opacity: 0,clipPath: 'inset(0% 0% 100%  0%)'  },
         {
-          clipPath:"inset(0 round 32px)",
+clipPath: 'inset(0% 0% 0% 0%)',
           opacity: 1,
           duration: 1.4,
         },
@@ -64,6 +64,7 @@ const HeroMedia = () => {
           opacity: 0,
           y: 80,
           rotateX: 12,
+          scale:0.9,
           transformOrigin: 'top center',
           filter: 'blur(12px)',
         },
@@ -71,6 +72,7 @@ const HeroMedia = () => {
           opacity: 1,
           y: 0,
           rotateX: 0,
+          scale:1,
           filter: 'blur(0px)',
           stagger: 0.08,
           duration: 1.4,
@@ -122,7 +124,7 @@ gsap.to(overlayRef.current, {
       const x = (e.clientX - rect.left - rect.width / 2) / rect.width
       const y = (e.clientY - rect.top - rect.height / 2) / rect.height
       gsap.to(imageRef.current, {
-        x: x * 14,
+        x: x * 50,
         y: y * 10,
         duration: 0.8,
         ease: 'power3.out',
@@ -131,7 +133,7 @@ gsap.to(overlayRef.current, {
     }
     const handleLeave = () => {
       gsap.to(imageRef.current, {
-        x: 0,
+        x: 10,
         y: 0,
         duration: 1,
         ease: 'elastic.out(1,0.4)',
@@ -155,6 +157,8 @@ gsap.to(overlayRef.current, {
         alt=""
         className={styles.image}
       />
+      <div className={styles.devider}/>
+      <div className={styles.overlayHalf}/>
 
       <div ref={overlayRef} className={styles.overlay} />
 
@@ -162,7 +166,7 @@ gsap.to(overlayRef.current, {
         <span className={styles.liveDot} />
         LIVE
       </div>
-
+      <span className={styles.name}>VOLODYMYR FUSHTEI</span>
       <div ref={frameRef} className={styles.frame} />
 
       <div ref={contentRef} className={styles.footer}>
@@ -183,7 +187,7 @@ gsap.to(overlayRef.current, {
         </div>
 
         <div className={styles.right} data-reveal>
-          <span className={styles.year}>2025</span>
+          <span className={styles.year}>2026</span>
 
           <a
             href="https://djinni.co/my/profile/"

@@ -71,7 +71,9 @@ const CardTech = () => {
     <section 
       className={`${styles.profileCard} ${isVisible ? styles.visible : ""}`} 
       ref={profileCardRef}
-    >
+    ><div className={styles.watermark}>
+      FUSHTEI
+    </div>
       <div className={styles.profileHeader}>
         <div className={styles.avatarWrap}>
           <img

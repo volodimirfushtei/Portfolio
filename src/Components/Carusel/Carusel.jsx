@@ -54,12 +54,6 @@ export default function Carousel() {
 
   return (
     <div className={styles.carousel}>
-      {/* LEFT */}
-      <div className={styles.panel}>
-        <SoftSkills />
-      </div>
-
-      {/* RIGHT */}
       <div className={styles.panel}>
         <h3 className={styles.title}>What I Do</h3>
         <p className={styles.subtitle}>

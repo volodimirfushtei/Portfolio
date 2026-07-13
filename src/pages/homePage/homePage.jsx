@@ -2,7 +2,7 @@ import React, {
   useState,
   useEffect,
   useRef,
-  Suspense,
+ 
   lazy,
   useCallback,
   useMemo,
@@ -19,12 +19,14 @@ import StickyZoomSection from '../../Components/StickyZoomSection/StickyZoomSect
 import ExperienceTable from '../../Components/ExperienceTable/ExperienceTable.jsx'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
+import { useOverlay } from '../../Components/OverlayProvider/OverlayProvider.jsx';
+import SoftSkills from '../../Components/SoftSkills/SoftSkills.jsx'
 const Model = lazy(() => import('../../Components/Model/Model.jsx'))
 
 gsap.registerPlugin(ScrollTrigger)
 
 const HomePage = () => {
+  const { visible } = useOverlay();
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
 const sectionRef = useRef(null);
@@ -57,28 +59,27 @@ const sectionRef = useRef(null);
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 useEffect(() => {
-  const ctx = gsap.context(() => {
+  if (visible) return;
 
-    const sections = gsap.utils.toArray(`.${styles.fadeSection}`);
+  const sections = gsap.utils.toArray(`.${styles.fadeSection}`);
 
-    sections.forEach((section) => {
-      gsap.to(section, {
-        "--fade": "15%",
-        ease: "none",
-        scrollTrigger: {
-          trigger: section,
-          start: "top bottom",
-          end: "top center",
-          scrub: true,
-        },
-      });
+  sections.forEach((section) => {
+    gsap.to(section, {
+      "--fade": "15%",
+      ease: "power2.out",
+  
+      scrollTrigger: {
+        trigger: section,
+        start: "top bottom",
+        end: "top center",
+        scrub: true,
+        pin: true
+      },
     });
+  });
 
-  }, sectionRef);
-
-  return () => ctx.revert();
-
-}, []);
+  ScrollTrigger.refresh();
+}, [visible]);
   // Мемоізація skills
   const skills = useMemo(
     () => [
@@ -198,16 +199,15 @@ useEffect(() => {
           </div>
       <section
         id="skills"
-        className={`${styles.ControllerSkills} ${styles.fadeSection}`}
+        className={`${styles.section} ${styles.fadeSection}`}
       >
         <ControllerSkills items={skills} />
       </section>
 
-      <section
-        id="projects"
-        className={`${styles.section} ${styles.fadeSection}`}
-      >
-        <div className={styles.carusel}>
+    <div className={`${styles.section} ${styles.fadeSection}`}>
+      <SoftSkills/>
+    </div>
+        <div className={`${styles.section} ${styles.fadeSection}`}>
           <Carusel />
         </div>
 
@@ -224,7 +224,7 @@ useEffect(() => {
 
         <section className={`${styles.stickySection} ${styles.fadeSection}`}>
           <StickyZoomSection />
-        </section>
+        
       </section>
 
       <Footer />

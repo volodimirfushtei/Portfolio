@@ -6,13 +6,28 @@ const OverlayContext = createContext();
 export const useOverlay = () => useContext(OverlayContext);
 
 export const OverlayProvider = ({ children }) => {
-  const [visible, setVisible] = useState(true); // або false — залежно від логіки
+  const [visible, setVisible] = useState(true);
+  const [finished, setFinished] = useState(false);
 
-  const show = () => setVisible(true);
-  const hide = () => setVisible(false);
+  const show = () => {
+    setFinished(false);
+    setVisible(true);
+  };
+
+  const hide = () => {
+    setVisible(false);
+    setFinished(true);
+  };
 
   return (
-    <OverlayContext.Provider value={{ show, hide, visible }}>
+    <OverlayContext.Provider
+      value={{
+        show,
+        hide,
+        visible,
+        finished,
+      }}
+    >
       {visible && <Overlay />}
       {children}
     </OverlayContext.Provider>

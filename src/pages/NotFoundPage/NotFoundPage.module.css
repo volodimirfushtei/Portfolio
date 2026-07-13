@@ -202,7 +202,7 @@
 
 /* ── Title ── */
 .title {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: var(--font-display, 'Bebas Neue', sans-serif);
   font-size: clamp(1.8rem, 5vw, 3rem);
   font-weight: 400;
   letter-spacing: 0.08em;

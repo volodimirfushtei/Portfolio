@@ -6,56 +6,41 @@
 /* ═══════════════════════════════════════════
    1. PANEL (Mobile First)
 ═══════════════════════════════════════════ */
-.panel {
-  position: relative;
-  flex-direction: column;
-  display: flex;
-  justify-content: center;
-  align-items: center; /* ← змінено з center на flex-start */
-  width: 100%;
-  height: 100%;
-  min-height: 400px;
-  overflow: hidden;
-  padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3rem);
+.wrapper {
+
+    position: relative;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* ← змінено з center на flex-start */
+    width: 100%;
+    height: 200vh;
+    
+    overflow: hidden;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3rem);
+  
   
 }
 
 /* ═══════════════════════════════════════════
    2. TYPOGRAPHY (Mobile First)
 ═══════════════════════════════════════════ */
-.panel h2 {
-  font-size: clamp(3rem, 10vw, 7rem);
-  font-weight: 800;
-  margin-bottom: 1rem;
-  line-height: 1;
-  letter-spacing: -0.02em;
-  background: linear-gradient(135deg, var(--color-text), var(--color-accent));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
 
-.panel h3 {
-  font-size: clamp(1.3rem, 3vw, 2rem);
-  font-weight: 600;
-  margin-bottom: 0.75rem;
-  color: var(--color-title);
+.panel{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  color: var(--color-text);
 }
-
-.panel p {
-  font-size: clamp(0.95rem, 1.4vw, 1.15rem);
-  font-weight: 400;
-  margin-bottom: 1rem;
-  line-height: 1.8;
-  color: var(--color-secondary);
-}
-
 .title {
+  font-family: var(--font-display, 'Bebas Neue', sans-serif);
   font-size: clamp(1.6rem, 3.5vw, 2.4rem);
   font-weight: 700;
   margin-bottom: 0.5rem;
   color: var(--color-title);
   letter-spacing: -0.01em;
+  text-align: center;
 }
 
 .subtitle {
@@ -64,7 +49,8 @@
   margin-bottom: 2.5rem;
   color: var(--color-secondary);
   line-height: 1.6;
-  max-width: 90%;
+margin: 0 auto;
+  text-align: center;
 }
 
 /* ═══════════════════════════════════════════
@@ -83,7 +69,7 @@
 .item {
   width: 100%;
   border: 1px solid var(--color-border);
-  border-radius: 12px;
+
   overflow: hidden;
   background: var(--color-surface);
   cursor: pointer;
@@ -95,7 +81,6 @@
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: 12px;
   padding: 1px;
   background: linear-gradient(135deg, transparent, var(--color-accent), transparent);
   opacity: 0;
@@ -201,7 +186,7 @@
 .glowBox {
   margin-top: 2.5rem;
   padding: clamp(1.2rem, 3vw, 2rem);
-  border-radius: 16px;
+
   background: radial-gradient(
     circle at top left,
     rgba(102, 126, 234, 0.08),
@@ -321,9 +306,7 @@
     border-radius: 20px;
   }
 
-  .item {
-    border-radius: 14px;
-  }
+
 }
 
 /* ── 5.3 Wide Screen (1440px+) ── */
@@ -415,9 +398,7 @@
     border-radius: 12px;
   }
 
-  .item {
-    border-radius: 8px;
-  }
+
 
   .item:hover {
     transform: translateX(2px);
