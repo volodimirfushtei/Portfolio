@@ -7,30 +7,30 @@
    1. CSS VARIABLES
 ═══════════════════════════════════════════ */
 .expertise {
-  --section-padding: clamp(4rem, 10vh, 12rem);
-  --inner-gap: clamp(3rem, 8vw, 10rem);
-  --title-size: clamp(2.5rem, 10vw, 8rem);
-  --columns-gap: clamp(2.5rem, 6vw, 6rem);
+    --section-padding: clamp(4rem, 10vh, 12rem);
+    --inner-gap: clamp(3rem, 8vw, 10rem);
+    --title-size: clamp(2.5rem, 10vw, 8rem);
+    --columns-gap: clamp(2.5rem, 6vw, 6rem);
 }
 
 /* ═══════════════════════════════════════════
    2. SECTION WRAPPER
 ═══════════════════════════════════════════ */
 .expertise {
-  position: relative;
-  width: 100%;
-  min-height: 100vh;
-  min-height: 100dvh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  overflow: hidden;
-  isolation: isolate;
-  padding: clamp(6rem, 12vw, 12rem) 2rem;
-  z-index: 2;
-  
+    position: relative;
+    width: 100%;
+
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-page-gradient);
+    overflow: hidden;
+    isolation: isolate;
+    padding: clamp(6rem, 12vw, 12rem) 2rem;
+    z-index: 0;
+
 }
 
 /* ═══════════════════════════════════════════
@@ -39,334 +39,338 @@
 
 /* ── 3.1 Gradient Background ── */
 .gradientBg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
 }
 
 /* ── 3.2 Grid Pattern ── */
 .gridPattern {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 40px 40px;
-  opacity: 0.5;
+    background-size: 40px 40px;
+    opacity: 0.5;
 }
 
 @media (min-width: 768px) {
-  .gridPattern {
-    background-size: 60px 60px;
-    opacity: 0.8;
-  }
+    .gridPattern {
+        background-size: 60px 60px;
+        opacity: 0.8;
+    }
 }
 
 /* ── 3.3 Noise Texture ── */
 .noise {
-  position: absolute;
-  inset: 0;
-  height: 120%;
-  top: -10%;
-  background: url("/images/grunge_texture.webp") no-repeat center center/cover;
-  will-change: transform;
-  opacity: 0.035;
-  pointer-events: none;
-  z-index: 0;
+    position: absolute;
+    inset: 0;
+    height: 120%;
+    top: -10%;
+    background: url("/images/grunge_texture.webp") no-repeat center center/cover;
+    will-change: transform;
+    opacity: 0.035;
+    pointer-events: none;
+    z-index: 0;
+    animation: noiseShift 8s steps(10) infinite;
 }
 
 @keyframes noiseShift {
-  0% {
-    transform: translate(0, 0);
-  }
+    0% {
+        transform: translate(0, 0);
+    }
 
-  25% {
-    transform: translate(-5%, -5%);
-  }
+    25% {
+        transform: translate(-5%, -5%);
+    }
 
-  50% {
-    transform: translate(5%, 5%);
-  }
+    50% {
+        transform: translate(5%, 5%);
+    }
 
-  75% {
-    transform: translate(-5%, 5%);
-  }
+    75% {
+        transform: translate(-5%, 5%);
+    }
 
-  100% {
-    transform: translate(5%, -5%);
-  }
+    100% {
+        transform: translate(5%, -5%);
+    }
 }
 
 /* ── 3.4 Blur Orbs ── */
 .blurOrb1,
 .blurOrb2 {
-  position: absolute;
-  z-index: 0;
-  pointer-events: none;
-  border-radius: 50%;
-  filter: blur(120px);
-  opacity: 0.15;
-  animation: orbFloat 20s ease-in-out infinite alternate;
+    position: absolute;
+    z-index: 0;
+    pointer-events: none;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.15;
+    animation: orbFloat 20s ease-in-out infinite alternate;
 }
 
 .blurOrb1 {
-  width: 300px;
-  height: 300px;
-  top: -10%;
-  right: -10%;
-  background: radial-gradient(circle, rgba(102, 126, 234, 0.2), transparent 70%);
-  animation-delay: 0s;
+    width: 300px;
+    height: 300px;
+    top: -10%;
+    right: -10%;
+    background: radial-gradient(circle, rgba(102, 126, 234, 0.2), transparent 70%);
+    animation-delay: 0s;
 }
 
 .blurOrb2 {
-  width: 250px;
-  height: 250px;
-  bottom: -10%;
-  left: -10%;
-  background: radial-gradient(circle, rgba(118, 75, 162, 0.15), transparent 70%);
-  animation-delay: -10s;
+    width: 250px;
+    height: 250px;
+    bottom: -10%;
+    left: -10%;
+    background: radial-gradient(circle, rgba(118, 75, 162, 0.15), transparent 70%);
+    animation-delay: -10s;
 }
 
 @media (min-width: 768px) {
-  .blurOrb1 {
-    width: 400px;
-    height: 400px;
-  }
+    .blurOrb1 {
+        width: 400px;
+        height: 400px;
+    }
 
-  .blurOrb2 {
-    width: 350px;
-    height: 350px;
-  }
+    .blurOrb2 {
+        width: 350px;
+        height: 350px;
+    }
 }
 
 @media (min-width: 1024px) {
-  .blurOrb1 {
-    width: 500px;
-    height: 500px;
-  }
+    .blurOrb1 {
+        width: 500px;
+        height: 500px;
+    }
 
-  .blurOrb2 {
-    width: 450px;
-    height: 450px;
-  }
+    .blurOrb2 {
+        width: 450px;
+        height: 450px;
+    }
 }
 
 @keyframes orbFloat {
-  0% {
-    transform: translate(0, 0) scale(1);
-  }
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
 
-  33% {
-    transform: translate(30px, -20px) scale(1.1);
-  }
+    33% {
+        transform: translate(30px, -20px) scale(1.1);
+    }
 
-  66% {
-    transform: translate(-20px, 30px) scale(0.9);
-  }
+    66% {
+        transform: translate(-20px, 30px) scale(0.9);
+    }
 
-  100% {
-    transform: translate(20px, 20px) scale(1.05);
-  }
+    100% {
+        transform: translate(20px, 20px) scale(1.05);
+    }
 }
 
 /* ═══════════════════════════════════════════
    4. CORNER BADGE
 ═══════════════════════════════════════════ */
 .cornerBadge {
-  position: fixed;
-  top: clamp(1.5rem, 7vh, 4rem);
-  right: clamp(1rem, 3vw, 3rem);
-  z-index: 100;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.25rem;
-  opacity: 0.2;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
+    position: fixed;
+    top: clamp(1.5rem, 7vh, 4rem);
+    right: clamp(1rem, 3vw, 3rem);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    opacity: 0.2;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
 }
 
 .cornerBadge:hover {
-  opacity: 0.8;
+    opacity: 0.8;
 }
 
 .cornerBadgeNum {
-  font-family: var(--font-display, 'Bebas Neue', sans-serif);
-  font-size: clamp(1.5rem, 2.5vw, 2.8rem);
-  line-height: 1;
-  color: var(--color-text, #ffffff);
-  letter-spacing: -0.02em;
+    font-family: var(--font-display, 'Bebas Neue', sans-serif);
+    font-size: clamp(1.5rem, 2.5vw, 2.8rem);
+    line-height: 1;
+    color: var(--color-text, #ffffff);
+    letter-spacing: -0.02em;
 }
 
 .cornerBadgeLabel {
-  font-family: var(--font-mono, 'DM Mono', monospace);
-  font-size: clamp(0.5rem, 0.6vw, 0.65rem);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--color-secondary, #94a3b8);
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: clamp(0.5rem, 0.6vw, 0.65rem);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-secondary, #94a3b8);
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
 }
 
 @media (max-width: 768px) {
-  .cornerBadge {
-    display: none;
-  }
+    .cornerBadge {
+        display: none;
+    }
 }
 
 /* ═══════════════════════════════════════════
    5. INNER LAYOUT
 ═══════════════════════════════════════════ */
 .inner {
-  position: relative;
-  z-index: 10;
-  width: 100%;
-  max-width: 1440px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: var(--inner-gap);
-  padding: 0 clamp(1rem, 3vw, 3rem);
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--inner-gap);
+    padding: 0 clamp(1rem, 3vw, 3rem);
 }
 
 /* ═══════════════════════════════════════════
    6. HEADER
 ═══════════════════════════════════════════ */
 .header {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 1.5rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
 }
 
 /* ── 6.1 Eyebrow ── */
 .eyebrow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  opacity: 0.7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    opacity: 0.7;
 }
 
 @media (min-width: 1024px) {
-  .eyebrow {
-    justify-content: flex-start;
-  }
+    .eyebrow {
+        justify-content: flex-start;
+    }
 }
-
 
 
 .eyebrowText {
-  font-family: var(--font-mono, 'DM Mono', monospace);
-  font-size: clamp(0.55rem, 0.7vw, 0.7rem);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--color-secondary, #94a3b8);
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: clamp(0.55rem, 0.7vw, 0.7rem);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-secondary, #94a3b8);
 }
 
 .eyebrowDot {
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--color-accent, #667eea);
-  animation: pulseDot 2s ease-in-out infinite;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--color-accent, #667eea);
+    animation: pulseDot 2s ease-in-out infinite;
 }
 
 @keyframes pulseDot {
 
-  0%,
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
 
-  50% {
-    opacity: 0.2;
-    transform: scale(0.5);
-  }
+    50% {
+        opacity: 0.2;
+        transform: scale(0.5);
+    }
 }
 
 /* ── 6.2 Title ── */
 .title {
-  font-family: var(--font-display, 'Bebas Neue', sans-serif);
-  font-weight: 700;
-  line-height: 0.9;
-  letter-spacing: -0.02em;
-  margin: 0;
-  text-transform: uppercase;
-  max-width: 900px;
+    font-family: var(--font-display, 'Bebas Neue', sans-serif);
+    font-weight: 700;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    margin: 0;
+    text-transform: uppercase;
+    max-width: 900px;
 }
 
 .titleLine {
-  display: block;
-  overflow: hidden;
-  padding-bottom: 0.05em;
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.05em;
 }
 
 .titleAccent {
-  display: inline-block;
-  background: linear-gradient(135deg,
-      #667eea 0%,
-      #764ba2 40%,
-      #ed0c4c 70%,
-      #667eea 100%);
-  background-size: 300% 100%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: gradientShift 6s ease-in-out infinite;
+    display: inline-block;
+    background: linear-gradient(135deg,
+    #667eea 0%,
+    #764ba2 40%,
+    #ed0c4c 70%,
+    #667eea 100%);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 6s ease-in-out infinite;
 }
 
 @keyframes gradientShift {
 
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
 
-  50% {
-    background-position: 100% 50%;
-  }
+    50% {
+        background-position: 100% 50%;
+    }
 }
 
 .titlePlain {
-  display: block;
-  color: var(--color-text, #ffffff);
-  -webkit-text-fill-color: var(--color-text, #ffffff);
+    display: block;
+    color: var(--color-text, #ffffff);
+    -webkit-text-fill-color: var(--color-text, #ffffff);
 }
 
-
+.divider {
+    width: 80px;
+    height: 1px;
+    background: var(--color-border, rgba(255, 255, 255, 0.15));
+    margin: 1.5rem auto;
+}
 
 @media (min-width: 1024px) {
-  .divider {
-    width: 120px;
-  }
+    .divider {
+        width: 120px;
+    }
 }
 
 /* ═══════════════════════════════════════════
    7. COLUMNS
 ═══════════════════════════════════════════ */
 .columns {
-  width: 100%;
-  max-width: 1000px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--columns-gap);
-  padding: 2rem 0;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--columns-gap);
+    padding: 2rem 0;
 }
 
 .cardCol,
 .tableCol {
-  width: 100%;
-  display: flex;
-  justify-content: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 /* ═══════════════════════════════════════════
@@ -375,114 +379,114 @@
 
 /* ── 8.1 Tablet (768px - 1023px) ── */
 @media (min-width: 768px) and (max-width: 1023px) {
-  .expertise {
-    padding: 6rem 2rem;
-  }
+    .expertise {
+        padding: 6rem 2rem;
+    }
 
-  .inner {
-    padding: 0 1.5rem;
-    gap: 4rem;
-  }
+    .inner {
+        padding: 0 1.5rem;
+        gap: 4rem;
+    }
 
-  .title {
-    font-size: clamp(3.5rem, 8vw, 5rem);
-  }
+    .title {
+        font-size: clamp(3.5rem, 8vw, 5rem);
+    }
 
-  .columns {
-    gap: 4rem;
-    padding: 1.5rem 0;
-  }
+    .columns {
+        gap: 4rem;
+        padding: 1.5rem 0;
+    }
 }
 
 /* ── 8.2 Desktop (1024px - 1439px) ── */
 @media (min-width: 1024px) and (max-width: 1439px) {
-  .expertise {
-    padding: 8rem 3rem;
-  }
+    .expertise {
+        padding: 8rem 3rem;
+    }
 
-  .title {
-    font-size: clamp(4rem, 8vw, 6rem);
-  }
+    .title {
+        font-size: clamp(4rem, 8vw, 6rem);
+    }
 
-  .columns {
-    gap: 5rem;
-  }
+    .columns {
+        gap: 5rem;
+    }
 }
 
 /* ── 8.3 Large Screen (1440px+) ── */
 @media (min-width: 1440px) {
-  .title {
-    font-size: 8rem;
-  }
+    .title {
+        font-size: 8rem;
+    }
 
-  .columns {
-    gap: 6rem;
-  }
+    .columns {
+        gap: 6rem;
+    }
 }
 
 /* ── 8.4 Mobile (≤ 767px) ── */
 @media (max-width: 767px) {
-  .expertise {
-    padding: 4rem 1.5rem;
-    min-height: auto;
-  }
+    .expertise {
+        padding: 4rem 1.5rem;
+        min-height: auto;
+    }
 
-  .inner {
-    padding: 0;
-    gap: 2.5rem;
-  }
+    .inner {
+        padding: 0;
+        gap: 2.5rem;
+    }
 
-  .title {
-    font-size: clamp(2.5rem, 8vw, 3.5rem);
-    max-width: 100%;
-  }
+    .title {
+        font-size: clamp(2.5rem, 8vw, 3.5rem);
+        max-width: 100%;
+    }
 
-  .columns {
-    gap: 2.5rem;
-    padding: 1rem 0;
-  }
+    .columns {
+        gap: 2.5rem;
+        padding: 1rem 0;
+    }
 
-  .divider {
-    width: 60px;
-  }
+    .divider {
+        width: 60px;
+    }
 
-  .blurOrb1,
-  .blurOrb2 {
-    display: none;
-  }
+    .blurOrb1,
+    .blurOrb2 {
+        display: none;
+    }
 }
 
 /* ── 8.5 Small Mobile (≤ 480px) ── */
 @media (max-width: 480px) {
-  .expertise {
-    padding: 3rem 1rem;
-  }
+    .expertise {
+        padding: 3rem 1rem;
+    }
 
-  .inner {
-    gap: 2rem;
-  }
+    .inner {
+        gap: 2rem;
+    }
 
-  .title {
-    font-size: clamp(2rem, 7vw, 2.8rem);
-  }
+    .title {
+        font-size: clamp(2rem, 7vw, 2.8rem);
+    }
 
-  .eyebrowText {
-    font-size: 0.5rem;
-    letter-spacing: 0.15em;
-  }
+    .eyebrowText {
+        font-size: 0.5rem;
+        letter-spacing: 0.15em;
+    }
 
-  .eyebrowLine {
-    width: 20px;
-  }
+    .eyebrowLine {
+        width: 20px;
+    }
 
-  .columns {
-    gap: 2rem;
-    padding: 0.5rem 0;
-  }
+    .columns {
+        gap: 2rem;
+        padding: 0.5rem 0;
+    }
 
-  .divider {
-    width: 40px;
-  }
+    .divider {
+        width: 40px;
+    }
 }
 
 /* ═══════════════════════════════════════════
@@ -492,64 +496,64 @@
 /* ── 9.1 Reduced Motion ── */
 @media (prefers-reduced-motion: reduce) {
 
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 
-  .titleAccent {
-    animation: none !important;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
+    .titleAccent {
+        animation: none !important;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
 
-  .eyebrowDot {
-    animation: none !important;
-  }
+    .eyebrowDot {
+        animation: none !important;
+    }
 
-  .blurOrb1,
-  .blurOrb2 {
-    animation: none !important;
-  }
+    .blurOrb1,
+    .blurOrb2 {
+        animation: none !important;
+    }
 
-  .noise {
-    animation: none !important;
-    opacity: 0.02;
-  }
+    .noise {
+        animation: none !important;
+        opacity: 0.02;
+    }
 }
 
 /* ── 9.2 High Contrast ── */
 @media (prefers-contrast: high) {
-  .expertise {
-    background: #000000;
-  }
+    .expertise {
+        background: #000000;
+    }
 
-  .titlePlain {
-    color: #ffffff;
-    -webkit-text-fill-color: #ffffff;
-  }
+    .titlePlain {
+        color: #ffffff;
+        -webkit-text-fill-color: #ffffff;
+    }
 
-  .divider {
-    background: #ffffff;
-  }
+    .divider {
+        background: #ffffff;
+    }
 
-  .eyebrowLine {
-    background: #ffffff;
-  }
+    .eyebrowLine {
+        background: #ffffff;
+    }
 
-  .eyebrowDot {
-    background: #ffffff;
-  }
+    .eyebrowDot {
+        background: #ffffff;
+    }
 }
 
 /* ── 9.3 Focus States ── */
 .cardCol:focus-visible,
 .tableCol:focus-visible {
-  outline: 2px solid var(--color-accent, #667eea);
-  outline-offset: 4px;
+    outline: 2px solid var(--color-accent, #667eea);
+    outline-offset: 4px;
 }

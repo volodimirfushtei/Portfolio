@@ -5,8 +5,7 @@ import ScrollToTopBtn from '../ScrollToTopBtn/ScrollTotopBtn'
 import Header from '../Header/Header'
 import { ScrollSmoother } from 'gsap/ScrollSmoother'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useLayoutEffect } from 'react'
-import { useRef } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 import gsap from 'gsap'
 import s from './Layout.module.css'
 
@@ -16,24 +15,24 @@ const Layout = () => {
   const wrapperRef = useRef()
   const contentRef = useRef()
 
-  
-useLayoutEffect(() => {
-  const ctx = gsap.context(() => {
-    ScrollSmoother.create({
-      wrapper: "#smooth-wrapper",
-      content: "#smooth-content",
-      smooth: 1.2,
-      effects: true,
-      normalizeScroll: true,
-      ignoreMobileResize: true,
-    });
-  }, wrapperRef);
 
-  return () => {
-    ScrollSmoother.get()?.kill();
-    ctx.revert();
-  };
-}, []);
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      ScrollSmoother.create({
+        wrapper: wrapperRef.current,
+        content: contentRef.current,
+        smooth: 1.2,
+        effects: true,
+        normalizeScroll: true,
+        ignoreMobileResize: true,
+      })
+    }, wrapperRef)
+
+    return () => {
+      ScrollSmoother.get()?.kill()
+      ctx.revert()
+    }
+  }, [])
 
   return (
     <div className={s.layoutContainer}>
@@ -51,7 +50,7 @@ useLayoutEffect(() => {
             className="content will-change-transform"
           >
             <AnimatePresence mode="wait">
-              <Outlet/>
+              <Outlet />
             </AnimatePresence>
           </div>
         </div>

@@ -1,5 +1,4 @@
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
-import { useRef, useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styles from './Expertise.module.css'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -33,73 +32,94 @@ const Expertise = () => {
   useEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
+        defaults: {
+          ease: 'power4.out',
+        },
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top 75%',
-          end: 'bottom 20%',
-          toggleActions: 'play none none reverse',
+          once: true,
+
         },
       })
 
-      tl.from(backgroundRef.current, {
-        opacity: 0,
-        autoAlpha: 0,
-        scale: 1.08,
-        ease: 'power4.out',
-        duration: 1.2,
-      })
+      tl
 
+        // Background
+        .from(backgroundRef.current, {
+          autoAlpha: 0,
+          scale: 1.12,
+          filter: 'blur(40px)',
+          duration: 1.4,
+        })
+
+        // Eyebrow
         .from(
           eyebrowRef.current,
           {
             autoAlpha: 0,
-            y: 24,
-            filter: 'blur(10px)',
-            duration: 0.6,
+            y: 30,
+            filter: 'blur(12px)',
+            duration: 0.7,
           },
-          '-=.3',
+          '-=1',
         )
 
-        .from(
-          titleRef.current,
-          {
-            autoAlpha: 0,
-            y: 80,
-            duration: 1,
-            ease: 'power4.out',
-          },
-          '-=.3',
-        )
-
+        // Divider
         .from(
           dividerRef.current,
           {
             scaleX: 0,
             transformOrigin: 'left center',
-            duration: 0.6,
+            duration: 0.8,
           },
-          '-=.6',
+          '-=0.4',
         )
 
+        // Title
+        .from(
+          titleRef.current,
+          {
+            autoAlpha: 0,
+            y: -90,
+            rotateX: -35,
+            transformOrigin: 'center bottom',
+            duration: 1.2,
+          },
+          '-=0.45',
+        )
+
+        // Location
         .from(
           locationRef.current,
           {
             autoAlpha: 0,
-            x: -30,
-            duration: 0.6,
+            y: -90,
+            duration: 0.8,
           },
-          '-=.4',
+          '-=0.8',
         )
 
-        .from(
-          cardRef.current,
-          {
-            autoAlpha: 0,
-            x: -50,
-            duration: 1,
-          },
-          '-=.3',
-        )
+        // Card
+        .from(cardRef.current, {
+          autoAlpha: 0,
+          y: 120,
+          scale: .92,
+          rotateX: 8,
+          filter: 'blur(10px)',
+          duration: 1.2,
+        })
+        .to(cardRef.current, {
+          y: -6,
+          duration: .25,
+          ease: 'power2.out',
+        })
+        .to(cardRef.current, {
+          y: 0,
+          duration: .35,
+          ease: 'bounce.out',
+        })
+
     }, sectionRef)
 
     return () => ctx.revert()
@@ -136,6 +156,8 @@ const Expertise = () => {
 
             <span className={styles.titlePlain}>Expertise</span>
           </h2>
+
+          <div className={styles.divider} ref={dividerRef} />
 
           <div className={styles.locationWrap} ref={locationRef}>
             <LocationBadge location="Located in Ivano-Frankivsk" />

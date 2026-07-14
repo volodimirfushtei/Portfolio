@@ -7,537 +7,554 @@
    1. CSS VARIABLES (Mobile базові значення)
 ═══════════════════════════════════════════ */
 .hero {
-  --hero-padding-top: 6rem;
-  --hero-padding-bottom: 4rem;
-  --hero-padding-x: 1rem;
-  --hero-gap: 2rem;
-  --title-font-size: clamp(6rem, 12vw, 14rem);
-  --title-line-height: 1;
-  --eyebrow-gap: 0.5rem;
-  --button-padding: 0.85rem 1.2rem;
-  --button-font-size: 0.7rem;
+    /* CSS Variables */
+    --hero-padding-top: 6rem;
+    --hero-padding-bottom: 4rem;
+    --hero-padding-x: 1rem;
+    --hero-gap: 2rem;
+    --title-font-size: clamp(6rem, 12vw, 14rem);
+    --title-line-height: 1;
+    --eyebrow-gap: 0.5rem;
+    --button-padding: 0.85rem 1.2rem;
+    --button-font-size: 0.7rem;
+}
+
+.hero {
+
+    position: relative;
+    z-index: 0;
+    width: 100%;
+    height: 100svh;
+    min-height: 100svh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    isolation: isolate;
+    background: var(--color-background);
+    border-bottom: 1px solid var(--color-border);
+    border-radius: 4px;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    transform-origin: top center;
+
 }
 
 /* ═══════════════════════════════════════════
    2. SECTION WRAPPER (Mobile First)
 ═══════════════════════════════════════════ */
-.hero {
-  position: relative;
-  z-index: 0;
-  width: 100%;
-  min-height: 100svh;
-  padding-block: clamp(0.8rem, 1vw, 1.6rem) 0rem;
-  overflow: hidden;
-  border-radius: 0;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  isolation: isolate;
-  background: var(--color-page-gradient);
-  z-index: 1;
-  scroll-behavior: smooth;
-  scrollbar-width: none;
-}
+
 
 .bgText {
-  position: absolute;
-  left: 50%;
-  top: 55%;
-  transform: translate(-50%, -50%) rotate(-8deg);
-  font-size: 24vw;
-  font-weight: 700;
-  color: var(--color-text);
-  opacity: .15;
-  text-shadow: 0 0 10px var(--color-text);
-  pointer-events: none;
-  mix-blend-mode: soft-light;
-  backdrop-filter: blur(.3px);
-  letter-spacing: -.06em;
+    position: absolute;
+    left: 50%;
+    top: 55%;
+    transform: translate(-50%, -50%) rotate(-8deg);
+    font-size: 24vw;
+    font-weight: 700;
+    color: var(--color-text);
+    opacity: .15;
+    text-shadow: 0 0 10px var(--color-text);
+    pointer-events: none;
+    mix-blend-mode: soft-light;
+    backdrop-filter: blur(.3px);
+    letter-spacing: -.06em;
 }
 
 /* ═══════════════════════════════════════════
    3. GRID BLUR ЕЛЕМЕНТИ (Mobile First)
 ═══════════════════════════════════════════ */
 .gridBlur1 {
-  position: absolute;
-  top: 15%;
-  left: -5%;
-  width: 600px;
-  height: 600px;
-  background: var(--color-accent, rgba(99, 102, 241, 0.3));
-  border-radius: 50%;
-  filter: blur(180px);
-  opacity: 0.2;
-  pointer-events: none;
-  z-index: -1;
+    position: absolute;
+    top: 65%;
+    left: -5%;
+    width: 600px;
+    height: 600px;
+    background: var(--color-accent, rgba(55, 63, 216, 0.3));
+    border-radius: 50%;
+    filter: blur(180px);
+    opacity: 0.25;
+    pointer-events: none;
+    z-index: -1;
 }
 
 .gridBlur2 {
-  position: absolute;
-  bottom: -35%;
-  right: -10%;
-  width: 450px;
-  height: 450px;
-  background: var(--color-accent, rgba(55, 63, 216, 0.3));
-  border-radius: 50%;
-  filter: blur(220px);
-  opacity: 0.15;
-  pointer-events: none;
-  z-index: -1;
+    position: absolute;
+    top: 25%;
+    right: -10%;
+    width: 450px;
+    height: 450px;
+    background: var(--color-accent, rgba(55, 63, 216, 0.3));
+    border-radius: 50%;
+    filter: blur(220px);
+    opacity: 0.1;
+    pointer-events: none;
+    z-index: -1;
 }
-.gridBlur3{
-  position: absolute;
-  bottom: 50%;
-  left: 20%;
-  width: 250px;
-  height: 250px;
-  background:  rgba(254, 203, 0, 0.3);
-  border-radius: 50%;
-  filter: blur(180px) brightness(100%);
-  opacity: 1;
-  pointer-events: none;
-  z-index: -1;
+
+.gridBlur3 {
+    position: absolute;
+    bottom: 50%;
+    left: 20%;
+    width: 250px;
+    height: 250px;
+    background: rgba(254, 203, 0, 0.3);
+    border-radius: 50%;
+    filter: blur(180px) brightness(100%);
+    opacity: 1;
+    pointer-events: none;
+    z-index: -1;
 }
+
 /* ═══════════════════════════════════════════
    4. DOT GRID (приховуємо на мобільних)
 ═══════════════════════════════════════════ */
 .dotGridWrap {
-  display: none;
+    display: none;
 }
 
 /* ═══════════════════════════════════════════
    5. BACKGROUND (Mobile First)
 ═══════════════════════════════════════════ */
 .gradientBackground {
-  position: absolute;
-  border-radius: 40px;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-image: radial-gradient(
-    circle,
-    var(--color-border) 1px,
-    transparent 1px
-  );
-  background-size: 20px 20px;
-  opacity: 0.2;
+    position: absolute;
+    border-radius: 40px;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: radial-gradient(
+            circle,
+            var(--color-border) 1px,
+            transparent 1px
+    );
+    background-size: 40px 40px;
+    opacity: 0.2;
 }
 
 /* ═══════════════════════════════════════════
    6. CORNER BADGE (приховуємо на мобільних)
 ═══════════════════════════════════════════ */
 .cornerBadge {
-  display: none;
+    display: none;
 }
 
 .cornerBadgeNum {
-  font-family: var(--font-display, 'Bebas Neue', sans-serif);
-  font-size: 2rem;
-  line-height: 1;
-  color: var(--color-text, #ffffff);
-  opacity: 0.22;
+    font-family: var(--font-display, 'Bebas Neue', sans-serif);
+    font-size: 2rem;
+    line-height: 1;
+    color: var(--color-text, #ffffff);
+    opacity: 0.22;
 }
 
 .cornerBadgeLabel {
-  font-family: var(--font-mono, 'DM Mono', monospace);
-  font-size: 0.6rem;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--color-secondary, #94a3b8);
-  opacity: 0.38;
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 0.6rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--color-secondary, #94a3b8);
+    opacity: 0.38;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
 }
 
 /* ═══════════════════════════════════════════
    7. SCROLL INDICATOR (приховуємо на мобільних)
 ═══════════════════════════════════════════ */
 .scrollIndicator {
-  display: none;
+    display: none;
 }
 
 .scrollText {
-  font-family: var(--font-mono, 'DM Mono', monospace);
-  font-size: 0.6rem;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--color-secondary, #94a3b8);
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  transform: rotate(180deg);
-  white-space: nowrap;
-  opacity: 0.55;
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 0.6rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--color-secondary, #94a3b8);
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    white-space: nowrap;
+    opacity: 0.55;
 }
 
 .scrollLineContainer {
-  position: sticky;
-  width: 1px;
-  height: 160px;
-  overflow: hidden;
+    position: sticky;
+    width: 1px;
+    height: 160px;
+    overflow: hidden;
 }
 
 .scrollLine {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 1px;
-  height: 100%;
-  background: linear-gradient(
-    to bottom,
-    var(--color-accent, #ed0c4c) 0%,
-    transparent 100%
-  );
-  transform-origin: top;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(
+            to bottom,
+            var(--color-accent, #ed0c4c) 0%,
+            transparent 100%
+    );
+    transform-origin: top;
 }
 
 /* ═══════════════════════════════════════════
    8. HERO INNER (Mobile First)
 ═══════════════════════════════════════════ */
 .heroInner {
-  position: relative;
-  z-index: 10;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  flex-direction: column;
-  padding: 0;
+    position: relative;
+    z-index: 0;
+    height: 100%;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    flex-direction: column;
+    padding: 0;
 }
 
 /* ═══════════════════════════════════════════
    9. CONTENT GRID (Mobile First)
 ═══════════════════════════════════════════ */
 .content {
-  width: min(100%, 1800px);
-  margin-inline: auto;
-  padding-inline: clamp(20px, 4vw, 80px);
-  padding-block: clamp(6rem, 10vw, 12rem);
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 4rem;
+    width: min(100%, 1800px);
+    margin-inline: auto;
+    padding-inline: clamp(20px, 4vw, 60px);
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    gap: 4rem;
 }
 
 /* ═══════════════════════════════════════════
    10. TEXT BLOCK (Mobile First)
 ═══════════════════════════════════════════ */
 .textContent {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  will-change: transform;
-  max-width: 100%;
-  margin: 0 auto;
-  width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-start;
+    text-align: left;
+    max-width: 640px;
+    margin: 0;
 }
 
 /* ── 10.1 Eyebrow ── */
 .eyebrow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--eyebrow-gap);
-  margin-bottom: 1.5rem;
-  overflow: hidden;
-  flex-wrap: wrap;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--eyebrow-gap);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    flex-wrap: wrap;
 }
 
 .eyebrowLine {
-  display: block;
-  width: 24px;
-  height: 1px;
-  background: var(--color-accent, #ed0c4c);
-  flex-shrink: 0;
-  opacity: 0.6;
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--color-accent, #ed0c4c);
+    flex-shrink: 0;
+    opacity: 0.6;
 }
 
 .eyebrowText {
-  font-family: var(--font-mono, 'DM Mono', monospace);
-  font-size: 0.6rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--color-secondary, #94a3b8);
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-secondary, #94a3b8);
 }
 
 .eyebrowDot {
-  display: block;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--color-accent, #ed0c4c);
-  animation: blink 2.4s ease-in-out infinite;
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-accent, #ed0c4c);
+    animation: blink 2.4s ease-in-out infinite;
 }
 
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.2; }
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.2;
+    }
 }
 
 /* ── 10.2 Title ── */
 .title {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
 
-  font-family: var(--font-display, "Bebas Neue", sans-serif);
-  font-size: clamp(5rem, 10vw, 10rem);
-  font-weight: 700;
-  line-height: 0.82;
-  letter-spacing: 0.085rem;
-  text-transform: uppercase;
+    font-family: var(--font-display, "Bebas Neue", sans-serif);
+    font-size: clamp(5rem, 9vw, 11rem);
+    line-height: .82;
+    font-weight: 700;
 
-  color: var(--color-text);
+    letter-spacing: 0.085rem;
+    text-transform: uppercase;
 
-  user-select: none;
-  perspective: 1200px;
-  transform-style: preserve-3d;
+    color: var(--color-text);
+
+    user-select: none;
+    perspective: 1200px;
+    transform-style: preserve-3d;
 }
 
 
-
-.titleLine{
-  display:block;
-
-  overflow:hidden;
-}
-
-.titleLine:nth-child(2){
-  margin-left:2.5rem;
-}
-
-.titleLine:nth-child(3){
-  margin-left:.8rem;
+.title {
+    display: flex;
+    flex-direction: column;
+    line-height: 0.82;
 }
 
 .titleLine {
-  display: block;
-  overflow: hidden;
-  line-height: 1;
-  padding-bottom: 0.06em;
-  -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
-  mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+    display: block;
+}
+
+.titleLine:nth-child(1) {
+    transform: translateX(0);
+}
+
+.titleLine:nth-child(2) {
+    transform: translateX(3rem);
+}
+
+.titleLine:nth-child(3) {
+    transform: translateX(1rem);
+}
+
+.titleLine {
+    display: block;
+    overflow: hidden;
+    line-height: 1;
+    padding-bottom: 0.06em;
+    -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
 }
 
 .titleAccent {
-  display: inline-block;
+    display: inline-block;
 
-  color: var(--color-secondary);
+    color: var(--color-secondary);
 
-  text-shadow:
-          0 0 18px rgba(255,255,255,.12),
-          0 18px 45px rgba(0,0,0,.45);
+    text-shadow: 0 0 18px rgba(255, 255, 255, .12),
+    0 18px 45px rgba(0, 0, 0, .45);
 
-  will-change: transform;
+    will-change: transform;
 }
 
 .titleAccent::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 10px;
-  width: 100%;
-  height: 18%;
-  background: var(--color-accent);
-  z-index: -1;
-  opacity: .25;
-  filter: blur(10px);
-}
-.titleLine:nth-child(2){
-  margin-left:3rem;
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 10px;
+    width: 100%;
+    height: 18%;
+    background: var(--color-accent);
+    z-index: -1;
+    opacity: .25;
+    filter: blur(10px);
 }
 
-.titleLine:nth-child(3){
-  margin-left:1rem;
-}
+
 .titleAccent,
 .titlePlain {
-  background: linear-gradient(
-          180deg,
-          #ffffff 0%,
-          #999999 45%,
-          #d9d9d9 100%
-  );
+    background: linear-gradient(
+            180deg,
+            #ffffff 0%,
+            #999999 45%,
+            #d9d9d9 100%
+    );
 
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 /* ── 10.3 Tagline ── */
 .tagline {
-  font-family: var(--font-mono, 'DM Mono', monospace);
-  font-size: 0.6rem;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  background: linear-gradient(
-    120deg,
-    var(--color-text, #ffffff) 0%,
-    var(--color-secondary, #94a3b8) 30%,
-    var(--color-text, #ffffff) 50%,
-    var(--color-secondary, #94a3b8) 70%,
-    var(--color-text, #ffffff) 100%
-  );
-  background-size: 200% auto;
-  background-position: 0% center;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  margin: 0 0 1rem;
-  opacity: 0.8;
-  text-align: center;
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    background: linear-gradient(
+            120deg,
+            var(--color-text, #ffffff) 0%,
+            var(--color-secondary, #94a3b8) 30%,
+            var(--color-text, #ffffff) 50%,
+            var(--color-secondary, #94a3b8) 70%,
+            var(--color-text, #ffffff) 100%
+    );
+    background-size: 200% auto;
+    background-position: 0% center;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin: 0 0 1rem;
+    opacity: 0.8;
+    text-align: center;
 }
 
 /* ── 10.4 Divider ── */
 .divider {
-  width: 60px;
-  height: 1px;
-  background: var(--color-border, rgba(255, 255, 255, 0.1));
-  margin: 0 auto 1.5rem;
+    width: 60px;
+    height: 1px;
+    background: var(--color-border, rgba(255, 255, 255, 0.1));
+    margin: 0 auto 1.5rem;
 }
 
 /* ── 10.5 Subtitle / Typewriter ── */
 .subtitle {
-  font-family: var(--font-mono, 'DM Mono', monospace);
-  color: var(--color-secondary, #94a3b8);
-  max-width: 620px;
-  font-size: 1rem;
-  line-height: 1.9;
-  opacity: .7;
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    color: var(--color-secondary, #94a3b8);
+    max-width: 620px;
+    font-size: 1rem;
+    line-height: 1.9;
+    opacity: .7;
 }
 
 /* ── 10.6 CTA Buttons ── */
 .buttons {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 0.75rem;
-  width: 100%;
-  margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+    width: 100%;
+    margin-bottom: 2rem;
 }
 
 /* Primary Button */
 .primaryButton {
-  background: var(--color-accent, rgba(255, 255, 255, 0.08));
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  color: var(--color-text, #ffffff);
-  padding: var(--button-padding);
-  font-family: var(--font-mono, 'DM Mono', monospace);
-  font-size: var(--button-font-size);
-  font-weight: 500;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  height: 72px;
-  padding-inline: 42px;
-  border-radius: 999px;
-  border: 1px solid var(--color-border, rgba(255, 255, 255, 0.1));
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-  white-space: nowrap;
-  z-index: 5;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    background: var(--color-accent, rgba(255, 255, 255, 0.08));
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: var(--color-text, #ffffff);
+    padding: var(--button-padding);
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: var(--button-font-size);
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    height: 72px;
+    padding-inline: 42px;
+    border-radius: 999px;
+    border: 1px solid var(--color-border, rgba(255, 255, 255, 0.1));
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    white-space: nowrap;
+    z-index: 5;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
 .primaryButton::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: var(--color-accent, #ed0c4c);
-  transform: translateX(-101%);
-  transition: transform 0.45s cubic-bezier(0.76, 0, 0.24, 1);
-  z-index: var(--z-overlay, 1);
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: var(--color-accent, #ed0c4c);
+    transform: translateX(-101%);
+    transition: transform 0.45s cubic-bezier(0.76, 0, 0.24, 1);
+    z-index: var(--z-overlay, 1);
 }
 
 .primaryButton:hover::before {
-  background: var(--color-surface, #080808);
-  transform: translate(0);
+    background: var(--color-surface, #080808);
+    transform: translate(0);
 }
 
 .primaryButton > * {
-  position: relative;
-  z-index: 2;
-  transition: all 0.45s cubic-bezier(0.76, 0, 0.24, 1);
+    position: relative;
+    z-index: 2;
+    transition: all 0.45s cubic-bezier(0.76, 0, 0.24, 1);
 }
 
 .primaryButton:hover > * {
-  color: var(--color-text);
+    color: var(--color-text);
 }
 
 .primaryButton:hover {
-  background: var(--color-accent, #ed0c4c);
-  color: var(--color-text, #ffffff);
-  border-color: var(--color-accent, #ed0c4c);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(237, 12, 76, 0.3);
+    background: var(--color-accent, #ed0c4c);
+    color: var(--color-text, #ffffff);
+    border-color: var(--color-accent, #ed0c4c);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(237, 12, 76, 0.3);
 }
 
 /* Secondary Button */
 .secondaryButton {
-  background: transparent;
-  color: var(--color-secondary, #94a3b8);
-  border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
-  padding: var(--button-padding);
-  font-family: var(--font-mono, 'DM Mono', monospace);
-  font-size: var(--button-font-size);
-  font-weight: 500;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 72px;
-  padding-inline: 42px;
-  border-radius: 999px;
-  gap: 0.6rem;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-  white-space: nowrap;
-  z-index: 5;
+    background: transparent;
+    color: var(--color-secondary, #94a3b8);
+    border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
+    padding: var(--button-padding);
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: var(--button-font-size);
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 72px;
+    padding-inline: 42px;
+    border-radius: 999px;
+    gap: 0.6rem;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    white-space: nowrap;
+    z-index: 5;
 }
 
 .secondaryButton:hover {
-  color: var(--color-text, #ffffff);
-  border-color: var(--color-accent, #ed0c4c);
-  background: rgba(255, 255, 255, 0.03);
-  transform: translateY(-2px);
+    color: var(--color-text, #ffffff);
+    border-color: var(--color-accent, #ed0c4c);
+    background: rgba(255, 255, 255, 0.03);
+    transform: translateY(-2px);
 }
 
 .btnArrowIcon {
-  transition: transform 0.2s ease;
-  flex-shrink: 0;
-  width: 12px;
-  height: 12px;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+    width: 12px;
+    height: 12px;
 }
 
 .primaryButton:hover .btnArrowIcon,
 .secondaryButton:hover .btnArrowIcon {
-  transform: translate(3px, -3px);
+    transform: translate(3px, -3px);
 }
 
 /* ═══════════════════════════════════════════
    11. MEDIA CONTAINER (Mobile First)
 ═══════════════════════════════════════════ */
 .mediaContainer {
-  position: relative;
-  width: 100%;
-  max-width: 700px;
+    position: relative;
+    width: 100%;
+    max-width: 680px;
 
-  box-shadow: 0 0 20px var(--color-secondary);
-  margin: 0 auto;
-  perspective: 1800px;
-  z-index: 8;
+    box-shadow: 0 0 20px var(--color-secondary);
+    margin: 0 auto;
+    perspective: 1800px;
+    z-index: 8;
 }
 
 /* ═══════════════════════════════════════════
@@ -546,342 +563,365 @@
 
 /* ── 12.1 Tablet (768px+) ── */
 @media (min-width: 768px) {
-  .dotGridWrap {
-    display: block;
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    opacity: 0.28;
-  }
+    .dotGridWrap {
+        display: block;
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 0.28;
+    }
 
-  .gridBlur1 {
-    width: 600px;
-    height: 600px;
-    top: 10%;
-    left: -10%;
-  }
+    .gridBlur1 {
+        width: 600px;
+        height: 600px;
+        top: 10%;
+        left: -10%;
+    }
 
-  .gridBlur2 {
-    width: 550px;
-    height: 550px;
-    bottom: 0;
-    right: -10%;
-  }
+    .gridBlur2 {
+        width: 550px;
+        height: 550px;
+        bottom: 0;
+        right: -10%;
+    }
 
-  .gradientBackground {
-    opacity: 0.4;
-  }
+    .gradientBackground {
+        opacity: 0.4;
+    }
 
-  .cornerBadge {
-    display: flex;
-    position: absolute;
-    top: clamp(1.5rem, 7vw, 7rem);
-    right: clamp(1rem, 4vw, 3rem);
-    z-index: 20;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.3rem;
-    pointer-events: none;
-  }
+    .cornerBadge {
+        display: flex;
+        position: absolute;
+        top: clamp(1.5rem, 7vw, 7rem);
+        right: clamp(1rem, 4vw, 3rem);
+        z-index: 20;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.3rem;
+        pointer-events: none;
+    }
 
-  .scrollIndicator {
-    display: flex;
-    position: absolute;
-    top: 50%;
-    right: clamp(1rem, 4vw, 4rem);
-    z-index: 20;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.3rem;
-    pointer-events: none;
-    transform: translateY(-30%);
-  }
+    .scrollIndicator {
+        display: flex;
+        position: absolute;
+        top: 50%;
+        right: clamp(1rem, 4vw, 4rem);
+        z-index: 20;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.3rem;
+        pointer-events: none;
+        transform: translateY(-30%);
+    }
 
-  .heroInner {
-    padding-left: clamp(1.5rem, 4vw, 3rem);
-  }
 
-  .content {
-    --hero-padding-top: 6rem;
-    --hero-padding-bottom: 5rem;
-    --hero-padding-x: 2rem;
-    --hero-gap: 3rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: clamp(2rem, 6vw, 5rem);
-    align-items: center;
-  }
+    .content {
+        --hero-padding-top: 6rem;
+        --hero-padding-bottom: 5rem;
+        --hero-padding-x: 2rem;
+        --hero-gap: 3rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: clamp(2rem, 8vw, 8rem);
+        align-items: center;
+    }
 
-  .textContent {
-    align-items: flex-start;
-    text-align: left;
-    max-width: 600px;
-    margin: 0;
-  }
 
-  .eyebrow {
-    justify-content: flex-start;
-    margin-bottom: 2rem;
-  }
+    .eyebrow {
+        justify-content: flex-start;
+        margin-bottom: 2rem;
+    }
 
-  .eyebrowLine {
-    width: 32px;
-  }
+    .eyebrowLine {
+        width: 32px;
+    }
 
-  .eyebrowText {
-    font-size: 0.65rem;
-    letter-spacing: 0.25em;
-  }
+    .eyebrowText {
+        font-size: 0.65rem;
+        letter-spacing: 0.25em;
+    }
 
-  .eyebrowDot {
-    width: 5px;
-    height: 5px;
-  }
+    .eyebrowDot {
+        width: 5px;
+        height: 5px;
+    }
 
-  .title {
-    --title-font-size: 4rem;
-    text-align: left;
-    margin-right: -2rem;
-    margin-bottom: 1.5rem;
-  }
 
-  .tagline {
-    font-size: 0.7rem;
-    letter-spacing: 0.35em;
-    margin: 0 0 1.5rem;
-    text-align: left;
-  }
+    .tagline {
+        font-size: 0.7rem;
+        letter-spacing: 0.35em;
+        margin: 0 0 1.5rem;
+        text-align: left;
+    }
 
-  .divider {
-    width: 100%;
-    margin: 0 0 1.5rem;
-  }
+    .divider {
+        width: 100%;
+        margin: 0 0 1.5rem;
+    }
 
-  .subtitle {
-    font-size: 0.85rem;
-    max-width: 400px;
-    text-align: left;
-    margin-bottom: 2rem;
+    .subtitle {
+        font-size: 0.85rem;
+        max-width: 400px;
+        text-align: left;
+        margin-bottom: 2rem;
 
-  }
+    }
 
-  .buttons {
-    justify-content: flex-start;
-    margin-bottom: 0;
+    .buttons {
+        justify-content: flex-start;
+        margin-bottom: 0;
 
-  }
+    }
 
-  .primaryButton {
-    --button-padding: 1rem 1.8rem;
-    --button-font-size: 0.72rem;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-  }
+    .primaryButton {
+        --button-padding: 1rem 1.8rem;
+        --button-font-size: 0.72rem;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    }
 
-  .primaryButton:hover {
-    box-shadow: 0 12px 40px var(--color-accent, rgba(238, 237, 237, 0.4));
-  }
+    .primaryButton:hover {
+        box-shadow: 0 12px 40px var(--color-accent, rgba(238, 237, 237, 0.4));
+    }
 
-  .secondaryButton {
-    --button-padding: 1rem 1.8rem;
-    --button-font-size: 0.72rem;
-  }
+    .secondaryButton {
+        --button-padding: 1rem 1.8rem;
+        --button-font-size: 0.72rem;
+    }
 
-  .btnArrowIcon {
-    width: 14px;
-    height: 14px;
-  }
+    .btnArrowIcon {
+        width: 14px;
+        height: 14px;
+    }
 
-  .mediaContainer {
-    max-width: 100%;
-    margin: 0;
-  }
+    .mediaContainer {
+
+        max-width: 700px;
+        margin: 0;
+    }
 }
 
 /* ── 12.2 Desktop (1024px+) ── */
 @media (min-width: 1024px) {
-  .cornerBadgeNum {
-    font-size: 2.8rem;
-  }
+    .cornerBadgeNum {
+        font-size: 2.8rem;
+    }
 
-  .cornerBadgeLabel {
-    font-size: 0.7rem;
-  }
+    .cornerBadgeLabel {
+        font-size: 0.7rem;
+    }
 
-  .scrollText {
-    font-size: 0.7rem;
-  }
+    .scrollText {
+        font-size: 0.7rem;
+    }
 
-  .scrollLineContainer {
-    height: 260px;
-  }
+    .scrollLineContainer {
+        height: 260px;
+    }
 
-  .heroInner {
-    padding-left: clamp(1rem, 2vw, 2rem);
-  }
 
-  .content {
-    --hero-padding-top: 8rem;
-    --hero-padding-x: 3rem;
-    --hero-gap: 4rem;
-  }
+    .content {
+        --hero-padding-top: 8rem;
+        --hero-padding-x: 3rem;
+        --hero-gap: 4rem;
+        gap: clamp(2rem, 8vw, 8rem);
+    }
 
-  .eyebrowText {
-    font-size: 0.7rem;
-    letter-spacing: 0.3em;
-  }
+    .eyebrowText {
+        font-size: 0.7rem;
+        letter-spacing: 0.3em;
+    }
 
-  .title {
-    font-size: clamp(4rem, 8vw, 16rem);
-  }
 
-  .subtitle {
-    font-size: 0.9rem;
-    margin-bottom: 2.4rem;
-    min-height: 2.6em;
-  }
+    .subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 2.4rem;
+        min-height: 2.6em;
+    }
 
-  .primaryButton {
-    --button-padding: 1.1rem 2.2rem;
-    --button-font-size: 0.75rem;
-    gap: 0.8rem;
-  }
+    .primaryButton {
+        --button-padding: 1.1rem 2.2rem;
+        --button-font-size: 0.75rem;
+        gap: 0.8rem;
+    }
 
-  .secondaryButton {
-    --button-padding: 1.1rem 2.2rem;
-    --button-font-size: 0.75rem;
-    gap: 0.8rem;
-  }
+    .secondaryButton {
+        --button-padding: 1.1rem 2.2rem;
+        --button-font-size: 0.75rem;
+        gap: 0.8rem;
+    }
 
-  .mediaContainer {
-    max-width: 100%;
-    margin: 0;
-  }
+    .mediaContainer {
+        max-width: 700px;
+        margin: 0;
+    }
 }
 
 /* ── 12.3 Desktop HD (1280px+) ── */
 @media (min-width: 1280px) {
-  .title {
-    font-size: clamp(6rem, 10vw, 18rem);
-    margin-right: -4rem;
-  }
+
 }
 
 /* ── 12.4 Large Screen (1440px+) ── */
 @media (min-width: 1440px) {
-  .gradientBackground {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background-image:
-      linear-gradient(rgba(0, 255, 0, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 255, 0, 0.05) 1px, transparent 1px);
-    background-size: 15px 15px;
-    animation: matrix 2s ease-in-out infinite alternate;
-    opacity: 0.95;
-  }
+    .gradientBackground {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        background-image: linear-gradient(rgba(0, 255, 0, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 0, 0.05) 1px, transparent 1px);
+        background-size: 15px 15px;
+        animation: matrix 2s ease-in-out infinite alternate;
+        opacity: 0.95;
+    }
 
-  .content {
-    padding-block: clamp(6rem, 10vw, 12rem);
-    max-width: 1800px;
-    gap: 16rem;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
+    .content {
+        padding-block: clamp(6rem, 10vw, 12rem);
+        max-width: 1800px;
+        gap: 16rem;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
 }
 
 /* ── 12.5 Mobile Landscape (480px+) ── */
 @media (min-width: 480px) {
-  .heroInner {
-    padding-left: clamp(1.5rem, 4vw, 3rem);
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+    .heroInner {
 
-  .title {
-    --title-font-size: 3.5rem;
-  }
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
 
-  .subtitle {
-    font-size: 0.8rem;
-    line-height: 1.7;
-  }
 
-  .buttons {
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 0.85rem;
-  }
+    .subtitle {
+        font-size: 0.8rem;
+        line-height: 1.7;
+    }
 
-  .primaryButton {
-    --button-padding: 0.9rem 1.5rem;
-    --button-font-size: 0.7rem;
-    letter-spacing: 0.18em;
-  }
+    .buttons {
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 0.85rem;
+    }
 
-  .secondaryButton {
-    --button-padding: 0.9rem 1.5rem;
-    --button-font-size: 0.7rem;
-    letter-spacing: 0.18em;
-  }
+    .primaryButton {
+        --button-padding: 0.9rem 1.5rem;
+        --button-font-size: 0.7rem;
+        letter-spacing: 0.18em;
+    }
+
+    .secondaryButton {
+        --button-padding: 0.9rem 1.5rem;
+        --button-font-size: 0.7rem;
+        letter-spacing: 0.18em;
+    }
 }
 
 /* ── 12.6 Small Mobile (640px+) ── */
 @media (min-width: 640px) {
-  .title {
-    --title-font-size: 4rem;
-  }
+    .title {
+        --title-font-size: 4rem;
+    }
 }
 
 /* ═══════════════════════════════════════════
    13. ANIMATIONS
 ═══════════════════════════════════════════ */
 @keyframes shimmer {
-  0% {
-    background-position: 0% center;
-  }
-  100% {
-    background-position: 200% center;
-  }
+    0% {
+        background-position: 0% center;
+    }
+    100% {
+        background-position: 200% center;
+    }
 }
 
 @keyframes matrix {
-  0% {
-    opacity: 0.95;
-  }
-  100% {
-    opacity: 1;
-  }
+    0% {
+        opacity: 0.95;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
 /* ═══════════════════════════════════════════
    14. REDUCED MOTION
 ═══════════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 
-  .titleAccent {
-    animation: none;
-    background: var(--color-text, #ffffff);
-    -webkit-background-clip: text;
-    background-clip: text;
-  }
+    .titleAccent {
+        animation: none;
+        background: var(--color-text, #ffffff);
+        -webkit-background-clip: text;
+        background-clip: text;
+    }
 
-  .eyebrowDot {
-    animation: none;
-  }
+    .eyebrowDot {
+        animation: none;
+    }
 
-  .gradientBackground {
-    animation: none;
-  }
+    .gradientBackground {
+        animation: none;
+    }
 }
+
+/* ── 13. CUSTOM BREAKPOINTS ── */
+
+/* Mobile (≤ 320px) */
+@media (max-width: 320px) {
+    .hero {
+        --hero-padding-top: 4rem;
+        --hero-padding-bottom: 2rem;
+        --hero-padding-x: 0.5rem;
+        --hero-gap: 1rem;
+    }
+
+
+    .primaryButton, .secondaryButton {
+        --button-padding: 0.7rem 1.2rem;
+        --button-font-size: 0.6rem;
+    }
+}
+
+/* Tablet (≥ 768px) */
+@media (min-width: 768px) {
+    .heroInner {
+        padding-left: clamp(1rem, 1.6vw, 1.6rem);
+    }
+
+    .content {
+        grid-template-columns: 1fr 1fr;
+
+    }
+
+
+    .subtitle {
+        font-size: 0.9rem;
+    }
+}
+
+/* Desktop HD (≥ 1440px) */
+@media (min-width: 1440px) {
+    .heroInner {
+        padding-left: clamp(1rem, 2vw, 2rem);
+    }
+
+
+    .primaryButton, .secondaryButton {
+        --button-padding: 1.2rem 2.4rem;
+        --button-font-size: 0.8rem;
+    }
+}
+

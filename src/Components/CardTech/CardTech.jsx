@@ -1,44 +1,41 @@
-import { useLayoutEffect, useRef, useState, useEffect } from "react";
-import styles from "./CardTech.module.css";
-import { gsap } from "gsap";
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import styles from './CardTech.module.css'
+import { gsap } from 'gsap'
 
 const techStack = [
-  { name: "React", icon: "ri-reactjs-line" },
-  { name: "Next.js", icon: "ri-nextjs-line" },
-  { name: "Node.js", icon: "ri-nodejs-line" },
-  { name: "JavaScript", icon: "ri-javascript-line" },
-  { name: "CSS3", icon: "ri-css3-line" },
-  { name: "HTML5", icon: "ri-html5-line" },
-  { name: "GSAP", icon: "ri-animation-line" },
-  { name: "Three.js", icon: "ri-3d-line" },
-  { name: "React Native", icon: "ri-mobile-line" },
-  { name: "Tailwind CSS", icon: "ri-css3-line" },
-  { name: "Framer", icon: "ri-animation-line" },
+  { name: 'React', icon: 'ri-reactjs-line' },
+  { name: 'Next.js', icon: 'ri-nextjs-line' },
+  { name: 'Node.js', icon: 'ri-nodejs-line' },
+  { name: 'JavaScript', icon: 'ri-javascript-line' },
+  { name: 'CSS3', icon: 'ri-css3-line' },
+  { name: 'HTML5', icon: 'ri-html5-line' },
+  { name: 'GSAP', icon: 'ri-animation-line' },
+  { name: 'Three.js', icon: 'ri-3d-line' },
+  { name: 'React Native', icon: 'ri-mobile-line' },
+  { name: 'Tailwind CSS', icon: 'ri-css3-line' },
+  { name: 'Framer', icon: 'ri-animation-line' },
 
-];
+]
 
 const CardTech = () => {
-  const profileCardRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const profileCardRef = useRef(null)
+  const [isVisible, setIsVisible] = useState(false)
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(profileCardRef.current, {
-        y: 80,
-        opacity: 0,
-        duration: 1.2,
-        ease: "power3.out",
-      });
-      gsap.to(profileCardRef.current, {
-        opacity: 1,
-        filter: "blur(0px)",
-        duration: 1.2,
-        ease: "power3.out",
-      });
-    });
+      const tl = gsap.timeline({ delay: 0.3 })
+      tl.from(profileCardRef.current, {
 
-    return () => ctx.revert();
-  }, []);
+        scale: 0.95,
+        opacity: 0,
+        filter: 'blur(8px)',
+        duration: 1,
+        ease: 'power4.out',
+      })
+    })
+
+    return () => ctx.revert()
+  }, [])
 
   // ── Intersection Observer для анімації при скролі ──
   useEffect(() => {
@@ -46,34 +43,38 @@ const CardTech = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setIsVisible(true);
+            setIsVisible(true)
           }
-        });
+        })
       },
-      { threshold: 0.1 }
-    );
+      { threshold: 0.1 },
+    )
 
     if (profileCardRef.current) {
-      observer.observe(profileCardRef.current);
+      observer.observe(profileCardRef.current)
     }
 
-    return () => observer.disconnect();
-  }, []);
+    return () => observer.disconnect()
+  }, [])
 
   // ── Копіювання email ──
   const handleCopyEmail = () => {
-    const email = "volodimir.fushtei@gmail.com";
-    navigator.clipboard.writeText(email);
+    const email = 'volodimir.fushtei@gmail.com'
+    navigator.clipboard.writeText(email)
     // Тут можна додати toast повідомлення
-  };
+  }
 
   return (
-    <section 
-      className={`${styles.profileCard} ${isVisible ? styles.visible : ""}`} 
+    <section
+      className={`${styles.profileCard} ${isVisible ? styles.visible : ''}`}
       ref={profileCardRef}
-    ><div className={styles.watermark}>
-      FUSHTEI
-    </div>
+    >
+      <div className={styles.profileCardNoise} />
+      <div className={styles.devider} />
+      <div className={styles.overlayHalf} />
+      <div className={styles.watermark}>
+        FUSHTEI
+      </div>
       <div className={styles.profileHeader}>
         <div className={styles.avatarWrap}>
           <img
@@ -132,7 +133,7 @@ const CardTech = () => {
         </button>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default CardTech;
+export default CardTech

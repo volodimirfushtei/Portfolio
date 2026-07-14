@@ -1,7 +1,8 @@
-import { useState, useRef, useEffect, useCallback, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import gsap from 'gsap/dist/gsap'
 import styles from './TechPage.module.css'
 import { useOverlay } from '../../Components/OverlayProvider/OverlayProvider'
+
 const techStack = [
   {
     name: 'React',
@@ -103,7 +104,7 @@ const techStack = [
   },
   {
     name: 'Firebase',
-    description: "Google's suite for mobile and web app development.",
+    description: 'Google\'s suite for mobile and web app development.',
     icon: 'ri-fire-line',
     color: '#FFCA28',
     link: 'https://firebase.google.com/',

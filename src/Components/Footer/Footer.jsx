@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import styles from './Footer.module.css'
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
+import { motion, useScroll, useSpring, useTransform } from 'framer-motion'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -166,6 +166,7 @@ const Footer = () => {
         height: '100%',
       }}
     >
+      <div className={styles.fadeSection}>FOOTER</div>
       <div ref={smokeRef} className={styles.smoke} />
       {/* Градієнтні ефекти */}
       <div className={styles.gradientTop} aria-hidden="true" />

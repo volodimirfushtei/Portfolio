@@ -17,18 +17,18 @@ const HeroMedia = () => {
     const ctx = gsap.context(() => {
       /* ── Entry timeline ── */
       const tl = gsap.timeline({
-    paused:false,
-    defaults:{
-        ease:"power4.out"
-    }
-});
+        paused: false,
+        defaults: {
+          ease: 'power4.out',
+        },
+      })
 
       // Frame clip-path reveal
       tl.fromTo(
         containerRef.current,
-        {  opacity: 0,clipPath: 'inset(0% 0% 100%  0%)'  },
+        { opacity: 0, clipPath: 'inset(0% 0% 100%  0%)' },
         {
-clipPath: 'inset(0% 0% 0% 0%)',
+          clipPath: 'inset(0% 0% 0% 0%)',
           opacity: 1,
           duration: 1.4,
         },
@@ -48,7 +48,7 @@ clipPath: 'inset(0% 0% 0% 0%)',
           '-=1',
         )
         // Overlay fade
-       
+
         // Accent frame
         .fromTo(
           frameRef.current,
@@ -64,7 +64,7 @@ clipPath: 'inset(0% 0% 0% 0%)',
           opacity: 0,
           y: 80,
           rotateX: 12,
-          scale:0.9,
+          scale: 0.9,
           transformOrigin: 'top center',
           filter: 'blur(12px)',
         },
@@ -72,7 +72,7 @@ clipPath: 'inset(0% 0% 0% 0%)',
           opacity: 1,
           y: 0,
           rotateX: 0,
-          scale:1,
+          scale: 1,
           filter: 'blur(0px)',
           stagger: 0.08,
           duration: 1.4,
@@ -93,26 +93,26 @@ clipPath: 'inset(0% 0% 0% 0%)',
         ease: 'sine.inOut',
       })
 
-gsap.to(overlayRef.current, {
-  yPercent: -8,
-  scale: 1.1,
-  rotation: 1,
-  ease: "none",
-  scrollTrigger: {
-    trigger: containerRef.current,
-    start: "top bottom",
-    end: "bottom top",
-    scrub: 2,
-  },
-});
-gsap.to(overlayRef.current, {
-  x: 30,
-  y: -20,
-  duration: 12,
-  repeat: -1,
-  yoyo: true,
-  ease: "sine.inOut",
-});
+      gsap.to(overlayRef.current, {
+        yPercent: -8,
+        scale: 1.1,
+        rotation: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 2,
+        },
+      })
+      gsap.to(overlayRef.current, {
+        x: 30,
+        y: -20,
+        duration: 12,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+      })
 
 
     }, containerRef)
@@ -150,15 +150,16 @@ gsap.to(overlayRef.current, {
   }, [])
 
   return (
-    <div ref={containerRef} className={styles.mediaContainer} data-cursor="hover" data-cursor-type="link" data-cursor-text="Hero">
+    <div ref={containerRef} className={styles.mediaContainer} data-cursor="hover" data-cursor-type="link"
+         data-cursor-text="Hero">
       <img
         ref={imageRef}
         src="/images/preview.webp"
         alt=""
         className={styles.image}
       />
-      <div className={styles.devider}/>
-      <div className={styles.overlayHalf}/>
+      <div className={styles.devider} />
+      <div className={styles.overlayHalf} />
 
       <div ref={overlayRef} className={styles.overlay} />
 
@@ -176,9 +177,8 @@ gsap.to(overlayRef.current, {
           </span>
 
           <h3 className={styles.title} data-reveal>
-            Frontend
-            <br />
-            Motion
+            <span>Frontend</span>
+            <span>Motion</span>
           </h3>
 
           <span className={styles.tags} data-reveal>

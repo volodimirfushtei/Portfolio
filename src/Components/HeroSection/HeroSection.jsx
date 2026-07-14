@@ -1,4 +1,4 @@
-import { useRef, lazy, useEffect } from 'react'
+import { lazy, useLayoutEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText } from 'gsap/SplitText'
@@ -7,6 +7,7 @@ import styles from './HeroSection.module.css'
 
 const HeroMedia = lazy(() => import('../HeroMedia/HeroMedia.jsx'))
 gsap.registerPlugin(ScrollTrigger, SplitText)
+
 
 const HeroSection = () => {
   const sectionRef = useRef(null)
@@ -21,15 +22,26 @@ const HeroSection = () => {
   const scrollIndicatorRef = useRef(null)
   const scrollLineRef = useRef(null)
   const titleRef = useRef(null)
+  const gridBlur1Ref = useRef(null)
+  const gridBlur2Ref = useRef(null)
   const gridBlur3Ref = useRef(null)
-  
-  useEffect(() => {
+
+  useLayoutEffect(() => {
+
+    gsap.utils.toArray('*').forEach(el => {
+      if (el.offsetHeight > 1000) {
+        console.log(el, el.offsetHeight)
+      }
+    })
+
     let split
     const ctx = gsap.context(() => {
-  
+      gsap.set(sectionRef.current, {
+        transformOrigin: 'top center',
+      })
       // Floating blur circles
       gsap.utils
-        .toArray(`.${styles.gridBlur1}, .${styles.gridBlur2}`)
+        .toArray([gridBlur1Ref.current, gridBlur2Ref.current])
         .forEach((el, i) => {
           gsap.to(el, {
             x: i % 2 ? -80 : 80,
@@ -37,77 +49,71 @@ const HeroSection = () => {
             opacity: i % 2 ? 0.6 : 0.2,
             duration: 8,
             yoyo: true,
-            repeat: 1,
-            ease: "none"
-            
+            repeat: -1,
+            ease: 'none',
+
           })
         })
       split = SplitText.create(titleRef.current, {
-        type: 'words',
+        type: 'lines,words',
       })
 
-     gsap.from(split.words,{
-    y:80,
-    opacity:0,
-    stagger:.08,
-    duration:1,
-    ease: "none",
-    scrollTrigger:{
-        trigger:titleRef.current,
-        start:"top 85%",
-        once:true
-    }
-})
-     const tl = gsap.timeline({
-  scrollTrigger: {
-    trigger: sectionRef.current,
-    start: "top top",
-    end: "bottom top",
-    scrub: true,
+      const intro = gsap.timeline()
 
-  },
-});
+      intro.from(split.lines, {
+        yPercent: 120,
+        stagger: .12,
+        duration: 1,
+        ease: 'power4.out',
+      })
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
 
-tl
-  .to(gridBlur3Ref.current, {
-    scale: 1.5,
-    opacity: 1,
-    filter: "blur(120px) brightness(300%)",
-    ease: "none",
-  }, 0)
 
-  .to(sectionRef.current, { 
-    scale: 0.92,
-    // clipPath: "inset(24px round 40px)",
-    borderRadius:'40px',
-    border:'1px solid var(--color-border)',
-    boxShadow:'0 0 200px var(--color-border)',
-    opacity: 0.92,
-    ease: "none",
-  }, 0)
+        },
+      })
 
-  .to(bgTextRef.current, {
-    opacity: 0,
-    y: -120,
-    rotateX: -10,
-    scale: 0.5,
-    ease: "none",
-  }, 0)
+      tl.addLabel('hero')
+        .to(sectionRef.current, {
 
-  .to(bgRef.current, {
-    scale: 1.7,
-    filter: "blur(160px)",
-    ease: "none",
-  }, 0)
 
-  .to(contentRef.current, {
-    y: -80,
-    opacity: 0.85,
+          borderRadius: 40,
+          filter: 'drop-shadow(0 20px 80px rgba(0,0,0,.35))',
+          ease: 'none',
+        }, 'hero')
 
-    ease: "none",
-  }, 0);
+        .to(contentRef.current, {
+          scale: 0.6,
+          yPercent: 100,
+          filter: 'blur(4px)',
+          opacity: .4,
+          ease: 'none',
+        }, 'hero')
 
-  
+        .to(bgRef.current, {
+          scale: 1.15,
+          yPercent: 10,
+          ease: 'none',
+        }, 'hero')
+
+        .to(bgTextRef.current, {
+          yPercent: -15,
+          scale: .75,
+          opacity: 0,
+          ease: 'none',
+        }, 'hero')
+
+        .to(gridBlur3Ref.current, {
+          scale: 2,
+          filter: 'blur(180px)',
+          opacity: 1,
+          ease: 'none',
+        }, 'hero')
+
     }, sectionRef)
 
     return () => {
@@ -130,8 +136,8 @@ tl
         FRONTEND
       </div>
       {/* ── Grid елементи ── */}
-      <div className={styles.gridBlur1} aria-hidden="true" />
-      <div className={styles.gridBlur2} aria-hidden="true" />
+      <div className={styles.gridBlur1} aria-hidden="true" ref={gridBlur1Ref} />
+      <div className={styles.gridBlur2} aria-hidden="true" ref={gridBlur2Ref} />
       <div className={styles.gridBlur3} aria-hidden="true" ref={gridBlur3Ref} />
       {/* ── Corner index badge ── */}
       <div ref={cornerRef} className={styles.cornerBadge} aria-hidden="true">

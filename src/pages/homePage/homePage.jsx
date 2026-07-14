@@ -1,12 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
- 
-  lazy,
-  useCallback,
-  useMemo,
-} from 'react'
+import React, { lazy, useEffect, useMemo, useRef, useState } from 'react'
 import styles from './homePage.module.css'
 import ControllerSkills from '../../Components/ControllerSkills/ControllerSkills.jsx'
 import Footer from '../../Components/Footer/Footer.jsx'
@@ -19,17 +11,18 @@ import StickyZoomSection from '../../Components/StickyZoomSection/StickyZoomSect
 import ExperienceTable from '../../Components/ExperienceTable/ExperienceTable.jsx'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useOverlay } from '../../Components/OverlayProvider/OverlayProvider.jsx';
+import { useOverlay } from '../../Components/OverlayProvider/OverlayProvider.jsx'
 import SoftSkills from '../../Components/SoftSkills/SoftSkills.jsx'
+
 const Model = lazy(() => import('../../Components/Model/Model.jsx'))
 
 gsap.registerPlugin(ScrollTrigger)
 
 const HomePage = () => {
-  const { visible } = useOverlay();
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
-const sectionRef = useRef(null);
+  const { visible } = useOverlay()
+  const [scrollProgress, setScrollProgress] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
+  const sectionRef = useRef(null)
 
   // Перевірка на мобільний пристрій
   useEffect(() => {
@@ -58,28 +51,27 @@ const sectionRef = useRef(null);
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
-useEffect(() => {
-  if (visible) return;
+  useEffect(() => {
+    if (visible) return
 
-  const sections = gsap.utils.toArray(`.${styles.fadeSection}`);
+    const sections = gsap.utils.toArray(`.${styles.fadeSection}`)
 
-  sections.forEach((section) => {
-    gsap.to(section, {
-      "--fade": "15%",
-      ease: "power2.out",
-  
-      scrollTrigger: {
-        trigger: section,
-        start: "top bottom",
-        end: "top center",
-        scrub: true,
-        pin: true
-      },
-    });
-  });
+    sections.forEach((section) => {
+      gsap.to(section, {
+        '--fade': '15%',
+        ease: 'power2.out',
 
-  ScrollTrigger.refresh();
-}, [visible]);
+        scrollTrigger: {
+          trigger: section,
+          start: 'top bottom',
+          end: 'top center',
+          scrub: true,
+        },
+      })
+    })
+
+    ScrollTrigger.refresh()
+  }, [visible])
   // Мемоізація skills
   const skills = useMemo(
     () => [
@@ -186,17 +178,17 @@ useEffect(() => {
   return (
     <div className={styles.container} ref={sectionRef}>
       <section className={styles.heroSectionWrapper} id="hero">
-        <HeroSection   />
+        <HeroSection />
       </section>
-      <section 
+      <section
         id="expertise"
         className={`${styles.section} ${styles.fadeSection}`}
       >
-        <Expertise    />
+        <Expertise />
       </section>
       <div className={`${styles.section} ${styles.fadeSection}`}>
-            <ExperienceTable />
-          </div>
+        <ExperienceTable />
+      </div>
       <section
         id="skills"
         className={`${styles.section} ${styles.fadeSection}`}
@@ -204,27 +196,27 @@ useEffect(() => {
         <ControllerSkills items={skills} />
       </section>
 
-    <div className={`${styles.section} ${styles.fadeSection}`}>
-      <SoftSkills/>
-    </div>
-        <div className={`${styles.section} ${styles.fadeSection}`}>
-          <Carusel />
-        </div>
+      <div className={`${styles.section} ${styles.fadeSection}`}>
+        <SoftSkills />
+      </div>
+      <div className={`${styles.section} ${styles.fadeSection}`}>
+        <Carusel />
+      </div>
 
-        <section id="cta" className={`${styles.section} ${styles.fadeSection}`}>
-          <CtaSection />
-        </section>
+      <section id="cta" className={`${styles.section} ${styles.fadeSection}`}>
+        <CtaSection />
+      </section>
 
-        <section
-          id="certificate"
-          className={`${styles.section} ${styles.fadeSection}`}
-        >
-          <Sertificate />
-        </section>
+      <section
+        id="certificate"
+        className={`${styles.section} ${styles.fadeSection}`}
+      >
+        <Sertificate />
+      </section>
 
-        <section className={`${styles.stickySection} ${styles.fadeSection}`}>
-          <StickyZoomSection />
-        
+      <section className={`${styles.stickySection} ${styles.fadeSection}`}>
+        <StickyZoomSection />
+
       </section>
 
       <Footer />

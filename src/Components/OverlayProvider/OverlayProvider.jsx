@@ -1,23 +1,24 @@
-import React, { createContext, useContext, useState } from "react";
-import Overlay from "../Overlay/Overlay.jsx";
+import React, { createContext, useContext, useState } from 'react'
+import Overlay from '../Overlay/Overlay.jsx'
 
-const OverlayContext = createContext();
+const OverlayContext = createContext()
 
-export const useOverlay = () => useContext(OverlayContext);
+export const useOverlay = () => useContext(OverlayContext)
 
 export const OverlayProvider = ({ children }) => {
-  const [visible, setVisible] = useState(true);
-  const [finished, setFinished] = useState(false);
-
+  const [visible, setVisible] = useState(true)
+  const [finished, setFinished] = useState(false)
+  const [heroFinished, setHeroFinished] = useState(false)
   const show = () => {
-    setFinished(false);
-    setVisible(true);
-  };
+    setFinished(false)
+    setVisible(true)
+    setHeroFinished(true)
+  }
 
   const hide = () => {
-    setVisible(false);
-    setFinished(true);
-  };
+    setVisible(false)
+    setFinished(true)
+  }
 
   return (
     <OverlayContext.Provider
@@ -31,5 +32,5 @@ export const OverlayProvider = ({ children }) => {
       {visible && <Overlay />}
       {children}
     </OverlayContext.Provider>
-  );
-};
+  )
+}
