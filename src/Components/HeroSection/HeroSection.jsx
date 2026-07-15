@@ -28,11 +28,6 @@ const HeroSection = () => {
 
   useLayoutEffect(() => {
 
-    gsap.utils.toArray('*').forEach(el => {
-      if (el.offsetHeight > 1000) {
-        console.log(el, el.offsetHeight)
-      }
-    })
 
     let split
     const ctx = gsap.context(() => {
@@ -55,12 +50,12 @@ const HeroSection = () => {
           })
         })
       split = SplitText.create(titleRef.current, {
-        type: 'lines,words',
+        type: 'words',
       })
 
       const intro = gsap.timeline()
 
-      intro.from(split.lines, {
+      intro.from(split.words, {
         yPercent: 120,
         stagger: .12,
         duration: 1,

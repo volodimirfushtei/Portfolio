@@ -28,41 +28,31 @@
     border: 1px solid rgba(255, 255, 255, .08);
     box-shadow: 0 80px 180px rgba(0, 0, 0, .45);
     isolation: isolate;
-
 }
 
 .overlayHalf {
     position: absolute;
     left: 0;
     top: 0;
-
     width: 50%;
     height: 100%;
-
     backdrop-filter: blur(4px);
-
     background: linear-gradient(
             90deg,
-            rgba(248, 79, 105, 0.28), transparent
+            rgba(248, 79, 105, 0.08), transparent
     );
     z-index: 0;
-
 }
 
 /* IMAGE */
 .image {
     position: absolute;
     inset: 4%;
-
     width: 90%;
     height: 100%;
-
     object-fit: cover;
-
     transform: scale(1.15);
-
     filter: contrast(1.05) brightness(.82) saturate(.95);
-
     will-change: transform;
 }
 
@@ -333,7 +323,7 @@
     opacity: .65;
 
     margin-top: 14px;
-    
+
     display: block;
 
 }

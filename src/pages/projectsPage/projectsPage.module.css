@@ -1,547 +1,554 @@
 /* projectsPage.module.css — Awwwards editorial premium sync */
 
 .page {
-  position: relative;
-  width: 100%;
-  z-index: 10;
-  min-height: 100vh;
-  background: var(--color-surface);
-  color: var(--color-text);
-  padding: clamp(4rem, 15vw, 8rem) 0;
-  overflow: hidden;
-  isolation: isolate;
+    position: relative;
+    width: 100%;
+    z-index: 10;
+    min-height: 100vh;
+    background: var(--color-surface);
+    color: var(--color-text);
+    padding: clamp(4rem, 15vw, 8rem) 0;
+    overflow: hidden;
+    isolation: isolate;
 }
 
 /* ── Noise layer ── */
 .noise {
-  position: absolute;
-  inset: -60%;
-  width: 220%;
-  height: 220%;
-  z-index: 2;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-  background-size: 220px 220px;
-  opacity: 0.025;
+    position: absolute;
+    inset: -60%;
+    width: 220%;
+    height: 220%;
+    z-index: 2;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    background-size: 220px 220px;
+    opacity: 0.025;
 }
 
 /* ── Scanlines layer ── */
 .scanlines {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background-image: repeating-linear-gradient(
-    0deg,
-    transparent 0px,
-    transparent 2px,
-    var(--color-border) 2px,
-    var(--color-border) 3px
-  );
-  background-size: 100% 6px;
-  opacity: 0.12;
-  animation: scanlineScroll 24s linear infinite;
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background-image: repeating-linear-gradient(
+            0deg,
+            transparent 0px,
+            transparent 2px,
+            var(--color-border) 2px,
+            var(--color-border) 3px
+    );
+    background-size: 100% 6px;
+    opacity: 0.12;
+    animation: scanlineScroll 24s linear infinite;
 }
 
 @keyframes scanlineScroll {
-  from {
-    background-position: 0 0;
-  }
-  to {
-    background-position: 0 100%;
-  }
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 0 100%;
+    }
 }
 
 .container {
-  position: relative;
-  z-index: 5;
-  width: 100%;
-  max-width: 1600px;
-  margin: 0 auto;
-  padding: 0 clamp(1.5rem, 4vw, 5rem);
+    position: relative;
+    z-index: 5;
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 clamp(1.5rem, 4vw, 5rem);
 }
 
 /* ── Header ── */
 .header {
-  margin-bottom: clamp(4rem, 8vw, 6rem);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+    margin-bottom: clamp(4rem, 8vw, 6rem);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  margin-bottom: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-bottom: 2.5rem;
 }
 
 .eyebrowLine {
-  display: block;
-  width: 36px;
-  height: 1px;
-  background: var(--color-accent);
+    display: block;
+    width: 36px;
+    height: 1px;
+    background: var(--color-accent);
 }
 
 .eyebrowText {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--color-secondary);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--color-secondary);
 }
 
 .heading {
-  font-family: var(--font-display);
-  font-size: clamp(3.5rem, 8vw, 6.5rem);
-  font-weight: 400;
-  line-height: 0.85;
-  letter-spacing: -0.01em;
-  color: var(--color-text);
-  margin: 0 0 1.5rem;
-  text-transform: uppercase;
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 8vw, 6.5rem);
+    font-weight: 400;
+    line-height: 0.85;
+    letter-spacing: -0.01em;
+    color: var(--color-text);
+    margin: 0 0 1.5rem;
+    text-transform: uppercase;
 }
 
 .headingAccent {
-  display: block;
-  background: linear-gradient(
-    120deg,
-    var(--color-text) 0%,
-    var(--color-secondary) 50%,
-    var(--color-text) 100%
-  );
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: shimmer 6s linear infinite;
+    display: block;
+    background: linear-gradient(
+            120deg,
+            var(--color-text) 0%,
+            var(--color-secondary) 50%,
+            var(--color-text) 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shimmer 6s linear infinite;
 }
 
 @keyframes shimmer {
-  0% {
-    background-position: -200% center;
-  }
-  100% {
-    background-position: 200% center;
-  }
+    0% {
+        background-position: -200% center;
+    }
+    100% {
+        background-position: 200% center;
+    }
 }
 
 .headingLine {
-  display: block;
-  overflow: hidden;
-  line-height: 1;
+    display: block;
+    overflow: hidden;
+    line-height: 1;
 }
 
 .heading span {
-  display: inline-block;
+    display: inline-block;
 }
 
 .subheading {
-  font-family: var(--font-mono);
-  font-size: clamp(0.75rem, 1.5vw, 0.85rem);
-  color: var(--color-secondary);
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  line-height: 1.8;
-  margin: 1.5rem 0 0;
-  max-width: 500px;
+    font-family: var(--font-mono);
+    font-size: clamp(0.75rem, 1.5vw, 0.85rem);
+    color: var(--color-secondary);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    line-height: 1.8;
+    margin: 1.5rem 0 0;
+    max-width: 500px;
 }
 
 /* ── Controls ── */
 .controls {
-  display: flex;
-  gap: 2rem;
-  margin-bottom: 4rem;
-  padding-bottom: 2rem;
-  border-bottom: 1px solid var(--color-border);
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 4rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--color-border);
 }
 
 .field {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  cursor: pointer;
-  position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    position: relative;
 }
 
 .field i {
-  font-size: 1rem;
-  color: var(--color-accent);
+    font-size: 1rem;
+    color: var(--color-accent);
 }
 
 .field input,
 .field select {
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid transparent;
-  outline: none;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--color-text);
-  padding: 0.5rem 0;
-  transition: border-color 0.3s ease;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid transparent;
+    outline: none;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-text);
+    padding: 0.5rem 0;
+    transition: border-color 0.3s ease;
 }
 
 .field input:focus,
 .field select:focus {
-  border-color: var(--color-accent);
+    border-color: var(--color-accent);
 }
 
 .field select {
-  appearance: none;
-  padding-right: 2rem;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='var(--color-secondary)' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right center;
+    appearance: none;
+    padding-right: 2rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='var(--color-secondary)' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right center;
 }
 
 /* ── Grid ── */
 .grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: clamp(2rem, 4vw, 4rem);
-  margin-bottom: 6rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(2rem, 4vw, 4rem);
+    margin-bottom: 6rem;
 }
 
 /* ── Card (Sertificate sync) ── */
 .cardContainer {
-  perspective: 2000px;
+    perspective: 2000px;
 }
 
 .card {
-  position: relative;
-  border: 4px solid var(--color-border);
-  background: var(--color-surface);
-  box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.5);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  transition: border-color 0.4s ease;
-  min-height: 520px;
-  cursor: pointer;
-  border-radius: 18px;
+    position: relative;
+    border: 4px solid var(--color-border);
+    background: var(--color-surface);
+    box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.4s ease;
+    min-height: 520px;
+    cursor: pointer;
+    border-radius: 18px;
 }
 
 .card:hover {
-  box-shadow: 0 30px 80px -10px rgba(0, 0, 0, 0.7);
-  border-color: var(--color-accent);
+    box-shadow: 0 30px 80px -10px rgba(0, 0, 0, 0.7);
+    border-color: var(--color-accent);
 }
 
 /* Watermark */
 .cardWatermark {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(-15deg);
-  font-family: var(--font-display);
-  font-size: 10rem;
-  opacity: 0.03;
-  color: var(--color-text);
-  pointer-events: none;
-  z-index: 0;
-  white-space: nowrap;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-15deg);
+    font-family: var(--font-display);
+    font-size: 10rem;
+    opacity: 0.03;
+    color: var(--color-text);
+    pointer-events: none;
+    z-index: 0;
+    white-space: nowrap;
 }
 
 .imageWrap {
-  position: relative;
-  aspect-ratio: 16/10;
-  overflow: hidden;
-  border-bottom: 1px solid var(--color-border);
-  z-index: 1;
+    position: relative;
+    aspect-ratio: 16/10;
+    overflow: hidden;
+    border-bottom: 1px solid var(--color-border);
+    z-index: 1;
 }
 
 .image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: grayscale(0.4) brightness(0.8);
-  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(0.4) brightness(0.8);
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .card:hover .image {
-  transform: scale(1.05);
-  filter: grayscale(0) brightness(1);
+    transform: scale(1.05);
+    filter: grayscale(0) brightness(1);
 }
 
 .cardNum {
-  position: absolute;
-  top: 1.5rem;
-  left: 1.5rem;
-  font-family: var(--font-display);
-  font-size: 1.25rem;
-  color: var(--color-accent);
-  z-index: 10;
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    color: var(--color-accent);
+    z-index: 10;
 }
 
 .cardBody {
-  padding: 3rem 2rem;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  position: relative;
-  z-index: 1;
+    padding: 3rem 2rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    position: relative;
+    z-index: 1;
 }
 
 .cardTitle {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 3vw, 2.5rem);
-  line-height: 1;
-  color: var(--color-text);
-  text-transform: uppercase;
-  margin: 0 0 1rem;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3vw, 2.5rem);
+    line-height: 1;
+    color: var(--color-text);
+    text-transform: uppercase;
+    margin: 0 0 1rem;
 }
 
 .cardDesc {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  line-height: 1.8;
-  color: var(--color-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin: 0 0 2rem;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.8;
+    color: var(--color-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 0 0 2rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.8rem;
-  margin-top: auto;
-  margin-bottom: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: auto;
+    margin-bottom: 2rem;
 }
 
 .tag {
-  font-family: var(--font-mono);
-  font-size: 0.6rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-secondary);
-  border: 1px solid var(--color-border);
-  padding: 0.4rem 0.8rem;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-secondary);
+    border: 1px solid var(--color-border);
+    padding: 0.4rem 0.8rem;
 }
 
 /* ── View Link (wipe transition) ── */
 .cardLink {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  width: 100%;
-  padding: 1.25rem;
-  background: transparent;
-  color: var(--color-text);
-  border: none;
-  border-top: 1px solid var(--color-border);
-  cursor: pointer;
-  text-decoration: none;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  position: relative;
-  overflow: hidden;
-  transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+    padding: 1.25rem;
+    background: transparent;
+    color: var(--color-text);
+    border: none;
+    border-top: 1px solid var(--color-border);
+    cursor: pointer;
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .cardLink::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--color-accent);
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  z-index: 0;
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 0;
 }
 
 .cardLink:hover::before {
-  transform: scaleX(1);
-  transform-origin: left;
+    transform: scaleX(1);
+    transform-origin: left;
 }
 
 .cardLink:hover {
-  color: var(--bg-color);
+    color: var(--bg-color);
 }
 
 .cardLink span,
 .cardLink i {
-  position: relative;
-  z-index: 1;
+    position: relative;
+    z-index: 1;
 }
 
 /* ── Pagination ── */
 .pagination {
-  display: flex;
-  justify-content: center;
-  gap: 1.5rem;
-  margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 3rem;
 }
 
 .pageBtn {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  background: transparent;
-  border: none;
-  color: var(--color-secondary);
-  cursor: pointer;
-  padding: 0.8rem 1.2rem;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative;
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    background: transparent;
+    border: none;
+    color: var(--color-secondary);
+    cursor: pointer;
+    padding: 0.8rem 1.2rem;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
 }
 
 .pageBtn::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 1.2rem;
-  right: 1.2rem;
-  height: 1px;
-  background: var(--color-accent);
-  transform: scaleX(0);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 1.2rem;
+    right: 1.2rem;
+    height: 1px;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .pageBtn:hover {
-  color: var(--color-text);
-  transform: translateY(-4px);
+    color: var(--color-text);
+    transform: translateY(-4px);
 }
 
 .pageBtn:hover::after {
-  transform: scaleX(1);
+    transform: scaleX(1);
 }
 
 .active {
-  color: var(--color-accent) !important;
+    color: var(--color-accent) !important;
 }
 
 .active::after {
-  transform: scaleX(1);
+    transform: scaleX(1);
 }
 
 /* ── Reset Button ── */
 .resetBtn {
-  margin-top: 2rem;
-  background: transparent;
-  border: 1px solid var(--color-border);
-  padding: 0.8rem 1.6rem;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--color-text);
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    margin-top: 2rem;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    padding: 0.8rem 1.6rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-text);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .resetBtn::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--color-accent);
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .resetBtn:hover::before {
-  transform: scaleX(1);
-  transform-origin: left;
+    transform: scaleX(1);
+    transform-origin: left;
 }
 
 .resetBtn:hover {
-  color: var(--bg-color);
-  border-color: var(--color-accent);
-  transform: translateY(-2px);
+    color: var(--bg-color);
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
 }
 
 .resetBtn span {
-  position: relative;
-  z-index: 1;
+    position: relative;
+    z-index: 1;
 }
 
 /* ── Loading ── */
 .loadingWrap {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background: var(--color-background);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: var(--color-background);
 }
 
 .loadingInner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
 }
 
 .spinner {
-  font-size: 3rem;
-  color: var(--color-accent);
-  animation: spin 1s linear infinite;
+    width: 40px;
+    height: 40px;
+
+    color: var(--color-accent);
+    animation: spin 1s linear infinite;
 }
 
 .loadingText {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.3em;
-  color: var(--color-secondary);
-  animation: pulse 2s ease-in-out infinite;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--color-secondary);
+    animation: pulse 2s ease-in-out infinite;
 }
 
+
 @keyframes pulse {
-  0%,
-  100% {
-    opacity: 0.5;
-  }
-  50% {
-    opacity: 1;
-  }
+    0%,
+    100% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 1;
+    }
 }
 
 @keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* ── Responsive ── */
 @media (max-width: 1200px) {
-  .grid {
-    grid-template-columns: 1fr;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-  }
+    .grid {
+        grid-template-columns: 1fr;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 
 @media (max-width: 768px) {
-  .header {
-    align-items: center;
-    text-align: center;
-  }
-  .subheading {
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .controls {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-  .field {
-    width: 100%;
-  }
-  .field input,
-  .field select {
-    width: 100%;
-  }
+    .header {
+        align-items: center;
+        text-align: center;
+    }
+
+    .subheading {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .controls {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .field {
+        width: 100%;
+    }
+
+    .field input,
+    .field select {
+        width: 100%;
+    }
 }

@@ -1,11 +1,9 @@
 import styles from './SoftSkills.module.css'
-import { useRef, useLayoutEffect } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import SplitText from 'gsap/SplitText'
 
-import { MoveUpRight, MessageCircle, Users, Lightbulb } from 'lucide-react'
-import { useGSAP } from '@gsap/react'
 
 gsap.registerPlugin(ScrollTrigger)
 gsap.registerPlugin(SplitText)
@@ -42,7 +40,6 @@ export default function SoftSkills() {
     let split
     const ctx = gsap.context(() => {
       const cards = gsap.utils.toArray(`.${styles.card}`)
-
 
 
       cards.forEach((card, i) => {
@@ -82,19 +79,22 @@ export default function SoftSkills() {
       <div className={styles.wrapper}>
         <div className={styles.content}>
           <div className={styles.header}>
-            <span className={styles.eyebrow}>Capabilities</span>
+            <div className={styles.eyebrow}>
+              <span className={styles.eyebrowLine} />
+              <h3 className={styles.eyebrowText}>Capabilities</h3>
+            </div>
             <h2 className={styles.title} ref={titleRef}>
                         <span className={styles.titleLine}>
-                          <span  className={styles.titleAccent}>
+                          <span className={styles.titleAccent}>
                             Personal
                           </span>
                         </span>
-                        <span className={styles.titleLine}>
-                          <span   className={styles.titlePlain}>
+              <span className={styles.titleLine}>
+                          <span className={styles.titlePlain}>
                             Skills
                           </span>
                         </span>
-                      </h2>
+            </h2>
           </div>
 
           <div className={styles.grid}>
@@ -143,7 +143,9 @@ export default function SoftSkills() {
 
                   <div className={styles.footer}>
                     <span className={styles.explore}>Explore Experience</span>
-                    <MoveUpRight />
+                    <svg className={styles.icon} width={24} height={24}>
+                      <use href="/sprite.svg#icon-move-up-right" />
+                    </svg>
                   </div>
                 </div>
               </div>

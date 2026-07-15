@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { gsap } from 'gsap'
 import styles from './Header.module.css'
@@ -6,8 +6,7 @@ import ToggleTheme from '../ToggleTheme/ToggleTheme'
 import FullscreenButton from '../FullScreenButton/FullScreenButton'
 import useScrollDetection from '../../hooks/useScrollDetection'
 import Logo from '../Logo/Logo'
-import { NAV_ITEMS } from '../../constants/navigations'
-import { SOCIAL_LINKS } from '../../constants/navigations/'
+import { NAV_ITEMS, socialLinks } from '../../constants/navigations'
 
 const Header = () => {
   const headerRef = useRef(null)
@@ -134,6 +133,7 @@ const Header = () => {
 
       <div className={`${styles.mobileMenu} ${menuOpen ? styles.open : ''}`}>
         <div className={styles.mobileMenuInner}>
+          <h4 className={styles.mobileMenuTitle}>Menu</h4>
           <nav className={styles.mobileNav}>
             {NAV_ITEMS.map((item, index) => (
               <NavLink
@@ -153,27 +153,26 @@ const Header = () => {
 
           {/* Mobile Footer */}
           <div className={styles.mobileFooter}>
-            <p className={styles.mobileFooterText}>
-              Volodimir Fushtei © {new Date().getFullYear()}
-            </p>
+
             <div className={styles.mobileSocial}>
-              {SOCIAL_LINKS.map((link) => (
+              {socialLinks.map((social, index) => (
                 <a
-                  key={link.label}
-                  href={link.url}
-                  className={styles.mobileSocialLink}
+                  key={index}
+                  href={social.url}
+                  aria-label={social.label}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={link.label}
+                  className={styles.mobileSocialLink}
                 >
-                  <img
-                    src={link.icon}
-                    alt={link.label}
-                    className={styles.mobileSocialIcon}
-                  />
+                  <svg className={styles.icon} width={24} height={24}>
+                    <use href={`/sprite.svg#${social.icon}`} />
+                  </svg>
                 </a>
               ))}
             </div>
+            <p className={styles.mobileFooterText}>
+              Volodymyr Fushtei © {new Date().getFullYear()}
+            </p>
           </div>
         </div>
       </div>

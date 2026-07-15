@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import styles from './Sertificate.module.css'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -140,6 +140,7 @@ const Certificate = () => {
     <section className={styles.section} ref={sectionRef}>
       {/* ── Visual Overlays ── */}
       <div className={styles.noise} aria-hidden="true" />
+
       <div ref={bgRef} className={styles.bgWord}>
         CERTIFIED
       </div>
@@ -192,6 +193,7 @@ const Certificate = () => {
             onMouseLeave={handleMouseLeave}
             ref={cardRef}
           >
+            <div className={styles.overlayHalf} aria-hidden="true" />
             <div className={styles.shine}>
               <div ref={shineRef} className={styles.shineInner} />
             </div>

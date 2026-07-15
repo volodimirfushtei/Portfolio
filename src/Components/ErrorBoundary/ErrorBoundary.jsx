@@ -1,12 +1,5 @@
 import { Component, createRef } from 'react'
-import {
-  AlertTriangle,
-  RefreshCw,
-  ChevronDown,
-  ChevronUp,
-  Mail,
-  Shield,
-} from 'lucide-react'
+
 import gsap from 'gsap'
 import s from './ErrorBoundary.module.css'
 
@@ -112,7 +105,7 @@ class ErrorBoundary extends Component {
     const { error, errorInfo, showDetails, isRestarting } = this.state
 
     return (
-      
+
       <div className={s.container}>
         {/* Visual Overlays */}
         <div className={s.noise} aria-hidden="true" />
@@ -125,8 +118,13 @@ class ErrorBoundary extends Component {
 
             <div className={s.iconRow}>
               <div className={s.iconWrap}>
-                <Shield className={s.shieldIcon} aria-hidden="true" />
-                <AlertTriangle className={s.alertIcon} aria-hidden="true" />
+                <svg className={s.shieldIcon} width="12" height="12">
+                  <use href="/sprite.svg#icon-shield" />
+                </svg>
+                <svg className={s.alertIcon} width="12" height="12">
+                  <use href="/sprite.svg#icon-alert-triangle" />
+                </svg>
+
               </div>
             </div>
 
@@ -158,10 +156,9 @@ class ErrorBoundary extends Component {
               disabled={isRestarting}
               className={`${s.btn} ${s.btnPrimary}`}
             >
-              <RefreshCw
-                size={14}
-                className={`${s.btnIcon} ${isRestarting ? s.spinning : ''}`}
-              />
+              <svg width="12" height="12" className={`${s.btnIcon} ${isRestarting ? s.spinning : ''}`}>
+                <use href="/sprite.svg#icon-refresh" />
+              </svg>
               <span>{isRestarting ? 'Restoring...' : 'Re-Initialize'}</span>
             </button>
 
@@ -172,12 +169,18 @@ class ErrorBoundary extends Component {
               >
                 {showDetails ? (
                   <>
-                    <ChevronUp size={14} className={s.btnIcon} />{' '}
+                    <svg className={s.btnIcon} width="12" height="12">
+                      <use href="/sprite.svg#icon-chevron-up" />
+                    </svg>
+                    {' '}
                     <span>Collapse</span>
                   </>
                 ) : (
                   <>
-                    <ChevronDown size={14} className={s.btnIcon} />{' '}
+                    <svg className={s.btnIcon} width="12" height="12">
+                      <use href="/sprite.svg#icon-chevron-down" />
+                    </svg>
+                    {' '}
                     <span>Inspect</span>
                   </>
                 )}
@@ -193,7 +196,9 @@ class ErrorBoundary extends Component {
           )}
 
           <div className={s.support}>
-            <Mail size={16} className={s.mailIcon} aria-hidden="true" />
+            <svg className={s.btnIcon} width="12" height="12">
+              <use href="/sprite.svg#icon-mail" />
+            </svg>
             <div>
               <p className={s.supportText}>Direct Support Channel</p>
               <a href="mailto:fuschteyy@gmail.com" className={s.supportEmail}>
@@ -212,7 +217,10 @@ class ErrorBoundary extends Component {
 
         {isRestarting && (
           <div className={s.overlay}>
-            <RefreshCw size={48} className={s.spinning} />
+            <svg className={s.spinning} width="12" height="12">
+              <use href="/sprite.svg#icon-refresh" />
+            </svg>
+
             <p className={s.overlayText}>Synchronizing Application State...</p>
           </div>
         )}

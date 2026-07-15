@@ -1,89 +1,100 @@
-import { useEffect, useState, useRef } from "react";
-import { Sun, Moon, SunMoon, Check } from "lucide-react";
-import styles from "./ToggleTheme.module.css";
-import { gsap } from "gsap";
+import { useEffect, useRef, useState } from 'react'
+import styles from './ToggleTheme.module.css'
+import { gsap } from 'gsap'
 
 /* ── Theme definitions ── */
 const THEMES = [
-  "dark-theme",
-  "light-theme",
-  "auto-theme",
-  "neutral-theme",
-  "blue-theme",
-  "prelight-theme",
-];
+  'dark-theme',
+  'light-theme',
+  'auto-theme',
+  'neutral-theme',
+  'blue-theme',
+  'prelight-theme',
+]
 
 /* Perceptually rich oklch swatches per theme */
 const THEME_SWATCHES = {
-  "dark-theme":    "linear-gradient(145deg, oklch(13% 0.022 265) 0%, oklch(22% 0.075 278) 100%)",
-  "light-theme":   "linear-gradient(145deg, oklch(97% 0.004 90) 0%, oklch(90% 0.01 78) 100%)",
-  "auto-theme":    "linear-gradient(135deg, oklch(13% 0.022 265) 50%, oklch(97% 0.004 90) 50%)",
- 
-  "neutral-theme": "linear-gradient(145deg, oklch(10% 0.008 264) 0%, oklch(16% 0.01 264) 100%)",
-  "blue-theme":    "linear-gradient(145deg, oklch(14% 0.04 260) 0%, oklch(22% 0.055 236) 100%)",
-  
-  "prelight-theme":"linear-gradient(145deg, oklch(100% 0 0) 0%, oklch(54% 0.24 278) 100%)",
-};
+  'dark-theme': 'linear-gradient(145deg, oklch(13% 0.022 265) 0%, oklch(22% 0.075 278) 100%)',
+  'light-theme': 'linear-gradient(145deg, oklch(97% 0.004 90) 0%, oklch(90% 0.01 78) 100%)',
+  'auto-theme': 'linear-gradient(135deg, oklch(13% 0.022 265) 50%, oklch(97% 0.004 90) 50%)',
+
+  'neutral-theme': 'linear-gradient(145deg, oklch(10% 0.008 264) 0%, oklch(16% 0.01 264) 100%)',
+  'blue-theme': 'linear-gradient(145deg, oklch(14% 0.04 260) 0%, oklch(22% 0.055 236) 100%)',
+
+  'prelight-theme': 'linear-gradient(145deg, oklch(100% 0 0) 0%, oklch(54% 0.24 278) 100%)',
+}
 
 const THEME_ICONS = {
-  "dark-theme":    <Moon    size={14} strokeWidth={1.5} />,
-  "light-theme":   <Sun     size={14} strokeWidth={1.5} />,
-  "auto-theme":    <SunMoon size={14} strokeWidth={1.5} />,
-  "neutral-theme": <Moon    size={14} strokeWidth={1.5} />,
-  "blue-theme":    <Moon    size={14} strokeWidth={1.5} />,
-  "prelight-theme":<Sun     size={14} strokeWidth={1.5} />,
-};
+  'dark-theme': <svg className={styles.icon} width={12} height={12}>
+    <use href="/sprite.svg#icon-moon" />
+  </svg>,
+  'light-theme': <svg className={styles.icon} width={12} height={12}>
+    <use href="/sprite.svg#icon-sun" />
+  </svg>,
+  'auto-theme': <svg className={styles.icon} width={12} height={12}>
+    <use href="/sprite.svg#icon-sun-moon" />
+  </svg>,
+  'neutral-theme': <svg className={styles.icon} width={12} height={12}>
+    <use href="/sprite.svg#icon-moon" />
+  </svg>,
+  'blue-theme': <svg className={styles.icon} width={12} height={12}>
+    <use href="/sprite.svg#icon-moon" />
+  </svg>,
+  'prelight-theme': <svg className={styles.icon} width={12} height={12}>
+    <use href="/sprite.svg#icon-sun" />
+  </svg>,
+}
 
 const THEME_LABELS = {
-  "dark-theme":    "Dark",
-  "light-theme":   "Light",
-  "auto-theme":    "Auto",
-  "neutral-theme": "Neutral",
-  "blue-theme":    "Ocean",
-  "prelight-theme":"Indigo",
-};
+  'dark-theme': 'Dark',
+  'light-theme': 'Light',
+  'auto-theme': 'Auto',
+  'neutral-theme': 'Neutral',
+  'blue-theme': 'Ocean',
+  'prelight-theme': 'Indigo',
+}
 
 /* ── Helpers ── */
 const getSystemTheme = () =>
-  window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark-theme"
-    : "light-theme";
+  window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark-theme'
+    : 'light-theme'
 
 /* ════════════════════════════════════════════════ */
 const ToggleTheme = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [shouldRender, setShouldRender] = useState(false);
-  const panelRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false)
+  const [shouldRender, setShouldRender] = useState(false)
+  const panelRef = useRef(null)
 
   const [theme, setTheme] = useState(() => {
-    const saved = localStorage.getItem("theme");
-    if (saved) return saved;
-    const system = getSystemTheme();
-    localStorage.setItem("theme", system);
-    return system;
-  });
+    const saved = localStorage.getItem('theme')
+    if (saved) return saved
+    const system = getSystemTheme()
+    localStorage.setItem('theme', system)
+    return system
+  })
 
   /* ── Apply theme to <html> ── */
   useEffect(() => {
-    const root = document.documentElement;
-    const applied = theme === "auto-theme" ? getSystemTheme() : theme;
-    THEMES.forEach((t) => root.classList.remove(t));
-    root.classList.add(applied);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
+    const root = document.documentElement
+    const applied = theme === 'auto-theme' ? getSystemTheme() : theme
+    THEMES.forEach((t) => root.classList.remove(t))
+    root.classList.add(applied)
+    localStorage.setItem('theme', theme)
+  }, [theme])
 
   /* ── Auto theme media listener ── */
   useEffect(() => {
-    if (theme !== "auto-theme") return;
-    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    if (theme !== 'auto-theme') return
+    const media = window.matchMedia('(prefers-color-scheme: dark)')
     const handler = () => {
-      const root = document.documentElement;
-      THEMES.forEach((t) => root.classList.remove(t));
-      root.classList.add(media.matches ? "dark-theme" : "light-theme");
-    };
-    media.addEventListener("change", handler);
-    return () => media.removeEventListener("change", handler);
-  }, [theme]);
+      const root = document.documentElement
+      THEMES.forEach((t) => root.classList.remove(t))
+      root.classList.add(media.matches ? 'dark-theme' : 'light-theme')
+    }
+    media.addEventListener('change', handler)
+    return () => media.removeEventListener('change', handler)
+  }, [theme])
 
   /* ── Panel GSAP animations ── */
   useEffect(() => {
@@ -91,39 +102,45 @@ const ToggleTheme = () => {
       gsap.fromTo(
         panelRef.current,
         { y: -12, opacity: 0, scale: 0.97 },
-        { y: 0, opacity: 1, scale: 1, duration: 0.35, ease: "power3.out" }
-      );
+        { y: 0, opacity: 1, scale: 1, duration: 0.35, ease: 'power3.out' },
+      )
     } else if (shouldRender) {
       gsap.to(panelRef.current, {
         y: -8, opacity: 0, scale: 0.96,
-        duration: 0.22, ease: "power2.in",
+        duration: 0.22, ease: 'power2.in',
         onComplete: () => setShouldRender(false),
-      });
+      })
     }
-  }, [isOpen]);
+  }, [isOpen])
 
   /* ── Toggle panel ── */
-  const openPanel = () => { setShouldRender(true); setIsOpen(true); };
-  const closePanel = () => setIsOpen(false);
-  const togglePanel = () => (isOpen ? closePanel() : openPanel());
+  const openPanel = () => {
+    setShouldRender(true)
+    setIsOpen(true)
+  }
+  const closePanel = () => setIsOpen(false)
+  const togglePanel = () => (isOpen ? closePanel() : openPanel())
 
   /* ── Select theme ── */
   const handleSelect = (t) => {
-    setTheme(t);
+    setTheme(t)
     gsap.to(panelRef.current, {
       y: -8, opacity: 0, scale: 0.96,
-      duration: 0.22, ease: "power2.in",
-      onComplete: () => { setIsOpen(false); setShouldRender(false); },
-    });
-  };
+      duration: 0.22, ease: 'power2.in',
+      onComplete: () => {
+        setIsOpen(false)
+        setShouldRender(false)
+      },
+    })
+  }
 
-  const currentLabel = THEME_LABELS[theme];
+  const currentLabel = THEME_LABELS[theme]
 
   return (
     <>
       {/* ── Trigger pill ── */}
       <button
-        className={`${styles.toggle} ${isOpen ? styles.active : ""}`}
+        className={`${styles.toggle} ${isOpen ? styles.active : ''}`}
         onClick={togglePanel}
         aria-label={`Theme: ${currentLabel}. Click to change.`}
         title={`Current theme: ${currentLabel}`}
@@ -167,7 +184,7 @@ const ToggleTheme = () => {
                 {THEMES.map((t) => (
                   <button
                     key={t}
-                    className={`${styles.themeCard} ${theme === t ? styles.selected : ""}`}
+                    className={`${styles.themeCard} ${theme === t ? styles.selected : ''}`}
                     onClick={() => handleSelect(t)}
                     title={THEME_LABELS[t]}
                     aria-pressed={theme === t}
@@ -182,7 +199,9 @@ const ToggleTheme = () => {
                       </span>
                       {theme === t && (
                         <span className={styles.selectedBadge}>
-                          <Check size={9} strokeWidth={3} />
+                          <svg className={styles.icon} width={9} height={9}>
+  <use href="/sprite.svg#icon-check" />
+</svg>
                         </span>
                       )}
                     </div>
@@ -206,10 +225,10 @@ const ToggleTheme = () => {
         </>
       )}
     </>
-  );
-};
+  )
+}
 
-export default ToggleTheme;
+export default ToggleTheme
 
 
 

@@ -279,7 +279,7 @@
     position: fixed;
 
 
-    top: 100px;
+    top: 90px;
     left: 20px;
     transform: translateX(-50%);
     width: min(1200px, calc(100% - 32px));
@@ -290,7 +290,7 @@
 
     overflow: auto;
     z-index: 100;
-    padding: 100px 24px 40px;
+    padding: 80px 24px 20px;
     opacity: 0;
     width: min(1500px, calc(100% - 32px));
     min-height: 80svh;
@@ -299,6 +299,16 @@
     pointer-events: none;
     transform: translateX(100%) scale(0);
     transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobileMenuTitle {
+    font-family: var(--font-display, 'Bebas Neue', sans-serif);
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--color-title, #ffffff);
+    text-align: center;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
 }
 
 .mobileMenu::-webkit-scrollbar {
@@ -386,11 +396,23 @@
     border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+.mobileFooterText {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 0.65rem;
+    color: var(--color-secondary, #94a3b8);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+    margin-top: 4rem;
+    text-align: center;
+}
+
 .mobileSocial {
     display: flex;
     align-items: center;
     flex-direction: row;
-    gap: 8px;
+    gap: 16px;
 }
 
 .mobileSocial a {
@@ -399,7 +421,7 @@
     color: var(--color-secondary, #94a3b8);
     text-decoration: none;
     letter-spacing: 0.05em;
-    opacity: 0.4;
+    opacity: 0.8;
     transition: all 0.3s ease;
 }
 
