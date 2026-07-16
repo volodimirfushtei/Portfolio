@@ -1,131 +1,130 @@
+import './App.css'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import { Route, Routes, useLocation } from 'react-router-dom'
+import { Toaster } from 'react-hot-toast'
+import { OverlayProvider } from './Components/OverlayProvider/OverlayProvider.jsx'
+import ErrorBoundary from './Components/ErrorBoundary/ErrorBoundary.jsx'
+import Loader from './Components/Loader/Loader.jsx'
+import Layout from './Components/Layout/Layout.jsx'
+import ScrollToTop from './Components/ScrollToTop/ScrollToTop.jsx'
+import CustomCursor from './Components/CustomCursor/CustomCursor.jsx'
 
-import "./App.css";
-import { useState, useEffect, lazy, Suspense,useRef } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
-import { Toaster } from "react-hot-toast";
-import  {OverlayProvider}  from "./Components/OverlayProvider/OverlayProvider.jsx";
-import ErrorBoundary from "./Components/ErrorBoundary/ErrorBoundary.jsx";
-import Loader from "./Components/Loader/Loader.jsx";
-import Layout from "./Components/Layout/Layout.jsx";
-import Overlay from "./Components/Overlay/Overlay.jsx";
-import ScrollToTop from "./Components/ScrollToTop/ScrollToTop.jsx";
-import CustomCursor from "./Components/CustomCursor/CustomCursor.jsx";
-
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence } from 'framer-motion'
+import Overlay from './Components/Overlay/Overlay.jsx'
 /* ── Lazy pages ── */
-const Home = lazy(() => import("./pages/homePage/homePage.jsx"));
-const Contacts = lazy(() => import("./pages/contactsPage/contactsPage.jsx"));
-const Projects = lazy(() => import("./pages/projectsPage/projectsPage.jsx"));
-const Tech = lazy(() => import("./pages/TechPage/TechPage.jsx"));
-const NotFound = lazy(() => import("./pages/NotFoundPage/NotFoundPage.jsx"));
-const TestError = lazy(() => import("./Components/TestError/TestError.jsx"));
+const Home = lazy(() => import('./pages/homePage/homePage.jsx'))
+const Contacts = lazy(() => import('./pages/contactsPage/contactsPage.jsx'))
+const Projects = lazy(() => import('./pages/projectsPage/projectsPage.jsx'))
+const Tech = lazy(() => import('./pages/TechPage/TechPage.jsx'))
+const NotFound = lazy(() => import('./pages/NotFoundPage/NotFoundPage.jsx'))
+const TestError = lazy(() => import('./Components/TestError/TestError.jsx'))
 
 /* ── Preload критичних сторінок ── */
 const preload = () =>
   Promise.all([
-    import("./pages/homePage/homePage.jsx"),
-    import("./pages/contactsPage/contactsPage.jsx"),
-    import("./pages/projectsPage/projectsPage.jsx"),
-    import("./pages/TechPage/TechPage.jsx"),
-  ]);
+    import('./pages/homePage/homePage.jsx'),
+    import('./pages/contactsPage/contactsPage.jsx'),
+    import('./pages/projectsPage/projectsPage.jsx'),
+    import('./pages/TechPage/TechPage.jsx'),
+  ])
 
 /* ── Toast styles ── */
 const toastStyle = {
   base: {
-    borderRadius: "0",
-    background: "#0d0d0d",
-    color: "#f5f5f0",
-    fontSize: "0.78rem",
+    borderRadius: '0',
+    background: '#0d0d0d',
+    color: '#f5f5f0',
+    fontSize: '0.78rem',
     fontFamily: '"DM Mono", monospace',
-    letterSpacing: "0.06em",
-    padding: "0.85rem 1.25rem",
-    border: "1px solid rgba(245,245,240,0.08)",
-    boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
+    letterSpacing: '0.06em',
+    padding: '0.85rem 1.25rem',
+    border: '1px solid rgba(245,245,240,0.08)',
+    boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
   },
   success: {
-    background: "#0d0d0d",
-    border: "1px solid #e8f53c",
-    color: "#e8f53c",
+    background: '#0d0d0d',
+    border: '1px solid #e8f53c',
+    color: '#e8f53c',
   },
   error: {
-    background: "var(--color-surface)",
-    border: "1px solid #ff4b4b",
-    color: "#ff4b4b",
+    background: 'var(--color-surface)',
+    border: '1px solid #ff4b4b',
+    color: '#ff4b4b',
   },
   loading: {
-    background: "#0d0d0d",
-    border: "1px solid rgba(245,245,240,0.2)",
+    background: '#0d0d0d',
+    border: '1px solid rgba(245,245,240,0.2)',
   },
-};
+}
 
 function App() {
-  const location = useLocation();
-  const [loading, setLoading] = useState(true);
-  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const location = useLocation()
+  const [loading, setLoading] = useState(true)
+  const [isTouchDevice, setIsTouchDevice] = useState(false)
   const [showOverlay, setShowOverlay] = useState(false)
-  const firstRender = useRef(true);
+  const firstRender = useRef(true)
   useEffect(() => {
     // ── Перевірка на touch device ──
     setIsTouchDevice(
-      "ontouchstart" in window || navigator.maxTouchPoints > 0
-    );
+      'ontouchstart' in window || navigator.maxTouchPoints > 0,
+    )
 
     // ── Додаємо клас завантаження ──
-    document.body.classList.add("loading");
+    document.body.classList.add('loading')
 
-    let isMounted = true;
-    
+    let isMounted = true
+
     // Safety backup fallback timer (max 8 seconds loading)
     const loadTimer = setTimeout(() => {
-      if (!isMounted) return;
-      console.warn("[App] Loading safety timeout reached");
-      setLoading(false);
-      document.body.classList.remove("loading");
-    }, 8000);
+      if (!isMounted) return
+      console.warn('[App] Loading safety timeout reached')
+      setLoading(false)
+      document.body.classList.remove('loading')
+    }, 8000)
 
     // ── Preload критичних сторінок ──
     preload()
       .catch((error) => {
-        console.error("[App] Preload error:", error);
-      });
+        console.error('[App] Preload error:', error)
+      })
 
     // ── Cleanup функція ──
     return () => {
-      isMounted = false;
-      clearTimeout(loadTimer);
-      document.body.classList.remove("loading");
-    };
-  }, []);
- 
+      isMounted = false
+      clearTimeout(loadTimer)
+      document.body.classList.remove('loading')
+    }
+  }, [])
 
-useEffect(() => {
-  if (loading) return;
 
-  if (firstRender.current) {
-    firstRender.current = false;
-    return;
-  }
+  useEffect(() => {
+    if (loading) return
 
-  setShowOverlay(true);
+    if (firstRender.current) {
+      firstRender.current = false
+      return
+    }
 
-  const timer = setTimeout(() => {
-    setShowOverlay(false);
-  }, 2600);
+    setShowOverlay(true)
 
-  return () => clearTimeout(timer);
+    const timer = setTimeout(() => {
+      setShowOverlay(false)
+    }, 2600)
 
-}, [location.pathname]);
+    return () => clearTimeout(timer)
+
+  }, [location.pathname])
 
   const handleLoaderComplete = () => {
-    setLoading(false);
-    document.body.classList.remove('loading');
-  };
+    setLoading(false)
+    document.body.classList.remove('loading')
+  }
 
   // ── Показуємо Loader під час завантаження ──
   if (loading) {
     return (
       <Loader onComplete={handleLoaderComplete} minDuration={3000} />
-    );
+    )
   }
 
   return (
@@ -135,24 +134,24 @@ useEffect(() => {
         <ScrollToTop />
         <Suspense
           fallback={
-            <div style={{ minHeight: "100vh", background: "#000" }} />
+            <div style={{ minHeight: '100vh', background: '#000' }} />
           }
         >
-          
-            <AnimatePresence mode="wait">
-        {showOverlay && <Overlay />}
-    </AnimatePresence>
-            <Routes location={location} key={location.pathname}>
-              <Route path="/" element={<Layout />}>
-                <Route index element={<Home />} />
-                <Route path="contacts" element={<Contacts />} />
-                <Route path="projects" element={<Projects />} />
-                <Route path="tech" element={<Tech />} />
-                <Route path="error" element={<TestError />} />
-                <Route path="*" element={<NotFound />} />
-              </Route>
-            </Routes>
-          
+
+          <AnimatePresence mode="wait">
+            {showOverlay && <Overlay />}
+          </AnimatePresence>
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="contacts" element={<Contacts />} />
+              <Route path="projects" element={<Projects />} />
+              <Route path="tech" element={<Tech />} />
+              <Route path="error" element={<TestError />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          </Routes>
+
         </Suspense>
 
         <Toaster
@@ -167,7 +166,7 @@ useEffect(() => {
         />
       </ErrorBoundary>
     </OverlayProvider>
-  );
+  )
 }
 
-export default App;
+export default App

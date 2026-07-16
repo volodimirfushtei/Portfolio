@@ -1,4 +1,4 @@
-import { lazy, useLayoutEffect, useRef } from 'react'
+import { lazy, Suspense, useCallback, useLayoutEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText } from 'gsap/SplitText'
@@ -6,7 +6,6 @@ import styles from './HeroSection.module.css'
 
 
 const HeroMedia = lazy(() => import('../HeroMedia/HeroMedia.jsx'))
-gsap.registerPlugin(ScrollTrigger, SplitText)
 
 
 const HeroSection = () => {
@@ -27,8 +26,10 @@ const HeroSection = () => {
   const gridBlur3Ref = useRef(null)
 
   useLayoutEffect(() => {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reducedMotion) return
 
-
+    gsap.registerPlugin(ScrollTrigger, SplitText)
     let split
     const ctx = gsap.context(() => {
       gsap.set(sectionRef.current, {
@@ -48,10 +49,15 @@ const HeroSection = () => {
             ease: 'none',
 
           })
+          if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            anim.pause()
+          }
         })
-      split = SplitText.create(titleRef.current, {
-        type: 'words',
-      })
+      try {
+        split = SplitText.create(titleRef.current, { type: 'words' })
+      } catch (err) {
+        console.error('SplitText failed:', err)
+      }
 
       const intro = gsap.timeline()
 
@@ -83,20 +89,20 @@ const HeroSection = () => {
 
         .to(contentRef.current, {
           scale: 0.6,
-          yPercent: 100,
+          y: 100,
           filter: 'blur(4px)',
           opacity: .4,
           ease: 'none',
         }, 'hero')
 
         .to(bgRef.current, {
-          scale: 1.15,
+          scale: 1.08,
           yPercent: 10,
           ease: 'none',
         }, 'hero')
 
         .to(bgTextRef.current, {
-          yPercent: -15,
+          yPercent: -12,
           scale: .75,
           opacity: 0,
           ease: 'none',
@@ -114,9 +120,12 @@ const HeroSection = () => {
     return () => {
       split?.revert()
       ctx.revert()
+      ScrollTrigger.getAll().forEach(st => st.kill())
     }
   }, [])
-
+  const handleGitHubClick = useCallback(() => {
+    window.open('https://github.com/volodimirfushtei', '_blank', 'noopener,noreferrer')
+  }, [])
   return (
     <section ref={sectionRef} className={styles.hero}>
       {/* ── Background ── */}
@@ -124,10 +133,9 @@ const HeroSection = () => {
         ref={bgRef}
         className={styles.gradientBackground}
         aria-hidden="true"
-        data-scroll
         data-lag="0.2"
       />
-      <div ref={bgTextRef} className={styles.bgText}>
+      <div ref={bgTextRef} className={styles.bgText} aria-hidden="true">
         FRONTEND
       </div>
       {/* ── Grid елементи ── */}
@@ -180,7 +188,7 @@ const HeroSection = () => {
             </div>
 
             {/* Giant title */}
-            <h1 ref={titleRef} className={styles.title}>
+            <h1 ref={titleRef} className={styles.title} aria-label="Building Digital Products">
               <span className={styles.titleLine}>
                 <span className={styles.titleAccent}>Building</span>
               </span>
@@ -230,13 +238,9 @@ const HeroSection = () => {
                 data-cursor-type="link"
                 data-cursor-text="GitHub"
                 className={styles.secondaryButton}
-                onClick={() =>
-                  window.open(
-                    'https://github.com/volodimirfushtei',
-                    '_blank',
-                    'noopener',
-                  )
-                }
+                onClick={handleGitHubClick}
+
+
                 aria-label="View my work on GitHub"
               >
                 <span>View my work</span>
@@ -261,15 +265,17 @@ const HeroSection = () => {
           </div>
 
           {/* RIGHT — Media column */}
-          <div
-            data-cursor="hover"
-            data-cursor-text="Interactive media"
-            data-cursor-type="media"
-            ref={mediaRef}
-            className={styles.mediaContainer}
-          >
-            <HeroMedia />
-          </div>
+          <Suspense fallback={<div className={styles.mediaPlaceholder} />}>
+            <div
+              data-cursor="hover"
+              data-cursor-text="Interactive media"
+              data-cursor-type="media"
+              ref={mediaRef}
+              className={styles.mediaContainer}
+            >
+              <HeroMedia />
+            </div>
+          </Suspense>
         </div>
       </div>
     </section>

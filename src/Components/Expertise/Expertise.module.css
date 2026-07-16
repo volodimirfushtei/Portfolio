@@ -1,25 +1,57 @@
-/* ═══════════════════════════════════════════
-   Expertise.module.css — Premium Awwwards Style
-   Оптимізовано | Адаптивно | Анімовано
-═══════════════════════════════════════════ */
+/* ============================================
+   Expertise.module.css — Awwwards Premium 2026
+   Mobile First + Fluid Typography + Layers
+============================================= */
 
-/* ═══════════════════════════════════════════
-   1. CSS VARIABLES
-═══════════════════════════════════════════ */
-.expertise {
+:root {
+    /* Colors */
+    --color-page-bg: #020205;
+    --color-page-gradient: linear-gradient(180deg, #020205 0%, #0a0a1a 50%, #020205 100%);
+    --color-text: #ffffff;
+    --color-text-muted: rgba(255, 255, 255, 0.6);
+    --color-secondary: #94a3b8;
+    --color-accent: #667eea;
+    --color-accent-secondary: #f59e0b;
+    --color-border: rgba(255, 255, 255, 0.1);
+    --color-border-subtle: rgba(255, 255, 255, 0.05);
+    --color-surface: rgba(255, 255, 255, 0.03);
+    --color-glow: rgba(102, 126, 234, 0.3);
+
+    /* Typography */
+    --font-display: "Bebas Neue", sans-serif;
+    --font-mono: "DM Mono", monospace;
+    --font-primary: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+
+    /* Spacing */
     --section-padding: clamp(4rem, 10vh, 12rem);
-    --inner-gap: clamp(3rem, 8vw, 10rem);
-    --title-size: clamp(2.5rem, 10vw, 8rem);
-    --columns-gap: clamp(2.5rem, 6vw, 6rem);
+    --inner-gap: clamp(2rem, 6vw, 6rem);
+    --columns-gap: clamp(2rem, 6vw, 6rem);
+
+    /* Effects */
+    --blur-amount: 120px;
+    --transition-fast: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-slow: 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* ═══════════════════════════════════════════
+/* ============================================
+   1. BASE RESET + SCROLLBEHAVIOR
+============================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* ============================================
    2. SECTION WRAPPER
-═══════════════════════════════════════════ */
+============================================= */
 .expertise {
     position: relative;
     width: 100%;
-
     min-height: 100dvh;
     display: flex;
     flex-direction: column;
@@ -28,156 +60,123 @@
     background: var(--color-page-gradient);
     overflow: hidden;
     isolation: isolate;
-    padding: clamp(6rem, 12vw, 12rem) 2rem;
+    padding: var(--section-padding) 1.5rem;
     z-index: 0;
-
 }
 
-/* ═══════════════════════════════════════════
+/* ============================================
    3. BACKGROUND EFFECTS
-═══════════════════════════════════════════ */
+============================================= */
 
-/* ── 3.1 Gradient Background ── */
-.gradientBg {
+/* --- Gradient Background (Aurora Effect) --- */
+.background {
     position: absolute;
     inset: 0;
-    z-index: 0;
-    pointer-events: none;
-}
-
-/* ── 3.2 Grid Pattern ── */
-.gridPattern {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-    background-size: 40px 40px;
+    z-index: -2;
+    background: radial-gradient(ellipse at 20% 50%, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 50%, rgba(245, 158, 11, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 100%, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
+    filter: blur(100px);
     opacity: 0.5;
+    animation: aurora 20s ease-in-out infinite alternate;
 }
 
-@media (min-width: 768px) {
-    .gridPattern {
-        background-size: 60px 60px;
-        opacity: 0.8;
+@keyframes aurora {
+    0% {
+        opacity: 0.4;
+        filter: blur(80px);
+    }
+    50% {
+        opacity: 0.7;
+        filter: blur(120px);
+    }
+    100% {
+        opacity: 0.4;
+        filter: blur(80px);
     }
 }
 
-/* ── 3.3 Noise Texture ── */
+/* --- Noise Texture --- */
 .noise {
     position: absolute;
     inset: 0;
-    height: 120%;
-    top: -10%;
     background: url("/images/grunge_texture.webp") no-repeat center center/cover;
-    will-change: transform;
-    opacity: 0.035;
+    opacity: 0.04;
     pointer-events: none;
-    z-index: 0;
-    animation: noiseShift 8s steps(10) infinite;
+    z-index: -1;
+    mix-blend-mode: overlay;
+    animation: noiseShift 12s steps(8) infinite;
 }
 
 @keyframes noiseShift {
     0% {
         transform: translate(0, 0);
     }
-
     25% {
-        transform: translate(-5%, -5%);
+        transform: translate(-3%, -3%);
     }
-
     50% {
-        transform: translate(5%, 5%);
+        transform: translate(3%, 3%);
     }
-
     75% {
-        transform: translate(-5%, 5%);
+        transform: translate(-3%, 3%);
     }
-
     100% {
-        transform: translate(5%, -5%);
+        transform: translate(3%, -3%);
     }
 }
 
-/* ── 3.4 Blur Orbs ── */
+/* --- Blur Orbs --- */
 .blurOrb1,
 .blurOrb2 {
     position: absolute;
-    z-index: 0;
+    z-index: -1;
     pointer-events: none;
     border-radius: 50%;
-    filter: blur(120px);
+    filter: blur(var(--blur-amount));
     opacity: 0.15;
-    animation: orbFloat 20s ease-in-out infinite alternate;
+    animation: orbFloat 25s ease-in-out infinite alternate;
+    will-change: transform;
 }
 
 .blurOrb1 {
-    width: 300px;
-    height: 300px;
+    width: clamp(250px, 25vw, 400px);
+    height: clamp(250px, 25vw, 400px);
     top: -10%;
     right: -10%;
-    background: radial-gradient(circle, rgba(102, 126, 234, 0.2), transparent 70%);
-    animation-delay: 0s;
+    background: radial-gradient(circle, rgba(102, 126, 234, 0.3) 0%, transparent 70%);
 }
 
 .blurOrb2 {
-    width: 250px;
-    height: 250px;
+    width: clamp(200px, 20vw, 350px);
+    height: clamp(200px, 20vw, 350px);
     bottom: -10%;
     left: -10%;
-    background: radial-gradient(circle, rgba(118, 75, 162, 0.15), transparent 70%);
-    animation-delay: -10s;
-}
-
-@media (min-width: 768px) {
-    .blurOrb1 {
-        width: 400px;
-        height: 400px;
-    }
-
-    .blurOrb2 {
-        width: 350px;
-        height: 350px;
-    }
-}
-
-@media (min-width: 1024px) {
-    .blurOrb1 {
-        width: 500px;
-        height: 500px;
-    }
-
-    .blurOrb2 {
-        width: 450px;
-        height: 450px;
-    }
+    background: radial-gradient(circle, rgba(118, 75, 162, 0.2) 0%, transparent 70%);
+    animation-delay: -5s;
 }
 
 @keyframes orbFloat {
     0% {
         transform: translate(0, 0) scale(1);
     }
-
     33% {
-        transform: translate(30px, -20px) scale(1.1);
+        transform: translate(20px, -15px) scale(1.05);
     }
-
     66% {
-        transform: translate(-20px, 30px) scale(0.9);
+        transform: translate(-15px, 20px) scale(0.95);
     }
-
     100% {
-        transform: translate(20px, 20px) scale(1.05);
+        transform: translate(10px, 10px) scale(1);
     }
 }
 
-/* ═══════════════════════════════════════════
+/* ============================================
    4. CORNER BADGE
-═══════════════════════════════════════════ */
+============================================= */
 .cornerBadge {
     position: fixed;
-    top: clamp(1.5rem, 7vh, 4rem);
+    top: clamp(1.5rem, 5vh, 4rem);
     right: clamp(1rem, 3vw, 3rem);
     z-index: 100;
     display: flex;
@@ -185,7 +184,7 @@
     align-items: center;
     gap: 0.25rem;
     opacity: 0.2;
-    transition: opacity 0.4s ease;
+    transition: opacity var(--transition-fast);
     pointer-events: none;
 }
 
@@ -194,32 +193,26 @@
 }
 
 .cornerBadgeNum {
-    font-family: var(--font-display, 'Bebas Neue', sans-serif);
-    font-size: clamp(1.5rem, 2.5vw, 2.8rem);
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 2vw, 2.2rem);
     line-height: 1;
-    color: var(--color-text, #ffffff);
+    color: var(--color-text);
     letter-spacing: -0.02em;
 }
 
 .cornerBadgeLabel {
-    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-family: var(--font-mono);
     font-size: clamp(0.5rem, 0.6vw, 0.65rem);
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--color-secondary, #94a3b8);
+    color: var(--color-secondary);
     writing-mode: vertical-rl;
     transform: rotate(180deg);
 }
 
-@media (max-width: 768px) {
-    .cornerBadge {
-        display: none;
-    }
-}
-
-/* ═══════════════════════════════════════════
+/* ============================================
    5. INNER LAYOUT
-═══════════════════════════════════════════ */
+============================================= */
 .inner {
     position: relative;
     z-index: 10;
@@ -228,23 +221,26 @@
     margin: 0 auto;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     gap: var(--inner-gap);
-    padding: 0 clamp(1rem, 3vw, 3rem);
+    padding: 0 clamp(1rem, 3vw, 2rem);
 }
 
-/* ═══════════════════════════════════════════
+/* ============================================
    6. HEADER
-═══════════════════════════════════════════ */
+============================================= */
 .header {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
+    justify-content: center;
+    margin: 0 auto;
     gap: 1.5rem;
 }
 
-/* ── 6.1 Eyebrow ── */
+/* --- Eyebrow --- */
 .eyebrow {
     display: flex;
     align-items: center;
@@ -253,46 +249,36 @@
     opacity: 0.7;
 }
 
-@media (min-width: 1024px) {
-    .eyebrow {
-        justify-content: flex-start;
-    }
-}
-
-
 .eyebrowText {
-    font-family: var(--font-mono, 'DM Mono', monospace);
-    font-size: clamp(0.55rem, 0.7vw, 0.7rem);
+    font-family: var(--font-mono);
+    font-size: clamp(0.55rem, 1vw, 0.75rem);
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--color-secondary, #94a3b8);
+    color: var(--color-secondary);
 }
 
 .eyebrowDot {
-    width: 4px;
-    height: 4px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
-    background: var(--color-accent, #667eea);
+    background: var(--color-accent);
     animation: pulseDot 2s ease-in-out infinite;
 }
 
 @keyframes pulseDot {
-
-    0%,
-    100% {
+    0%, 100% {
         opacity: 1;
         transform: scale(1);
     }
-
     50% {
-        opacity: 0.2;
-        transform: scale(0.5);
+        opacity: 0.3;
+        transform: scale(0.6);
     }
 }
 
-/* ── 6.2 Title ── */
+/* --- Title --- */
 .title {
-    font-family: var(--font-display, 'Bebas Neue', sans-serif);
+    font-family: var(--font-display);
     font-weight: 700;
     line-height: 0.9;
     letter-spacing: -0.02em;
@@ -309,25 +295,19 @@
 
 .titleAccent {
     display: inline-block;
-    background: linear-gradient(135deg,
-    #667eea 0%,
-    #764ba2 40%,
-    #ed0c4c 70%,
-    #667eea 100%);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #ed0c4c 100%);
     background-size: 300% 100%;
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: gradientShift 6s ease-in-out infinite;
+    color: transparent;
+    animation: gradientShift 8s ease-in-out infinite;
+    filter: drop-shadow(0 0 10px var(--color-glow));
 }
 
 @keyframes gradientShift {
-
-    0%,
-    100% {
+    0%, 100% {
         background-position: 0% 50%;
     }
-
     50% {
         background-position: 100% 50%;
     }
@@ -335,26 +315,26 @@
 
 .titlePlain {
     display: block;
-    color: var(--color-text, #ffffff);
-    -webkit-text-fill-color: var(--color-text, #ffffff);
+    color: var(--color-text);
+    -webkit-text-fill-color: var(--color-text);
 }
 
+/* --- Divider --- */
 .divider {
-    width: 80px;
+    width: clamp(60px, 8vw, 100px);
     height: 1px;
-    background: var(--color-border, rgba(255, 255, 255, 0.15));
-    margin: 1.5rem auto;
+    background: var(--color-border);
+    margin: 1rem auto;
 }
 
-@media (min-width: 1024px) {
-    .divider {
-        width: 120px;
-    }
+/* --- Location --- */
+.locationWrap {
+    margin-top: 1rem;
 }
 
-/* ═══════════════════════════════════════════
+/* ============================================
    7. COLUMNS
-═══════════════════════════════════════════ */
+============================================= */
 .columns {
     width: 100%;
     max-width: 1000px;
@@ -366,54 +346,78 @@
     padding: 2rem 0;
 }
 
-.cardCol,
-.tableCol {
+.cardCol {
     width: 100%;
     display: flex;
     justify-content: center;
 }
 
-/* ═══════════════════════════════════════════
+/* ============================================
    8. RESPONSIVE BREAKPOINTS
-═══════════════════════════════════════════ */
+============================================= */
 
-/* ── 8.1 Tablet (768px - 1023px) ── */
-@media (min-width: 768px) and (max-width: 1023px) {
+/* --- Tablet (768px - 1023px) --- */
+@media (min-width: 768px) {
     .expertise {
-        padding: 6rem 2rem;
+        padding: clamp(6rem, 12vh, 10rem) 2rem;
     }
 
     .inner {
-        padding: 0 1.5rem;
-        gap: 4rem;
+        padding: 0 clamp(1.5rem, 4vw, 3rem);
+        gap: clamp(3rem, 8vw, 5rem);
+    }
+
+    .header {
+        align-items: center;
+        text-align: left;
+    }
+
+    .eyebrow {
+        justify-content: flex-start;
     }
 
     .title {
-        font-size: clamp(3.5rem, 8vw, 5rem);
+        font-size: clamp(3.5rem, 8vw, 6rem);
+        max-width: 700px;
     }
 
     .columns {
-        gap: 4rem;
+        gap: clamp(3rem, 8vw, 5rem);
         padding: 1.5rem 0;
     }
 }
 
-/* ── 8.2 Desktop (1024px - 1439px) ── */
-@media (min-width: 1024px) and (max-width: 1439px) {
+/* --- Desktop (1024px+) --- */
+@media (min-width: 1024px) {
     .expertise {
-        padding: 8rem 3rem;
+        padding: clamp(8rem, 15vh, 12rem) 3rem;
+    }
+
+    .inner {
+        gap: clamp(4rem, 10vw, 6rem);
     }
 
     .title {
-        font-size: clamp(4rem, 8vw, 6rem);
+        font-size: clamp(4rem, 10vw, 8rem);
+        text-align: center;
     }
 
     .columns {
-        gap: 5rem;
+        gap: clamp(4rem, 10vw, 6rem);
+    }
+
+    .blurOrb1 {
+        width: 450px;
+        height: 450px;
+    }
+
+    .blurOrb2 {
+        width: 400px;
+        height: 400px;
     }
 }
 
-/* ── 8.3 Large Screen (1440px+) ── */
+/* --- Large Screen (1440px+) --- */
 @media (min-width: 1440px) {
     .title {
         font-size: 8rem;
@@ -424,39 +428,43 @@
     }
 }
 
-/* ── 8.4 Mobile (≤ 767px) ── */
+/* --- Mobile (≤ 767px) --- */
 @media (max-width: 767px) {
     .expertise {
-        padding: 4rem 1.5rem;
+        padding: clamp(4rem, 12vh, 6rem) 1.5rem;
         min-height: auto;
     }
 
     .inner {
         padding: 0;
-        gap: 2.5rem;
+        gap: clamp(2rem, 6vw, 3rem);
     }
 
     .title {
-        font-size: clamp(2.5rem, 8vw, 3.5rem);
+        font-size: clamp(2.5rem, 8vw, 4rem);
         max-width: 100%;
     }
 
     .columns {
-        gap: 2.5rem;
+        gap: clamp(2rem, 6vw, 3rem);
         padding: 1rem 0;
     }
 
     .divider {
-        width: 60px;
+        width: 40px;
     }
 
     .blurOrb1,
     .blurOrb2 {
         display: none;
     }
+
+    .cornerBadge {
+        display: none;
+    }
 }
 
-/* ── 8.5 Small Mobile (≤ 480px) ── */
+/* --- Small Mobile (≤ 480px) --- */
 @media (max-width: 480px) {
     .expertise {
         padding: 3rem 1rem;
@@ -475,27 +483,22 @@
         letter-spacing: 0.15em;
     }
 
-    .eyebrowLine {
-        width: 20px;
-    }
-
     .columns {
         gap: 2rem;
         padding: 0.5rem 0;
     }
 
     .divider {
-        width: 40px;
+        width: 30px;
     }
 }
 
-/* ═══════════════════════════════════════════
+/* ============================================
    9. ACCESSIBILITY
-═══════════════════════════════════════════ */
+============================================= */
 
-/* ── 9.1 Reduced Motion ── */
+/* --- Reduced Motion --- */
 @media (prefers-reduced-motion: reduce) {
-
     *,
     *::before,
     *::after {
@@ -508,8 +511,8 @@
         animation: none !important;
         background: linear-gradient(135deg, #667eea, #764ba2);
         -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
         background-clip: text;
+        color: transparent;
     }
 
     .eyebrowDot {
@@ -527,7 +530,7 @@
     }
 }
 
-/* ── 9.2 High Contrast ── */
+/* --- High Contrast --- */
 @media (prefers-contrast: high) {
     .expertise {
         background: #000000;
@@ -542,18 +545,13 @@
         background: #ffffff;
     }
 
-    .eyebrowLine {
-        background: #ffffff;
-    }
-
     .eyebrowDot {
         background: #ffffff;
     }
 }
 
-/* ── 9.3 Focus States ── */
-.cardCol:focus-visible,
-.tableCol:focus-visible {
-    outline: 2px solid var(--color-accent, #667eea);
+/* --- Focus States --- */
+.cardCol:focus-visible {
+    outline: 2px solid var(--color-accent);
     outline-offset: 4px;
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styles from './Loader.module.css'
 import NoiseOverlay from '../NoiseOverlay/NoiseOverlay'
 import Logo from '../Logo/Logo'
@@ -38,22 +38,29 @@ const Loader = ({ onComplete }) => {
     tl.fromTo(
       overlayRef.current,
       { autoAlpha: 0, scale: 1.08, filter: 'blur(20px)' },
-      { autoAlpha: 1, scale: 1, filter: 'blur(0px)', duration: 0.8, ease: 'expo.out' }
+      { autoAlpha: 1, scale: 1, filter: 'blur(0px)', duration: 0.8, ease: 'expo.out' },
     )
-      .fromTo(topBarRef.current, ENTRANCE_FROM, ENTRANCE_TO, )
-      .fromTo(bottomBarRef.current, ENTRANCE_FROM, ENTRANCE_TO, )
+      .fromTo(topBarRef.current, ENTRANCE_FROM, ENTRANCE_TO)
+      .fromTo(bottomBarRef.current, ENTRANCE_FROM, ENTRANCE_TO)
       .fromTo(
         logoRef.current,
-        { autoAlpha: 0, scale: 0.5, opacity: 0, filter: 'blur(30px)', clipPath: "inset(0 100% 0 0)", strokeDashoffset: '2512px' },
+        {
+          autoAlpha: 0,
+          scale: 0.5,
+          opacity: 0,
+          filter: 'blur(30px)',
+          clipPath: 'inset(0 100% 0 0)',
+          strokeDashoffset: '2512px',
+        },
         {
           autoAlpha: 1,
           scale: 1.1,
           opacity: 1,
-          filter: 'blur(0px)',clipPath: "inset(0 0% 0 0)",strokeDashoffset:"0",
+          filter: 'blur(0px)', clipPath: 'inset(0 0% 0 0)', strokeDashoffset: '0',
           duration: 1,
           ease: 'expo.out',
         },
-        '-=0.3'
+        '-=0.3',
       )
       .to({}, { duration: 0.8 })
       .to(overlayRef.current, {
@@ -78,6 +85,7 @@ const Loader = ({ onComplete }) => {
 
   return (
     <div className={styles.overlay} ref={overlayRef}>
+
       <div className={styles.noise} ref={noiseRef}>
         <NoiseOverlay />
       </div>

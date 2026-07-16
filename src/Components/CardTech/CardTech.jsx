@@ -1,49 +1,59 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import styles from './CardTech.module.css'
 import { gsap } from 'gsap'
 
+// ✅ Updated with sprite IDs
 const techStack = [
-  { name: 'React', icon: 'ri-reactjs-line' },
-  { name: 'Next.js', icon: 'ri-nextjs-line' },
-  { name: 'Node.js', icon: 'ri-nodejs-line' },
-  { name: 'JavaScript', icon: 'ri-javascript-line' },
-  { name: 'CSS3', icon: 'ri-css3-line' },
-  { name: 'HTML5', icon: 'ri-html5-line' },
-  { name: 'GSAP', icon: 'ri-animation-line' },
-  { name: 'Three.js', icon: 'ri-3d-line' },
-  { name: 'React Native', icon: 'ri-mobile-line' },
-  { name: 'Tailwind CSS', icon: 'ri-css3-line' },
-  { name: 'Framer', icon: 'ri-animation-line' },
-
+  { name: 'React', icon: 'icon-react' },
+  { name: 'Next.js', icon: 'icon-nextjs' },
+  { name: 'Node.js', icon: 'icon-nodejs' },
+  { name: 'JavaScript', icon: 'icon-javascript' },
+  { name: 'CSS3', icon: 'icon-css3' },
+  { name: 'HTML5', icon: 'icon-html5' },
+  { name: 'GSAP', icon: 'icon-gsap' },
+  { name: 'Three.js', icon: 'icon-threejs' },
+  { name: 'React Native', icon: 'icon-react-native' },
+  { name: 'Tailwind CSS', icon: 'icon-tailwindcss' },
+  { name: 'Framer', icon: 'icon-framer' },
 ]
 
 const CardTech = () => {
   const profileCardRef = useRef(null)
   const [isVisible, setIsVisible] = useState(false)
+  const [copied, setCopied] = useState(false)
 
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ delay: 0.3 })
-      tl.from(profileCardRef.current, {
-
-        scale: 0.95,
-        opacity: 0,
-        filter: 'blur(8px)',
-        duration: 1,
-        ease: 'power4.out',
-      })
-    })
-
-    return () => ctx.revert()
+  const handleCopyEmail = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText('fuschteyy@gmail.com')
+      setCopied(true)
+    } catch (err) {
+      console.error('Failed to copy:', err)
+    }
   }, [])
 
-  // ── Intersection Observer для анімації при скролі ──
   useEffect(() => {
+    let timer
+    if (copied) {
+      timer = setTimeout(() => setCopied(false), 2000)
+    }
+    return () => clearTimeout(timer)
+  }, [copied])
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    gsap.set(profileCardRef.current, {
+      opacity: 0,
+      filter: 'blur(8px)',
+      scale: 0.95,
+    })
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsVisible(true)
+            observer.unobserve(entry.target)
           }
         })
       },
@@ -57,24 +67,38 @@ const CardTech = () => {
     return () => observer.disconnect()
   }, [])
 
-  // ── Копіювання email ──
-  const handleCopyEmail = () => {
-    const email = 'volodimir.fushtei@gmail.com'
-    navigator.clipboard.writeText(email)
-    // Тут можна додати toast повідомлення
-  }
+  useEffect(() => {
+    if (!isVisible) return
+
+    const ctx = gsap.context(() => {
+      gsap.to(profileCardRef.current, {
+        opacity: 1,
+        filter: 'blur(0)',
+        scale: 1,
+        duration: 1,
+        ease: 'power4.out',
+      })
+    }, profileCardRef)
+
+    return () => ctx.revert()
+  }, [isVisible])
+
+  // ✅ SVG Icon Component (reusable)
+  const SvgIcon = ({ id, className, width = 24, height = 24 }) => (
+    <svg className={className} width={width} height={height} aria-hidden="true">
+      <use href={`/sprite.svg#${id}`} />
+    </svg>
+  )
 
   return (
-    <section
-      className={`${styles.profileCard} ${isVisible ? styles.visible : ''}`}
-      ref={profileCardRef}
-    >
-      <div className={styles.profileCardNoise} />
-      <div className={styles.devider} />
-      <div className={styles.overlayHalf} />
-      <div className={styles.watermark}>
+    <section lang="en" className={styles.profileCard} ref={profileCardRef}>
+      <div className={styles.profileCardNoise} aria-hidden="true" />
+      <div className={styles.devider} aria-hidden="true" />
+      <div className={styles.overlayHalf} aria-hidden="true" />
+      <div className={styles.watermark} aria-hidden="true">
         FUSHTEI
       </div>
+
       <div className={styles.profileHeader}>
         <div className={styles.avatarWrap}>
           <img
@@ -82,35 +106,32 @@ const CardTech = () => {
             alt="Volodymyr Fushtei"
             className={styles.avatar}
             loading="lazy"
+            width="112"
+            height="112"
           />
-          <span className={styles.avatarStatus} />
+          <span className={styles.avatarStatus} aria-hidden="true" />
         </div>
 
         <div className={styles.info}>
           <span className={styles.status}>
-            <span className={styles.statusDot} />
+            <span className={styles.statusDot} aria-hidden="true" />
             Available for freelance
           </span>
 
-          <h2 className={styles.name}>
-            Volodymyr Fushtei
-          </h2>
-
-          <p className={styles.role}>
-            Full Stack Developer
-          </p>
+          <h2 className={styles.name}>Volodymyr Fushtei</h2>
+          <p className={styles.role}>Full Stack Developer</p>
         </div>
       </div>
 
       <p className={styles.bio}>
-        Building modern web experiences with React,
-        Next.js, Node.js and motion-driven interfaces.
+        Building modern web experiences with React, Next.js, Node.js and
+        motion-driven interfaces.
       </p>
 
       <div className={styles.techStack}>
         {techStack.map((tech) => (
           <span key={tech.name} className={styles.techItem}>
-            <i className={tech.icon} />
+            <SvgIcon id={tech.icon} className={styles.svgIcon} />
             {tech.name}
           </span>
         ))}
@@ -120,16 +141,21 @@ const CardTech = () => {
         <a
           href="https://github.com/volodimirfushtei"
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           className={styles.primaryBtn}
+          aria-label="View Volodymyr Fushtei on GitHub (opens in new tab)"
         >
-          <i className="ri-github-fill" />
+          <SvgIcon id="icon-github" className={styles.svgIcon} />
           View GitHub
         </a>
 
-        <button className={styles.secondaryBtn} onClick={handleCopyEmail}>
-          <i className="ri-mail-line" />
-          Email Me
+        <button
+          className={styles.secondaryBtn}
+          onClick={handleCopyEmail}
+          aria-label={copied ? 'Email copied to clipboard!' : 'Copy email address'}
+        >
+          <SvgIcon id="icon-mail" className={styles.svgIcon} />
+          {copied ? 'Copied!' : 'Email Me'}
         </button>
       </div>
     </section>

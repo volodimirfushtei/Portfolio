@@ -40,7 +40,7 @@
 
     background: url("/images/grunge_texture.webp") center/cover no-repeat;
     background-size: 100% 100%;
-    opacity: .16;
+    opacity: .12;
     z-index: -3;
     mix-blend-mode: overlay;
 
@@ -59,9 +59,9 @@
     z-index: 0;
 }
 
-.section:nth-child(1) {
-    z-index: 10;
-}
+/*.section:nth-child(1) {*/
+/*    z-index: 10;*/
+/*}*/
 
 /* Hero Section Wrapper */
 .heroSectionWrapper {
