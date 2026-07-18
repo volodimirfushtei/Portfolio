@@ -26,88 +26,85 @@ const HeroSection = () => {
   const gridBlur3Ref = useRef(null)
 
   useLayoutEffect(() => {
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (reducedMotion) return
+
 
     gsap.registerPlugin(ScrollTrigger, SplitText)
+
     let split
+    let floatingAnimations = []
+
     const ctx = gsap.context(() => {
-      gsap.set(sectionRef.current, {
-        transformOrigin: 'top center',
+
+      gsap.set([sectionRef.current, contentRef.current, bgRef.current, bgTextRef.current], {
+        willChange: 'transform, filter, opacity', // ✅ GPU acceleration
       })
-      // Floating blur circles
-      gsap.utils
-        .toArray([gridBlur1Ref.current, gridBlur2Ref.current])
-        .forEach((el, i) => {
-          gsap.to(el, {
-            x: i % 2 ? -80 : 80,
-            y: i % 2 ? -80 : 80,
-            opacity: i % 2 ? 0.6 : 0.2,
-            duration: 8,
-            yoyo: true,
-            repeat: -1,
-            ease: 'none',
 
-          })
-          if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            anim.pause()
-          }
+
+      gsap.utils.toArray([gridBlur1Ref.current, gridBlur2Ref.current]).forEach((el, i) => {
+        const anim = gsap.to(el, {
+          x: i % 2 ? -80 : 80,
+          y: i % 2 ? -80 : 80,
+          opacity: i % 2 ? 0.6 : 0.2,
+          duration: 8,
+          yoyo: true,
+          repeat: -1,
+          ease: 'none',
+          paused: false, //
         })
-      try {
-        split = SplitText.create(titleRef.current, { type: 'words' })
-      } catch (err) {
-        console.error('SplitText failed:', err)
-      }
+        floatingAnimations.push(anim)
+      })
 
+
+      split = SplitText.create(titleRef.current, { type: 'words' })
+      gsap.set(split.words, { opacity: 0 })
+
+
+      // Intro animation
       const intro = gsap.timeline()
-
       intro.from(split.words, {
-        yPercent: 120,
-        stagger: .12,
+        opacity: 0,
+        y: 20,
+        stagger: 0.12,
         duration: 1,
         ease: 'power4.out',
       })
+
+      intro.addLabel('hero')
+
+
+      // ScrollTrigger animation
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top top',
           end: 'bottom top',
           scrub: true,
-
-
         },
       })
 
       tl.addLabel('hero')
         .to(sectionRef.current, {
-
-
           borderRadius: 40,
           filter: 'drop-shadow(0 20px 80px rgba(0,0,0,.35))',
           ease: 'none',
         }, 'hero')
-
         .to(contentRef.current, {
-          scale: 0.6,
-          y: 100,
-          filter: 'blur(4px)',
-          opacity: .4,
+          scale: 0.70,
+          y: 80,
+          opacity: 0.6,
           ease: 'none',
         }, 'hero')
-
         .to(bgRef.current, {
           scale: 1.08,
           yPercent: 10,
           ease: 'none',
         }, 'hero')
-
         .to(bgTextRef.current, {
-          yPercent: -12,
-          scale: .75,
+          yPercent: -22,
+          scale: 0.75,
           opacity: 0,
           ease: 'none',
         }, 'hero')
-
         .to(gridBlur3Ref.current, {
           scale: 2,
           filter: 'blur(180px)',
@@ -115,17 +112,23 @@ const HeroSection = () => {
           ease: 'none',
         }, 'hero')
 
+
     }, sectionRef)
 
+
     return () => {
-      split?.revert()
+
       ctx.revert()
-      ScrollTrigger.getAll().forEach(st => st.kill())
+      floatingAnimations.forEach(anim => anim.kill())
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill())
     }
   }, [])
+
+
   const handleGitHubClick = useCallback(() => {
     window.open('https://github.com/volodimirfushtei', '_blank', 'noopener,noreferrer')
   }, [])
+
   return (
     <section ref={sectionRef} className={styles.hero}>
       {/* ── Background ── */}
@@ -155,6 +158,7 @@ const HeroSection = () => {
       >
         <span className={styles.scrollText}>Scroll</span>
         <div className={styles.scrollLineContainer}>
+          <span className={styles.scrollText}>Scroll</span>
           <div ref={scrollLineRef} className={styles.scrollLine} />
           <svg
             width="14"
@@ -190,7 +194,7 @@ const HeroSection = () => {
             {/* Giant title */}
             <h1 ref={titleRef} className={styles.title} aria-label="Building Digital Products">
               <span className={styles.titleLine}>
-                <span className={styles.titleAccent}>Building</span>
+                <span ref={titleRef} className={styles.titleAccent}>Building</span>
               </span>
               <span className={styles.titleLine}>
                 <span className={styles.titlePlain}>Digital</span>

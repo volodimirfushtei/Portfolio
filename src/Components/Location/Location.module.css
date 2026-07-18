@@ -4,12 +4,7 @@
 ============================================= */
 
 :root {
-    --color-text: #ffffff;
-    --color-text-muted: rgba(255, 255, 255, 0.6);
-    --color-secondary: #94a3b8;
-    --color-accent: #667eea;
-    --color-accent-glow: rgba(102, 126, 234, 0.3);
-    --color-border: rgba(255, 255, 255, 0.1);
+  
     --font-mono: "DM Mono", monospace;
     --font-primary: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
     --transition-fast: 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);

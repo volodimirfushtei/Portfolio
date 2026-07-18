@@ -1,49 +1,50 @@
 /* Overlay.module.css — Premium page transition */
 
 .blinds {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  display: flex;
-  flex-direction: column;
-  pointer-events: none;
-  overflow: hidden;
-  
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    pointer-events: none;
+    overflow: hidden;
+
 }
 
 .line {
-  flex: 1;
-  background: var(--color-surface, #222222);
-  transform: scaleY(0);
-  transform-origin: bottom;
-  will-change: transform;
-}
-.line:nth-child(3n){
-    flex:1.5;
-    
+    flex: 1;
+    background: var(rgba(255, 255, 255, 0.03), #222222);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    will-change: transform;
 }
 
-.line:nth-child(3n+1){
-    flex:2;
-  
+.line:nth-child(3n) {
+    flex: 1.5;
+
 }
 
-.line:nth-child(3n+2){
-    flex:2.4;
-  
+.line:nth-child(3n+1) {
+    flex: 2;
+
+}
+
+.line:nth-child(3n+2) {
+    flex: 2.4;
+
 }
 
 /* Subtle accent shimmer on the edges of each strip */
 .line::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--color-accent, oklch(74.748% 0.13 260.678)) 50%,
-    transparent 100%
-  );
-  opacity: 0.24;
-  pointer-events: none;
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+            90deg,
+            transparent 0%,
+            var(--color-accent, oklch(74.748% 0.13 260.678)) 50%,
+            transparent 100%
+    );
+    opacity: 0.24;
+    pointer-events: none;
 }

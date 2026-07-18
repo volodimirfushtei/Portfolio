@@ -5,12 +5,12 @@
 
 :root {
     /* Colors */
-    --color-page-bg: #020205;
-    --color-page-gradient: linear-gradient(180deg, #020205 0%, #0a0a1a 50%, #020205 100%);
-    --color-text: #ffffff;
-    --color-text-muted: rgba(255, 255, 255, 0.6);
-    --color-secondary: #94a3b8;
-    --color-accent: #667eea;
+    /*--color-page-bg: #020205;*/
+    /*--color-page-gradient: linear-gradient(180deg, #020205 0%, #0a0a1a 50%, #020205 100%);*/
+    /*--color-text: #ffffff;*/
+    /*--color-text-muted: rgba(255, 255, 255, 0.6);*/
+    /*--color-secondary: #94a3b8;*/
+    /*--color-accent: #667eea;*/
     --color-accent-secondary: #f59e0b;
     --color-border: rgba(255, 255, 255, 0.1);
     --color-border-subtle: rgba(255, 255, 255, 0.05);

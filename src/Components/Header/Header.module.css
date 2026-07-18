@@ -2,8 +2,8 @@
 
 /* Variables */
 :root {
-    --header-height: 80px;
-    --header-scrolled-height: 70px;
+    --header-height: 60px;
+    --header-scrolled-height: 50px;
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --color-background-scrolled: var(--color-overlay);
 }
@@ -11,28 +11,31 @@
 /* Header */
 .header {
     position: fixed;
-    top: 20px;
+    top: 0;
     left: 50%;
     transform: translateX(-50%);
     width: min(1500px, 95vw);
-    border-radius: 999px;
+    width: 100%;
     height: var(--header-height);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
     background-color: rgba(255, 255, 255, 0);
-    backdrop-filter: blur(24px);
-    transition: transform 0.4s ease,
-    opacity 0.4s ease;
+    transition: transform 0.4s var(--transition),
+    opacity 0.4s var(--transition),
+    background 0.4s var(--transition);
     z-index: 99;
+    will-change: transform, opacity; /* ✅ Added */
+    transform-style: preserve-3d; /* ✅ Added */
+    isolation: isolate; /* ✅ Added */
 }
 
 .header::after {
     content: "";
     position: absolute;
     inset: 0;
-    border-radius: 999px;
+
     background: url("/images/texture_broken.webp") center/cover no-repeat;
-    opacity: .28;
+    opacity: .08;
     mix-blend-mode: overlay;
     pointer-events: none;
 
@@ -44,9 +47,9 @@
     left: 50%;
     bottom: -40px;
     width: 300px;
-    border-radius: 999px;
+
     height: 80px;
-    transform: translateX(-50%);
+
     filter: blur(60px);
     background: rgba(255, 255, 255, .05);
 
@@ -57,7 +60,7 @@
     height: var(--header-scrolled-height);
     background: var(--color-background-scrolled);
 
-    border-radius: 999px;
+
 }
 
 .header.hidden {
@@ -85,7 +88,7 @@
 }
 
 .logoText {
-    font-size: 1rem;
+    font-size: 0.8rem;
     font-weight: 500;
     letter-spacing: 1px;
     letter-spacing: 0.2em;
@@ -124,7 +127,7 @@
 }
 
 .navLink {
-    padding: 8px 16px;
+    padding: 4px 8px;
     color: var(--color-text);
     border: 1px solid transparent;
     text-decoration: none;
@@ -218,48 +221,98 @@
     gap: 12px;
 }
 
-/* Burger Menu */
+
+/* Burger menu */
 .burger {
     display: none;
-    flex-direction: column;
-    justify-content: center;
-    gap: 6px;
-    width: 32px;
-    height: 32px;
+    width: 16px;
+    height: 16px;
     background: none;
     border: none;
     cursor: pointer;
     z-index: 1001;
+    color: var(--color-text);
+
+    .icon {
+        fill: currentColor;
+        transition: fill 0.3s var(--transition);
+        vertical-align: middle;
+        flex-shrink: 0;
+    }
+
+    /* Burger menu */
+
+    .burger {
+        display: none;
+        width: 32px;
+        height: 32px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        z-index: 1001;
+        color: var(--color-text);
+        padding: 0;
+        transition: color 0.3s var(--transition);
+    }
+
+    .burger .icon {
+        width: 24px;
+        height: 24px;
+        transition: transform 0.3s var(--transition);
+    }
+
+    .burger.open .icon {
+        transform: rotate(180deg); /* ✅ Smooth transition between icons */
+    }
+
+    /* Status dot */
+
+    .statusDotIcon {
+        width: 0.75em;
+        height: 0.75em;
+        display: inline-block;
+        vertical-align: baseline;
+        margin-right: 0.25em;
+        color: #4ade80;
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.5;
+        }
+    }
+
+    /* Mobile social icons */
+
+    .mobileSocialLink .icon {
+        width: 24px;
+        height: 24px;
+        color: var(--color-secondary, #94a3b8);
+        transition: all 0.3s ease;
+    }
+
+    .mobileSocialLink:hover .icon {
+        color: var(--color-text, #ffffff);
+    }
+
+    padding: 0;
+    transition: color 0.3s var(--transition);
 }
 
-.burger span {
-    display: block;
-    height: 2px;
-    background: white;
-    transition: var(--transition);
+.burger .icon {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s var(--transition);
 }
 
-.burger span:first-child {
-    width: 20px;
+.burger.open .icon {
+    transform: rotate(180deg); /* ✅ Smooth transition between icons */
 }
 
-.burger span:last-child {
-    width: 12px;
-}
-
-.burger:hover span:last-child {
-    width: 20px;
-}
-
-.burger.open span:first-child {
-    transform: rotate(45deg) translate(4px, 4px);
-    width: 20px;
-}
-
-.burger.open span:last-child {
-    transform: rotate(-45deg) translate(4px, -4px);
-    width: 20px;
-}
 
 @media (max-width: 1024px) {
     .burger {
@@ -268,52 +321,43 @@
 
 
     .header {
-        top: 20px;
+        top: 0;
         bottom: unset;
         height: var(--header-height);
     }
 }
 
-/* Mobile Menu */
+/* ===== MOBILE MENU ===== */
 .mobileMenu {
     position: fixed;
 
-
-    top: 90px;
-    left: 20px;
-    transform: translateX(-50%);
-    width: min(1200px, calc(100% - 32px));
-
-    background: rgba(10, 10, 10, .82);
-
+    inset: 55% auto auto 50%; /* ✅ Better centering */
+    transform: translate(-50%, -50%) scale(0.95); /* ✅ Combined transforms */
+    width: 80%;
+    min-height: 70svh;
+    background: rgba(10, 10, 10, 0.82);
     backdrop-filter: blur(30px);
-
-    overflow: auto;
+    padding: 5rem 1.5rem 1.25rem;
     z-index: 100;
-    padding: 80px 24px 20px;
     opacity: 0;
-    width: min(1500px, calc(100% - 32px));
-    min-height: 80svh;
-    border-radius: 16px;
-
     pointer-events: none;
-    transform: translateX(100%) scale(0);
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 16px; /* ✅ Added for better appearance */
 }
 
-.mobileMenuTitle {
-    font-family: var(--font-display, 'Bebas Neue', sans-serif);
-    font-size: 1.6rem;
-    font-weight: 500;
-    color: var(--color-title, #ffffff);
-    text-align: center;
-    letter-spacing: -0.02em;
-    text-transform: uppercase;
+.mobileMenu.open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1); /* ✅ Match the initial translateX */
 }
 
 .mobileMenu::-webkit-scrollbar {
-    width: 0;
+    display: none;
 }
+
 
 .mobileMenuInner {
     display: flex;
@@ -322,66 +366,64 @@
     min-height: 100%;
 }
 
-.mobileMenu.open {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateX(0) scale(1);
-
+.mobileMenuTitle {
+    font: 500 1.6rem/1 var(--font-display, 'Bebas Neue', sans-serif);
+    color: var(--color-title, #fff);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    margin-bottom: 2rem;
 }
 
+/* Navigation Links */
 .mobileNav {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    align-items: center;
+    gap: 0.5rem;
+    margin: auto 0;
 }
 
 .mobileNavLink {
     display: flex;
+    min-width: clamp(160px, 20vw, 240px);
     align-items: center;
     gap: 1.5rem;
-    font-family: var(--font-display, 'Bebas Neue', sans-serif);
-    font-size: clamp(1.2rem, 2vw, 1.8rem);
-    font-weight: 500;
-    color: var(--color-secondary, #94a3b8);
-    text-decoration: none;
-    letter-spacing: -0.02em;
-    transition: all 0.3s ease;
-    padding: 0.5rem 0;
+    padding: 0.75rem 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-    position: relative;
+    color: var(--color-secondary, #94a3b8);
+    font: 500 clamp(0.68rem, 1.2vw, 1.2rem)/1 var(--font-display, 'Bebas Neue', sans-serif);
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    transition: color 0.3s ease;
 }
 
 .mobileNavLink:hover {
-    color: var(--color-text, #ffffff);
-
+    color: var(--color-text, #fff);
 }
 
 .mobileNavLink.active {
     color: var(--color-accent, #667eea);
 }
 
-.mobileNavLink.active .mobileNum {
-    color: var(--color-accent, #667eea);
-}
-
 .mobileNum {
-    font-family: var(--font-mono, 'DM Mono', monospace);
-    font-size: clamp(1.2rem, 2vw, 1.8rem);
+    font: 400 clamp(0.68rem, 1.6vw, 1.2rem)/1 var(--font-mono, 'DM Mono', monospace);
     color: var(--color-secondary, #94a3b8);
     opacity: 0.4;
-    min-width: 30px;
+    min-width: 2rem;
 }
 
 .mobileLabel {
     flex: 1;
+    font-size: clamp(1rem, 1.6vw, 1.8rem);
 }
 
 .mobileArrow {
     font-size: clamp(0.8rem, 2vw, 1rem);
-    opacity: 0;
-    transform: translateX(-10px);
-    transition: all 0.3s ease;
     color: var(--color-accent, #667eea);
+    opacity: 0;
+    transform: translateX(-0.5rem);
+    transition: all 0.3s ease;
 }
 
 .mobileNavLink:hover .mobileArrow {
@@ -389,7 +431,7 @@
     transform: translateX(0);
 }
 
-/* ── Mobile Footer ── */
+/* Footer */
 .mobileFooter {
     margin-top: auto;
     padding-top: 2rem;
@@ -397,37 +439,31 @@
 }
 
 .mobileFooterText {
-    font-family: var(--font-mono, 'DM Mono', monospace);
-    font-size: 0.65rem;
+    font: 400 0.65rem/1 var(--font-mono, 'DM Mono', monospace);
     color: var(--color-secondary, #94a3b8);
-    text-decoration: none;
     letter-spacing: 0.05em;
     opacity: 0.8;
-    transition: all 0.3s ease;
-    margin-top: 4rem;
     text-align: center;
+    margin-top: 2rem;
+    transition: all 0.3s ease;
 }
 
 .mobileSocial {
     display: flex;
-    align-items: center;
-    flex-direction: row;
-    gap: 16px;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
 }
 
-.mobileSocial a {
-    font-family: var(--font-mono, 'DM Mono', monospace);
-    font-size: 0.55rem;
+.mobileSocialLink {
     color: var(--color-secondary, #94a3b8);
-    text-decoration: none;
-    letter-spacing: 0.05em;
     opacity: 0.8;
     transition: all 0.3s ease;
 }
 
-.mobileSocial a:hover {
+.mobileSocialLink:hover {
     opacity: 1;
-    color: var(--color-text, #ffffff);
+    color: var(--color-text, #fff);
 }
 
 /* Responsive */
@@ -464,10 +500,6 @@
     }
 }
 
-/* Dark Theme Support */
-:global(.dark-theme) .header {
-    background: transparent;
-}
 
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
@@ -477,4 +509,31 @@
     }
 }
 
-/* За замовчуванням меню приховане але в DOM */
+/* Для десктопу (hover) */
+@media (hover: hover) and (pointer: fine) {
+    .mobileNavLink:hover {
+        color: var(--color-text, #fff);
+    }
+
+    .mobileSocialLink:hover {
+        opacity: 1;
+        color: var(--color-text, #fff);
+    }
+}
+
+/* Для мобільних пристроїв (tap) */
+@media (hover: none) and (pointer: coarse) {
+    .mobileNavLink:active,
+    .mobileNavLink:focus {
+        color: var(--color-text, #fff);
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .mobileSocialLink:active,
+    .mobileSocialLink:focus {
+        opacity: 1;
+        color: var(--color-text, #fff);
+        transform: scale(1.1);
+    }
+}
+

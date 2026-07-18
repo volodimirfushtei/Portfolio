@@ -53,11 +53,12 @@ export default function ExperienceTable() {
   useLayoutEffect(() => {
 
     document.fonts.ready.then(() => {
-      gsap.set('.title', { opacity: 1 })
+      gsap.set(titleRef.current, { opacity: 1 })
       let split = SplitText.create(titleRef.current, { type: 'words', aria: 'hidden' })
 
       gsap.from(split.words, {
         opacity: 0,
+        y: 20,
         duration: 2,
         ease: 'sine.out',
         stagger: 0.1,

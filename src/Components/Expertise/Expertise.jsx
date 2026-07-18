@@ -11,6 +11,7 @@ const Expertise = () => {
   // Refs
   const backgroundRef = useRef(null)
   const eyebrowRef = useRef(null)
+  const eyebrowTextRef = useRef(null)
   const titleRef = useRef(null)
   const dividerRef = useRef(null)
   const locationRef = useRef(null)
@@ -20,6 +21,7 @@ const Expertise = () => {
   const blurOrb2Ref = useRef(null)
 
   useEffect(() => {
+    if (!sectionRef.current) return
     const ctx = gsap.context(() => {
       // Entry Animation (Timeline)
       const tl = gsap.timeline({
@@ -27,6 +29,7 @@ const Expertise = () => {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top 85%',
+          end: 'bottom 10%',
           once: true,
         },
       })
@@ -42,8 +45,7 @@ const Expertise = () => {
       // 2. Eyebrow
       tl.from(eyebrowRef.current, {
         autoAlpha: 0,
-        y: 40,
-        filter: 'blur(12px)',
+        x: 40,
         duration: 0.8,
       }, '-=1')
 
@@ -54,31 +56,20 @@ const Expertise = () => {
         duration: 0.9,
       }, '-=0.5')
 
-      // 4. Title (SplitText effect)
-      const titleChars = titleRef.current.querySelectorAll('.titleLine span')
-      tl.from(titleChars, {
-        y: 100,
-        opacity: 0,
-        rotateX: -20,
-        stagger: 0.1,
-        duration: 1.2,
-        ease: 'back.out(1.7)',
-      }, '-=0.6')
 
       // 5. Location
       tl.from(locationRef.current, {
         autoAlpha: 0,
-        y: -30,
+        x: -50,
         duration: 0.8,
       }, '-=0.8')
 
       // 6. Card (with bounce effect)
       tl.from(cardRef.current, {
         autoAlpha: 0,
-        y: 100,
+        x: 50,
         scale: 0.9,
         rotateX: 10,
-        filter: 'blur(12px)',
         duration: 1.4,
       })
         .to(cardRef.current, {
@@ -160,7 +151,7 @@ const Expertise = () => {
         {/* Section Header */}
         <header className={styles.header}>
           <div className={styles.eyebrow} ref={eyebrowRef}>
-            <span className={styles.eyebrowText}>Skills & Technologies · 2026</span>
+            <span ref={eyebrowTextRef} className={styles.eyebrowText}>Skills & Technologies · 2026</span>
             <span className={styles.eyebrowDot} />
           </div>
 

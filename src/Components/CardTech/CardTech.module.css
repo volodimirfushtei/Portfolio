@@ -46,7 +46,9 @@
 .profileCardNoise {
     position: absolute;
     background: url("/images/texture.webp") center/cover no-repeat;
-    opacity: 0.1;
+
+
+    opacity: 0.22;
     inset: 0;
     z-index: -1;
     pointer-events: none;
@@ -77,14 +79,20 @@
     width: 100%;
     height: 100%;
     backdrop-filter: blur(4px);
-    background: linear-gradient(to bottom, rgba(248, 79, 105, 0.1), transparent);
-    z-index: 0;
+
+    background: linear-gradient(
+    90deg,% rgba(247, 41, 82, 0.15) 0%,
+    transparent 60%
+    );
+
+    opacity: 0.8;
+    z-index: -1;
     pointer-events: none;
 }
 
 @supports (backdrop-filter: blur(4px)) {
     .overlayHalf {
-        background: linear-gradient(to bottom, rgba(248, 79, 105, 0.28), transparent);
+
     }
 }
 
@@ -504,70 +512,7 @@
     }
 }
 
-/* ═══════════════════════════════════════════
-   9. THEME SPECIFIC OVERRIDES (GLOBAL CLASSES)
-   ═══════════════════════════════════════════ */
 
-/* Light Theme Overrides */
-:global(.light-theme) .profileCard,
-:global(.prelight-theme) .profileCard {
-    background: rgba(0, 0, 0, 0.03);
-    border-color: rgba(0, 0, 0, 0.08);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.06);
-}
-
-:global(.light-theme) .profileCard:hover,
-:global(.prelight-theme) .profileCard:hover {
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
-    border-color: rgba(0, 0, 0, 0.15);
-}
-
-:global(.light-theme) .status,
-:global(.prelight-theme) .status {
-    background: rgba(0, 0, 0, 0.04);
-    border-color: rgba(0, 0, 0, 0.02);
-}
-
-:global(.light-theme) .techItem,
-:global(.prelight-theme) .techItem {
-    background: rgba(0, 0, 0, 0.03);
-    border-color: rgba(0, 0, 0, 0.06);
-}
-
-:global(.light-theme) .techItem:hover,
-:global(.prelight-theme) .techItem:hover {
-    color: #fff;
-    background: var(--color-accent);
-    border-color: var(--color-accent);
-}
-
-:global(.light-theme) .techItem:hover .svgIcon,
-:global(.prelight-theme) .techItem:hover .svgIcon {
-    color: #fff;
-}
-
-:global(.light-theme) .primaryBtn,
-:global(.prelight-theme) .primaryBtn {
-    color: #fff;
-}
-
-:global(.light-theme) .primaryBtn:hover,
-:global(.prelight-theme) .primaryBtn:hover {
-    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
-}
-
-:global(.light-theme) .secondaryBtn,
-:global(.prelight-theme) .secondaryBtn {
-    border-color: rgba(0, 0, 0, 0.12);
-    color: var(--color-text);
-}
-
-:global(.light-theme) .secondaryBtn:hover,
-:global(.prelight-theme) .secondaryBtn:hover {
-    background: rgba(0, 0, 0, 0.02);
-    border-color: var(--color-accent);
-    color: var(--color-accent);
-}
 
 /* ═══════════════════════════════════════════
    10. ACCESSIBILITY — FOCUS STATES
