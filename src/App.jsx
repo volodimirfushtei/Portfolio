@@ -1,5 +1,5 @@
 import './App.css'
-import { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import { OverlayProvider } from './Components/OverlayProvider/OverlayProvider.jsx'
@@ -19,14 +19,6 @@ const Tech = lazy(() => import('./pages/TechPage/TechPage.jsx'))
 const NotFound = lazy(() => import('./pages/NotFoundPage/NotFoundPage.jsx'))
 const TestError = lazy(() => import('./Components/TestError/TestError.jsx'))
 
-/* ── Preload критичних сторінок ── */
-const preload = () =>
-  Promise.all([
-    import('./pages/homePage/homePage.jsx'),
-    import('./pages/contactsPage/contactsPage.jsx'),
-    import('./pages/projectsPage/projectsPage.jsx'),
-    import('./pages/TechPage/TechPage.jsx'),
-  ])
 
 /* ── Toast styles ── */
 const toastStyle = {
@@ -62,75 +54,39 @@ function App() {
   const [loading, setLoading] = useState(true)
   const [isTouchDevice, setIsTouchDevice] = useState(false)
   const [showOverlay, setShowOverlay] = useState(false)
-  const firstRender = useRef(true)
+
   useEffect(() => {
-    // ── Перевірка на touch device ──
     setIsTouchDevice(
       'ontouchstart' in window || navigator.maxTouchPoints > 0,
     )
 
-    // ── Додаємо клас завантаження ──
     document.body.classList.add('loading')
 
-    let isMounted = true
 
-    // Safety backup fallback timer (max 8 seconds loading)
-    const loadTimer = setTimeout(() => {
-      if (!isMounted) return
-      console.warn('[App] Loading safety timeout reached')
-      setLoading(false)
-      document.body.classList.remove('loading')
-    }, 8000)
-
-    // ── Preload критичних сторінок ──
-    preload()
-      .catch((error) => {
-        console.error('[App] Preload error:', error)
-      })
-
-    // ── Cleanup функція ──
     return () => {
-      isMounted = false
-      clearTimeout(loadTimer)
+      document.body.classList.remove('loading')
+    }
+  }, [])
+  useEffect(() => {
+    document.body.classList.add('loading')
+
+    return () => {
       document.body.classList.remove('loading')
     }
   }, [])
 
-
-  useEffect(() => {
-    if (loading) return
-
-    if (firstRender.current) {
-      firstRender.current = false
-      return
-    }
-
-    setShowOverlay(true)
-
-    const timer = setTimeout(() => {
-      setShowOverlay(false)
-    }, 2600)
-
-    return () => clearTimeout(timer)
-
-  }, [location.pathname])
-
   const handleLoaderComplete = () => {
     setLoading(false)
-    document.body.classList.remove('loading')
   }
 
-  // ── Показуємо Loader під час завантаження ──
   if (loading) {
-    return (
-      <Loader onComplete={handleLoaderComplete} minDuration={3000} />
-    )
+    return <Loader onComplete={handleLoaderComplete} />
   }
 
   return (
     <OverlayProvider>
       <ErrorBoundary>
-        {!isTouchDevice && <CustomCursor />}
+        {isTouchDevice && <CustomCursor />}
         <ScrollToTop />
         <Suspense
           fallback={

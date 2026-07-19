@@ -20,13 +20,13 @@
 /* Dark theme */
 .noise.dark {
   opacity: 0.2;
-  background-image: url('/images/texture_broken.webp')  ;
+  background-image: url('/images/texture.webp')  ;
   background-size: cover;
 }
 
 /* Light theme */
 .noise.light {
   opacity: 0.1;
-  background-image: url('/images/texture_broken.webp') ;
+  background-image: url('/images/texture.webp') ;
   background-size: cover;
 }

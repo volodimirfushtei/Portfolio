@@ -1,30 +1,30 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from 'react'
 
 const useScrollDetection = (threshold = 50) => {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
-    let ticking = false;
+    let ticking = false
 
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          setIsScrolled(window.scrollY > threshold);
-          ticking = false;
-        });
-        ticking = true;
+          setIsScrolled(window.scrollY > threshold)
+          ticking = false
+        })
+        ticking = true
       }
-    };
+    }
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // Initial check
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll() // Initial check
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [threshold]);
 
-  return isScrolled;
-};
+    }
+  }, [threshold])
 
-export default useScrollDetection;
+  return isScrolled
+}
+
+export default useScrollDetection

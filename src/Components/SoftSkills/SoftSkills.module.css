@@ -67,11 +67,11 @@
 
 .title {
     font-family: var(--font-display, 'Bebas Neue', sans-serif);
-    font-size: clamp(2.5rem, 8vw, 8rem);
+    font-size: clamp(2.8rem, 8vw, 8rem);
     font-weight: 700;
     line-height: 0.9;
     text-transform: uppercase;
-    margin: 0;
+    margin: clamp(0.5rem, 2vh, 1rem);
     letter-spacing: -0.02em;
 }
 
@@ -509,9 +509,6 @@
         border-radius: 16px;
     }
 
-    .title {
-        font-size: 1.1rem;
-    }
 
     .content {
         padding: 1rem;

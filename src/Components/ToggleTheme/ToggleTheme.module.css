@@ -106,18 +106,18 @@
     top: 10rem;
     left: 0;
     width: clamp(280px, 32vw, 400px);
-    z-index: 997;
+    z-index: 995;
     background: var(--color-overlay);
     backdrop-filter: blur(var(--blur-sm));
     -webkit-backdrop-filter: blur(var(--blur-sm));
     border: 1px solid var(--glass-border);
     border-radius: var(--radius-lg);
-    box-shadow: var(-shadow-sm,
+    box-shadow: var(--shadow-sm,
     0 0 0 1px var(--glass-bg));
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    opacity: 0.5;
+    opacity: 0.8;
 }
 
 /* ── Panel header ── */

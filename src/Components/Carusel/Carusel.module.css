@@ -61,7 +61,7 @@ margin: 0 auto;
   margin: 0 auto; /* ← змінено відступи */
   flex-direction: column;
   gap: 0.75rem;
-  width: 60%;
+  width: clamp(700px,100%,900px);
   max-width: 100%;
 }
 

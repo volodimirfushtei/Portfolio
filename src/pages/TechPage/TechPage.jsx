@@ -126,7 +126,7 @@ const TechnologyPage = () => {
   const headerRef = useRef(null)
   const gridRef = useRef(null)
   const cardRefs = useRef([])
-  const { finished } = useOverlay()
+ 
   const tl = useRef(null)
   const totalPages = Math.ceil(techStack.length / PER_PAGE)
   const current = useMemo(
@@ -182,7 +182,7 @@ const TechnologyPage = () => {
 
   /* ── Header reveal ── */
   useEffect(() => {
-    if (!finished) return
+   
 
     const ctx = gsap.context(() => {
       tl.current = gsap.timeline()
@@ -214,11 +214,11 @@ const TechnologyPage = () => {
     }, wrapperRef)
 
     return () => ctx.revert()
-  }, [finished])
+  }, [])
 
   /* ── Grid reveal on page change ── */
   useEffect(() => {
-    if (!finished) return
+  
     if (!gridRef.current) return
     const containers = gridRef.current.querySelectorAll(
       `.${styles.cardContainer}`,
@@ -238,7 +238,7 @@ const TechnologyPage = () => {
     }, gridRef)
 
     return () => ctx.revert()
-  }, [currentPage, finished])
+  }, [currentPage])
 
   const handlePage = useCallback((page) => {
     setCurrentPage(page)

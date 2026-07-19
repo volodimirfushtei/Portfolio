@@ -1,60 +1,88 @@
 /* Reset */
-
+/*global.css*/
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: "Bebas Neue";
+    src: url('/fonts/BebasNeue-Regular.woff2') format('woff2'),
+    url('/fonts/BebasNeue-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap; /* ✅ Уникає миготіння тексту */
+}
+
+@font-face {
+    font-family: "DM Mono";
+    src: url("/fonts/DMMono-MediumItalic.woff2") format("woff2");
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Rethink Sans";
+    src: url("/fonts/RethinkSans-VariableFont_wght.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
 }
 
 /* Smooth scroll */
 html {
-  scroll-behavior: smooth;
+    scroll-behavior: smooth;
 }
 
 body {
-  overscroll-behavior: none;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none;
-  font-family: "Bebas Neue", sans-serif;
+    overscroll-behavior: none;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    font-family: "Rethink Sans", sans-serif;
 }
+
 .scrollbar-hidden::-webkit-scrollbar {
-  display: none;
+    display: none;
 }
+
 .scrollbar-hidden {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 /* CSS variables */
 
 /* Anchor styles */
 a {
-  color: inherit;
-  text-decoration: none;
+    color: inherit;
+    text-decoration: none;
 }
 
 a:hover {
-  text-decoration: inherit;
+    text-decoration: inherit;
 }
 
 /* Lists */
 ul,
 ol {
-  list-style: none;
+    list-style: none;
 }
 
 /* Images */
 img {
-  max-width: 100%;
-  display: block;
+    max-width: 100%;
+    display: block;
 }
+
 h1,
 h2,
 h3,
 h4,
 h5,
-h6{
-  font-family: "Bebas Neue", sans-serif;
-  
+h6 {
+    font-family: "Bebas Neue", sans-serif;
+
 }
 

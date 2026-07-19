@@ -1,10 +1,14 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react-swc";
-import tailwindcss from "@tailwindcss/vite";
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react-swc'
+import tailwindcss from '@tailwindcss/vite'
+import { fileURLToPath, URL } from 'node:url'
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  
+
+  // ✅ Виправлено: одна зірочка замість двох
+  assetsInclude: ['**/fonts/*.woff2', '**/fonts/*.woff', '**/fonts/*.ttf'],
+
   build: {
     target: 'es2020',
     minify: 'terser',
@@ -12,50 +16,49 @@ export default defineConfig({
       compress: {
         drop_console: true,
         drop_debugger: true,
-      }
+      },
     },
-    // Тимчасово вимикаємо ручне розділення для уникнення циклів
     rollupOptions: {
       output: {
-        // Автоматичне розділення
         manualChunks: undefined,
         chunkFileNames: 'assets/[name]-[hash].js',
         entryFileNames: 'assets/[name]-[hash].js',
-      }
+        assetFileNames: 'assets/fonts/[name][extname]', // ✅ Шлях для шрифтів
+      },
     },
     sourcemap: false,
-    chunkSizeWarningLimit: 1000
+    chunkSizeWarningLimit: 1000,
   },
-  
+
   server: {
     proxy: {
-      "/api": {
-        target: "http://localhost:5000",
+      '/api': {
+        target: 'http://localhost:5000',
         changeOrigin: true,
       },
     },
   },
-  
+
   resolve: {
     alias: {
-      '@': '/src',
-      '@components': '/src/Components',
-      '@pages': '/src/pages',
-      '@hooks': '/src/hooks',
-      '@utils': '/src/utils',
-      '@styles': '/src/styles',
-      '@assets': '/src/assets',
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '@components': fileURLToPath(new URL('./src/Components', import.meta.url)),
+      '@pages': fileURLToPath(new URL('./src/pages', import.meta.url)),
+      '@hooks': fileURLToPath(new URL('./src/hooks', import.meta.url)),
+      '@utils': fileURLToPath(new URL('./src/utils', import.meta.url)),
+      '@styles': fileURLToPath(new URL('./src/styles', import.meta.url)),
+      '@assets': fileURLToPath(new URL('./src/assets', import.meta.url)),
     },
-    dedupe: ['react', 'react-dom', 'three']
+    dedupe: ['react', 'react-dom', 'three'],
   },
-  
+
   optimizeDeps: {
     include: [
       'react',
       'react-dom',
       'three',
       '@react-three/fiber',
-      '@react-three/drei'
-    ]
-  }
-});
+      '@react-three/drei',
+    ],
+  },
+})

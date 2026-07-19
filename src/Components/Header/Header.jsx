@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { gsap } from 'gsap'
 import styles from './Header.module.css'
 import ToggleTheme from '../ToggleTheme/ToggleTheme'
 import FullscreenButton from '../FullScreenButton/FullScreenButton'
@@ -26,60 +25,32 @@ const Header = () => {
   const [scrollDirection, setScrollDirection] = useState('up')
   const prevScrollRef = useRef(0)
 
-  // ✅ Optimized scroll direction with requestAnimationFrame
   useEffect(() => {
-    let ticking = false
     const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const currentScroll = window.scrollY
-          setScrollDirection(prev => prevScrollRef.current > currentScroll ? 'up' : 'down')
-          prevScrollRef.current = currentScroll
-          ticking = false
-        })
-        ticking = true
+      const currentScroll = window.scrollY
+
+      // ✅ Виправлена логіка напрямку
+      if (currentScroll > prevScrollRef.current) {
+        setScrollDirection('down')
+      } else if (currentScroll < prevScrollRef.current) {
+        setScrollDirection('up')
       }
+      prevScrollRef.current = currentScroll
+
+
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Hide/show header
+// ✅ Виправлена логіка приховування
   useEffect(() => {
-    if (isScrolled && scrollDirection === 'down') {
-      setHidden(true)
-    } else {
-      setHidden(false)
-    }
+    // Ховаємо лише якщо скролимо ВНИЗ і вже прокрутили > 50px
+    const shouldHide = isScrolled && scrollDirection === 'down'
+    setHidden(shouldHide)
   }, [isScrolled, scrollDirection])
 
-  // ✅ Optimized GSAP animation with cleanup
-  useEffect(() => {
-    if (!headerRef.current) return
-
-    // ✅ Respect reduced motion
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      gsap.set(headerRef.current, { y: 0, opacity: 1 })
-      return
-    }
-
-    // ✅ Use GSAP context for cleanup
-    const ctx = gsap.context(() => {
-      animationRef.current = gsap.to(headerRef.current, {
-        y: hidden ? -120 : 0,
-        opacity: hidden ? 0 : 1,
-        duration: 0.8,
-        ease: 'expo.out',
-        overwrite: true,
-      })
-    }, headerRef)
-
-    return () => {
-      ctx.revert()
-      animationRef.current?.kill()
-    }
-  }, [hidden])
 
   // Close menu on page change
   useEffect(() => {
@@ -147,6 +118,7 @@ const Header = () => {
               </div>
             </Link>
             <FullscreenButton aria-label="Toggle fullscreen mode" />
+            
           </nav>
 
           {/* Right Section */}
@@ -159,7 +131,7 @@ const Header = () => {
               className={`${styles.burger} ${menuOpen ? styles.open : ''}`}
               onClick={toggleMenu}
               aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-              aria-expanded={menuOpen}
+
             >
               <SvgIcon
                 id={menuOpen ? 'icon-close' : 'icon-menu'}
@@ -174,7 +146,7 @@ const Header = () => {
       {/* Mobile Menu */}
       <div
         className={`${styles.mobileMenu} ${menuOpen ? styles.open : ''}`}
-        aria-hidden={!menuOpen}
+
       >
         <div className={styles.mobileMenuInner}>
           <h4 className={styles.mobileMenuTitle}>Menu</h4>
