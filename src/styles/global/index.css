@@ -1,8 +1,8 @@
-@import './_reset.css';
-@import './_fonts.css';
-@import './_variables.css';
-@import './_base.css';
-@import './_utilits.css';
-@import './_themes.css';
+@import "/src/styles/global/_reset.css";
+@import '/src/styles/global/_fonts.css';
+@import '/src/styles/global/_variables.css';
+@import '/src/styles/global/_base.css';
+@import '/src/styles/global/_utilits.css';
+@import '/src/styles/global/_themes.css';
 
 
