@@ -1,10 +1,25 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
-import tailwindcss from '@tailwindcss/vite'
 import { fileURLToPath, URL } from 'node:url'
+import purgecss from 'vite-plugin-purgecss'
 
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [react(), purgecss({
+    content: ['**/*.html', '**/*.jsx', '**/*.tsx'],
+    css: ['**/*.css'],
+    safelist: {
+      standard: [
+        /-(leave|enter|appear)(|-(to|from|active))$/,
+        /^cursor-/,
+        /^data-/,
+        /^el-/,
+        /^v-/,
+        /^gsap-/,
+        /^motion-/,
+        /^cursor-/,
+      ],
+    },
+  })],
 
   // ✅ Виправлено: одна зірочка замість двох
   assetsInclude: ['**/fonts/*.woff2', '**/fonts/*.woff', '**/fonts/*.ttf'],

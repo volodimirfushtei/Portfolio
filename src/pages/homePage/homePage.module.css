@@ -23,29 +23,14 @@
     width: 100%;
     min-height: 100vh;
     background: transparent;
-    overflow-x: hidden;
+
     z-index: -1;
-    scroll-behavior: smooth;
 
     border-radius: 8px;
 
     transition: opacity 0.3s ease;
 }
 
-
-.container::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-
-    background: url("/images/grunge_texture.webp") center/cover no-repeat;
-    background-size: 100% 100%;
-    opacity: .12;
-    z-index: -3;
-    mix-blend-mode: overlay;
-
-    pointer-events: none;
-}
 
 /* ═══════════════════════════════════════════
    SECTION BASE
@@ -75,9 +60,7 @@
 }
 
 .fadeSection {
-
     --fade: 15%;
-
     mask-image: linear-gradient(
             to bottom,
             transparent,
@@ -85,7 +68,6 @@
             black calc(100% - var(--fade)),
             transparent
     );
-
     -webkit-mask-image: linear-gradient(
             to bottom,
             transparent,

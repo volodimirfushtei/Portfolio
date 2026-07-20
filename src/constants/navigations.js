@@ -5,6 +5,7 @@ export const NAV_ITEMS = [
   { path: '/tech', label: 'Tech' },
   { path: '/contacts', label: 'Contacts' },
   { path: '/error', label: 'Test Error' },
+  { path: '/about', label: 'About' },
 ]
 
 export const socialLinks = [

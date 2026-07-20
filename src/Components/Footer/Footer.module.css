@@ -15,6 +15,25 @@
     perspective: 1000px;
 }
 
+.footer::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    height: 200px;
+
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+
+    background: linear-gradient(
+            to bottom,
+            rgba(10, 10, 10, 0),
+            rgba(10, 10, 10, .85) 60%,
+            #0a0a0a 100%
+    );
+
+    pointer-events: none;
+}
+
 .fadeSection {
     position: absolute;
     z-index: -2;
@@ -87,30 +106,22 @@
     right: -100px;
     width: 300px;
     height: 300px;
-    background: linear-gradient(
-            135deg,
-            rgba(99, 102, 241, 0.3),
-            rgba(168, 85, 247, 0.3)
-    );
+    background: var(--gradient-accent);
     border-radius: 50%;
-    filter: blur(100px);
+    filter: blur(200px);
     pointer-events: none;
     z-index: 2;
 }
 
 .gradientBottom {
     position: absolute;
-    bottom: -100px;
+    bottom: -50px;
     left: -100px;
-    width: 250px;
-    height: 250px;
-    background: linear-gradient(
-            135deg,
-            rgba(231, 46, 206, 0.3),
-            rgba(147, 51, 234, 0.3)
-    );
+    width: 350px;
+    height: 350px;
+    background: var(--gradient-accent);
     border-radius: 50%;
-    filter: blur(120px);
+    filter: blur(180px);
     pointer-events: none;
     z-index: 2;
 }

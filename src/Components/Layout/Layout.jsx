@@ -42,12 +42,12 @@ const Layout = () => {
         <div
           ref={wrapperRef}
           id="smooth-wrapper"
-          className="wrapper overflow-hidden"
+          className={s.wrapper}
         >
           <div
             ref={contentRef}
             id="smooth-content"
-            className="content will-change-transform"
+            className={s.content}
           >
             <AnimatePresence mode="wait">
               <Outlet />

@@ -1,4 +1,3 @@
-import './App.css'
 import { lazy, Suspense, useEffect, useState } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
@@ -11,6 +10,8 @@ import CustomCursor from './Components/CustomCursor/CustomCursor.jsx'
 
 import { AnimatePresence } from 'framer-motion'
 import Overlay from './Components/Overlay/Overlay.jsx'
+
+
 /* ── Lazy pages ── */
 const Home = lazy(() => import('./pages/homePage/homePage.jsx'))
 const Contacts = lazy(() => import('./pages/contactsPage/contactsPage.jsx'))
@@ -18,7 +19,7 @@ const Projects = lazy(() => import('./pages/projectsPage/projectsPage.jsx'))
 const Tech = lazy(() => import('./pages/TechPage/TechPage.jsx'))
 const NotFound = lazy(() => import('./pages/NotFoundPage/NotFoundPage.jsx'))
 const TestError = lazy(() => import('./Components/TestError/TestError.jsx'))
-
+const ScrollBar = lazy(() => import('./Components/ScrollBar/ScrollBar.jsx'))
 
 /* ── Toast styles ── */
 const toastStyle = {
@@ -103,6 +104,7 @@ function App() {
               <Route path="contacts" element={<Contacts />} />
               <Route path="projects" element={<Projects />} />
               <Route path="tech" element={<Tech />} />
+              <Route path="about" element={<ScrollBar />} />
               <Route path="error" element={<TestError />} />
               <Route path="*" element={<NotFound />} />
             </Route>

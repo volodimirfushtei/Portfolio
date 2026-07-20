@@ -69,32 +69,7 @@ html {
 ============================================= */
 
 /* --- Gradient Background (Aurora Effect) --- */
-.background {
-    position: absolute;
-    inset: 0;
-    z-index: -2;
-    background: radial-gradient(ellipse at 20% 50%, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 50%, rgba(245, 158, 11, 0.1) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 100%, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
-    filter: blur(100px);
-    opacity: 0.5;
-    animation: aurora 20s ease-in-out infinite alternate;
-}
 
-@keyframes aurora {
-    0% {
-        opacity: 0.4;
-        filter: blur(80px);
-    }
-    50% {
-        opacity: 0.7;
-        filter: blur(120px);
-    }
-    100% {
-        opacity: 0.4;
-        filter: blur(80px);
-    }
-}
 
 /* --- Noise Texture --- */
 .noise {
@@ -144,15 +119,15 @@ html {
     height: clamp(250px, 25vw, 400px);
     top: -10%;
     right: -10%;
-    background: radial-gradient(circle, rgba(102, 126, 234, 0.3) 0%, transparent 70%);
+    background: radial-gradient(circle, var(--color-primary) 0%, transparent 70%);
 }
 
 .blurOrb2 {
     width: clamp(200px, 20vw, 350px);
     height: clamp(200px, 20vw, 350px);
-    bottom: -10%;
+    bottom: 10%;
     left: -10%;
-    background: radial-gradient(circle, rgba(118, 75, 162, 0.2) 0%, transparent 70%);
+    background: radial-gradient(circle, var(--color-primary) 0%, transparent 70%);
     animation-delay: -5s;
 }
 

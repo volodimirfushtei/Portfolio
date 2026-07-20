@@ -1,78 +1,77 @@
-import { useState, useRef, useEffect } from "react";
-import { gsap } from "gsap";
-import SoftSkills from "../SoftSkills/SoftSkills";
-import styles from "./Carusel.module.css";
+import { useEffect, useRef, useState } from 'react'
+import { gsap } from 'gsap'
+import styles from './Carusel.module.css'
 
 const ACCORDION = [
   {
-    title: "Frontend Architecture",
+    title: 'Frontend Architecture',
     content:
-      "Building scalable apps using React, Zustand, and modular structure. Clean, maintainable and production-ready code.",
+      'Building scalable apps using React, Zustand, and modular structure. Clean, maintainable and production-ready code.',
   },
   {
-    title: "Animations & UX",
+    title: 'Animations & UX',
     content:
-      "Advanced animations with GSAP & Framer Motion. Smooth scrolling, parallax, and micro-interactions.",
+      'Advanced animations with GSAP & Framer Motion. Smooth scrolling, parallax, and micro-interactions.',
   },
   {
-    title: "Performance",
+    title: 'Performance',
     content:
-      "Optimized rendering, lazy loading, code splitting and smooth 60fps interactions.",
+      'Optimized rendering, lazy loading, code splitting and smooth 60fps interactions.',
   },
   {
-    title: "3D & WebGL",
+    title: '3D & WebGL',
     content:
-      "Interactive 3D experiences using Three.js and React Three Fiber.",
+      'Interactive 3D experiences using Three.js and React Three Fiber.',
   },
-];
+]
 
 export default function Carousel() {
-  const [active, setActive] = useState(null);
-  const contentRefs = useRef([]);
+  const [active, setActive] = useState(null)
+  const contentRefs = useRef([])
 
   useEffect(() => {
     contentRefs.current.forEach((el, i) => {
-      if (!el) return;
+      if (!el) return
 
       if (active === i) {
         gsap.to(el, {
           height: el.scrollHeight,
           opacity: 1,
           duration: 0.5,
-          ease: "power3.out",
-        });
+          ease: 'power3.out',
+        })
       } else {
         gsap.to(el, {
           height: 0,
           opacity: 0,
           duration: 0.4,
-          ease: "power2.inOut",
-        });
+          ease: 'power2.inOut',
+        })
       }
-    });
-  }, [active]);
+    })
+  }, [active])
 
   return (
     <div className={styles.carousel}>
       <div className={styles.panel}>
-        <h3 className={styles.title}>What I Do</h3>
-        <p className={styles.subtitle}>
+        <h2 className={styles.title}>What I Do</h2>
+        <h3 className={styles.subtitle}>
           Focused on modern UI, performance and interactive experiences.
-        </p>
+        </h3>
 
         {/* 🔥 Accordion */}
         <div className={styles.accordion}>
           {ACCORDION.map((item, i) => (
             <div
               key={i}
-              className={`${styles.item} ${active === i ? styles.active : ""
-                }`}
+              className={`${styles.item} ${active === i ? styles.active : ''
+              }`}
               onClick={() => setActive(active === i ? null : i)}
             >
               <div className={styles.header}>
                 <span>{item.title}</span>
                 <span className={styles.plus}>
-                  {active === i ? "−" : "+"}
+                  {active === i ? '−' : '+'}
                 </span>
               </div>
 
@@ -86,9 +85,9 @@ export default function Carousel() {
           ))}
         </div>
 
-        
+
       </div>
     </div>
-  );
+  )
 }
 

@@ -5,7 +5,7 @@
     width: 100%;
     z-index: 10;
     min-height: 100vh;
-    background: var(--color-surface);
+    background: var(--color-page-gradient);
     color: var(--color-text);
     padding: clamp(4rem, 15vw, 8rem) 0;
     overflow: hidden;

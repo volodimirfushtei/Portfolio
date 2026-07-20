@@ -76,7 +76,7 @@ const Header = () => {
       >
         <div className={styles.container}>
           {/* Logo */}
-          <Link to="/" className={styles.logo} aria-label="Volodimir Fushtei - Home">
+          <Link to="/about" className={styles.logo} aria-label="Volodimir Fushtei - Home">
             <Logo />
             <span className={styles.logoText}>Volodimir Fushtei</span>
           </Link>
@@ -118,7 +118,7 @@ const Header = () => {
               </div>
             </Link>
             <FullscreenButton aria-label="Toggle fullscreen mode" />
-            
+
           </nav>
 
           {/* Right Section */}

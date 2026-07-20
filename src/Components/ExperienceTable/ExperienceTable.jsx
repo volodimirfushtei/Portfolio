@@ -75,11 +75,11 @@ export default function ExperienceTable() {
           <span className={styles.eyebrowText}>My experience</span>
         </div>
 
-        <h2 className={styles.title} ref={titleRef}>
+        <h3 className={styles.title} ref={titleRef}>
           Building products
           <br />
           with modern technologies.
-        </h2>
+        </h3>
       </div>
 
       <div className={styles.grid}>

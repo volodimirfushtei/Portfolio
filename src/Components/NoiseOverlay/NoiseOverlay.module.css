@@ -1,32 +1,33 @@
 /* Noise.module.css */
 
 .noise {
-  position: fixed;
-  inset: -50%;
-  width: 200%;
-  height: 200%;
+    position: fixed;
+    inset: -50%;
+    width: 200%;
+    height: 200%;
+    z-index: -1;
 }
 
 /* Анімація зміщення */
 
 /* Для зменшення анімацій */
 @media (prefers-reduced-motion: reduce) {
-  .noise {
-    animation: none;
-    opacity: 0.2;
-  }
+    .noise {
+        animation: none;
+        opacity: 0.2;
+    }
 }
 
 /* Dark theme */
 .noise.dark {
-  opacity: 0.2;
-  background-image: url('/images/texture.webp')  ;
-  background-size: cover;
+    opacity: 0.2;
+    background-image: url('/images/texture.webp');
+    background-size: cover;
 }
 
 /* Light theme */
 .noise.light {
-  opacity: 0.1;
-  background-image: url('/images/texture.webp') ;
-  background-size: cover;
+    opacity: 0.1;
+    background-image: url('/images/texture.webp');
+    background-size: cover;
 }

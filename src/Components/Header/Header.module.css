@@ -2,8 +2,8 @@
 
 /* Variables */
 :root {
-    --header-height: 60px;
-    --header-scrolled-height: 50px;
+    --header-height: 80px;
+    --header-scrolled-height: 70px;
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --color-background-scrolled: var(--color-overlay);
 }
@@ -129,22 +129,27 @@
 .navLink {
     padding: 4px 8px;
     color: var(--color-text);
-    border: 1px solid transparent;
+    border: 1px solid var(--color-border);
+    background: var(--glass-bg);
     text-decoration: none;
     font-size: 0.85rem;
     font-weight: 500;
-    transition: var(--transition);
+    transition: border-color var(--transition),
+    transform var(--transition),
+    box-shadow var(--transition);
     border-radius: 8px;
+    box-shadow: var(--color-shadow);
 }
 
 .navLink:hover {
-    color: var(--color-secondary);
-    background: var(--color-background);
+    border-color: var(--color-border);
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: var(--shadow-xs);
 }
 
 .navLink.active {
     color: var(--color-primary);
-    border: 1px solid var(--color-primary);
+    border: 1px solid var(--color-accent);
 }
 
 /* CTA Button */
@@ -152,7 +157,7 @@
     display: flex;
     align-items: center;
     gap: 24px;
-    width: 180px;
+    min-width: 200px;
     padding: 4px 8px 4px 4px;
     margin-left: 16px;
     background: var(--color-surface);
@@ -163,7 +168,7 @@
 }
 
 .ctaBtn:hover {
-    background: var(--color-primary);
+    background: var(--glass-bg);
     border-color: var(--color-primary);
     transform: translateY(-2px);
 }

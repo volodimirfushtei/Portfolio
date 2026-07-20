@@ -1,29 +1,29 @@
-import React, { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import styles from "./ScrollBar.module.css";
+import React, { useRef } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import styles from './ScrollBar.module.css'
 
 const ScrollBar = () => {
-  const containerRef = useRef(null);
+  const containerRef = useRef(null)
   const { scrollYProgress } = useScroll({
     container: containerRef,
-  });
+  })
 
-  const scrollProgress = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const scrollProgress = useTransform(scrollYProgress, [0, 1], [0, 1])
 
   const pages = [
-    { id: 1, color: "var(--color-background)", title: "Welcome" },
-    { id: 2, color: "var(--color-surface)", title: "Services" },
-    { id: 3, color: "var(--color-background)", title: "Portfolio" },
-    { id: 4, color: "var(--color-surface)", title: "Contact" },
-  ];
+    { id: 1, color: 'var(--color-accent)', title: 'Welcome', image: '/images/sity-portrait.webp' },
+    { id: 2, color: 'var(--color-text)', title: 'Services', image: '/images/texture_broken.webp' },
+    { id: 3, color: 'var(--color-secondary)', title: 'Portfolio', image: '/images/robs.jpg' },
+    { id: 4, color: 'var(--color-secondary)', title: 'Contact', image: '/images/preview-portrait.webp' },
+  ]
 
   const scrollToSection = (index) => {
-    const sectionHeight = containerRef.current.clientHeight;
+    const sectionHeight = containerRef.current.clientHeight
     containerRef.current.scrollTo({
       top: sectionHeight * index,
-      behavior: "smooth",
-    });
-  };
+      behavior: 'smooth',
+    })
+  }
 
   return (
     <div className={styles.wrapper}>
@@ -34,7 +34,15 @@ const ScrollBar = () => {
             key={page.id}
             id={`section-${page.id}`}
             className={styles.section}
-            style={{ backgroundColor: page.color }}
+            style={{
+              backgroundColor: page.color,
+              backgroundImage: `url(${page.image})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              width: '100%',
+              height: '100vh',
+              opacity: 0.9,
+            }}
           >
             <motion.h2
               className={styles.sectionTitle}
@@ -44,6 +52,7 @@ const ScrollBar = () => {
             >
               {page.title}
             </motion.h2>
+
           </section>
         ))}
       </div>
@@ -67,13 +76,16 @@ const ScrollBar = () => {
                 className={styles.dot}
                 onClick={() => scrollToSection(index)}
                 aria-label={`Go to section ${index + 1}`}
+
               />
+
             ))}
+            <p className={styles.titleDot}>{pages.title}</p>
           </div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ScrollBar;
+export default ScrollBar

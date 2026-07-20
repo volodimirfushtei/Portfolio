@@ -1,0 +1,339 @@
+/* =======================================================================================
+   🎨 THEME SYSTEM – Enhanced OKLCH Palettes with Better Contrast & Harmony
+   =======================================================================================
+   Поліпшено для:
+   ✅ Кращої читабельності (WCAG AA/AAA)
+   ✅ Гармонійного поєднання кольорів
+   ✅ Чіткої візуальної ієрархії
+   ✅ Адаптивності до різних екранів
+   ======================================================================================= */
+
+:root {
+    /* Дефолтна тема (світла) застосовується автоматично */
+}
+
+/* =======================================================================================
+   ☀️ LIGHT THEME – Clean & High-Contrast
+   ======================================================================================= */
+.light-theme {
+    /* 🎨 Enhanced Color Palette */
+    --color-primary: oklch(45% 0.25 260); /* ✅ Більш насичений */
+    --color-secondary: oklch(55% 0.05 260); /* ✅ Кращий контраст з primary */
+    --color-accent: oklch(70% 0.15 265); /* ✅ Яскравіший акцент */
+    --color-accent-hover: oklch(60% 0.18 265); /* ✅ Помітніший hover */
+
+    /* 🖼️ Background System */
+    --color-background: oklch(99% 0 0); /* ✅ Чистий білий */
+    --color-surface: oklch(97% 0.002 260); /* ✅ Світліший surface */
+    --color-surface-hover: oklch(95% 0.003 260);
+
+    /* 🌄 Page Gradient (м'якший для читання) */
+    --color-page-gradient: linear-gradient(
+            135deg,
+            oklch(98% 0.005 260),
+            oklch(94% 0.01 240)
+    );
+
+    /* 🔤 Typography (кращий контраст) */
+    --color-text: oklch(20% 0.03 260); /* ✅ Темніший текст */
+    --color-text-secondary: oklch(35% 0.03 260);
+    --color-text-muted: oklch(50% 0.02 260); /* ✅ Кращий контраст з background */
+    --color-title: oklch(70% 0.15 265);
+
+    /* ✨ Borders & Effects */
+    --color-border: oklch(85% 0.005 260); /* ✅ Помітніший border */
+    --color-shadow: 0 4px 12px oklch(0% 0 0 / 0.1);
+
+    /* 🌫️ Overlay (прозоріший для світлої теми) */
+    --color-overlay: linear-gradient(
+            to bottom,
+            oklch(95% 0.002 260 / 0.4),
+            oklch(90% 0.004 260 / 0.7)
+    );
+
+    --color-grid: linear-gradient(
+            90deg,
+            transparent 0%,
+            transparent 49.5%,
+            var(--color-border) 50%,
+            transparent 50.5%,
+            transparent 100%
+    );
+
+    /* 💎 Glass Morphism (помітніший) */
+    --glass-bg: rgba(255, 255, 255, 0.12);
+    --glass-border: oklch(20% 0.03 260 / 0.12);
+
+    /* 🌈 Accent Gradients (яскравіші) */
+    --gradient-subtle: linear-gradient(
+            135deg,
+            oklch(98% 0.005 260),
+            oklch(94% 0.01 240)
+    );
+
+    --gradient-accent: linear-gradient(
+            135deg,
+            oklch(45% 0.25 260),
+            oklch(60% 0.18 265)
+    );
+}
+
+/* =======================================================================================
+   🌙 DARK THEME – Deep & Elegant (Krischan Style)
+   ======================================================================================= */
+.dark-theme {
+    /* 🎨 Enhanced Color Palette */
+    --color-primary: oklch(85% 0.05 260); /* ✅ Світліший для читабельності */
+    --color-secondary: oklch(70% 0.06 260);
+    --color-accent: oklch(75% 0.15 270); /* ✅ Більш виразний акцент */
+    --color-accent-hover: oklch(85% 0.15 270);
+
+    /* 🖼️ Background System (глибший чорний) */
+    --color-background: oklch(10% 0.01 260); /* ✅ Глибший чорний */
+    --color-surface: oklch(15% 0.015 260);
+    --color-surface-hover: oklch(20% 0.02 260);
+
+    /* 🌌 Page Gradient (м'якший для очей) */
+    --color-page-gradient: linear-gradient(
+            170deg,
+            oklch(12% 0.015 270) 0%,
+            oklch(15% 0.02 275) 25%,
+            oklch(14% 0.01 290) 55%,
+            oklch(12% 0.008 310) 80%,
+            oklch(10% 0.005 320) 100%
+    );
+
+    /* 🔤 Typography (кращий контраст з темним фоном) */
+    --color-text: oklch(95% 0.05 100); /* ✅ Світліший текст */
+    --color-text-secondary: oklch(80% 0.05 260);
+    --color-text-muted: oklch(60% 0.03 260);
+    --color-white: oklch(100% 0 0);
+
+    /* ✨ Borders & Effects */
+    --color-border: oklch(20% 0.02 260); /* ✅ Помітніший border */
+    --color-shadow: 0 8px 32px oklch(0% 0 0 / 0.4);
+
+    /* 🌫️ Overlay (помітніший) */
+    --color-overlay: linear-gradient(
+            to bottom,
+            oklch(20% 0.01 270 / 0.7),
+            oklch(10% 0.005 270 / 0.9)
+    );
+
+    --color-grid: linear-gradient(
+            90deg,
+            transparent 0%,
+            transparent 49.5%,
+            var(--color-border) 50%,
+            transparent 50.5%,
+            transparent 100%
+    );
+
+    /* 💎 Glass Morphism */
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: oklch(85% 0.05 260 / 0.1);
+
+    /* 🌈 Accent Gradients */
+    --gradient-subtle: linear-gradient(
+            135deg,
+            oklch(15% 0.015 270),
+            oklch(20% 0.02 275)
+    );
+
+    --gradient-accent: linear-gradient(
+            135deg,
+            oklch(75% 0.15 270),
+            oklch(85% 0.15 270)
+    );
+}
+
+/* =======================================================================================
+   🌊 BLUE THEME – Ocean Depth (Поліпшена гармонія)
+   ======================================================================================= */
+.blue-theme {
+    /* 🎨 Enhanced Color Palette */
+    --color-primary: oklch(60% 0.2 260); /* ✅ Більш насичений синій */
+    --color-secondary: oklch(70% 0.15 255);
+    --color-accent: oklch(75% 0.15 280); /* ✅ Фіолетовий відтінок */
+    --color-accent-hover: oklch(80% 0.15 280);
+
+    /* 🖼️ Background System */
+    --color-background: oklch(18% 0.05 265);
+    --color-surface: oklch(25% 0.04 260);
+    --color-surface-hover: oklch(30% 0.04 260);
+
+    /* 🌌 Page Gradient */
+    --color-page-gradient: linear-gradient(
+            135deg,
+            oklch(17.859% 0.07415 260.331),
+            oklch(0.17 0.01 301)
+    );
+
+    /* 🔤 Typography */
+    --color-text: oklch(95% 0.01 265);
+    --color-text-secondary: oklch(80% 0.02 260);
+    --color-text-muted: oklch(65% 0.02 260);
+    --color-white: oklch(100% 0 0);
+
+    /* ✨ Borders & Effects */
+    --color-border: oklch(70% 0.15 255 / 0.3); /* ✅ Яскравіший border */
+    --color-shadow: 0 10px 40px oklch(0% 0 0 / 0.5);
+
+    /* 🌫️ Overlay */
+    --color-overlay: linear-gradient(
+            to bottom,
+            oklch(40% 0.08 270 / 0.5),
+            oklch(20% 0.04 270 / 0.8)
+    );
+
+    --color-grid: linear-gradient(
+            90deg,
+            transparent 0%,
+            transparent 49.5%,
+            var(--color-accent) 50%,
+            transparent 50.5%,
+            transparent 100%
+    );
+
+    /* 💎 Glass Morphism */
+    --glass-bg: oklch(20% 0.05 265 / 0.6);
+    --glass-border: oklch(70% 0.15 255 / 0.2);
+
+    /* 🌈 Accent Gradients */
+    --gradient-subtle: linear-gradient(
+            135deg,
+            oklch(20% 0.05 265),
+            oklch(25% 0.04 260)
+    );
+
+    --gradient-accent: linear-gradient(
+            135deg,
+            oklch(60% 0.2 260),
+            oklch(75% 0.15 280)
+    );
+}
+
+/* =======================================================================================
+   ☀️ PRELIGHT THEME – Minimalist with Punch
+   ======================================================================================= */
+.prelight-theme {
+    /* 🎨 Enhanced Color Palette */
+    --color-primary: oklch(55% 0.2 280); /* ✅ Більш насичений */
+    --color-secondary: oklch(70% 0.12 280);
+    --color-accent: oklch(70% 0.18 285); /* ✅ Яскравіший акцент */
+    --color-accent-hover: oklch(60% 0.2 285);
+
+    /* 🖼️ Background System */
+    --color-background: oklch(96% 0.01 220);
+    --color-surface: oklch(90% 0.005 200);
+    --color-surface-hover: oklch(85% 0.01 250);
+
+    /* 🌄 Page Gradient */
+    --color-page-gradient: linear-gradient(
+            135deg,
+            oklch(97% 0.01 220),
+            oklch(93% 0.02 240)
+    );
+
+    /* 🔤 Typography */
+    --color-text: oklch(25% 0.02 260); /* ✅ Темніший текст */
+    --color-text-secondary: oklch(45% 0.02 260);
+    --color-text-muted: oklch(60% 0.01 260);
+    --color-title: oklch(80% 0.001 270);
+
+    /* ✨ Borders & Effects */
+    --color-border: oklch(50% 0.25 280 / 0.15); /* ✅ Помітніший border */
+    --color-shadow: 0 4px 12px oklch(0% 0 0 / 0.08);
+
+    /* 🌫️ Overlay */
+    --color-overlay: oklch(20% 0.02 220 / 0.4);
+
+    --color-grid: linear-gradient(
+            90deg,
+            transparent 0%,
+            transparent 49.5%,
+            var(--color-border) 50%,
+            transparent 50.5%,
+            transparent 100%
+    );
+
+    /* 💎 Glass Morphism */
+    --glass-bg: oklch(95% 0 0 / 0.6);
+    --glass-border: oklch(50% 0.25 280 / 0.1);
+
+    /* 🌈 Accent Gradients */
+    --gradient-subtle: linear-gradient(
+            135deg,
+            oklch(95% 0.01 220),
+            oklch(90% 0.02 250)
+    );
+
+    --gradient-accent: linear-gradient(
+            135deg,
+            oklch(55% 0.2 280),
+            oklch(70% 0.18 285)
+    );
+}
+
+/* =======================================================================================
+   🎭 NEUTRAL THEME – Professional with Depth
+   ======================================================================================= */
+.neutral-theme {
+    /* 🎨 Enhanced Color Palette */
+    --color-primary: oklch(70% 0.02 285); /* ✅ Більш виразний */
+    --color-secondary: oklch(60% 0.03 280);
+    --color-accent: oklch(55% 0.06 305); /* ✅ М'який акцент */
+    --color-accent-hover: oklch(65% 0.06 285);
+
+    /* 🖼️ Background System */
+    --color-background: oklch(18% 0.015 260);
+    --color-surface: oklch(22% 0.01 260);
+    --color-surface-hover: oklch(25% 0.015 280);
+
+    /* 🌄 Page Gradient */
+    --color-page-gradient: linear-gradient(
+            135deg,
+            oklch(20% 0.01 260),
+            oklch(15% 0.005 280)
+    );
+
+    /* 🔤 Typography */
+    --color-text: oklch(90% 0.03 260);
+    --color-text-secondary: oklch(75% 0.02 250);
+    --color-text-muted: oklch(60% 0.01 250);
+    --color-title: oklch(95% 0.001 270);
+
+    /* ✨ Borders & Effects */
+    --color-border: oklch(100% 0 0 / 0.1); /* ✅ Помітніший на темному */
+    --color-shadow: 0 8px 30px oklch(0% 0 0 / 0.6);
+
+    /* 🌫️ Overlay */
+    --color-overlay: oklch(20% 0.01 260 / 0.6);
+
+    --color-grid: linear-gradient(
+            90deg,
+            transparent 0%,
+            transparent 49.5%,
+            var(--color-border) 50%,
+            transparent 50.5%,
+            transparent 100%
+    );
+
+    /* 💎 Glass Morphism */
+    --glass-bg: oklch(20% 0 0 / 0.6);
+    --glass-border: oklch(100% 0 0 / 0.1);
+
+    /* 🌈 Accent Gradients */
+    --gradient-subtle: linear-gradient(
+            135deg,
+            oklch(20% 0.01 260),
+            oklch(25% 0.015 280)
+    );
+
+    --gradient-accent: linear-gradient(
+            135deg,
+            oklch(90% 0.03 285),
+            oklch(75% 0.02 285)
+    );
+}
+
