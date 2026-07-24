@@ -19,7 +19,7 @@
     height: var(--header-height);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
-    background-color: rgba(255, 255, 255, 0);
+    background-color: transparent;
     transition: transform 0.4s var(--transition),
     opacity 0.4s var(--transition),
     background 0.4s var(--transition);
@@ -29,17 +29,6 @@
     isolation: isolate; /* ✅ Added */
 }
 
-.header::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-
-    background: url("/images/texture_broken.webp") center/cover no-repeat;
-    opacity: .08;
-    mix-blend-mode: overlay;
-    pointer-events: none;
-
-}
 
 .header::before {
     content: "";
@@ -116,7 +105,7 @@
     display: flex;
 
     align-items: center;
-    gap: 8px;
+    gap: 26px;
 }
 
 @media (max-width: 1024px) {
@@ -127,30 +116,33 @@
 }
 
 .navLink {
-    padding: 4px 8px;
-    color: var(--color-text);
-    border: 1px solid var(--color-border);
-    background: var(--glass-bg);
+    padding: 6px 2px;
+    color: var(--color-text-muted);
+
+    background: transparent;
     text-decoration: none;
-    font-size: 0.85rem;
-    font-weight: 500;
+    outline: none;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
     transition: border-color var(--transition),
     transform var(--transition),
-    box-shadow var(--transition);
-    border-radius: 8px;
-    box-shadow: var(--color-shadow);
+
 }
 
 .navLink:hover {
-    border-color: var(--color-border);
-    transform: translateY(-1px) scale(1.02);
+
+    transform: translateY(-2px);
+    transition: transform var(--transition);
     box-shadow: var(--shadow-xs);
 }
 
 .navLink.active {
     color: var(--color-primary);
-    border: 1px solid var(--color-accent);
+    border-bottom: 2px solid var(--color-accent);
 }
+
 
 /* CTA Button */
 .ctaBtn {

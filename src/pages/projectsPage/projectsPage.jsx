@@ -11,22 +11,18 @@ const ProjectPage = () => {
   const gridRef = useRef(null)
   const cardRefs = useRef([])
   const tl = useRef()
-  const { visible } = useOverlay()
+  const { finished } = useOverlay()
   const [projects, setProjects] = useState([])
   const [loading, setLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
   const [searchTerm, setSearchTerm] = useState('')
   const [filterTag, setFilterTag] = useState('')
   const PER_PAGE = 4
-
-  /* ── Helper: Split Title into Lines ── */
-  const splitTitle = (text) => {
-    if (!text) return []
-    return text.split(/(?<=[.!?])\s+|(?<=\|)\s*/).map(line => line.replace('|', '').trim())
-  }
+  const { show } = useOverlay()
 
   /* ── Firestore with error handling ── */
   useEffect(() => {
+   
     setLoading(true)
     const unsub = onSnapshot(
       collection(db, 'projects'),
@@ -195,10 +191,10 @@ const ProjectPage = () => {
 
   }, [paginated, loading])
   useEffect(() => {
-    if (!visible) {
+    if (finished) {
       tl.current?.play()
     }
-  }, [visible])
+  }, [finished])
 
   const handlePageChange = useCallback((page) => {
     setCurrentPage(page)

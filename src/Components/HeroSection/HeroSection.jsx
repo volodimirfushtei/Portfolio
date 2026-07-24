@@ -7,7 +7,6 @@ import styles from './HeroSection.module.css'
 
 const HeroMedia = lazy(() => import('../HeroMedia/HeroMedia.jsx'))
 
-
 const HeroSection = () => {
   const sectionRef = useRef(null)
   const bgRef = useRef(null)
@@ -24,53 +23,33 @@ const HeroSection = () => {
   const gridBlur1Ref = useRef(null)
   const gridBlur2Ref = useRef(null)
   const gridBlur3Ref = useRef(null)
+  gsap.registerPlugin(ScrollTrigger, SplitText)
 
   useLayoutEffect(() => {
 
 
-    gsap.registerPlugin(ScrollTrigger, SplitText)
-
-    let split
-    let floatingAnimations = []
-
     const ctx = gsap.context(() => {
 
-      gsap.set([sectionRef.current, contentRef.current, bgRef.current, bgTextRef.current], {
-        willChange: 'transform, filter, opacity', // ✅ GPU acceleration
-      })
+      const intro = gsap.timeline({ defaults: { ease: 'power4.out' } })
+
+      const fills = gsap.utils.toArray(`.${styles.fill}`)
 
 
-      gsap.utils.toArray([gridBlur1Ref.current, gridBlur2Ref.current]).forEach((el, i) => {
-        const anim = gsap.to(el, {
-          x: i % 2 ? -80 : 80,
-          y: i % 2 ? -80 : 80,
-          opacity: i % 2 ? 0.6 : 0.2,
-          duration: 8,
-          yoyo: true,
+      intro
+        .from(fills, {
+          backgroundPosition: '200% center',
+          duration: 5,
           repeat: -1,
           ease: 'none',
-          paused: false, //
         })
-        floatingAnimations.push(anim)
-      })
-
-
-      split = SplitText.create(titleRef.current, { type: 'words' })
-      gsap.set(split.words, { opacity: 0 })
-
-
-      // Intro animation
-      const intro = gsap.timeline()
-      intro.from(split.words, {
-        opacity: 0,
-        y: 20,
-        stagger: 0.12,
-        duration: 1,
-        ease: 'power4.out',
-      })
-
-      intro.addLabel('hero')
-
+        .from(buttonsRef.current, {
+          opacity: 0,
+          y: 80,
+          rotationX: -25,
+          duration: 1.2,
+          ease: 'power4.out',
+          stagger: 0.12,
+        })
 
       // ScrollTrigger animation
       const tl = gsap.timeline({
@@ -79,38 +58,34 @@ const HeroSection = () => {
           start: 'top top',
           end: 'bottom top',
           scrub: true,
+
         },
       })
 
       tl.addLabel('hero')
         .to(sectionRef.current, {
           borderRadius: 40,
-          filter: 'drop-shadow(0 20px 80px rgba(0,0,0,.35))',
+          opacity: 0.5,
           ease: 'none',
         }, 'hero')
-        .to(contentRef.current, {
-          scale: 0.70,
-          y: 80,
-          opacity: 0.6,
-          ease: 'none',
-        }, 'hero')
+
         .to(bgRef.current, {
           scale: 1.08,
           yPercent: 10,
           ease: 'none',
-        }, 'hero')
+        }, 'hero+=0.2')
         .to(bgTextRef.current, {
           yPercent: -22,
           scale: 0.75,
           opacity: 0,
           ease: 'none',
-        }, 'hero')
+        }, 'hero+=0.2')
         .to(gridBlur3Ref.current, {
           scale: 2,
-          filter: 'blur(180px)',
+
           opacity: 1,
           ease: 'none',
-        }, 'hero')
+        }, 'hero+=0,1')
 
 
     }, sectionRef)
@@ -119,8 +94,8 @@ const HeroSection = () => {
     return () => {
 
       ctx.revert()
-      floatingAnimations.forEach(anim => anim.kill())
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+
+
     }
   }, [])
 
@@ -194,78 +169,27 @@ const HeroSection = () => {
             {/* Giant title */}
             <h1 ref={titleRef} className={styles.title} aria-label="Building Digital Products">
               <span className={styles.titleLine}>
-                <span ref={titleRef} className={styles.titleAccent}>Building</span>
+                <div className={styles.word}>
+               <span className={styles.stroke}>BUILDING</span>
+               <span className={styles.fill}>BUILDING</span>
+
+                </div>
               </span>
               <span className={styles.titleLine}>
-                <span className={styles.titlePlain}>Digital</span>
+                            <div className={styles.word}>
+    <span className={styles.stroke}>Digital</span>
+    <span className={styles.fill}>Digital</span>
+</div>
               </span>
               <span className={styles.titleLine}>
-                <span className={styles.titlePlain}>Products</span>
+                           <div className={styles.word}>
+    <span className={styles.stroke}>Products</span>
+    <span className={styles.fill}>Products</span>
+</div>
               </span>
             </h1>
 
-            {/* Divider */}
-            <div className={styles.divider} />
 
-            {/* CTA buttons */}
-            <div ref={buttonsRef} className={styles.buttons}>
-              <button
-                data-cursor="hover"
-                data-cursor-type="link"
-                data-cursor-text="Let's work together"
-                className={styles.primaryButton}
-                aria-label="Start a project"
-              >
-                <span className={styles.primaryButtonText}>
-                  Start a project
-                </span>
-                <svg
-                  className={styles.btnArrowIcon}
-                  width="14"
-                  height="14"
-                  viewBox="0 0 14 14"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M2 12L12 2M12 2H4M12 2V10"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
-
-              <button
-                data-cursor="hover"
-                data-cursor-type="link"
-                data-cursor-text="GitHub"
-                className={styles.secondaryButton}
-                onClick={handleGitHubClick}
-
-
-                aria-label="View my work on GitHub"
-              >
-                <span>View my work</span>
-                <svg
-                  className={styles.btnArrowIcon}
-                  width="14"
-                  height="14"
-                  viewBox="0 0 14 14"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M2 12L12 2M12 2H4M12 2V10"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
-            </div>
           </div>
 
           {/* RIGHT — Media column */}
@@ -281,6 +205,66 @@ const HeroSection = () => {
             </div>
           </Suspense>
         </div>
+
+      </div>
+      {/* CTA buttons */}
+      <div ref={buttonsRef} className={styles.buttons}>
+        <button
+          data-cursor="hover"
+          data-cursor-type="link"
+          data-cursor-text="Let's work together"
+          className={styles.primaryButton}
+          aria-label="Start a project"
+        >
+                <span className={styles.primaryButtonText}>
+                  Start a project
+                </span>
+          <svg
+            className={styles.btnArrowIcon}
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M2 12L12 2M12 2H4M12 2V10"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
+
+        <button
+          data-cursor="hover"
+          data-cursor-type="link"
+          data-cursor-text="GitHub"
+          className={styles.secondaryButton}
+          onClick={handleGitHubClick}
+
+
+          aria-label="View my work on GitHub"
+        >
+          <span>View my work</span>
+          <svg
+            className={styles.btnArrowIcon}
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M2 12L12 2M12 2H4M12 2V10"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
       </div>
     </section>
   )

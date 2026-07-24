@@ -37,10 +37,8 @@ const ScrollBar = () => {
             style={{
               backgroundColor: page.color,
               backgroundImage: `url(${page.image})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              width: '100%',
-              height: '100vh',
+
+
               opacity: 0.9,
             }}
           >

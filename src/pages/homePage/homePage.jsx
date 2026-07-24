@@ -180,6 +180,7 @@ const HomePage = () => {
       <section className={styles.heroSectionWrapper} id="hero">
         <HeroSection />
       </section>
+
       <section
         id="expertise"
         className={`${styles.section} ${styles.fadeSection}`}

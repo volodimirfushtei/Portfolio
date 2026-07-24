@@ -6,7 +6,7 @@ import FullscreenButton from '../FullScreenButton/FullScreenButton'
 import useScrollDetection from '../../hooks/useScrollDetection'
 import Logo from '../Logo/Logo'
 import { NAV_ITEMS, socialLinks } from '../../constants/navigations'
-
+import TransitionLink from '../../hooks/useTransitionLink'
 // ✅ Reusable SVG Icon component with memo
 const SvgIcon = React.memo(({ id, className = '', width = 24, height = 24 }) => (
   <svg className={`${styles.icon} ${className}`} width={width} height={height} aria-hidden="true">
@@ -68,6 +68,7 @@ const Header = () => {
     })
   }, [])
 
+
   return (
     <>
       <header
@@ -83,18 +84,19 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className={styles.desktopNav}>
+
             {NAV_ITEMS.map((item) => (
-              <NavLink
+              <TransitionLink
                 key={item.path}
                 to={item.path}
                 className={({ isActive }) =>
                   `${styles.navLink} ${isActive ? styles.active : ''}`
                 }
-                aria-label={`Navigate to ${item.label}`}
               >
                 {item.label}
-              </NavLink>
+              </TransitionLink>
             ))}
+
 
             <Link
               to="/contacts"

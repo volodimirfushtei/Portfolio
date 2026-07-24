@@ -20,35 +20,8 @@ const HeroMedia = () => {
         defaults: { ease: 'power4.out' },
       })
 
-      // Container reveal
-      tl.fromTo(
-        containerRef.current,
-        { opacity: 0, clipPath: 'inset(10% 10% 90% 10%)' },
-        {
-          clipPath: 'inset(0% 0% 0% 0%)',
-          opacity: 1,
-          duration: 1.6,
-        },
-      )
-        // Image scale + clip reveal
-        .fromTo(
-          imageRef.current,
-          { clipPath: 'inset(100% 0% 0% 0%)', scale: 1.25 },
-          {
-            clipPath: 'inset(0% 0% 0% 0%)',
-            scale: 1.1,
-            duration: 2,
-            ease: 'expo.inOut',
-          },
-          '-=1.2',
-        )
-        // Frame scale-in
-        .fromTo(
-          frameRef.current,
-          { scale: 0.8, opacity: 0 },
-          { scale: 1, opacity: 0.3, duration: 1.2, ease: 'back.out(1.7)' },
-          '-=1.4',
-        )
+
+
         // Content stagger
         .from(
           contentRef.current.querySelectorAll('[data-reveal]'),

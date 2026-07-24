@@ -14,7 +14,7 @@ export default function SoftSkills() {
   const skills = [
     {
       title: 'Communication',
-      img: '/images/scott_webb.jpg',
+      img: '/images/Workspace.webp',
       items: [
         'Clear communication of idease',
         'Open to feedback',
@@ -23,12 +23,12 @@ export default function SoftSkills() {
     },
     {
       title: 'Teamwork',
-      img: '/images/business.jpg',
+      img: '/images/Coworking.webp',
       items: ['Work under deadlines', 'Support team goals', 'Flexible roles'],
     },
     {
       title: 'Thinking',
-      img: '/images/ingo.jpg',
+      img: '/images/Discussion.webp',
       items: [
         'Creative problem solving',
         'Multi-perspective analysis',
@@ -47,6 +47,7 @@ export default function SoftSkills() {
           card,
           {
             y: 0,
+
             scale: 1,
             opacity: 1,
             filter: 'blur(2px) brightness(0.95)',
@@ -55,6 +56,7 @@ export default function SoftSkills() {
             y: (i + 1) * 80, // менший рух
             scale: 1 - i * 0.06, // сильніший depth
             opacity: 1 - i * 0.15, // легке згасання
+
             filter: 'none',
             ease: 'none',
             scrollTrigger: {
@@ -99,6 +101,7 @@ export default function SoftSkills() {
 
           <div className={styles.grid}>
             {skills.map((skill, i) => (
+
               <div
                 key={skill.title}
                 className={styles.card}
@@ -108,6 +111,7 @@ export default function SoftSkills() {
                 data-cursor-type="link"
                 data-cursor-text="Explore Experience"
               >
+                <div className={styles.frame} />
                 {/* background layer */}
                 <div className={styles.bgWrapper}>
                   <img
@@ -151,6 +155,7 @@ export default function SoftSkills() {
               </div>
             ))}
           </div>
+
         </div>
       </div>
     </section>

@@ -1,23 +1,38 @@
-import React, { createContext, useContext, useState } from 'react'
-import Overlay from '../Overlay/Overlay.jsx'
+import { createContext, useContext, useRef, useState } from 'react'
+import Overlay from '../Overlay/Overlay'
 
-const OverlayContext = createContext()
+const OverlayContext = createContext(null)
 
-export const useOverlay = () => useContext(OverlayContext)
+export const useOverlay = () => {
+  const context = useContext(OverlayContext)
+
+  if (!context) {
+    throw new Error('useOverlay must be used inside OverlayProvider')
+  }
+
+  return context
+}
 
 export const OverlayProvider = ({ children }) => {
-  const [visible, setVisible] = useState(true)
-  const [finished, setFinished] = useState(false)
-  const [heroFinished, setHeroFinished] = useState(false)
+  const [visible, setVisible] = useState(false)
+  const resolverRef = useRef(null)
+  let resolver = null
+
   const show = () => {
-    setFinished(false)
     setVisible(true)
-    setHeroFinished(true)
+
+    return new Promise((resolve) => {
+      resolverRef.current = resolve
+    })
   }
 
   const hide = () => {
     setVisible(false)
-    setFinished(true)
+  }
+
+  const animationFinished = () => {
+    resolverRef.current?.()
+    resolverRef.current = null
   }
 
   return (
@@ -26,7 +41,7 @@ export const OverlayProvider = ({ children }) => {
         show,
         hide,
         visible,
-        finished,
+        animationFinished,
       }}
     >
       {visible && <Overlay />}

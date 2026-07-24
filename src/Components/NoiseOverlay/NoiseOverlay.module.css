@@ -20,7 +20,7 @@
 
 /* Dark theme */
 .noise.dark {
-    opacity: 0.2;
+    opacity: 0.15;
     background-image: url('/images/texture.webp');
     background-size: cover;
 }

@@ -21,13 +21,23 @@
     isolation: isolate;
 }
 
-/* Додати для fade out ефекту */
 
-.noise {
-    background: url("/images/ryan_wilson.jpg") center/cover no-repeat;
+.overlay::after {
+    content: "";
 
+    position: absolute;
+    inset: 0;
+    background-image: url(https://framerusercontent.com/images/9ErWmXn2IIfOUCaXNwDeuxqJXM.png?width=432&height=288);
+    background-size: 216px auto;
+    background-repeat: repeat;
+    opacity: .15;
+    background-position: left top;
+    pointer-events: none;
+
+    mix-blend-mode: overlay;
+
+    animation: noise .3s steps(2) infinite;
 }
-
 
 /* Log{o Wrapper */
 .logoWrap {

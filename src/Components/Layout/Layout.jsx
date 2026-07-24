@@ -1,52 +1,67 @@
-import { Outlet } from 'react-router-dom'
-
+import { Outlet, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import ScrollToTopBtn from '../ScrollToTopBtn/ScrollTotopBtn'
 import Header from '../Header/Header'
 import { ScrollSmoother } from 'gsap/ScrollSmoother'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useLayoutEffect, useRef } from 'react'
+import { useEffect, useLayoutEffect, useRef } from 'react'
 import gsap from 'gsap'
 import s from './Layout.module.css'
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
 const Layout = () => {
-  const wrapperRef = useRef()
-  const contentRef = useRef()
+  const wrapperRef = useRef(null)
+  const contentRef = useRef(null)
+  const smootherRef = useRef(null)
 
+  const location = useLocation()
 
+  // Створюємо ScrollSmoother лише один раз
   useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      ScrollSmoother.create({
+    if (!wrapperRef.current || !contentRef.current) return
+
+    if (!ScrollSmoother.get()) {
+      smootherRef.current = ScrollSmoother.create({
         wrapper: wrapperRef.current,
         content: contentRef.current,
         smooth: 1.2,
         effects: true,
         normalizeScroll: true,
         ignoreMobileResize: true,
+        smoothTouch: 0.1,
       })
-    }, wrapperRef)
+    } else {
+      smootherRef.current = ScrollSmoother.get()
+    }
 
     return () => {
-      ScrollSmoother.get()?.kill()
-      ctx.revert()
+      // НЕ kill()
     }
   }, [])
+
+  // Після переходу просто оновлюємо
+  useEffect(() => {
+    requestAnimationFrame(() => {
+      ScrollTrigger.refresh()
+      smootherRef.current?.refresh()
+    })
+  }, [location.pathname])
 
   return (
     <div className={s.layoutContainer}>
       <Header />
       <ScrollToTopBtn />
-      <main className={`${s.mainContent} `}>
+
+      <main className={s.mainContent}>
         <div
-          ref={wrapperRef}
           id="smooth-wrapper"
+          ref={wrapperRef}
           className={s.wrapper}
         >
           <div
-            ref={contentRef}
             id="smooth-content"
+            ref={contentRef}
             className={s.content}
           >
             <AnimatePresence mode="wait">

@@ -22,7 +22,7 @@
     color: var(--color-text, #ffffff);
     width: 100%;
     min-height: 100vh;
-    background: transparent;
+
 
     z-index: -1;
 
@@ -31,6 +31,22 @@
     transition: opacity 0.3s ease;
 }
 
+.container::after {
+    content: "";
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+
+    transform: translateX(-50%);
+    z-index: -2;
+    width: clamp(500px, 20vw, 400px);
+    height: clamp(500px, 20vw, 400px);
+    filter: blur(var(--blur-amount-2));
+
+
+    background: radial-gradient(circle, var(--color-accent-hover) 0%, transparent 70%);
+    opacity: 0.53;
+}
 
 /* ═══════════════════════════════════════════
    SECTION BASE
@@ -44,9 +60,9 @@
     z-index: 0;
 }
 
-/*.section:nth-child(1) {*/
-/*    z-index: 10;*/
-/*}*/
+.section:nth-child(2) {
+    z-index: 10;
+}
 
 /* Hero Section Wrapper */
 .heroSectionWrapper {

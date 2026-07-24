@@ -8,9 +8,6 @@ import Layout from './Components/Layout/Layout.jsx'
 import ScrollToTop from './Components/ScrollToTop/ScrollToTop.jsx'
 import CustomCursor from './Components/CustomCursor/CustomCursor.jsx'
 
-import { AnimatePresence } from 'framer-motion'
-import Overlay from './Components/Overlay/Overlay.jsx'
-
 
 /* ── Lazy pages ── */
 const Home = lazy(() => import('./pages/homePage/homePage.jsx'))
@@ -54,7 +51,7 @@ function App() {
   const location = useLocation()
   const [loading, setLoading] = useState(true)
   const [isTouchDevice, setIsTouchDevice] = useState(false)
-  const [showOverlay, setShowOverlay] = useState(false)
+
 
   useEffect(() => {
     setIsTouchDevice(
@@ -68,13 +65,7 @@ function App() {
       document.body.classList.remove('loading')
     }
   }, [])
-  useEffect(() => {
-    document.body.classList.add('loading')
 
-    return () => {
-      document.body.classList.remove('loading')
-    }
-  }, [])
 
   const handleLoaderComplete = () => {
     setLoading(false)
@@ -87,7 +78,7 @@ function App() {
   return (
     <OverlayProvider>
       <ErrorBoundary>
-        {isTouchDevice && <CustomCursor />}
+        {!isTouchDevice && <CustomCursor />}
         <ScrollToTop />
         <Suspense
           fallback={
@@ -95,9 +86,7 @@ function App() {
           }
         >
 
-          <AnimatePresence mode="wait">
-            {showOverlay && <Overlay />}
-          </AnimatePresence>
+
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
