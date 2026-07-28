@@ -1,12 +1,40 @@
+/* ============================================
+   Experience Table - Chaotic Style
+============================================= */
+
 .section {
+    position: relative;
     padding: clamp(120px, 10vw, 220px) 6vw;
+    overflow: hidden;
+    background: var(--color-background);
+    isolation: isolate;
 }
 
+/* Хаотичні dividers */
+.divider {
+    position: absolute;
+    width: clamp(300px, 40vw, 600px);
+    height: 1px;
+    background: linear-gradient(
+            90deg,
+            transparent,
+            var(--color-border),
+            transparent
+    );
+    opacity: 0.8;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Header */
 .header {
+    position: relative;
     margin-bottom: 5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
+    z-index: 10;
 }
 
 .eyebrow {
@@ -31,163 +59,153 @@
     color: var(--color-secondary);
 }
 
-.header h3 {
-
+.title {
     font-size: clamp(2.5rem, 5vw, 5rem);
-
     font-weight: 500;
-
-    line-height: .95;
-
-    letter-spacing: -.05em;
-
+    line-height: 0.95;
+    letter-spacing: -0.05em;
     color: var(--color-title);
-
     max-width: 700px;
 }
 
-.title {
-    text-align: center;
-    margin-bottom: 6rem;
-
-}
-
+/* Grid - Хаотична сітка */
 .grid {
-
+    position: relative;
     display: grid;
-
     grid-template-columns: repeat(3, minmax(260px, 1fr));
-
-    border-top: 1px solid var(--color-border);
-
-    border-left: 1px solid var(--color-border);
+    gap: 1px;
+    z-index: 10;
 }
 
+/* Картка */
 .card {
-
     position: relative;
-    margin-top: 40px;
     min-height: 260px;
-    align-items: center;
-    justify-content: center;
+    padding: 3rem;
     display: flex;
     flex-direction: column;
-    padding: 3rem;
-
-    border-right: 1px solid var(--color-border);
-
-    border-bottom: 1px solid var(--color-border);
-
-    transition: background .4s,
-    border-color .4s;
-
+    align-items: flex-start;
+    background: rgba(255, 255, 255, 0.01);
+    transition: all 0.4s ease;
     overflow: hidden;
+    border: 1px solid transparent;
+    cursor: pointer;
 }
 
 .card:hover {
-
-    background: rgba(255, 255, 255, .03);
-
-    border-color: var(--color-accent);
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
 }
 
+/* Номер картки */
 .index {
-
     display: block;
-
     margin-bottom: 2rem;
-
-    opacity: .35;
-
-    font-size: .7rem;
-
-    letter-spacing: .25em;
-
+    opacity: 0.35;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
     text-transform: uppercase;
+    color: var(--color-text-muted);
 }
 
+.image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    opacity: 0.25;
+}
+
+/* Лічильник */
 .number {
-
     font-size: clamp(4rem, 8vw, 7rem);
-
     font-weight: 300;
-
-    line-height: .85;
-
-    letter-spacing: -.06em;
-
+    line-height: 0.85;
+    letter-spacing: -0.06em;
     color: var(--color-title);
+    margin-bottom: 1rem;
 }
 
+/* Текст */
 .text {
-
-    margin-top: 2rem;
+    margin-top: auto;
 }
 
 .text h3 {
-
     font-size: 1.05rem;
-
     font-weight: 600;
-
-    margin-bottom: .35rem;
+    margin-bottom: 0.35rem;
+    color: var(--color-text);
 }
 
 .text p {
-
     color: var(--color-text-secondary);
-
     line-height: 1.6;
+    font-size: 0.95rem;
 }
 
-.card::before {
-
-    content: "";
-
+/* Divider всередині картки */
+.cardDivider {
     position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(
+            90deg,
+            transparent,
+            var(--color-border),
+            transparent
+    );
+    opacity: 0.8;
+}
 
+/* Анімація лінії при hover */
+.card::before {
+    content: "";
+    position: absolute;
     inset: auto 0 0;
-
     height: 2px;
-
     background: var(--color-accent);
-
     transform: scaleX(0);
-
     transform-origin: left;
-
-    transition: transform .45s;
+    transition: transform 0.45s ease;
+    z-index: -1;
 }
 
 .card:hover::before {
-
     transform: scaleX(1);
 }
 
+/* Адаптивність */
 @media (max-width: 1000px) {
-
     .grid {
-
-        grid-template-columns:repeat(2, 1fr);
-
-    }
-
-}
-
-@media (max-width: 640px) {
-
-    .grid {
-
-        grid-template-columns:1fr;
-
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .card {
-
-        min-height: 180px;
-
+        min-height: 220px;
         padding: 2rem;
+    }
+}
 
+@media (max-width: 640px) {
+    .grid {
+        grid-template-columns: 1fr;
     }
 
+    .card {
+        min-height: 180px;
+        padding: 1.5rem;
+    }
+
+    .section {
+        padding: clamp(80px, 15vw, 120px) 4vw;
+    }
 }

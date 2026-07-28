@@ -1,27 +1,26 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
-import styles from './Sertificate.module.css'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import styles from './Sertificate.module.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
 const Certificate = () => {
   const [currentTime, setCurrentTime] = useState(new Date())
   const [isMobile, setIsMobile] = useState(false)
-  const [isTablet, setIsTablet] = useState(false)
   const cardRef = useRef(null)
   const shineRef = useRef(null)
   const bgRef = useRef(null)
   const bg2Ref = useRef(null)
   const bg3Ref = useRef(null)
   const sectionRef = useRef(null)
+  const timeRef = useRef(null)
 
   // ── Responsive Check ──
   useEffect(() => {
     const check = () => {
       const width = window.innerWidth
       setIsMobile(width < 768)
-      setIsTablet(width >= 768 && width < 1024)
     }
     check()
     window.addEventListener('resize', check)
@@ -40,33 +39,23 @@ const Certificate = () => {
   })
 
   // ── GSAP Magnetic Tilt ──
-  const handleMouseMove = useCallback(
-    (e) => {
-      if (isMobile || !cardRef.current) return
-
-      const rect = cardRef.current.getBoundingClientRect()
-      const x = e.clientX - rect.left
-      const y = e.clientY - rect.top
-
-      const centerX = rect.width / 2
-      const centerY = rect.height / 2
-
-      const rotateX = (y - centerY) / 20
-      const rotateY = (centerX - x) / 20
-
-      gsap.to(cardRef.current, {
-        rotateX: rotateX,
-        rotateY: rotateY,
-        duration: 0.5,
-        ease: 'power2.out',
-      })
-    },
-    [isMobile],
-  )
+  const handleMouseMove = useCallback((e) => {
+    if (isMobile || !cardRef.current) return
+    const rect = cardRef.current.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+    const centerX = rect.width / 2
+    const centerY = rect.height / 2
+    gsap.to(cardRef.current, {
+      rotateX: (y - centerY) / 20,
+      rotateY: (centerX - x) / 20,
+      duration: 0.5,
+      ease: 'power2.out',
+    })
+  }, [isMobile])
 
   const handleMouseLeave = useCallback(() => {
     if (isMobile || !cardRef.current) return
-
     gsap.to(cardRef.current, {
       rotateX: 0,
       rotateY: 0,
@@ -78,11 +67,7 @@ const Certificate = () => {
   // ── Shine Animation ──
   useEffect(() => {
     if (!shineRef.current) return
-
-    gsap.set(shineRef.current, {
-      xPercent: -180,
-    })
-
+    gsap.set(shineRef.current, { xPercent: -180 })
     gsap.to(shineRef.current, {
       xPercent: 560,
       duration: 1.8,
@@ -94,6 +79,7 @@ const Certificate = () => {
 
   // ── Background Animations ──
   useEffect(() => {
+    // Анімація фону
     gsap.to(bgRef.current, {
       scale: 1.1,
       duration: 16,
@@ -102,6 +88,7 @@ const Certificate = () => {
       ease: 'sine.inOut',
     })
 
+    // Паралакс для фонових елементів
     gsap.to(bgRef.current, {
       yPercent: -18,
       ease: 'none',
@@ -124,68 +111,68 @@ const Certificate = () => {
       },
     })
 
-    gsap.to(bg3Ref.current, {
-      yPercent: -4,
-      ease: 'none',
+    // Анімація часу
+    gsap.from(timeRef.current, {
+      opacity: 0,
+      y: 20,
+      duration: 1,
+      ease: 'power3.out',
       scrollTrigger: {
         trigger: sectionRef.current,
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: true,
+        start: 'top 80%',
       },
     })
   }, [])
 
   return (
     <section className={styles.section} ref={sectionRef}>
-      {/* ── Visual Overlays ── */}
-      <div className={styles.noise} aria-hidden="true" />
+      {/* Хаотичні dividers */}
+      <div className={styles.divider} style={{ top: '10%', left: '5%', transform: 'rotate(-15deg)' }} />
+      <div className={styles.divider} style={{ top: '30%', right: '10%', transform: 'rotate(20deg)' }} />
+      <div className={styles.divider} style={{ bottom: '20%', left: '15%', transform: 'rotate(5deg)' }} />
+      <div className={styles.divider} style={{ top: '60%', right: '20%', transform: 'rotate(-25deg)' }} />
 
-      <div ref={bgRef} className={styles.bgWord}>
-        CERTIFIED
-      </div>
+      {/* Фонові елементи */}
+      <div className={styles.noise} aria-hidden="true" />
+      <div ref={bgRef} className={styles.bgWord}>CERTIFIED</div>
       <div ref={bg2Ref} className={styles.bgWord2}>
         <div className={styles.bgWordInner}>GOIT / FULLSTACK / 2025</div>
       </div>
       <div ref={bg3Ref} className={styles.bgWord3}>
-        FRONTEND • REACT • NEXT • GSAP • TYPESCRIPT • Framer • React • Node.js •
-        Express • MongoDB • Rest API • Angular
+        FRONTEND • REACT • NEXT • GSAP • TYPESCRIPT • Framer
       </div>
 
       <div className={styles.wrapper}>
-        {/* Info Column */}
+        {/* Інформаційна частина (хаотично розташована) */}
         <div className={styles.infoContainer}>
           <div className={styles.infoSubtitle}>
             <span className={styles.eyebrowLine} />
-            <span className={styles.infoSubtitleText}>
-              Ivano-Frankivsk, Ukraine
-            </span>
+            <span className={styles.infoSubtitleText}>Ivano-Frankivsk, Ukraine</span>
           </div>
 
           <h2 className={styles.infoTitle}>
             Local time
-            <span className={`${styles.time} ${styles.timeShimmer}`}>
+            <span ref={timeRef} className={`${styles.time} ${styles.timeShimmer}`}>
               {formattedTime}
             </span>
           </h2>
 
-          <div className={styles.infoButtons}>
+          <div className={styles.infoTextContainer}>
             <p className={styles.infoText}>
-              Collaborating across borders. <br />
-              <a href="mailto:fuschteyy@gmail.com" className={styles.emailLink}>
-                fuschteyy@gmail.com
-              </a>
+              Collaborating across borders.
             </p>
+            <a href="mailto:fuschteyy@gmail.com" className={styles.emailLink}>
+              fuschteyy@gmail.com
+            </a>
           </div>
         </div>
 
-        {/* Card Column */}
+        {/* Картка сертифіката (не по центру) */}
         <div
           className={styles.cardContainer}
           data-cursor="hover"
           data-cursor-type="link"
-          data-scroll
-          data-cursor-text="GOIT sertificate"
+          data-cursor-text="GOIT Certificate"
         >
           <div
             className={styles.card}
@@ -197,6 +184,7 @@ const Certificate = () => {
             <div className={styles.shine}>
               <div ref={shineRef} className={styles.shineInner} />
             </div>
+
             <div className={styles.certificate}>
               <div className={styles.certificateHeader}>
                 <div className={styles.certLabel}>
@@ -208,8 +196,8 @@ const Certificate = () => {
 
               <div className={styles.body}>
                 <p className={styles.achievement}>
-                  Has successfully completed <br />
-                  <span className={styles.courseName}>FULLSTACK DEVELOPER</span>
+                  Has successfully completed
+                  <span className={styles.courseName}> FULLSTACK DEVELOPER</span>
                 </p>
 
                 <div className={styles.details}>
@@ -226,13 +214,14 @@ const Certificate = () => {
 
               <div className={styles.watermark}>GOIT</div>
             </div>
+
             <a
               href="/certificates/FUSHTEI_VOLODYMYR.pdf"
               download
               className={styles.downloadButton}
               data-cursor="hover"
               data-cursor-type="link"
-              data-cursor-text="Download Sertificate"
+              data-cursor-text="Download Certificate"
             >
               <span className={styles.downloadText}>View Certificate</span>
               <span className={styles.downloadIcon}>→</span>

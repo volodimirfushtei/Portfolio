@@ -12,63 +12,69 @@ const HeroMedia = () => {
   const contentRef = useRef(null)
   const frameRef = useRef(null)
   const nameRef = useRef(null)
-
+  const titleRef = useRef(null)
+  const badgeRef = useRef(null)
   useEffect(() => {
     const ctx = gsap.context(() => {
       /* ── Entry Animation ── */
       const tl = gsap.timeline({
-        defaults: { ease: 'power4.out' },
+        defaults: {
+          ease: 'power4.out',
+        },
       })
 
+      tl
 
+        .from(frameRef.current, {
+          scale: 0.8,
+          opacity: 0,
+          duration: 1,
+        })
 
-        // Content stagger
+        .from(imageRef.current, {
+          scale: 1.3,
+          yPercent: -10,
+          opacity: 0,
+          filter: 'blur(10px)',
+          duration: 1.6,
+        }, '<')
+
+        .from(overlayRef.current, {
+          opacity: 0,
+          scale: 1.2,
+          duration: 1,
+        }, '<0.2')
+        .from(titleRef.current, {
+          x: -20,
+          opacity: 0,
+          duration: .6,
+        }, '<0.1')
+        .from(nameRef.current, {
+          y: 40,
+          opacity: 0,
+          filter: 'blur(10px)',
+          duration: .8,
+        }, '-=0.8')
+
+        .from(badgeRef.current, {
+          x: 20,
+          opacity: 0,
+          duration: .6,
+        }, '<0.1')
+
         .from(
           contentRef.current.querySelectorAll('[data-reveal]'),
           {
-            y: 60,
+            x: 60,
             opacity: 0,
             rotateX: 15,
-            scale: 0.95,
+            scale: .95,
             filter: 'blur(8px)',
-            stagger: 0.1,
-            duration: 1.2,
-            ease: 'expo.out',
+            stagger: .12,
+            duration: 1,
           },
-          '-=0.8',
+          '-=0.5',
         )
-        // Name fade-in
-        .fromTo(
-          nameRef.current,
-          { opacity: 0, x: 20 },
-          { opacity: 0.7, x: 0, duration: 1, ease: 'power2.out' },
-          '-=0.6',
-        )
-
-      /* ── Scroll Parallax ── */
-      gsap.to(imageRef.current, {
-        yPercent: -10,
-        scale: 1.15,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 1.5,
-        },
-      })
-
-      gsap.to(overlayRef.current, {
-        yPercent: -5,
-        scale: 1.05,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 2,
-        },
-      })
 
       /* ── Floating Animation ── */
       gsap.to(imageRef.current, {
@@ -124,7 +130,7 @@ const HeroMedia = () => {
       ctx.revert()
       container.removeEventListener('mousemove', handleMove)
       container.removeEventListener('mouseleave', handleLeave)
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+
     }
   }, [])
 
@@ -148,7 +154,7 @@ const HeroMedia = () => {
       <div ref={overlayRef} className={styles.overlay} />
       <div ref={frameRef} className={styles.frame} />
 
-      <div className={styles.liveBadge}>
+      <div className={styles.liveBadge} ref={badgeRef}>
         <span className={styles.liveDot} />
         LIVE
       </div>
@@ -162,7 +168,7 @@ const HeroMedia = () => {
           <span className={styles.label} data-reveal>
             Creative Engineering
           </span>
-          <h3 className={styles.title} data-reveal>
+          <h3 className={styles.title} ref={titleRef}>
             <span>Frontend</span>
             <span>Motion</span>
           </h3>

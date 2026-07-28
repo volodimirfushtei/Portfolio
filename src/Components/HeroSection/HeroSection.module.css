@@ -6,7 +6,6 @@
 :root {
     /* Colors */
 
-
     /* Typography */
     --font-display: "Bebas Neue", sans-serif;
     --font-mono: "DM Mono", monospace;
@@ -19,7 +18,7 @@
     --hero-gap: clamp(2rem, 8vw, 4rem);
 
     /* Sizes */
-    --title-font-size: clamp(3.5rem, 7.5vw, 6.5rem);
+    --title-font-size: clamp(6rem, 10vw, 14rem);
     --title-line-height: 0.9;
     --button-padding: clamp(1rem, 4vw, 2rem) 2rem;
     --button-font-size: clamp(0.75rem, 1.2vw, 0.85rem);
@@ -37,85 +36,59 @@
 /* ============================================
    2. HERO SECTION (Main Container)
 ============================================= */
-.hero {
+.heroContainer {
     position: relative;
     width: 100%;
     min-height: 100svh;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
     isolation: isolate;
-    background: var(--color-page-gradient);
-    border-bottom: 1px solid var(--color-border);
-    border-radius: 0;
-    transform-origin: top center;
+    overflow: hidden;
+    background: transparent;
     scroll-snap-align: start;
-
 }
 
-.hero::before {
+.heroContainer::before {
     content: "";
     position: absolute;
     inset: 0;
-
     background-image: url(https://framerusercontent.com/images/9ErWmXn2IIfOUCaXNwDeuxqJXM.png?width=432&height=288);
     background-size: 216px auto;
     background-repeat: repeat;
-    opacity: .12;
-
-
+    opacity: .28;
     background-position: left top;
     pointer-events: none;
+    z-index: -10;
 }
 
-/* ============================================
-   3. BACKGROUND ELEMENTS
-============================================= */
 
 /* --- Gradient Background (Aurora Effect) --- */
 .gradientBackground {
     position: absolute;
     inset: 0;
-    z-index: -2;
-    background: var(--color-grid);
-    filter: blur(2px);
+    z-index: 4;
+    background: var("/images/grunge_texture.webp") center/cover;
+
+    background-repeat: no-repeat;
     opacity: 0.9;
-    animation: aurora 20s ease-in-out infinite alternate;
+
 }
 
-@keyframes aurora {
-    0% {
-        opacity: 0.5;
-        filter: blur(80px);
-    }
-    50% {
-        opacity: 0.8;
-        filter: blur(120px);
-    }
-    100% {
-        opacity: 0.5;
-        filter: blur(80px);
-    }
-}
 
 /* --- BG Text (3D Effect) --- */
-.bgText {
+.bgImage {
     position: absolute;
-    left: 40%;
-    top: 55%;
-    transform: translate(-50%, -50%) rotate(-8deg);
-    font-family: var(--font-display);
-    font-size: clamp(14rem, 25vw, 28rem);
-    font-weight: 700;
-    color: var(--color-text);
-    opacity: 0.08;
-    text-shadow: 0 0 10px var(--color-glow);
+    inset: 0;
+    z-index: -2;
+    background-image: url("/images/surrealis.webp");
+    background-position: 50% 10%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 0.2;
+    perspective: 1200px;
     pointer-events: none;
     mix-blend-mode: overlay;
-    backdrop-filter: blur(1px);
-    letter-spacing: -0.05em;
-    line-height: 0.8;
-    will-change: transform, opacity;
+    will-change: transform, background-position, filter;
+
+
 }
 
 /* In HeroSection.module.css */
@@ -178,9 +151,10 @@
 .cornerBadge {
     display: none;
     position: absolute;
-    top: clamp(3rem, 4vw, 5rem);
-    right: clamp(1rem, 4vw, 4rem);
-    z-index: 20;
+    top: 50px;
+    right: 50px;
+
+    z-index: -1;
     flex-direction: column;
     align-items: center;
     gap: 0.3rem;
@@ -192,7 +166,7 @@
     font-size: clamp(1.5rem, 3vw, 2.5rem);
     line-height: 1;
     color: var(--color-text);
-    opacity: 0.2;
+    opacity: 0.8;
 }
 
 .cornerBadgeLabel {
@@ -201,7 +175,7 @@
     letter-spacing: 0.28em;
     text-transform: uppercase;
     color: var(--color-secondary);
-    opacity: 0.4;
+    opacity: 0.8;
     writing-mode: vertical-rl;
     transform: rotate(180deg);
 }
@@ -265,39 +239,43 @@
 }
 
 /* ============================================
-   5. HERO INNER + CONTENT GRID
+   5. HERO GRID+ CONTENT GRID
 ============================================= */
-.heroInner {
+.heroGrid {
+    width: min(1800px, 100%);
+    height: 100svh;
     position: relative;
-    z-index: 1;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    flex-direction: column;
-    padding: var(--hero-padding-top) var(--hero-padding-x) var(--hero-padding-bottom);
+    margin: auto;
+    padding: clamp(32px, 5vw, 80px) clamp(32px, 5vw, 80px) 0;
+
+    display: grid;
+
+    grid-template-columns:
+    55%
+    45%;
+
+    grid-template-rows:
+        1fr
+        auto;
+
+    grid-template-areas:
+        "text media"
+        "buttons buttons";
 }
 
-.content {
-    width: min(100%, 1600px);
-    margin-inline: auto;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--hero-gap);
-    align-items: center;
-    justify-content: center;
-}
 
 /* ============================================
    6. TEXT BLOCK (Eyebrow, Title, Buttons)
 ============================================= */
 .textContent {
+    grid-area: text;
+
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    justify-content: center;
+    align-self: center;
 
-    max-width: 600px;
+    max-width: clamp(300px, 80vw, 700px)
 }
 
 /* --- Eyebrow --- */
@@ -305,7 +283,7 @@
     display: flex;
     align-items: center;
     gap: 0.85rem;
-    margin-bottom: clamp(1.5rem, 2vw, 3rem);
+    margin-top: clamp(0.5rem, 2vw, 2rem);
 
 
     text-align: center;
@@ -383,7 +361,7 @@
 }
 
 .titleLine:nth-child(3) {
-    transform: translateX(clamp(0.5rem, 1.5vw, 1rem));
+    transform: translateX(clamp(-0.5rem, -1.5vw, -1.5rem));
 }
 
 .word {
@@ -396,7 +374,7 @@
     inset: 0;
 
     color: transparent;
-    -webkit-text-stroke: 2px rgba(53, 51, 51, 0.35);
+    -webkit-text-stroke: 2px var(--color-border);
 }
 
 .fill {
@@ -410,27 +388,22 @@
 
     background-clip: text;
     -webkit-background-clip: text;
-
+    clip-path: inset(100% 0% 0% 0%);
     color: transparent;
 }
 
-/* --- Divider --- */
-.divider {
-    width: clamp(100%, 8vw, 800px);
-    height: 1px;
-    background: var(--color-border);
-    margin: clamp(0.5rem, 1vw, 1rem) 0;
-}
 
 /* --- Buttons --- */
 .buttons {
+    grid-area: buttons;
+
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.75rem;
-    width: 100%;
-    margin-top: clamp(1rem, 2vw, 2rem);
-    
+    justify-content: center;
+    align-items: center;
+
+    gap: 24px;
+
+    padding-bottom: 40px;
 }
 
 .primaryButton,
@@ -517,6 +490,13 @@
 ============================================= */
 .mediaContainer {
     position: relative;
+    grid-area: media;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    align-self: center;
     width: 100%;
     max-width: clamp(300px, 80vw, 700px);
     margin: 0 auto;
@@ -528,116 +508,6 @@
    8. RESPONSIVE BREAKPOINTS
 ============================================= */
 
-/* --- Tablet (768px+) --- */
-@media (min-width: 768px) {
-    .cornerBadge,
-    .scrollIndicator {
-        display: flex;
-    }
-
-    .content {
-        grid-template-columns: 1fr 1fr;
-        gap: clamp(2rem, 8vw, 6rem);
-        align-items: center;
-    }
-
-    .textContent {
-        max-width: 500px;
-        margin-right: auto;
-    }
-
-    .eyebrow {
-        justify-content: flex-start;
-        margin-bottom: 2rem;
-    }
-
-    .title {
-        font-size: clamp(5rem, 10vw, 9rem);
-    }
-
-    .buttons {
-        flex-direction: row;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    .mediaContainer {
-        margin: 0;
-    }
-}
-
-/* --- Desktop (1024px+) --- */
-@media (min-width: 1024px) {
-    .hero {
-        min-height: 100vh;
-    }
-
-    .content {
-        gap: clamp(3rem, 8vw, 8rem);
-    }
-
-    .title {
-        font-size: clamp(6rem, 10vw, 10rem);
-    }
-
-    .primaryButton,
-    .secondaryButton {
-        --button-padding: 1.2rem 2.4rem;
-        --button-font-size: 0.8rem;
-        --button-height: 80px;
-    }
-
-    .gridBlur1 {
-        width: 600px;
-        height: 600px;
-    }
-
-    .gridBlur2 {
-        width: 500px;
-        height: 500px;
-    }
-}
-
-/* --- Large Desktop (1440px+) --- */
-@media (min-width: 1440px) {
-    .content {
-        gap: clamp(4rem, 10vw, 12rem);
-    }
-
-    .title {
-        font-size: clamp(7rem, 12vw, 12rem);
-    }
-
-    .gradientBackground {
-        opacity: 0.8;
-    }
-}
-
-/* --- Mobile Landscape (480px+) --- */
-@media (min-width: 480px) {
-    .buttons {
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-start;
-    }
-}
-
-/* --- Small Mobile (≤ 320px) --- */
-@media (max-width: 320px) {
-    :root {
-        --hero-padding-top: 3rem;
-        --hero-padding-bottom: 2rem;
-        --hero-padding-x: 0.5rem;
-        --title-font-size: 3rem;
-        --button-padding: 0.7rem 1rem;
-        --button-font-size: 0.6rem;
-        --button-height: 60px;
-    }
-
-    .eyebrowText {
-        font-size: 0.5rem;
-    }
-}
 
 /* ============================================
    9. REDUCED MOTION (Accessibility)

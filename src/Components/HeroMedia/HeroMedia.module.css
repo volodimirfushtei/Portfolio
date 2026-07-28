@@ -8,8 +8,8 @@
     --transition-slow: 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
     --media-height-mobile: 340px;
-    --media-height-tablet: 500px;
-    --media-height-desktop: 700px;
+    --media-height-tablet: 400px;
+    --media-height-desktop: 600px;
 
     --blur-amount: 12px;
     --glow-color: rgba(255, 45, 85, 0.3);
@@ -52,6 +52,7 @@
     object-position: center;
     transform: scale(1.1);
     filter: drop-shadow(0 20px 40px rgba(0, 0, 0, .35));
+
     transition: transform 0.5s ease, filter 0.5s ease;
     will-change: transform, filter;
 }
@@ -84,6 +85,7 @@
     filter: blur(2px);
     will-change: transform;
     pointer-events: none;
+
 }
 
 /* ═══════════════════════════════════════
@@ -313,10 +315,7 @@
 }
 
 @media (max-width: 768px) {
-    .mediaContainer {
-        min-height: var(--media-height-mobile);
 
-    }
 
     .footer {
         padding: 24px;

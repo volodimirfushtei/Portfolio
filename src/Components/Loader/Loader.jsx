@@ -30,6 +30,8 @@ const Loader = ({ onComplete }) => {
     const tl = gsap.timeline()
     const noiseTween = gsap.to(noiseRef.current, {
       opacity: 0.5,
+
+
       duration: 2,
       repeat: -1,
       yoyo: true,
@@ -73,7 +75,9 @@ const Loader = ({ onComplete }) => {
           setIsLoading(false)
           onComplete?.()
         },
+
       })
+
 
     return () => {
       tl.kill()

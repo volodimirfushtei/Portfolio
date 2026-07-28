@@ -14,15 +14,8 @@ const images = [
   'images/Workspace.webp',
   'images/Discussion.webp',
   'images/Coworking.webp',
-  'images/Workspace.webp',
-  'images/Discussion.webp',
-  'images/Coworking.webp',
-  'images/Workspace.webp',
-  'images/Discussion.webp',
-  'images/Coworking.webp',
 ]
 
-// 4x for a dense, seamless marquee
 const marqueeImages = [...images, ...images, ...images, ...images]
 
 const CtaSection = () => {
@@ -32,54 +25,49 @@ const CtaSection = () => {
   const topTrackRef = useRef(null)
   const bottomTrackRef = useRef(null)
   const marqueeWrapRef = useRef(null)
+
+  // Marquee Animation
   useEffect(() => {
     const top = topTrackRef.current
     const bottom = bottomTrackRef.current
     if (!top || !bottom) return
-    const topWidth = top.scrollWidth / 2
-    const bottomWidth = bottom.scrollWidth / 2
 
     const tl = gsap.context(() => {
       gsap.to(top, {
-        x: -topWidth,
+        x: -top.scrollWidth / 2,
         duration: 250,
         ease: 'none',
         repeat: -1,
       })
 
-      gsap.fromTo(
-        bottom,
-        {
-          x: -bottomWidth,
-        },
-        {
-          x: 0,
-          duration: 280,
-          ease: 'none',
-          repeat: -1,
-        },
-      )
+      gsap.fromTo(bottom, {
+        x: -bottom.scrollWidth / 2,
+      }, {
+        x: 0,
+        duration: 280,
+        ease: 'none',
+        repeat: -1,
+      })
     })
+
+    // Rotate marquee on scroll
     gsap.to(marqueeWrapRef.current, {
       rotate: -12,
+      y: -20,
       scrollTrigger: {
         trigger: sectionRef.current,
         start: 'top bottom',
         end: 'bottom top',
         scrub: 1,
-
       },
-      y: -20,
       duration: 4,
       ease: 'sine.inOut',
       repeat: -1,
       yoyo: true,
     })
+
     return () => tl.revert()
-
-
   }, [])
-
 
   // Responsive Check
   useEffect(() => {
@@ -89,10 +77,9 @@ const CtaSection = () => {
     return () => window.removeEventListener('resize', check)
   }, [])
 
-  // GSAP Magnetic Effect
+  // Magnetic Effect
   const handleMouseMove = useCallback((e) => {
     if (isMobile || !buttonRef.current) return
-
     const rect = buttonRef.current.getBoundingClientRect()
     const x = e.clientX - (rect.left + rect.width / 2)
     const y = e.clientY - (rect.top + rect.height / 2)
@@ -107,7 +94,6 @@ const CtaSection = () => {
 
   const handleMouseLeave = useCallback(() => {
     if (isMobile || !buttonRef.current) return
-
     gsap.to(buttonRef.current, {
       x: 0,
       y: 0,
@@ -136,27 +122,23 @@ const CtaSection = () => {
 
   return (
     <section ref={sectionRef} className={styles.section}>
-      {/* Visual Overlays */}
+      {/* Хаотичні dividers */}
+      <div className={styles.divider} style={{ top: '10%', left: '5%', transform: 'rotate(-15deg)' }} />
+      <div className={styles.divider} style={{ top: '60%', right: '10%', transform: 'rotate(20deg)' }} />
+      <div className={styles.divider} style={{ bottom: '20%', left: '15%', transform: 'rotate(5deg)' }} />
+      <div className={styles.divider} style={{ top: '40%', right: '20%', transform: 'rotate(-25deg)' }} />
+
+      {/* Scanlines overlay */}
       <div className={styles.scanlines} aria-hidden="true" />
 
-      {/* Marquee (Subtle Background) */}
+      {/* Marquee Background */}
       <div className={styles.marqueeWrap} aria-hidden="true" ref={marqueeWrapRef}>
-        <div
-          className={styles.row}
-          ref={topTrackRef}
-
-          transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}
-        >
+        <div className={styles.row} ref={topTrackRef}>
           {marqueeImages.map((src, i) => (
             <img key={`m1-${i}`} src={src} alt="" className={styles.image} loading="lazy" />
           ))}
         </div>
-        <div
-          className={styles.row}
-          ref={bottomTrackRef}
-
-          transition={{ duration: 70, repeat: Infinity, ease: 'linear' }}
-        >
+        <div className={styles.row} ref={bottomTrackRef}>
           {marqueeImages.map((src, i) => (
             <img key={`m2-${i}`} src={src} alt="" className={styles.image} loading="lazy" />
           ))}
@@ -202,7 +184,7 @@ const CtaSection = () => {
             data-cursor-text="Let's work together"
           >
             <a
-              href="https://webflow.com/templates/designers/brandbes"
+              href="https://github.com/volodimirfushtei"
               target="_blank"
               rel="noopener noreferrer"
               className={styles.button}
@@ -217,7 +199,7 @@ const CtaSection = () => {
           <motion.ul className={styles.list} variants={containerVariants}>
             {listItems.map((text) => (
               <motion.li key={text} className={styles.listItem} variants={itemVariants}>
-                <i className="ri-checkbox-circle-line" />
+                <span className={styles.checkIcon}>✓</span>
                 <span>{text}</span>
               </motion.li>
             ))}

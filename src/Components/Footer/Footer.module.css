@@ -10,6 +10,8 @@
     overflow: hidden;
     isolation: isolate;
     min-height: 100vh;
+    background-size: 100% 100%;
+    background-position: center;
     padding: 3rem clamp(1.5rem, 5vw, 3rem);
     transform-style: preserve-3d;
     perspective: 1000px;
@@ -64,7 +66,7 @@
     inset: -10%;
     background: url("/images/smoke.webp") center/cover no-repeat;
     background-size: 140%;
-    opacity: .35;
+    opacity: .15;
     z-index: 10;
     filter: blur(12px);
     mix-blend-mode: lighten;
@@ -76,7 +78,7 @@
 .overlay {
     position: absolute;
     inset: 0;
-    background: var(--color-overlay, #000000);
+    background: rgba(10, 10, 26, 0.7);
     z-index: 1;
     pointer-events: none;
 }
@@ -212,7 +214,7 @@
     width: 42px;
     height: 42px;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    color: var(--color-secondary, #94a3b8);
+    color: var(--color-secondary);
     text-decoration: none;
     font-size: 1.1rem;
     margin-right: -1px;
@@ -269,7 +271,7 @@
     gap: 0.6rem;
     padding: 0.85rem 0;
     font-family: var(--font-mono, 'DM Mono', monospace);
-    font-size: 0.7rem;
+    font-size: var(--font-sm);
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--color-secondary, #94a3b8);
@@ -303,14 +305,14 @@
     gap: 0.6rem;
     padding: 0.85rem 0;
     font-family: var(--font-mono, 'DM Mono', monospace);
-    font-size: 0.7rem;
+    font-size: var(--font-sm);
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--color-secondary, #94a3b8);
 }
 
 .linkItem a {
-    color: inherit;
+    color: var(--color-secondary, #94a3b8);
     text-decoration: none;
     transition: color 0.3s ease;
 }
@@ -342,7 +344,7 @@
 }
 
 .contactInfo i {
-    font-size: 0.9rem;
+    font-size: 0.65rem;
     color: var(--color-accent, #ed0c4c);
     flex-shrink: 0;
 }

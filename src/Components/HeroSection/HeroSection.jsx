@@ -4,13 +4,12 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText } from 'gsap/SplitText'
 import styles from './HeroSection.module.css'
 
-
 const HeroMedia = lazy(() => import('../HeroMedia/HeroMedia.jsx'))
 
 const HeroSection = () => {
   const sectionRef = useRef(null)
   const bgRef = useRef(null)
-  const bgTextRef = useRef(null)
+  const bgImageRef = useRef(null)
   const textRef = useRef(null)
   const eyebrowRef = useRef(null)
   const contentRef = useRef(null)
@@ -23,33 +22,72 @@ const HeroSection = () => {
   const gridBlur1Ref = useRef(null)
   const gridBlur2Ref = useRef(null)
   const gridBlur3Ref = useRef(null)
+
   gsap.registerPlugin(ScrollTrigger, SplitText)
 
   useLayoutEffect(() => {
 
-
+    if (!sectionRef.current) {
+      return
+    }
     const ctx = gsap.context(() => {
 
-      const intro = gsap.timeline({ defaults: { ease: 'power4.out' } })
+
+      gsap.to(bgImageRef.current, {
+        backgroundPosition: '50% 80%',
+        scale: 1.4,
+        rotateZ: 10,
+        ease: 'power1.out',
+        scrollTrigger: {
+          trigger: bgImageRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+        },
+      })
+
+
+      const intro = gsap.timeline({
+
+        defaults: {
+          ease: 'power4.out',
+        },
+      })
+
 
       const fills = gsap.utils.toArray(`.${styles.fill}`)
 
+      intro.to(fills, {
+        clipPath: 'inset(0% 0 0 0)',
+        duration: 1.8,
+        stagger: 0.25,
+        ease: 'power4.out',
+      })
 
-      intro
-        .from(fills, {
-          backgroundPosition: '200% center',
-          duration: 5,
-          repeat: -1,
-          ease: 'none',
-        })
-        .from(buttonsRef.current, {
+      intro.from(buttonsRef.current, {
+        opacity: 0,
+        y: 80,
+        rotationX: -25,
+        duration: 0.8,
+        ease: 'power4.out',
+        stagger: 0.25,
+      }, '>-1.0')
+      intro.fromTo(bgImageRef.current,
+        {
           opacity: 0,
-          y: 80,
-          rotationX: -25,
-          duration: 1.2,
-          ease: 'power4.out',
-          stagger: 0.12,
-        })
+          scale: 1.15,
+          backgroundPosition: '50% 0%',
+          filter: 'blur(10px)',
+        },
+        {
+          opacity: 0.9,
+          scale: 1.05,
+          y: 20,
+          backgroundPosition: '50% 30%',
+          filter: 'blur(1px)',
+          duration: 2,
+          ease: 'expo.out',
+        }, '+=0.2')
 
       // ScrollTrigger animation
       const tl = gsap.timeline({
@@ -59,13 +97,16 @@ const HeroSection = () => {
           end: 'bottom top',
           scrub: true,
 
+
         },
       })
 
       tl.addLabel('hero')
         .to(sectionRef.current, {
           borderRadius: 40,
-          opacity: 0.5,
+          scale: 0.8,
+
+
           ease: 'none',
         }, 'hero')
 
@@ -74,22 +115,19 @@ const HeroSection = () => {
           yPercent: 10,
           ease: 'none',
         }, 'hero+=0.2')
-        .to(bgTextRef.current, {
-          yPercent: -22,
-          scale: 0.75,
-          opacity: 0,
-          ease: 'none',
-        }, 'hero+=0.2')
+
         .to(gridBlur3Ref.current, {
           scale: 2,
-
           opacity: 1,
           ease: 'none',
         }, 'hero+=0,1')
+        .to(scrollIndicatorRef.current, {
+          opacity: 1,
+          ease: 'none',
+        }, 'hero+=0.2')
 
 
     }, sectionRef)
-
 
     return () => {
 
@@ -105,7 +143,9 @@ const HeroSection = () => {
   }, [])
 
   return (
-    <section ref={sectionRef} className={styles.hero}>
+    <section ref={sectionRef} className={styles.heroContainer}>
+
+
       {/* ── Background ── */}
       <div
         ref={bgRef}
@@ -113,9 +153,8 @@ const HeroSection = () => {
         aria-hidden="true"
         data-lag="0.2"
       />
-      <div ref={bgTextRef} className={styles.bgText} aria-hidden="true">
-        FRONTEND
-      </div>
+      <div ref={bgImageRef} className={styles.bgImage} aria-hidden="true" />
+
       {/* ── Grid елементи ── */}
       <div className={styles.gridBlur1} aria-hidden="true" ref={gridBlur1Ref} />
       <div className={styles.gridBlur2} aria-hidden="true" ref={gridBlur2Ref} />
@@ -153,119 +192,119 @@ const HeroSection = () => {
         </div>
       </div>
       {/* ── Main content ── */}
-      <div ref={contentRef} className={styles.heroInner}>
-        <div className={styles.content}>
-          {/* LEFT — Text column */}
-          <div ref={textRef} className={styles.textContent}>
-            {/* Eyebrow */}
-            <div ref={eyebrowRef} className={styles.eyebrow}>
-              <span className={styles.eyebrowLine} />
-              <span className={styles.eyebrowText}>
+      <div ref={contentRef} className={styles.heroGrid}>
+
+        {/* LEFT — Text column */}
+        <div ref={textRef} className={styles.textContent}>
+          {/* Eyebrow */}
+          <div ref={eyebrowRef} className={styles.eyebrow}>
+            <span className={styles.eyebrowLine} />
+            <span className={styles.eyebrowText}>
                 Fullstack Developer · 2025
               </span>
-              <span className={styles.eyebrowDot} />
-            </div>
+            <span className={styles.eyebrowDot} />
+          </div>
 
-            {/* Giant title */}
-            <h1 ref={titleRef} className={styles.title} aria-label="Building Digital Products">
+          {/* Giant title */}
+          <h1 ref={titleRef} className={styles.title} aria-label="Building Digital Products">
               <span className={styles.titleLine}>
-                <div className={styles.word}>
+                <span className={styles.word}>
                <span className={styles.stroke}>BUILDING</span>
                <span className={styles.fill}>BUILDING</span>
 
-                </div>
+                </span>
               </span>
-              <span className={styles.titleLine}>
-                            <div className={styles.word}>
-    <span className={styles.stroke}>Digital</span>
-    <span className={styles.fill}>Digital</span>
-</div>
+            <span className={styles.titleLine}>
+                            <span className={styles.word}>
+                 <span className={styles.stroke}>Digital</span>
+                     <span className={styles.fill}>Digital</span>
+               </span>
               </span>
-              <span className={styles.titleLine}>
-                           <div className={styles.word}>
-    <span className={styles.stroke}>Products</span>
-    <span className={styles.fill}>Products</span>
-</div>
+            <span className={styles.titleLine}>
+                           <span className={styles.word}>
+                            <span className={styles.stroke}>Products</span>
+                    <span className={styles.fill}>Products</span>
+                  </span>
               </span>
-            </h1>
+          </h1>
 
 
-          </div>
-
-          {/* RIGHT — Media column */}
-          <Suspense fallback={<div className={styles.mediaPlaceholder} />}>
-            <div
-              data-cursor="hover"
-              data-cursor-text="Interactive media"
-              data-cursor-type="media"
-              ref={mediaRef}
-              className={styles.mediaContainer}
-            >
-              <HeroMedia />
-            </div>
-          </Suspense>
         </div>
 
-      </div>
-      {/* CTA buttons */}
-      <div ref={buttonsRef} className={styles.buttons}>
-        <button
-          data-cursor="hover"
-          data-cursor-type="link"
-          data-cursor-text="Let's work together"
-          className={styles.primaryButton}
-          aria-label="Start a project"
-        >
+        {/* RIGHT — Media column */}
+        <Suspense fallback={<div className={styles.mediaPlaceholder} />}>
+          <div
+            data-cursor="hover"
+            data-cursor-text="Interactive media"
+            data-cursor-type="media"
+            ref={mediaRef}
+            className={styles.mediaContainer}
+          >
+            <HeroMedia />
+          </div>
+        </Suspense>
+
+        {/* CTA buttons */}
+        <div ref={buttonsRef} className={styles.buttons}>
+          <button
+            data-cursor="hover"
+            data-cursor-type="link"
+            data-cursor-text="Let's work together"
+            className={styles.primaryButton}
+            aria-label="Start a project"
+          >
                 <span className={styles.primaryButtonText}>
                   Start a project
                 </span>
-          <svg
-            className={styles.btnArrowIcon}
-            width="14"
-            height="14"
-            viewBox="0 0 14 14"
-            fill="none"
-            aria-hidden="true"
+            <svg
+              className={styles.btnArrowIcon}
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M2 12L12 2M12 2H4M12 2V10"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+
+          <button
+            data-cursor="hover"
+            data-cursor-type="link"
+            data-cursor-text="GitHub"
+            className={styles.secondaryButton}
+            onClick={handleGitHubClick}
+
+
+            aria-label="View my work on GitHub"
           >
-            <path
-              d="M2 12L12 2M12 2H4M12 2V10"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
-
-        <button
-          data-cursor="hover"
-          data-cursor-type="link"
-          data-cursor-text="GitHub"
-          className={styles.secondaryButton}
-          onClick={handleGitHubClick}
-
-
-          aria-label="View my work on GitHub"
-        >
-          <span>View my work</span>
-          <svg
-            className={styles.btnArrowIcon}
-            width="14"
-            height="14"
-            viewBox="0 0 14 14"
-            fill="none"
-            aria-hidden="true"
-          >
-            <path
-              d="M2 12L12 2M12 2H4M12 2V10"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
+            <span>View my work</span>
+            <svg
+              className={styles.btnArrowIcon}
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M2 12L12 2M12 2H4M12 2V10"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
+
     </section>
   )
 }

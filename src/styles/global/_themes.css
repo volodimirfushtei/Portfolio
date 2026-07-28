@@ -85,8 +85,8 @@
     /* 🎨 Enhanced Color Palette */
     --color-primary: oklch(85% 0.05 260); /* ✅ Світліший для читабельності */
     --color-secondary: oklch(70% 0.06 260);
-    --color-accent: oklch(75% 0.15 270); /* ✅ Більш виразний акцент */
-    --color-accent-hover: oklch(85% 0.15 270);
+    --color-accent: oklch(0.813 0.167 83.286); /* ✅ Більш виразний акцент */
+    --color-accent-hover: oklch(0.663 0.142 71.601);
 
     /* 🖼️ Background System (глибший чорний) */
     --color-background: oklch(10% 0.01 260); /* ✅ Глибший чорний */

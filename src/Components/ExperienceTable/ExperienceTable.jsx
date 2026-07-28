@@ -5,22 +5,25 @@ import gsap from 'gsap'
 import SplitText from 'gsap/SplitText'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-gsap.registerPlugin(ScrollTrigger)
-gsap.registerPlugin(SplitText)
+gsap.registerPlugin(ScrollTrigger, SplitText)
+
 const STATS = [
-  { value: 3, suffix: '+', title: 'Years', subtitle: 'Experience' },
-  { value: 15, suffix: '+', title: 'Projects', subtitle: 'Completed' },
-  { value: 12, suffix: '+', title: 'Happy', subtitle: 'Clients' },
-  { value: 20, suffix: '+', title: 'Modern', subtitle: 'Technologies' },
-  { value: 3, suffix: '+', title: 'Languages', subtitle: 'Spoken' },
-  { value: 4, suffix: '+', title: 'Professional', subtitle: 'Certificates' },
+  { value: 3, suffix: '+', title: 'Years', subtitle: 'Experience', image: '/images/Workspace.webp' },
+  { value: 15, suffix: '+', title: 'Projects', subtitle: 'Completed', image: '/images/Discussion.webp' },
+  { value: 12, suffix: '+', title: 'Happy', subtitle: 'Clients', image: '/images/Coworking.webp' },
+  { value: 20, suffix: '+', title: 'Modern', subtitle: 'Technologies', image: '/images/darkroom.webp' },
+  { value: 3, suffix: '+', title: 'Languages', subtitle: 'Spoken', image: '/images/grungedark.webp' },
+  { value: 4, suffix: '+', title: 'Professional', subtitle: 'Certificates', image: '/images/surrealis.webp' },
 ]
 
 export default function ExperienceTable() {
   const sectionRef = useRef(null)
   const titleRef = useRef(null)
+  const gridRef = useRef(null)
+  const cardRef = useRef(null)
   const [start, setStart] = useState(false)
 
+  // Observer для секції
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -32,11 +35,14 @@ export default function ExperienceTable() {
       { threshold: 0.4 },
     )
 
-    observer.observe(sectionRef.current)
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current)
+    }
 
     return () => observer.disconnect()
   }, [])
 
+  // Анімація заголовка
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from(titleRef.current, {
@@ -50,57 +56,91 @@ export default function ExperienceTable() {
     return () => ctx.revert()
   }, [])
 
+  // SplitText анімація
   useLayoutEffect(() => {
-
     document.fonts.ready.then(() => {
-      gsap.set(titleRef.current, { opacity: 1 })
-      let split = SplitText.create(titleRef.current, { type: 'words', aria: 'hidden' })
-
+      let split = SplitText.create(titleRef.current, { type: 'words' })
       gsap.from(split.words, {
         opacity: 0,
         y: 20,
-        duration: 2,
+        duration: 1.5,
         ease: 'sine.out',
         stagger: 0.1,
       })
     })
-
   }, [])
+
+  // Анімація карток при скролі
+  useLayoutEffect(() => {
+    if (!start) return
+
+    const ctx = gsap.context(() => {
+      gsap.from('.card', {
+        opacity: 0,
+        y: 50,
+        stagger: 0.15,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: gridRef.current,
+          start: 'top 80%',
+          toggleActions: 'play none none reverse',
+        },
+      })
+    }, gridRef)
+
+    return () => ctx.revert()
+  }, [start])
+
+  const handleMoove = () => {
+
+    gsap.from(cardRef.current, {
+      width: '120%',
+      duration: 0.2,
+      ease: 'power3.out',
+    })
+  }
+
 
   return (
     <section ref={sectionRef} className={styles.section}>
+      {/* Хаотичні dividers */}
+      <div className={styles.divider} style={{ top: '15%', left: '0%', transform: 'rotate(-10deg)' }} />
+      <div className={styles.divider} style={{ top: '60%', right: '0%', transform: 'rotate(15deg)' }} />
+      <div className={styles.divider} style={{ bottom: '10%', left: '20%', transform: 'rotate(5deg)' }} />
+
       <div className={styles.header}>
         <div className={styles.eyebrow}>
           <span className={styles.eyebrowLine} />
           <span className={styles.eyebrowText}>My experience</span>
         </div>
-
         <h3 className={styles.title} ref={titleRef}>
-          Building products
-          <br />
+          Building products<br />
           with modern technologies.
         </h3>
       </div>
 
-      <div className={styles.grid}>
+      <div ref={gridRef} className={styles.grid}>
         {STATS.map((item, index) => (
-          <article className={styles.card} key={item.title}>
+          <article className={styles.card} key={item.title} ref={cardRef} onMouseEnter={() => handleMoove(true)}>
+            {/* Номер картки */}
             <span className={styles.index}>
               {(index + 1).toString().padStart(2, '0')}
             </span>
-
+            <img src={item.image} className={styles.image} alt={item.title} />
+            {/* Лічильник */}
             <div className={styles.number}>
-              <Counter
-                value={item.value}
-                suffix={item.suffix}
-                start={start}
-              />
+              <Counter value={item.value} suffix={item.suffix} start={start} />
             </div>
 
+            {/* Текст */}
             <div className={styles.text}>
               <h3>{item.title}</h3>
               <p>{item.subtitle}</p>
             </div>
+
+            {/* Додатковий divider всередині картки */}
+            <div className={styles.cardDivider} />
           </article>
         ))}
       </div>

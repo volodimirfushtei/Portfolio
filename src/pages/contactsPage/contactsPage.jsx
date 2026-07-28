@@ -9,7 +9,8 @@ const ContactsPage = () => {
   const headerRef = useRef(null)
   const contentRef = useRef(null)
   const bgRef = useRef(null)
-const tl = useRef(null);
+  const socialsRef = useRef(null)
+  const tl = useRef(null)
   const socialItems = [
     {
       icon: 'icon-facebook',
@@ -46,9 +47,9 @@ const tl = useRef(null);
     }
 
     const ctx = gsap.context(() => {
-  tl.current = gsap.timeline({
-      paused: true,
-    });
+      tl.current = gsap.timeline({
+        paused: true,
+      })
       // Background entry
       tl.current.fromTo(
         bgRef.current,
@@ -114,7 +115,7 @@ const tl = useRef(null);
         )
 
         .from(
-          `.${styles.socials} a`,
+          socialsRef.current,
           {
             opacity: 0,
             scale: 0.5,
@@ -134,7 +135,7 @@ const tl = useRef(null);
           },
           '-=0.8',
         )
-        tl.current.play();
+      tl.current.play()
     }, containerRef)
 
     // ✅ Cleanup при розмонтуванні
@@ -142,7 +143,7 @@ const tl = useRef(null);
   }, [])
 
   return (
-    
+
     <div className={styles.contactsPage} ref={containerRef}>
       {/* Visual Overlays */}
       <div className={styles.noise} aria-hidden="true" />
@@ -224,7 +225,7 @@ const tl = useRef(null);
                 </p>
               </article>
               <div>
-                <ul className={styles.socials} aria-label="Social media links">
+                <ul className={styles.socials} aria-label="Social media links" ref={socialsRef}>
                   {socialItems.map((item, index) => (
                     <li key={index}>
                       <a
@@ -289,7 +290,7 @@ const tl = useRef(null);
         </footer>
       </div>
     </div>
-   
+
   )
 }
 

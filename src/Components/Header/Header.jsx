@@ -2,28 +2,35 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import styles from './Header.module.css'
 import ToggleTheme from '../ToggleTheme/ToggleTheme'
-import FullscreenButton from '../FullScreenButton/FullScreenButton'
+import gsap from 'gsap'
 import useScrollDetection from '../../hooks/useScrollDetection'
 import Logo from '../Logo/Logo'
 import { NAV_ITEMS, socialLinks } from '../../constants/navigations'
-import TransitionLink from '../../hooks/useTransitionLink'
+import NavHeader from '../NavHeader/NavHeader.jsx'
+
+
 // ✅ Reusable SVG Icon component with memo
+
 const SvgIcon = React.memo(({ id, className = '', width = 24, height = 24 }) => (
   <svg className={`${styles.icon} ${className}`} width={width} height={height} aria-hidden="true">
     <use href={`/sprite.svg#${id}`} />
   </svg>
 ))
-
 const Header = () => {
   const headerRef = useRef(null)
   const [menuOpen, setMenuOpen] = useState(false)
   const [hidden, setHidden] = useState(false)
+  const [isActive, setIsActive] = useState(false)
   const location = useLocation()
   const animationRef = useRef(null) // ✅ For GSAP cleanup
-
+  const burgerRef = useRef(null)
+  const labelRef = useRef(null)
   const isScrolled = useScrollDetection(50)
   const [scrollDirection, setScrollDirection] = useState('up')
   const prevScrollRef = useRef(0)
+  const menuRef = useRef(null)
+  const closeRef = useRef(null)
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -68,6 +75,38 @@ const Header = () => {
     })
   }, [])
 
+  const handleClick = () => {
+    setIsActive(prev => !prev)
+    const next = !isActive
+    setIsActive(next)
+
+    const tl = gsap.timeline({
+      defaults: {
+        duration: 0.45,
+        ease: 'power3.out',
+      },
+    })
+
+    tl.to(menuRef.current, {
+      yPercent: next ? -100 : 0,
+    }, 0)
+      .to(closeRef.current, {
+        yPercent: next ? 0 : 100,
+      }, 0)
+      .to(labelRef.current, {
+        backgroundColor: next
+          ? 'var(--color-background)'
+          : 'var(--color-surface)',
+      }, 0)
+      .to([menuRef.current, closeRef.current], {
+        color: next
+          ? 'var(--color-text)'
+          : 'var(--color-text)',
+      }, 0)
+
+
+  }
+
 
   return (
     <>
@@ -83,51 +122,31 @@ const Header = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className={styles.desktopNav}>
 
-            {NAV_ITEMS.map((item) => (
-              <TransitionLink
-                key={item.path}
-                to={item.path}
-                className={({ isActive }) =>
-                  `${styles.navLink} ${isActive ? styles.active : ''}`
-                }
-              >
-                {item.label}
-              </TransitionLink>
-            ))}
-
-
-            <Link
-              to="/contacts"
-              className={styles.ctaBtn}
-              aria-label="Schedule a 15-minute consultation"
-            >
-              <img
-                src="/images/preview.webp"
-                alt="Volodymyr Fushtei"
-                fetchpriority="high"
-                decoding="async"
-                loading="eager"
-                className={styles.ctaPhoto}
-              />
-              <div className={styles.ctaText}>
-                <span>Grab 15 minutes</span>
-                <span className={styles.ctaStatus}>
-                  <SvgIcon id="icon-dot" className={styles.statusDotIcon} />
-                  Open and ready
-                </span>
-              </div>
-            </Link>
-            <FullscreenButton aria-label="Toggle fullscreen mode" />
-
-          </nav>
 
           {/* Right Section */}
           <div className={styles.rightSection}>
             <ToggleTheme aria-label="Toggle dark/light mode" />
 
+            <div className={styles.el} onClick={handleClick} ref={labelRef}>
+              <div ref={burgerRef}
+                   className={`${styles.burgerDesktop} ${
+                     isActive ? styles.burgerDesktopActive : ''
+                   }`}
+              />
 
+
+              <div className={styles.label}>
+                <div className={styles.words}>
+                  <p className={styles.menu} ref={menuRef}>
+                    Menu
+                  </p>
+                  <p className={styles.close} ref={closeRef}>
+                    Close
+                  </p>
+                </div>
+              </div>
+            </div>
             {/* Burger Button */}
             <button
               className={`${styles.burger} ${menuOpen ? styles.open : ''}`}
@@ -141,9 +160,11 @@ const Header = () => {
                 height={16}
               />
             </button>
+
           </div>
         </div>
       </header>
+      {isActive && <NavHeader />}
 
       {/* Mobile Menu */}
       <div

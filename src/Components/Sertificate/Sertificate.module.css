@@ -1,281 +1,456 @@
-/* ═══════════════════════════════════════════
-   Sertificate.module.css — Адаптивна версія
-═══════════════════════════════════════════ */
+/* ═══════════════/* ============================================
+   Certificate - Chaotic Style
+============================================= */
 
-/* ═══════════════════════════════════════════
-   1. SECTION BASE
-═══════════════════════════════════════════ */
 .section {
     position: relative;
-    width: 100%;
-    padding: clamp(4rem, 10vh, 8rem) clamp(1rem, 4vw, 4rem);
+    padding: clamp(100px, 12vw, 200px) 6vw;
     overflow: hidden;
-    background: transparent;
+    background: var(--color-background);
     isolation: isolate;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
 }
 
-/* ═══════════════════════════════════════════
-   2. NOISE OVERLAY
-═══════════════════════════════════════════ */
+/* Хаотичні dividers */
+.divider {
+    position: absolute;
+    width: clamp(200px, 30vw, 500px);
+    height: 1px;
+    background: linear-gradient(
+            90deg,
+            transparent,
+            var(--color-border),
+            transparent
+    );
+    opacity: 0.8;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Noise overlay */
 .noise {
     position: absolute;
     inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background-size: 200px 200px;
+    background-image: url('/images/texture.webp');
     opacity: 0.03;
-}
-
-/* ═══════════════════════════════════════════
-   3. BACKGROUND WORDS (Mobile First)
-═══════════════════════════════════════════ */
-
-.bgWord2,
-.bgWord3 {
-    position: absolute;
+    pointer-events: none;
     z-index: 0;
-    pointer-events: none;
-    font-weight: 700;
-    color: var(--color-text, #ffffff);
-    opacity: 0.18;
-    letter-spacing: -0.04em;
-    white-space: nowrap;
 }
 
+/* Фонові тексти */
 .bgWord {
     position: absolute;
-    inset: auto;
-    z-index: 1;
-
+    font-family: var(--font-display);
+    font-size: clamp(8rem, 20vw, 20rem);
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.03);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
     pointer-events: none;
-    user-select: none;
-
-    font-size: clamp(8rem, 18vw, 22rem);
-    font-weight: 800;
-    line-height: .9;
-    letter-spacing: -.05em;
-    white-space: nowrap;
-
-    opacity: .06;
-
-    color: transparent;
-    -webkit-text-stroke: 1px var(--color-border);
-
-    background: var(--color-accent);
-
-    -webkit-background-clip: text;
-    background-clip: text;
-
-    filter: blur(.4px);
-
-    mix-blend-mode: soft-light;
-
-    will-change: transform, opacity;
-}
-
-/* ── bgWord: CERTIFIED ── */
-.bgWord {
-    font-size: clamp(6rem, 20vw, 18rem);
+    z-index: 0;
     top: 10%;
-    right: -5%;
-    transform: rotate(-8deg);
+    left: -5%;
+    transform: rotate(-5deg);
+    animation: float 12s ease-in-out infinite;
 }
 
-/* ── bgWord2: GOIT / FULLSTACK / 2025 ── */
 .bgWord2 {
-    font-size: clamp(3rem, 10vw, 8rem);
-    bottom: 15%;
-    left: -5%;
-    transform: rotate(4deg);
-    opacity: 0.02;
-    font-weight: 300;
+    position: absolute;
+    font-family: var(--font-mono);
+    font-size: clamp(1rem, 3vw, 1.5rem);
+    color: rgba(255, 255, 255, 0.05);
+    pointer-events: none;
+    z-index: 0;
+    top: 60%;
+    right: -5%;
+    transform: rotate(8deg);
+    animation: float 15s ease-in-out infinite reverse;
 }
 
 .bgWordInner {
-    display: block;
-}
-
-/* ── bgWord3: Tech Stack ── */
-.bgWord3 {
-    font-size: clamp(0.8rem, 2vw, 1.6rem);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-2deg);
-    opacity: 0.02;
-    font-weight: 300;
-    letter-spacing: 0.2em;
-    white-space: nowrap;
-    width: 100%;
-    text-align: center;
-}
-
-/* Mobile: hide bgWord3 on small screens */
-@media (max-width: 768px) {
-    .bgWord3 {
-        display: none;
-    }
-
-    .bgWord {
-        font-size: 8rem;
-        top: 5%;
-        right: -10%;
-    }
-
-    .bgWord2 {
-        font-size: 4rem;
-        bottom: 10%;
-        left: -10%;
-    }
-}
-
-@media (max-width: 480px) {
-    .bgWord {
-        font-size: 5rem;
-        top: 2%;
-        right: -15%;
-    }
-
-    .bgWord2 {
-        font-size: 2.5rem;
-        bottom: 5%;
-        left: -15%;
-    }
-}
-
-/* ═══════════════════════════════════════════
-   4. WRAPPER
-═══════════════════════════════════════════ */
-.wrapper {
-    position: relative;
-    z-index: 2;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: clamp(2rem, 5vw, 4rem);
-    width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
-    align-items: center;
-}
-
-@media (max-width: 1024px) {
-    .wrapper {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-    }
-}
-
-.overlayHalf {
-    position: absolute;
-    left: 0;
-    top: 50%;
-
-    width: 100%;
-    height: 100%;
-
-    backdrop-filter: blur(4px);
-
-    background: linear-gradient(
-            0deg,
-            rgba(248, 79, 105, 0.28), transparent
-    );
-    z-index: 0;
-
-}
-
-/* ═══════════════════════════════════════════
-   5. INFO COLUMN
-═══════════════════════════════════════════ */
-.infoContainer {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(1rem, 2vw, 1.5rem);
-}
-
-.infoSubtitle {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
-
-.eyebrowLine {
-    width: clamp(30px, 4vw, 50px);
-    height: 1px;
-    background: var(--color-accent, #667eea);
-    flex-shrink: 0;
-}
-
-.infoSubtitleText {
-    font-family: var(--font-mono, 'DM Mono', monospace);
-    font-size: clamp(0.55rem, 0.8vw, 0.7rem);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--color-secondary, #94a3b8);
-}
-
-.infoTitle {
-    font-family: var(--font-display, 'Bebas Neue', sans-serif);
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-    font-weight: 700;
-    color: var(--color-text, #ffffff);
-    margin: 0;
-    line-height: 1;
-    letter-spacing: -0.02em;
-}
-
-.time {
-    display: block;
-    background: linear-gradient(135deg, #667eea, #764ba2, #ed0c4c);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-size: clamp(3rem, 8vw, 6rem);
-    margin-top: 0.25rem;
-}
-
-.timeShimmer {
+    display: inline-block;
     animation: shimmer 3s ease-in-out infinite;
-    background-size: 200% 200%;
+}
+
+.bgWord3 {
+    position: absolute;
+    font-family: var(--font-mono);
+    font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+    color: rgba(255, 255, 255, 0.04);
+    letter-spacing: 0.2em;
+    pointer-events: none;
+    z-index: 0;
+    bottom: 10%;
+    left: 0;
+    right: 0;
+    text-align: center;
+    animation: float 18s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-10px) rotate(1deg);
+    }
 }
 
 @keyframes shimmer {
     0%, 100% {
-        background-position: 0% 50%;
+        opacity: 0.3;
     }
     50% {
-        background-position: 100% 50%;
+        opacity: 0.6;
     }
 }
 
-.infoButtons {
+/* Wrapper */
+.wrapper {
+    position: relative;
+    flex-direction: row-reverse;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8rem;
+    z-index: 10;
+    margin-top: 4rem;
+}
+
+/* Інформаційний блок */
+.infoContainer {
+    flex: 1;
+    max-width: 600px;
+}
+
+/* Підзаголовок */
+.infoSubtitle {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-bottom: 2rem;
+}
+
+.eyebrowLine {
+    display: block;
+    width: 36px;
+    height: 1px;
+    background: var(--color-accent);
+}
+
+.infoSubtitleText {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+}
+
+/* Заголовок з часом */
+.infoTitle {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 500;
+    line-height: 1.1;
+    color: var(--color-text);
+    margin-bottom: 2rem;
+}
+
+.time {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    color: var(--color-accent);
     margin-top: 0.5rem;
 }
 
+.timeShimmer {
+    background: linear-gradient(90deg, var(--color-accent), var(--color-secondary), var(--color-accent));
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shimmerTime 2s linear infinite;
+}
+
+@keyframes shimmerTime {
+    0% {
+        background-position: 0% center;
+    }
+    100% {
+        background-position: 200% center;
+    }
+}
+
+/* Текст з поштою */
+.infoTextContainer {
+    margin-top: 2rem;
+}
+
 .infoText {
-    font-family: var(--font-body, 'Inter', sans-serif);
-    font-size: clamp(0.85rem, 1.2vw, 1.1rem);
-    line-height: 1.7;
-    color: var(--color-secondary, #94a3b8);
-    margin: 0;
+    font-family: var(--font-primary);
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
 }
 
 .emailLink {
-    color: var(--color-text, #ffffff);
+    font-family: var(--font-primary);
+    font-size: 1rem;
+    color: var(--color-text);
     text-decoration: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    transition: border-color 0.3s ease;
+    transition: color 0.3s ease;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 2px;
 }
 
 .emailLink:hover {
-    border-color: var(--color-accent, #667eea);
+    color: var(--color-accent);
+    border-color: var(--color-accent);
 }
 
-/* ── Tablet / Mobile Info ── */
+/* Контейнер картки */
+.cardContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+}
+
+/* Картка сертифіката */
+.card {
+    position: relative;
+    width: clamp(300px, 40vw, 450px);
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.card:hover {
+    transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+}
+
+/* Overlay */
+.overlayHalf {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    backdrop-filter: blur(10px);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.05), transparent);
+    pointer-events: none;
+}
+
+/* Shine effect */
+.shine {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    border-radius: 16px;
+}
+
+.shineInner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 100%;
+    background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.2),
+            transparent
+    );
+    transform-origin: left center;
+}
+
+/* Вміст сертифіката */
+.certificate {
+    position: relative;
+    z-index: 10;
+}
+
+.certificateHeader {
+    margin-bottom: 2rem;
+}
+
+.certLabel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.certLabelText {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+}
+
+.goitBadge {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    letter-spacing: 0.1em;
+}
+
+.userName {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 500;
+    color: var(--color-text);
+    line-height: 1.2;
+}
+
+.body {
+    margin-bottom: 2rem;
+}
+
+.achievement {
+    font-family: var(--font-primary);
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.courseName {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    letter-spacing: 0.05em;
+}
+
+.details {
+    display: flex;
+    gap: 2rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+}
+
+.detailItem {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.detailLabel {
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.75rem;
+}
+
+.detailValue {
+    color: var(--color-text);
+    font-weight: 500;
+}
+
+.watermark {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    font-family: var(--font-display);
+    font-size: 4rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.05);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Кнопка завантаження */
+.downloadButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    padding: 1rem 2rem;
+    background: var(--color-accent);
+    color: var(--color-background);
+    font-family: var(--font-primary);
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.downloadButton:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.downloadText {
+    position: relative;
+    z-index: 1;
+}
+
+.downloadIcon {
+    transition: transform 0.3s ease;
+}
+
+.downloadButton:hover .downloadIcon {
+    transform: translateX(5px);
+}
+
+/* Адаптивність */
 @media (max-width: 1024px) {
-    .infoContainer {
+    .wrapper {
+        flex-direction: column;
+        gap: 3rem;
+    }
+
+    .cardContainer {
         align-items: center;
+        width: 100%;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .bgWord {
+        font-size: clamp(5rem, 15vw, 12rem);
+        top: 5%;
+    }
+
+    .bgWord2 {
+        top: 50%;
+        right: 5%;
+    }
+}
+
+@media (max-width: 768px) {
+    .section {
+        padding: clamp(60px, 15vw, 100px) 4vw;
+    }
+
+    .wrapper {
+        gap: 2rem;
+    }
+
+    .infoContainer {
+        max-width: 100%;
         text-align: center;
     }
 
@@ -283,403 +458,16 @@
         justify-content: center;
     }
 
-    .infoTitle {
-        font-size: 2.5rem;
-    }
-
-    .time {
-        font-size: 3.5rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .infoTitle {
-        font-size: 2rem;
-    }
-
-    .time {
-        font-size: 2.8rem;
-    }
-
-    .infoText {
-        font-size: 0.85rem;
-    }
-}
-
-/* ═══════════════════════════════════════════
-   6. CARD COLUMN
-═══════════════════════════════════════════ */
-.cardContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
-
-.card {
-    position: relative;
-    width: 100%;
-    max-width: 480px;
-    aspect-ratio: 3 / 4;
-    background: var(--color-surface, #1a1a2e);
-    border-radius: clamp(16px, 2vw, 24px);
-    padding: clamp(2.5rem, 3.5vw, 4.5rem);
-    border: 1px solid var(--color-border);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
-    overflow: hidden;
-    transform-style: preserve-3d;
-    cursor: pointer;
-}
-
-.card:hover {
-    border-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
-}
-
-@media (max-width: 480px) {
-    .card {
-        max-width: 80%;
-        aspect-ratio: auto;
-        min-height: 550px;
-        padding: 1.25rem;
-    }
-}
-
-/* ── Shine Effect ── */
-.shine {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    pointer-events: none;
-    border-radius: inherit;
-}
-
-.shineInner {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 40%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
-    transform: skewX(-20deg);
-}
-
-/* ── Certificate Content ── */
-.certificate {
-    position: relative;
-    z-index: 1;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.certificateHeader {
-    margin-bottom: 1rem;
-}
-
-.certLabel {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 0.5rem;
-}
-
-.certLabelText {
-    font-family: var(--font-mono, 'DM Mono', monospace);
-    font-size: clamp(0.5rem, 0.7vw, 0.65rem);
-    letter-spacing: 0.3em;
-    color: var(--color-secondary, #94a3b8);
-    opacity: 0.5;
-}
-
-.goitBadge {
-    font-family: var(--font-mono, 'DM Mono', monospace);
-    font-size: clamp(0.45rem, 0.6vw, 0.55rem);
-    padding: 0.2rem 0.6rem;
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 4px;
-    color: var(--color-secondary, #94a3b8);
-    letter-spacing: 0.1em;
-}
-
-.userName {
-    font-family: var(--font-display, 'Bebas Neue', sans-serif);
-    font-size: clamp(1.2rem, 2.5vw, 2.2rem);
-    font-weight: 700;
-    color: var(--color-text, #ffffff);
-    margin: 0.5rem 0 0;
-    letter-spacing: 0.05em;
-}
-
-.body {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 1rem;
-}
-
-.achievement {
-    font-family: var(--font-body, 'Inter', sans-serif);
-    font-size: clamp(0.75rem, 1vw, 0.95rem);
-    color: var(--color-secondary, #94a3b8);
-    line-height: 1.6;
-    margin: 0;
-}
-
-.courseName {
-    font-family: var(--font-display, 'Bebas Neue', sans-serif);
-    font-size: clamp(1.2rem, 2.5vw, 2rem);
-    color: var(--color-text, #ffffff);
-    letter-spacing: 0.05em;
-    display: block;
-    margin-top: 0.25rem;
-}
-
-.details {
-    display: flex;
-    gap: 2rem;
-    margin-top: 0.5rem;
-}
-
-.detailItem {
-    display: flex;
-    flex-direction: column;
-}
-
-.detailLabel {
-    font-family: var(--font-mono, 'DM Mono', monospace);
-    font-size: clamp(0.4rem, 0.5vw, 0.5rem);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--color-secondary, #94a3b8);
-    opacity: 0.4;
-}
-
-.detailValue {
-    font-family: var(--font-mono, 'DM Mono', monospace);
-    font-size: clamp(0.7rem, 0.9vw, 0.85rem);
-    color: var(--color-text, #ffffff);
-    margin-top: 0.1rem;
-}
-
-.watermark {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-15deg);
-    font-family: var(--font-display, 'Bebas Neue', sans-serif);
-    font-size: 8rem;
-    opacity: 0.03;
-    color: var(--color-text);
-    pointer-events: none;
-    z-index: 0;
-    white-space: nowrap;
-}
-
-/* ── Download button ── */
-.downloadButton {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--spacing-md);
-    width: 100%;
-    padding: var(--spacing-md);
-    background: var(--color-text);
-    color: var(--color-background);
-    border: none;
-    border-radius: 99px;
-    border-top: 1px solid var(--color-border);
-    cursor: pointer;
-    text-decoration: none;
-    font-family: var(--font-mono, 'DM Mono', monospace);
-    font-size: var(--font-sm);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    position: relative;
-    overflow: hidden;
-    transition: color var(--transition-base, 0.4s ease);
-}
-
-.downloadButton::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--color-background);
-    transform: translateX(-101%);
-    transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
-    z-index: 0;
-}
-
-.downloadButton:hover::before {
-    transform: translateX(0);
-}
-
-.downloadButton:hover {
-    color: var(--color-text);
-}
-
-.downloadText,
-.downloadIcon {
-    position: relative;
-    z-index: 1;
-}
-
-@media (max-width: 480px) {
-    .downloadButton {
-        width: 100%;
-        justify-content: center;
-        padding: 0.7rem 1.2rem;
-        font-size: 0.55rem;
-    }
-}
-
-/* ═══════════════════════════════════════════
-   7. RESPONSIVE BREAKPOINTS
-═══════════════════════════════════════════ */
-
-/* ── 7.1 Tablet (768px - 1024px) ── */
-@media (min-width: 768px) and (max-width: 1024px) {
-    .section {
-        padding: 4rem 2rem;
-    }
-
-    .card {
-        max-width: 400px;
-    }
-
-    .wrapper {
-        gap: 2rem;
-    }
-}
-
-/* ── 7.2 Mobile (≤ 768px) ── */
-@media (max-width: 768px) {
-    .section {
-        padding: 3rem 1rem;
-        min-height: auto;
-    }
-
-    .card {
-        max-width: 90%;
-        min-height: 360px;
-        padding: 2rem;
-    }
-
-    .details {
-        gap: 1.5rem;
-    }
-
-    .watermark {
-        font-size: 2.5rem;
-        bottom: 1rem;
-        right: 1rem;
-    }
-}
-
-/* ── 7.3 Small Mobile (≤ 480px) ── */
-@media (max-width: 480px) {
-    .section {
-        padding: 2rem 0.75rem;
-    }
-
-    .card {
-        min-height: 320px;
-        padding: 1rem;
-        border-radius: 16px;
-    }
-
-    .certLabel {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.3rem;
-    }
-
-    .userName {
-        font-size: 1.1rem;
-    }
-
-    .courseName {
-        font-size: 1.1rem;
-    }
-
-    .details {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-
-    .watermark {
-        font-size: 1.8rem;
-    }
-
-    .achievement {
-        font-size: 0.75rem;
-    }
-}
-
-/* ── 7.4 Landscape Mobile ── */
-@media (max-height: 600px) and (orientation: landscape) {
-    .section {
-        padding: 2rem 1rem;
-        min-height: auto;
-    }
-
-    .card {
-        min-height: 280px;
-        max-width: 400px;
-        padding: 1.25rem;
-    }
-
-    .wrapper {
-        gap: 1.5rem;
-    }
-
-    .infoTitle {
-        font-size: 2rem;
-    }
-
-    .time {
-        font-size: 2.5rem;
-    }
-
-    .userName {
-        font-size: 1.2rem;
-    }
-
-    .courseName {
-        font-size: 1.2rem;
-    }
-
-    .bgWord,
-    .bgWord2,
-    .bgWord3 {
+    .bgWord {
         display: none;
     }
-}
 
-/* ═══════════════════════════════════════════
-   8. REDUCED MOTION
-═══════════════════════════════════════════ */
-@media (prefers-reduced-motion: reduce) {
-    .timeShimmer {
-        animation: none !important;
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+    .card {
+        width: 100%;
+        padding: 1.5rem;
     }
 
-    .card:hover {
-        transform: none !important;
-    }
-
-    .downloadButton:hover {
-        transform: none !important;
-    }
-
-    .downloadButton:hover .downloadIcon {
-        transform: none !important;
+    .userName {
+        font-size: 1.5rem;
     }
 }

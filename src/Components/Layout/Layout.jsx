@@ -4,7 +4,7 @@ import ScrollToTopBtn from '../ScrollToTopBtn/ScrollTotopBtn'
 import Header from '../Header/Header'
 import { ScrollSmoother } from 'gsap/ScrollSmoother'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useEffect, useLayoutEffect, useRef } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 import gsap from 'gsap'
 import s from './Layout.module.css'
 
@@ -21,31 +21,36 @@ const Layout = () => {
   useLayoutEffect(() => {
     if (!wrapperRef.current || !contentRef.current) return
 
-    if (!ScrollSmoother.get()) {
+    const ctx = gsap.context(() => {
       smootherRef.current = ScrollSmoother.create({
         wrapper: wrapperRef.current,
         content: contentRef.current,
         smooth: 1.2,
         effects: true,
-        normalizeScroll: true,
+        normalizeScroll: false,
         ignoreMobileResize: true,
-        smoothTouch: 0.1,
+        smoothTouch: 0,
       })
-    } else {
-      smootherRef.current = ScrollSmoother.get()
-    }
+    })
 
     return () => {
-      // НЕ kill()
+      ctx.revert()
+
+      smootherRef.current?.kill()
+      smootherRef.current = null
     }
   }, [])
 
   // Після переходу просто оновлюємо
-  useEffect(() => {
-    requestAnimationFrame(() => {
-      ScrollTrigger.refresh()
-      smootherRef.current?.refresh()
+  useLayoutEffect(() => {
+    const id = requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        smootherRef.current?.refresh()
+        ScrollTrigger.refresh()
+      })
     })
+
+    return () => cancelAnimationFrame(id)
   }, [location.pathname])
 
   return (

@@ -1,538 +1,331 @@
-/* ═══════════════════════════════════════════
-   CardTech.module.css — Awwwards Premium
-   Mobile First | Cinematic | Editorial
-   Optimized & Theme-Adaptive
-   ═══════════════════════════════════════════ */
+/* ============================================
+   Chaotic Tech Card - Unusual Layout
+============================================= */
 
-/* ═══════════════════════════════════════════
-   1. CSS VARIABLES
-   ═══════════════════════════════════════════ */
-.profileCard {
-    --card-padding: clamp(1.25rem, 3vw, 2.25rem);
-    --card-radius: clamp(20px, 3vw, 36px);
-    --avatar-size: clamp(80px, 12vw, 112px);
-    --gap-sm: clamp(0.75rem, 1.5vw, 1rem);
-    --gap-md: clamp(1.25rem, 2.5vw, 1.75rem);
-    --gap-lg: clamp(1.5rem, 3vw, 2rem);
-    --transition-smooth: cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* ═══════════════════════════════════════════
-   2. PROFILE CARD (Mobile First)
-   ═══════════════════════════════════════════ */
-.profileCard {
+.chaoticContainer {
     position: relative;
+    width: 100%;
+    min-height: 80vh;
+    padding: 2rem;
     overflow: hidden;
-    width: min(100%, 720px);
-    min-height: 560px;
-    display: flex;
-    flex-direction: column;
-    padding: var(--card-padding);
-    border-radius: var(--card-radius);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-
-    box-shadow: var(--shadow-xl, 0 30px 80px rgba(0, 0, 0, 0.35));
-    transition: transform 0.6s var(--transition-smooth),
-    box-shadow 0.6s var(--transition-smooth),
-    border-color 0.4s ease,
-    background 0.4s ease;
-    color: var(--color-text);
-    will-change: transform, box-shadow, border-color, background;
-    transform-style: preserve-3d;
+    background: transparent;
     isolation: isolate;
 }
 
-.profileCardNoise {
+.chaoticContainer::before {
+    content: '';
     position: absolute;
-    background: url("/images/texture.webp") center/cover no-repeat;
-
-
-    opacity: 0.22;
     inset: 0;
-    z-index: -1;
     pointer-events: none;
-}
-
-.profileCard:hover {
-    transform: translateY(-8px) rotateX(2deg) rotateY(-2deg);
-    box-shadow: 0 45px 90px rgba(0, 0, 0, 0.4);
+    background: url('/images/texture.webp') center/cover no-repeat;
+    z-index: -1;
+    opacity: 0.22;
 
 }
 
-.devider {
+/* Хаотичні dividers */
+.divider {
     position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translate(-50%, -50%);
-    width: 200%;
+    width: clamp(200px, 30vw, 400px);
     height: 1px;
-    background: var(--color-border);
-    z-index: 3;
-    pointer-events: none;
-}
-
-.overlayHalf {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    width: 100%;
-    height: 100%;
-    backdrop-filter: blur(4px);
-
     background: linear-gradient(
-    90deg,% rgba(247, 41, 82, 0.15) 0%,
-    transparent 60%
+            90deg,
+            transparent,
+            var(--color-border),
+            transparent
     );
-
-    opacity: 0.8;
-    z-index: -1;
+    opacity: 0.9;
     pointer-events: none;
+    z-index: 1;
 }
 
-@supports (backdrop-filter: blur(4px)) {
-    .overlayHalf {
+/* Watermark */
+.watermark {
+    position: absolute;
+    font-family: var(--font-mono);
+    font-size: clamp(4rem, 12vw, 10rem);
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.05);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    pointer-events: none;
+    z-index: 0;
+    animation: float 6s ease-in-out infinite;
+}
 
+@keyframes float {
+    0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    50% {
+        transform: translate(10px, -10px) rotate(1deg);
     }
 }
 
-.watermark {
-    position: absolute;
-    left: 50%;
-    bottom: -0.5em;
-    transform: translateX(-50%);
-    font-size: 8rem;
-    font-family: var(--font-display, inherit);
-    font-weight: 900;
-    letter-spacing: 0.08em;
-    opacity: 0.035;
-    white-space: nowrap;
-    pointer-events: none;
-    user-select: none;
-    text-transform: uppercase;
-}
-
-/* ═══════════════════════════════════════════
-   3. PROFILE HEADER
-   ═══════════════════════════════════════════ */
-.profileHeader {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.25rem;
-    margin-bottom: var(--gap-md);
-    position: relative;
-    z-index: 2;
-}
-
-/* ── 3.1 Avatar ── */
+/* Аватарка */
 .avatarWrap {
-    position: relative;
-    width: var(--avatar-size);
-    height: var(--avatar-size);
+    position: absolute;
+    width: clamp(100px, 15vw, 140px);
+    height: clamp(100px, 15vw, 140px);
     border-radius: 50%;
     overflow: hidden;
-    border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.08));
-    background: rgba(255, 255, 255, 0.02);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    animation: floatAvatar 8s ease-in-out infinite;
+}
+
+@keyframes floatAvatar {
+    0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    50% {
+        transform: translate(5px, -5px) rotate(2deg);
+    }
 }
 
 .avatar {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: top;
-    aspect-ratio: 1 / 1;
-    filter: contrast(1.02) brightness(0.95);
-    transition: transform 0.6s var(--transition-smooth);
-    will-change: transform;
+    filter: grayscale(100%) contrast(1.2);
+    transition: filter 0.3s ease;
 }
 
-.profileCard:hover .avatar {
-    transform: scale(1.05);
+.avatar:hover {
+    filter: grayscale(0%) contrast(1.1);
 }
 
-.avatarWrap::after {
-    content: "";
+.avatarStatus {
     position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, transparent 60%, rgba(0, 0, 0, 0.25));
-    opacity: 0.7;
-    transition: opacity 0.4s ease;
+    width: 12px;
+    height: 12px;
+    bottom: 8px;
+    right: 8px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    border: 2px solid var(--color-background);
+    box-shadow: 0 0 10px var(--color-accent);
+    z-index: 20;
 }
 
-.profileCard:hover .avatarWrap::after {
-    opacity: 0.9;
-}
-
+/* Інформація */
 .info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    align-items: center;
-    text-align: center;
+    position: absolute;
+    z-index: 10;
 }
 
-/* ── 3.2 Status Badge ── */
 .status {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.4rem 0.8rem;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.05);
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    font-family: var(--font-mono, monospace);
-    color: var(--color-secondary);
-    border: 1px solid rgba(255, 255, 255, 0.03);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
 }
 
 .statusDot {
-    width: 7px;
-    height: 7px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
-    background: #37ff78;
-    box-shadow: 0 0 10px #37ff78;
-    animation: pulseDot 2s ease-in-out infinite;
+    background: var(--color-accent);
+    animation: pulse 2s ease-in-out infinite;
 }
 
-@keyframes pulseDot {
+@keyframes pulse {
     0%, 100% {
         opacity: 1;
+        transform: scale(1);
     }
     50% {
-        opacity: 0.4;
+        opacity: 0.5;
+        transform: scale(1.2);
     }
 }
 
-/* ── 3.3 Name & Role ── */
 .name {
-    font-size: clamp(2rem, 5vw, 2.75rem);
-    line-height: 1;
-    font-family: var(--font-display, sans-serif);
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 4rem);
     font-weight: 700;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
     color: var(--color-text);
-    margin: 0.5rem 0 0;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
 }
 
 .role {
-    font-size: 0.85rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    font-family: var(--font-mono, monospace);
-    color: var(--color-secondary);
-    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.1em;
 }
 
-/* ═══════════════════════════════════════════
-   4. BIO
-   ═══════════════════════════════════════════ */
+/* Біо */
 .bio {
-    font-size: 0.95rem;
+    position: absolute;
+    max-width: 300px;
+    font-family: var(--font-mono);
+    font-size: var(--font-sm);
+    color: var(--color-text-muted);
     line-height: 1.6;
-    color: var(--color-text);
-    opacity: 0.8;
-    max-width: 42ch;
-    margin: 0 auto var(--gap-lg);
-    text-align: center;
-    position: relative;
-    z-index: 2;
-    padding-bottom: clamp(1.5rem, 3vw, 1.5rem);
-    hyphens: auto;
+    z-index: 10;
 }
 
-/* ═══════════════════════════════════════════
-   5. TECH STACK
-   ═══════════════════════════════════════════ */
+/* Tech Stack */
 .techStack {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.5rem 0.75rem;
-    margin-bottom: var(--gap-lg);
-    position: relative;
-    z-index: 2;
-    content-visibility: auto;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
 }
 
 .techItem {
-    display: inline-flex;
+    position: absolute;
+    display: flex;
     align-items: center;
-    gap: 0.4rem;
-    padding: 0.45rem 0.9rem;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    color: var(--color-text);
-    font-size: clamp(0.7rem, 1vw, 0.82rem);
-    font-family: var(--font-mono, monospace);
-    font-weight: 400;
-    letter-spacing: 0.02em;
-    transition: transform 0.3s var(--transition-smooth),
-    background 0.3s var(--transition-smooth),
-    border-color 0.3s var(--transition-smooth),
-    color 0.3s var(--transition-smooth),
-    box-shadow 0.3s var(--transition-smooth);
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--color-text-muted);
+    opacity: 0;
+    transition: all 0.3s ease;
     cursor: default;
-    will-change: transform;
-    hyphens: auto;
-    word-break: break-word;
-    text-rendering: optimizeLegibility;
+    animation: fadeInUp 1s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px) rotate(0deg);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) rotate(var(--rotation, 0deg));
+    }
 }
 
 .techItem:hover {
-    transform: translateY(-2px);
-    background: var(--color-accent);
-    border-color: var(--color-accent);
-    color: #000;
-    box-shadow: 0 6px 16px rgba(102, 126, 234, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--color-text);
+    transform: scale(1.05) rotate(0deg) !important;
 }
 
-/* ═══════════════════════════════════════════
-   6. ACTIONS
-   ═══════════════════════════════════════════ */
+.svgIcon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+/* Кнопки */
 .actions {
-    margin-top: auto;
+    position: absolute;
     display: flex;
     gap: 1rem;
-    width: 100%;
-    position: relative;
-    z-index: 2;
+    z-index: 10;
 }
 
 .primaryBtn,
 .secondaryBtn {
-    flex: 1;
-    height: 52px;
     display: inline-flex;
-    justify-content: center;
     align-items: center;
     gap: 0.5rem;
-    border-radius: 999px;
-    font-family: var(--font-mono, monospace);
-    font-size: clamp(0.4rem, 0.68vw, 0.76rem);
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-family: var(--font-primary);
+    font-size: 0.9rem;
     font-weight: 500;
     letter-spacing: 0.1em;
-    text-transform: uppercase;
     cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.4s var(--transition-smooth),
-    box-shadow 0.4s var(--transition-smooth),
-    background 0.4s var(--transition-smooth),
-    border-color 0.4s var(--transition-smooth),
-    color 0.4s var(--transition-smooth);
-    border: none;
-    will-change: transform;
-    touch-action: manipulation;
+    transition: all 0.3s ease;
+    text-decoration: none;
 }
 
 .primaryBtn {
     background: var(--color-accent);
-    color: #000;
+    color: var(--color-background);
+    border: none;
 }
 
 .primaryBtn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
-    filter: brightness(1.05);
-}
-
-.primaryBtn:active {
-    transform: translateY(-1px) scale(0.97);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }
 
 .secondaryBtn {
     background: transparent;
-    border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.08));
     color: var(--color-text);
+    border: 1px solid var(--color-border);
 }
 
 .secondaryBtn:hover {
-    transform: translateY(-3px);
-    background: rgba(255, 255, 255, 0.04);
-    border-color: var(--color-accent);
-    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.02);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--color-text);
 }
 
-.secondaryBtn:active {
-    transform: translateY(-1px) scale(0.97);
-}
-
-/* ===== SVG ICONS ===== */
-.svgIcon {
-    fill: currentColor;
-    transition: fill 0.3s var(--transition-smooth);
-    vertical-align: middle;
-    flex-shrink: 0;
-}
-
-/* Tech stack icons */
-.techItem .svgIcon {
-    width: 1em;
-    height: 1em;
-    color: var(--color-accent);
-}
-
-.techItem:hover .svgIcon {
-    color: #000;
-}
-
-/* Button icons */
-.primaryBtn .svgIcon,
-.secondaryBtn .svgIcon {
-    width: 1.25em;
-    height: 1.25em;
-    margin-right: 0.25em;
-}
-
-.primaryBtn:hover .svgIcon,
-.secondaryBtn:hover .svgIcon {
-    transform: translateY(-1px) scale(1.05);
-}
-
-/* ═══════════════════════════════════════════
-   7. RESPONSIVE BREAKPOINTS
-   ═══════════════════════════════════════════ */
-
-/* ── 7.1 Mobile Small (≤ 480px) ── */
-@media (max-width: 480px) {
-    .profileCard {
-        padding: 1.25rem;
-        min-height: 480px;
-        height: 100%;
+/* Адаптивність */
+@media (max-width: 1024px) {
+    .chaoticContainer {
+        min-height: auto;
+        padding: 4rem 2rem;
     }
 
-    .profileHeader {
-        gap: 0.75rem;
-        margin-bottom: var(--gap-sm);
+    .avatarWrap {
+        position: static;
+        margin: 0 auto 2rem;
     }
 
-    .name {
-        font-size: 1.8rem;
+    .info {
+        position: static;
+        margin: 0 auto 2rem;
+        text-align: center;
     }
 
     .bio {
-        font-size: 0.85rem;
-        margin-bottom: var(--gap-sm);
+        position: static;
+        margin: 0 auto 2rem;
+        text-align: center;
     }
 
     .techStack {
-        gap: 0.4rem 0.5rem;
-        margin-bottom: var(--gap-md);
+        position: static;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+        margin: 2rem 0;
     }
 
     .techItem {
-        font-size: 0.7rem;
-        padding: 0.35rem 0.75rem;
+        position: static;
+        transform: none !important;
     }
 
-    .primaryBtn,
-    .secondaryBtn {
-        height: 46px;
-        font-size: 0.62rem;
-    }
-
-    .primaryBtn .svgIcon,
-    .secondaryBtn .svgIcon {
-        width: 1.1em;
-        height: 1.1em;
+    .actions {
+        position: static;
+        justify-content: center;
+        margin-top: 2rem;
     }
 }
 
-/* ── 7.2 Mobile Medium (481px - 768px) ── */
-@media (min-width: 481px) and (max-width: 768px) {
-    .profileCard {
-        padding: 1.5rem;
-        min-height: 720px;
-    }
-
+@media (max-width: 768px) {
     .name {
-        font-size: 2.2rem;
+        font-size: clamp(2rem, 8vw, 3rem);
     }
 
-    .techItem {
-        font-size: 0.75rem;
+    .bio {
+        font-size: 1rem;
     }
 
-    .primaryBtn,
-    .secondaryBtn {
-        height: 48px;
+    .actions {
+        flex-direction: column;
+        align-items: center;
     }
-}
-
-/* ── 7.3 Desktop Width Adaptability ── */
-@media (min-width: 1025px) {
-    .profileCard {
-        width: min(540px, 100%);
-    }
-}
-
-/* ═══════════════════════════════════════════
-   8. REDUCED MOTION
-   ═══════════════════════════════════════════ */
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
-
-    .profileCard,
-    .avatar,
-    .techItem,
-    .primaryBtn,
-    .secondaryBtn,
-    .primaryBtn .svgIcon,
-    .secondaryBtn .svgIcon {
-        transform: none !important;
-        transition: none !important;
-    }
-
-    .profileCard:hover {
-        transform: none !important;
-        box-shadow: var(--shadow-xl);
-    }
-
-    .profileCard,
-    .profileCardNoise,
-    .overlayHalf {
-        backdrop-filter: none !important;
-        -webkit-backdrop-filter: none !important;
-        filter: none !important;
-    }
-
-    .statusDot {
-        animation: none !important;
-    }
-}
-
-
-
-/* ═══════════════════════════════════════════
-   10. ACCESSIBILITY — FOCUS STATES
-   ═══════════════════════════════════════════ */
-.primaryBtn:focus-visible,
-.secondaryBtn:focus-visible {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 4px;
-    scroll-margin-top: 100px;
-}
-
-.techItem:focus-visible {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 2px;
-}
-
-/* ═══════════════════════════════════════════
-   11. UTILITY — SELECTION
-   ═══════════════════════════════════════════ */
-.profileCard ::selection {
-    background: var(--color-accent);
-    color: #000;
 }

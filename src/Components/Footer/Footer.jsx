@@ -158,13 +158,15 @@ const Footer = () => {
       aria-label="Footer"
       style={{
         backgroundPositionY: bgPositionSpring,
-        backgroundImage: 'url(/images/njeromin2.jpg)',
+        backgroundImage: 'url(/images/Workspace.webp)',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
+
+
         width: '100%',
         height: '100%',
-      }}
+      }} npm
     >
       <div className={styles.fadeSection}>FOOTER</div>
       <div ref={smokeRef} className={styles.smoke} />
