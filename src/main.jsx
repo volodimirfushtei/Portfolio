@@ -4,7 +4,7 @@ import 'modern-normalize'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 
-import './styles/global/index.css'
+import '../index.css'
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
