@@ -43,6 +43,8 @@ const HeroSection = () => {
           start: 'top top',
           end: 'bottom top',
           scrub: true,
+
+
         },
       })
 
@@ -84,7 +86,7 @@ const HeroSection = () => {
           scale: 1.05,
           y: 20,
           backgroundPosition: '50% 30%',
-          filter: 'blur(1px)',
+          filter: 'blur(0px)',
           duration: 2,
           ease: 'expo.out',
         }, '+=0.2')
@@ -144,7 +146,6 @@ const HeroSection = () => {
 
   return (
     <section ref={sectionRef} className={styles.heroContainer}>
-
 
       {/* ── Background ── */}
       <div

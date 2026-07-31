@@ -166,7 +166,7 @@ const Footer = () => {
 
         width: '100%',
         height: '100%',
-      }} npm
+      }} 
     >
       <div className={styles.fadeSection}>FOOTER</div>
       <div ref={smokeRef} className={styles.smoke} />

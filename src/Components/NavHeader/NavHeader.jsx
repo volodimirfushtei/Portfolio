@@ -6,7 +6,7 @@ import styles from './NavHeader.module.css'
 import gsap from 'gsap'
 import { motion } from 'framer-motion'
 import HeaderImage from '../HeaderImage/HeaderImage.jsx'
-
+import BottomBlur from '../BottomBlur/BottomBlur.jsx'
 const SvgIcon = React.memo(({ id, className = '', width = 24, height = 24 }) => (
   <svg className={`${styles.icon} ${className}`} width={width} height={height} aria-hidden="true">
     <use href={`/sprite.svg#${id}`} />
@@ -50,6 +50,8 @@ const NavHeader = () => {
 
   return (
     <div className={styles.wrapper} ref={navRef}>
+      <BottomBlur/>
+      <div className={styles.noise} />
       {/* Хаотичні dividers */}
       <div className={styles.divider} style={{ top: '0%', left: '0%', width: '100%', transform: 'rotate(-2deg)' }} />
       <div className={styles.divider} style={{ top: '10%', right: '0%', height: '80%', transform: 'rotate(90deg)' }} />

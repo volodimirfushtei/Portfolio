@@ -177,6 +177,7 @@ const HomePage = () => {
 
   return (
     <div className={styles.container} ref={sectionRef}>
+      <div id='viewport-blur' className={styles.viewportBlur}></div>
       <section className={styles.heroSectionWrapper} id="hero">
         <HeroSection />
       </section>

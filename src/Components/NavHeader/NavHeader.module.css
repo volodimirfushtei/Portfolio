@@ -7,8 +7,8 @@
     top: 90px;
     left: 50%;
     transform: translateX(-50%);
-    height: 60vh;
-    max-width: 800px;
+    height: 90vh;
+    min-width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -17,7 +17,7 @@
     z-index: 15;
     padding: 20px;
     border: 1px solid var(--color-border);
-    background: var(--color-page-gradient);
+    background: var(--glass-border);
     overflow: hidden;
     border-radius: 16px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
@@ -25,18 +25,32 @@
     transform-style: preserve-3d;
 }
 
+.noise {
+    position: absolute;
+    inset: 0;
+    background-image: url(https://framerusercontent.com/images/9ErWmXn2IIfOUCaXNwDeuxqJXM.png?width=432&height=288);
+    background-size: 216px auto;
+    background-repeat: repeat;
+    opacity: .38;
+    background-position: left top;
+    pointer-events: none;
+    z-index: -1;
+}
+
 /* Хаотичні dividers */
 .divider {
     position: absolute;
+   
     background: linear-gradient(
             90deg,
             transparent,
-            var(--color-border),
+            var(--color-text),
             transparent
     );
     opacity: 0.85;
+    box-shadow: 0 0 10px rgba(209, 69, 69, 0.1);
     pointer-events: none;
-    z-index: 0;
+    z-index: 1;
 }
 
 /* Frame */
@@ -52,8 +66,8 @@
 }
 
 .wrapper:hover .frame {
-    opacity: 0.6;
-    border-color: var(--color-accent);
+    opacity: 0.8;
+    border-color: var(--color-border);
     box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
 }
 
@@ -71,6 +85,7 @@
     column-gap: 10px;
     padding: 10px;
     position: relative;
+   background: transparent;
     z-index: 10;
 }
 

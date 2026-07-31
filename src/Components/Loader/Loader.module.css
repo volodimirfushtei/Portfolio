@@ -5,21 +5,59 @@
 ═══════════════════════════════════════════ */
 .overlay {
     position: fixed;
+    content: 'FRONTEND DEVELOPER';
+    color: aliceblue;
+    font-size: larger;
     inset: 0;
     z-index: 9;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background: linear-gradient(
-            to bottom,
-            oklch(14.958% 0.00002 271.152 / 0.25),
-            oklch(10.668% 0.00001 271.152 / 0.3256)
-    );
+    
     align-items: center;
-    overflow: hidden;
-    clip-path: inset(0 0 0 0);
+
+    clip-path: inset(0 0% 0% 0);
     isolation: isolate;
 }
+
+.columns{
+    position:absolute;
+    inset:0;
+
+    display:grid;
+    grid-template-columns:repeat(48,1fr);
+
+    z-index:15;
+    pointer-events:none;
+}
+
+.column{
+    justify-self:center;
+
+    width:1px;
+    height:100%;
+    display: block;
+
+    transform-origin:top center;
+
+    background:linear-gradient(
+        to bottom,
+        transparent,
+        var(--color-accent,) 15%,
+        var(--color-accent,),
+        transparent
+    );
+
+    filter:blur(.4px);
+
+    box-shadow:
+        0 0 8px var(--color-accent, ),
+        0 0 25px var(--color-accent, );
+
+    opacity:0;
+    transform: scaleY(0);
+}
+
 
 
 .overlay::after {
@@ -30,7 +68,7 @@
     background-image: url(https://framerusercontent.com/images/9ErWmXn2IIfOUCaXNwDeuxqJXM.png?width=432&height=288);
     background-size: 216px auto;
     background-repeat: repeat;
-    opacity: .15;
+    opacity: .25;
     background-position: left top;
     pointer-events: none;
 
@@ -42,7 +80,7 @@
 /* Log{o Wrapper */
 .logoWrap {
     position: absolute;
-    top: 35%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 20;
@@ -63,7 +101,7 @@
     gap: 1rem;
     padding: 2rem clamp(1.5rem, 4vw, 4rem);
     font-family: var(--font-mono, 'DM Mono', monospace);
-    font-size: 0.75rem;
+    font-size: 0.65rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.8);
@@ -189,7 +227,7 @@
     gap: 1rem;
     padding: 2rem clamp(1.5rem, 4vw, 4rem);
     font-family: var(--font-mono, 'DM Mono', monospace);
-    font-size: 1.2rem;
+    font-size: 0.6rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.7);
@@ -334,7 +372,7 @@
     gap: 1rem;
     padding: 2rem clamp(1.5rem, 4vw, 4rem);
     font-family: var(--font-mono, 'DM Mono', monospace);
-    font-size: 0.9rem;
+    font-size: 0.55rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--color-text);
@@ -345,11 +383,12 @@
 }
 
 .statusDot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #4ade80;
+    width: 8px;
+    height: 8px;
+
+    background: #ac021b;
     display: inline-block;
+
 }
 
 /* ═══════════════════════════════════════════

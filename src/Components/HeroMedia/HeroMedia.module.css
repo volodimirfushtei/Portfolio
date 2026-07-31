@@ -34,7 +34,7 @@
     overflow: hidden;
     background: transparent;
     box-shadow: var(--shadow-xl);
-
+    cursor: move;
     isolation: isolate;
     transition: all var(--transition-slow);
 }
@@ -323,6 +323,7 @@
         align-items: flex-start;
         gap: 20px;
     }
+
 
     .right {
         align-items: flex-start;

@@ -52,12 +52,10 @@
     );
 
     --color-grid: linear-gradient(
-            90deg,
-            transparent 0%,
-            transparent 49.5%,
-            var(--color-border) 50%,
-            transparent 50.5%,
-            transparent 100%
+            
+        135deg,
+            oklch(98% 0.005 260),
+            oklch(94% 0.01 240)
     );
 
     /* 💎 Glass Morphism (помітніший) */

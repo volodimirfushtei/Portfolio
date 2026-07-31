@@ -58,6 +58,7 @@ const Layout = () => {
       <Header />
       <ScrollToTopBtn />
 
+
       <main className={s.mainContent}>
         <div
           id="smooth-wrapper"

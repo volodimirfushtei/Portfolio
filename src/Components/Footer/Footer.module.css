@@ -64,7 +64,7 @@
 .smoke {
     position: absolute;
     inset: -10%;
-    background: url("/images/smoke.webp") center/cover no-repeat;
+    background: url("/images/smoke.webp") bottom right repeat-x black;
     background-size: 140%;
     opacity: .15;
     z-index: 10;

@@ -14,20 +14,20 @@
 @media (prefers-reduced-motion: reduce) {
     .noise {
         animation: none;
-        opacity: 0.2;
+        opacity: 0.3;
     }
 }
 
 /* Dark theme */
 .noise.dark {
-    opacity: 0.15;
-    background-image: url('/images/texture.webp');
+    opacity: 0.45;
+    background-image: url('/images/texture_broken.webp');
     background-size: cover;
 }
 
 /* Light theme */
 .noise.light {
-    opacity: 0.1;
+    opacity: 0.3;
     background-image: url('/images/texture.webp');
     background-size: cover;
 }

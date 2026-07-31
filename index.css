@@ -8,7 +8,7 @@
 
 @font-face {
     font-family: "Bebas Neue";
-    src: url('/fonts/BebasNeue-Regular.woff2') format('woff2'),
+    src: url('./fonts/BebasNeue-Regular.woff2') format('woff2'),
     url('/fonts/BebasNeue-Regular.woff') format('woff');
     font-weight: 400;
     font-style: normal;
@@ -291,7 +291,7 @@ a {
     --color-white: oklch(100% 0 0);
 
     /* ✨ Borders & Effects */
-    --color-border: oklch(20% 0.02 260); /* ✅ Помітніший border */
+    --color-border: oklch(0.56 0.222 6.871); /* ✅ Помітніший border */
     --color-shadow: 0 8px 32px oklch(0% 0 0 / 0.4);
 
     /* 🌫️ Overlay (помітніший) */
@@ -357,7 +357,7 @@ a {
     --color-white: oklch(100% 0 0);
 
     /* ✨ Borders & Effects */
-    --color-border: oklch(70% 0.15 255 / 0.3); /* ✅ Яскравіший border */
+    --color-border: oklch(0.576 0.23 5.683 / 0.3); /* ✅ Яскравіший border */
     --color-shadow: 0 10px 40px oklch(0% 0 0 / 0.5);
 
     /* 🌫️ Overlay */
@@ -423,7 +423,7 @@ a {
     --color-title: oklch(80% 0.001 270);
 
     /* ✨ Borders & Effects */
-    --color-border: oklch(50% 0.25 280 / 0.15); /* ✅ Помітніший border */
+    --color-border: oklch(0.522 0.206 18.723 / 0.15); /* ✅ Помітніший border */
     --color-shadow: 0 4px 12px oklch(0% 0 0 / 0.08);
 
     /* 🌫️ Overlay */
