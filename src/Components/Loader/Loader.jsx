@@ -9,15 +9,15 @@ const ENTRANCE_FROM = {
   opacity: 0,
 
   scale: 0.5,
-  filter: 'blur(16px)',
-  brightness: 0.5,
+  filter: 'blur(4px)',
+
 }
 
 const ENTRANCE_TO = {
   opacity: 1,
- 
+
   scale: 1,
- brightness: 1,
+
   filter: 'blur(0px)',
   duration: 0.8,
   ease: 'expo.out',
@@ -31,7 +31,7 @@ const Loader = ({ onComplete }) => {
   const bottomBarRef = useRef(null)
   const noiseRef = useRef(null)
   const dividerRefs = useRef([])
-  const columns = Array.from({ length: 48 });
+  const columns = Array.from({ length: 48 })
   useEffect(() => {
     const tl = gsap.timeline()
 
@@ -52,7 +52,6 @@ const Loader = ({ onComplete }) => {
       .fromTo(bottomBarRef.current, ENTRANCE_FROM, ENTRANCE_TO)
 
 
-      
       .fromTo(
         logoRef.current,
         {
@@ -73,62 +72,62 @@ const Loader = ({ onComplete }) => {
         },
         '-=0.3',
       )
-    .fromTo(
-    dividerRefs.current,
-    {
-        scaleY:0,
-        opacity:0,
-        y:
-        -300,
-    },
-    {
-        scaleY:1,
-        opacity:1,
-        y:0,
-        duration:1,
-        stagger:{
-            each:0.015,
-            from:"center",
+      .fromTo(
+        dividerRefs.current,
+        {
+          scaleY: 0,
+          opacity: 0,
+          y:
+            -300,
         },
-        ease:"expo.out",
-    }
-)
-.to(dividerRefs.current,{
-    scaleY:1.2,
-    duration:.35,
-    stagger:{
-        each:.01,
-        yoyo:true,
-        repeat:1,
-        from:"edges"
-    },
-    ease:"sine.inOut"
-})
+        {
+          scaleY: 1,
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          stagger: {
+            each: 0.015,
+            from: 'center',
+          },
+          ease: 'expo.out',
+        },
+      )
+      .to(dividerRefs.current, {
+        scaleY: 1.2,
+        duration: .35,
+        stagger: {
+          each: .01,
+          yoyo: true,
+          repeat: 1,
+          from: 'edges',
+        },
+        ease: 'sine.inOut',
+      })
 
-.to(dividerRefs.current,{
-    scaleY:0,
-    opacity:0,
-    x:500,
-    duration:.8,
-    stagger:{
-        each:.008,
-        from:"random"
-    },
-    ease:"power4.in"
-})
+      .to(dividerRefs.current, {
+        scaleY: 0,
+        opacity: 0,
+        y: -500,
+        duration: .8,
+        stagger: {
+          each: .008,
+          from: 'random',
+        },
+        ease: 'power4.in',
+      })
       .to({}, { duration: 0.8 })
 
       .to(overlayRef.current, {
         autoAlpha: 0,
         scale: 1.15,
-        
+
         clipPath: 'inset(0 0% 100% 0)',
         filter: 'blur(12px)',
         duration: 1.2,
-          onComplete: () => {
-            setIsLoading(false)
-            onComplete?.()
-          },
+        onComplete: () => {
+          setIsLoading(false)
+          onComplete?.()
+        },
 
       })
 
@@ -140,7 +139,7 @@ const Loader = ({ onComplete }) => {
   }, [])
 
   if (!isLoading) return null
- 
+
   return (
     <div className={styles.overlay} ref={overlayRef}>
 
@@ -150,24 +149,21 @@ const Loader = ({ onComplete }) => {
       </div>
 
 
-    
+      <div className={styles.columns}>
+        {columns.map((_, i) => (
+          <span
+            key={i}
+            ref={(el) => (dividerRefs.current[i] = el)}
+            className={styles.column}
+            style={{
+              left: `${(i / 20) * 100}%`,
+              height: `${20 + Math.random() * 80}%`,
+              opacity: 0.2 + Math.random() * 0.8,
 
-
-
-<div className={styles.columns}>
-  {columns.map((_, i) => (
-    <span
-      key={i}
-      ref={(el) => (dividerRefs.current[i] = el)}
-      className={styles.column}
-      style={{
-    left: `${(i / 40) * 100}%`,
-    height: `${20 + Math.random() * 80}%`,
-    opacity: 0.2 + Math.random() * 0.8,
-}}
-    />
-  ))}
-</div>
+            }}
+          />
+        ))}
+      </div>
 
 
       <div className={styles.logoWrap}>

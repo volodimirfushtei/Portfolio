@@ -17,7 +17,7 @@
     z-index: 15;
     padding: 20px;
     border: 1px solid var(--color-border);
-    background: var(--glass-border);
+    background: var(--glass-bg);
     overflow: hidden;
     border-radius: 16px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
@@ -40,7 +40,7 @@
 /* Хаотичні dividers */
 .divider {
     position: absolute;
-   
+
     background: linear-gradient(
             90deg,
             transparent,
@@ -85,7 +85,7 @@
     column-gap: 10px;
     padding: 10px;
     position: relative;
-   background: transparent;
+    background: transparent;
     z-index: 10;
 }
 
@@ -109,7 +109,7 @@
     color: var(--color-secondary);
     text-decoration: none;
     padding: 8px 16px;
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-sm);
     background-color: rgba(255, 255, 255, 0.05);
     display: inline-flex;
     text-align: center;
@@ -208,6 +208,48 @@
 .footer li span {
     color: var(--color-text-muted);
     margin-right: 4px;
+}
+
+.mobileFooter {
+    margin-top: auto;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.mobileFooterText {
+    font: 400 0.65rem/1 var(--font-mono, 'DM Mono', monospace);
+    color: var(--color-secondary, #94a3b8);
+    letter-spacing: 0.05em;
+    opacity: 0.8;
+    text-align: center;
+    margin-top: 2rem;
+    transition: all 0.3s ease;
+}
+
+.mobileSocial {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.mobileSocialLink {
+    color: var(--color-secondary, #94a3b8);
+    opacity: 0.8;
+    transition: all 0.3s ease;
+    padding: 5px;
+
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.mobileSocialLink:hover {
+    opacity: 1;
+    color: var(--color-text, #fff);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.mobileSocialLink:hover .icon {
+    transform: translateY(-2px) scale(1.05);
 }
 
 /* Адаптивність */

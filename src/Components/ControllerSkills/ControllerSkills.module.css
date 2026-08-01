@@ -65,7 +65,7 @@
     content: '';
     position: absolute;
     top: 0;
-    bottom: -1;
+    bottom: 0;
     width: 200px;
     z-index: 0;
     pointer-events: none;

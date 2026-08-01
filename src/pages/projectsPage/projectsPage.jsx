@@ -5,6 +5,7 @@ import { db } from '../../firebase'
 import { collection, onSnapshot } from 'firebase/firestore'
 import { useOverlay } from '../../Components/OverlayProvider/OverlayProvider'
 
+
 const ProjectPage = () => {
   const pageRef = useRef(null)
   const headerRef = useRef(null)
@@ -22,7 +23,7 @@ const ProjectPage = () => {
 
   /* ── Firestore with error handling ── */
   useEffect(() => {
-   
+
     setLoading(true)
     const unsub = onSnapshot(
       collection(db, 'projects'),
@@ -175,14 +176,15 @@ const ProjectPage = () => {
       tl.current = gsap.timeline({
         paused: true,
       })
-      gsap.from(containers, {
+
+
+      tl.current.from(containers, {
         opacity: 0,
         y: 60,
         scale: 0.95,
-        duration: 1,
         stagger: 0.15,
+        duration: 0.8,
         ease: 'power3.out',
-        clearProps: 'all',
       })
       tl.current.play()
     }, gridRef)
@@ -280,6 +282,7 @@ const ProjectPage = () => {
                       alt={project.title}
                       className={styles.image}
                       loading="lazy"
+                      decoding="async"
                       onError={(e) => {
                         e.target.src = '/images/business.jpg'
                       }}
