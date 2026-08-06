@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState, useLayoutEffect } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion'
 import styles from './ScrollBar.module.css'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
+gsap.registerPlugin(ScrollTrigger)
 const pages = [
   {
     id: 1,
@@ -112,45 +113,45 @@ const ScrollBar = () => {
   }, [activeIndex])
 
   const scrollProgress = useTransform(scrollYProgress, [0, 1], [0, 1])
-  useLayoutEffect(() => { 
+  useLayoutEffect(() => {
     if (!backgroundRef.current) {
       return
-    
-      
-         gsap.fromTo(
-      backgroundRef.current,
-      {
-        clipPath: 'inset(100% 0% 0% 0%)',
-        scale: 0.5,
-        opacity: 0,
-        filter: 'blur(10px)'
-      },
-      {
-        clipPath: 'inset(0% 0% 0% 0%)',
-        scale: 1,
-        opacity: 1,
-        filter: 'blur(0px)',
-        duration: 1.2,
-        ease: 'power2.out',
+
+
+      gsap.fromTo(
+        backgroundRef.current,
+        {
+          clipPath: 'inset(100% 0% 0% 0%)',
+          scale: 0.5,
+          opacity: 0,
+          filter: 'blur(10px)',
+        },
+        {
+          clipPath: 'inset(0% 0% 0% 0%)',
+          scale: 1,
+          opacity: 1,
+          filter: 'blur(0px)',
+          duration: 1.2,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: backgroundRef.current,
+            start: 'top 80%',
+            end: 'top 20%',
+            scrub: 1,
+            markers: false, // Для дебагу можна ввімкнути
+          },
+        },
+      )
+      gsap.to(backgroundRef.current, {
+        yPercent: -15,
+        ease: 'none',
         scrollTrigger: {
           trigger: backgroundRef.current,
-          start: 'top 80%',
-          end: 'top 20%',
+          start: 'top bottom',
+          end: 'bottom top',
           scrub: 1,
-          markers: false // Для дебагу можна ввімкнути
-        }
-      }
-      )
-        gsap.to(backgroundRef.current, {
-      yPercent: -15,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: backgroundRef.current,
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: 1
-      }
-    })
+        },
+      })
     }
   }, [pages.image])
   return (
@@ -170,7 +171,7 @@ const ScrollBar = () => {
           >
             <div
               className={styles.sectionBackground} ref={backgroundRef}
-              style={{ backgroundImage: `url(${page.image})`}}
+              style={{ backgroundImage: `url(${page.image})` }}
             />
             <div className={styles.sectionOverlay} />
 

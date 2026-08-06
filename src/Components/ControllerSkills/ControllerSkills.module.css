@@ -18,7 +18,7 @@
     color: var(--color-accent);
     z-index: 1;
     pointer-events: none;
-    opacity: .018;
+    opacity: .08;
 }
 
 /* HEADER */
@@ -49,10 +49,11 @@
 .track {
     position: relative;
     display: flex;
-    flex-direction: column;
+   
     gap: 1.5rem;
-
-    width: 100%;
+overflow: hidden;
+  width: 100%;
+    
     padding: 2rem 0;
     z-index: 1;
     height: 200%;
@@ -60,18 +61,7 @@
 
 }
 
-.track::before,
-.track::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 200px;
-    z-index: 0;
-    pointer-events: none;
-    backdrop-filter: blur(4px);
-    perspective: 1200px;
-}
+
 
 .track::before {
     left: 0;
@@ -87,7 +77,10 @@
 .inner {
     display: flex;
     gap: 1.5rem;
-    width: max-content;
+      display: flex;
+  width: max-content;
+  flex-wrap: nowrap;
+  will-change: transform;
     transform: perspective(1200px) rotateX(-3deg);
     transform-style: preserve-3d;
     will-change: transform;
@@ -100,31 +93,26 @@
     width: 80%;
     height: 1px;
     background: var(--color-border);
-    opacity: .5;
+    opacity: .85;
     margin: 0 auto;
 }
 
 /* CARD */
 .card {
     flex-shrink: 0;
-    width: 340px;
+    width: 240px;
+    min-height: 100px;
     padding: 1.4rem;
-
-
+  flex: 0 0 auto;
+backdrop-filter:blur(20px);
     transition: transform .45s,
     border-color .45s,
     background .45s,
     box-shadow .45s;
+
 }
 
-/* DEPTH LAYERS */
-.card:nth-child(3n) {
-    transform: translateZ(40px);
-}
 
-.card:nth-child(2n) {
-    transform: translateZ(20px);
-}
 
 /* HOVER */
 .card {

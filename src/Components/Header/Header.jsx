@@ -1,13 +1,12 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { Link, NavLink, useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import styles from './Header.module.css'
 import ToggleTheme from '../ToggleTheme/ToggleTheme'
 import gsap from 'gsap'
 import useScrollDetection from '../../hooks/useScrollDetection'
 import Logo from '../Logo/Logo'
-import { NAV_ITEMS, socialLinks } from '../../constants/navigations'
 import NavHeader from '../NavHeader/NavHeader.jsx'
-
+import clsx from 'clsx'
 
 // ✅ Reusable SVG Icon component with memo
 
@@ -28,8 +27,7 @@ const Header = () => {
   const isScrolled = useScrollDetection(50)
   const [scrollDirection, setScrollDirection] = useState('up')
   const prevScrollRef = useRef(0)
-  const menuRef = useRef(null)
-  const closeRef = useRef(null)
+  const wrapperRef = useRef(null)
 
 
   useEffect(() => {
@@ -87,22 +85,10 @@ const Header = () => {
       },
     })
 
-    tl.to(menuRef.current, {
-      yPercent: next ? -100 : 0,
-    }, 0)
-      .to(closeRef.current, {
-        yPercent: next ? 0 : 100,
-      }, 0)
-      .to(labelRef.current, {
-        backgroundColor: next
-          ? 'var(--color-background)'
-          : 'var(--color-surface)',
-      }, 0)
-      .to([menuRef.current, closeRef.current], {
-        color: next
-          ? 'var(--color-text)'
-          : 'var(--color-text)',
-      }, 0)
+    tl.to(wrapperRef.current, {
+      yPercent: next ? -50 : 0,
+      duration: 0.4,
+    })
 
 
   }
@@ -128,91 +114,35 @@ const Header = () => {
           <div className={styles.rightSection}>
             <ToggleTheme aria-label="Toggle dark/light mode" />
 
-            <div className={styles.el} onClick={handleClick} ref={labelRef}>
-              <div ref={burgerRef}
-                   className={`${styles.burgerDesktop} ${
-                     isActive ? styles.burgerDesktopActive : ''
-                   }`}
-              />
-
-
-              <div className={styles.label}>
-                <div className={styles.words}>
-                  <p className={styles.menu} ref={menuRef}>
-                    Menu
-                  </p>
-                  <p className={styles.close} ref={closeRef}>
-                    Close
-                  </p>
+            <div className={clsx(
+              styles.el,
+              isActive && styles.elActive,
+            )} onClick={handleClick} ref={labelRef}>
+              <div
+                className={clsx(
+                  styles.burgerDesktop,
+                  isActive && styles.burgerDesktopActive,
+                )}
+              >
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              
+              <div className={styles.words}>
+                <div ref={wrapperRef}>
+                  <p>Menu</p>
+                  <p>Close</p>
                 </div>
               </div>
             </div>
-            {/* Burger Button */}
-            <button
-              className={`${styles.burger} ${menuOpen ? styles.open : ''}`}
-              onClick={toggleMenu}
-              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-
-            >
-              <SvgIcon
-                id={menuOpen ? 'icon-close' : 'icon-menu'}
-                width={16}
-                height={16}
-              />
-            </button>
 
           </div>
         </div>
       </header>
       {isActive && <NavHeader />}
 
-      {/* Mobile Menu */}
-      <div
-        className={`${styles.mobileMenu} ${menuOpen ? styles.open : ''}`}
 
-      >
-        <div className={styles.mobileMenuInner}>
-          <h4 className={styles.mobileMenuTitle}>Menu</h4>
-          <nav className={styles.mobileNav}>
-            {NAV_ITEMS.map((item, index) => (
-              <NavLink
-                key={item.path}
-                to={item.path}
-                className={({ isActive }) =>
-                  `${styles.mobileNavLink} ${isActive ? styles.active : ''}`
-                }
-                onClick={toggleMenu}
-                aria-label={`Go to ${item.label}`}
-              >
-                <span className={styles.mobileNum}>0{index + 1}</span>
-                <span className={styles.mobileLabel}>{item.label}</span>
-                <span className={styles.mobileArrow} aria-hidden="true">→</span>
-              </NavLink>
-            ))}
-          </nav>
-
-          {/* Mobile Footer */}
-          <div className={styles.mobileFooter}>
-            <div className={styles.mobileSocial}>
-              {socialLinks.map((social) => (
-                <a
-                  key={social.url}
-                  href={social.url}
-                  aria-label={social.label}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.mobileSocialLink}
-                >
-                  <SvgIcon id={social.icon} width={24} height={24} />
-                </a>
-              ))}
-            </div>
-            <p className={styles.mobileFooterText}>
-              Volodymyr Fushtei © {new Date().getFullYear()}
-            </p>
-          </div>
-        </div>
-      </div>
     </>
   )
 }

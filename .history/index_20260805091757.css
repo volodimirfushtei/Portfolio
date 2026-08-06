@@ -1,0 +1,617 @@
+/*@import "./_reset.css";*/
+/*@import './_fonts.css';*/
+/*@import './_variables.css';*/
+/*@import './_base.css';*/
+/*@import './_utilits.css';*/
+/*@import './_themes.css';*/
+
+@font-face {
+  font-family: 'Bebas Neue';
+  src:
+    url('/public/fonts/BebasNeue-Regular.woff2') format('woff2'),
+    url('/public/fonts/BebasNeue-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap; /* ✅ Уникає миготіння тексту */
+}
+
+@font-face {
+  font-family: 'DM Mono';
+  src: url('/public/fonts/DMMono-MediumItalic.woff2') format('woff2');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Rethink Sans';
+  src: url('/public/fonts/RethinkSans-VariableFont_wght.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --color-background: #111;
+  --color-text: #fff;
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
+
+  /* Border radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-pill: 9999px;
+
+  /* Blur values */
+  --blur-sm: 8px;
+  --blur-md: 12px;
+  --blur-lg: 24px;
+
+  /* Type scale */
+
+  --font-sm: 0.65rem;
+  --font-xs: 0.75rem;
+  --font-sm: 0.875rem;
+  --font-base: 1rem;
+  --font-lg: 1.125rem;
+  --font-xl: 1.375rem;
+  --font-2xl: 1.75rem;
+  --font-3xl: 2.25rem;
+  --font-4xl: 3rem;
+  --font-5xl: 4rem;
+
+  /* Font families */
+  --font-display: 'Bebas Neue', sans-serif; /* Для заголовків */
+  --font-mono: 'DM Mono', monospace; /* Для тексту */
+  --font-primary: 'Rethink Sans', sans-serif; /* Для основного тексту */
+
+  /* Motion */
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Shadows */
+  --shadow-xs: 0 1px 2px oklch(0 0 0 / 0.05);
+  --shadow-sm: 0 2px 4px oklch(0 0 0 / 0.08);
+  --shadow-md: 0 4px 12px oklch(0 0 0 / 0.12);
+  --shadow-lg: 0 12px 32px oklch(0 0 0 / 0.16);
+  --shadow-xl: 0 20px 48px oklch(0 0 0 / 0.2);
+
+  /* Buttons */
+
+  .sm {
+    --btn-height: 38px;
+    --btn-padding: 0 16px;
+    --font-size: var(--font-sm);
+    --btn-radius: 4px;
+  }
+
+  .md {
+    --btn-height: 48px;
+    --btn-padding: 0 24px;
+    --font-size: var(--font-base);
+    --btn-radius: 8px;
+  }
+
+  .lg {
+    --btn-height: 58px;
+    --btn-padding: 0 34px;
+    --font-size: var(--font-lg);
+    --btn-radius: 12px;
+  }
+  .xl {
+    --btn-height: 68px;
+    --btn-padding: 0 44px;
+    --font-size: var(--font-2xl);
+    --btn-radius: 16px;
+  }
+}
+
+/* reset.css */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+img,
+picture,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+
+body {
+  font-family: 'Rethink Sans', sans-serif;
+  overscroll-behavior: none;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  background: var(--color-background);
+  color: var(--color-text);
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+
+  background-image: url('/noise/noisechat.png');
+  background-repeat: repeat;
+  background-size: 216px auto;
+
+  opacity: 0.25;
+
+  pointer-events: none;
+  z-index: 1000;
+
+  mix-blend-mode: soft-light;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Bebas Neue', sans-serif;
+}
+
+a {
+  text-decoration: none;
+  transition: color 0.3s var(--transition);
+  font-family: 'DM Mono', sans-serif;
+  font-size: var(--font-base);
+  line-height: 1.6;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.title,
+.highlight,
+.accent {
+  font-family: var(--font-primary);
+  font-weight: 800; /* Від 100 до 900 */
+  font-style: normal;
+}
+
+/* =======================================================================================
+   🎨 THEME SYSTEM – Enhanced OKLCH Palettes with Better Contrast & Harmony
+   =======================================================================================
+   Поліпшено для:
+   ✅ Кращої читабельності (WCAG AA/AAA)
+   ✅ Гармонійного поєднання кольорів
+   ✅ Чіткої візуальної ієрархії
+   ✅ Адаптивності до різних екранів
+   ======================================================================================= */
+
+/* =======================================================================================
+   ☀️ LIGHT THEME – Clean & High-Contrast
+   ======================================================================================= */
+.light-theme {
+  /* 🎨 Enhanced Color Palette */
+  --color-primary: oklch(45% 0.25 260); /* ✅ Більш насичений */
+  --color-secondary: oklch(55% 0.05 260); /* ✅ Кращий контраст з primary */
+  --color-accent: oklch(70% 0.15 265); /* ✅ Яскравіший акцент */
+  --color-accent-hover: oklch(60% 0.18 265); /* ✅ Помітніший hover */
+
+  /* 🖼️ Background System */
+  --color-background: oklch(99% 0 0); /* ✅ Чистий білий */
+  --color-surface: oklch(97% 0.002 260); /* ✅ Світліший surface */
+  --color-surface-hover: oklch(95% 0.003 260);
+
+  /* 🌄 Page Gradient (м'якший для читання) */
+  --color-page-gradient: linear-gradient(
+    135deg,
+    oklch(98% 0.005 260),
+    oklch(94% 0.01 240)
+  );
+
+  /* 🔤 Typography (кращий контраст) */
+  --color-text: oklch(20% 0.03 260); /* ✅ Темніший текст */
+  --color-text-secondary: oklch(35% 0.03 260);
+  --color-text-muted: oklch(50% 0.02 260); /* ✅ Кращий контраст з background */
+  --color-title: oklch(70% 0.15 265);
+
+  /* ✨ Borders & Effects */
+  --color-border: oklch(85% 0.005 260); /* ✅ Помітніший border */
+  --color-shadow: 0 4px 12px oklch(0% 0 0 / 0.1);
+
+  /* 🌫️ Overlay (прозоріший для світлої теми) */
+  --color-overlay: linear-gradient(
+    to bottom,
+    oklch(95% 0.002 260 / 0.4),
+    oklch(90% 0.004 260 / 0.7)
+  );
+
+  --color-grid: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 49.5%,
+    var(--color-border) 50%,
+    transparent 50.5%,
+    transparent 100%
+  );
+
+  /* 💎 Glass Morphism (помітніший) */
+  --glass-bg: rgba(255, 255, 255, 0.12);
+  --glass-border: oklch(20% 0.03 260 / 0.12);
+
+  /* 🌈 Accent Gradients (яскравіші) */
+  --gradient-subtle: linear-gradient(
+    135deg,
+    oklch(98% 0.005 260),
+    oklch(94% 0.01 240)
+  );
+
+  --gradient-accent: linear-gradient(
+    135deg,
+    oklch(65% 0.25 260),
+    oklch(60% 0.18 265)
+  );
+}
+
+/* =======================================================================================
+   🌙 DARK THEME – Deep & Elegant (Krischan Style)
+   ======================================================================================= */
+.dark-theme {
+  /* 🎨 Enhanced Color Palette */
+  --color-primary: oklch(85% 0.05 260); /* ✅ Світліший для читабельності */
+  --color-secondary: oklch(70% 0.06 260);
+  --color-accent: oklch(72.8% 0.224 262.5); /* ✅ Більш виразний акцент */
+  --color-accent-hover: oklch(79.8% 0.244 262.5);
+
+  /* 🖼️ Background System (глибший чорний) */
+  --color-background: oklch(10% 0.01 260); /* ✅ Глибший чорний */
+  --color-surface: oklch(15% 0.015 260);
+  --color-surface-hover: oklch(20% 0.02 260);
+
+  /* 🌌 Page Gradient (м'якший для очей) */
+  --color-page-gradient: linear-gradient(
+    170deg,
+    oklch(12% 0.015 270) 0%,
+    oklch(15% 0.02 275) 25%,
+    oklch(14% 0.01 290) 55%,
+    oklch(12% 0.008 310) 80%,
+    oklch(10% 0.005 320) 100%
+  );
+
+  /* 🔤 Typography (кращий контраст з темним фоном) */
+  --color-text: oklch(90% 0.05 260); /* ✅ Світліший текст */
+  --color-text-secondary: oklch(80% 0.05 260);
+  --color-text-muted: oklch(60% 0.03 260);
+  --color-white: oklch(100% 0 0);
+
+  /* ✨ Borders & Effects */
+  --color-border: oklch(67.8% 0.224 262.5); /* ✅ Помітніший border */
+  --color-shadow: 0 8px 32px oklch(0% 0 0 / 0.4);
+
+  /* 🌫️ Overlay (помітніший) */
+  --color-overlay: linear-gradient(
+    to bottom,
+    oklch(20% 0.01 270 / 0.7),
+    oklch(10% 0.005 270 / 0.9)
+  );
+
+  --color-grid: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 49.5%,
+    var(--color-border) 50%,
+    transparent 50.5%,
+    transparent 100%
+  );
+
+  /* 💎 Glass Morphism */
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: oklch(85% 0.05 260 / 0.1);
+
+  /* 🌈 Accent Gradients */
+  --gradient-subtle: linear-gradient(
+    135deg,
+    oklch(15% 0.015 270),
+    oklch(20% 0.02 275)
+  );
+
+  --gradient-accent: linear-gradient(
+    135deg,
+    oklch(75% 0.15 270),
+    oklch(85% 0.15 270)
+  );
+}
+
+/* =======================================================================================
+   🌊 BLUE THEME – Ocean Depth (Поліпшена гармонія)
+   ======================================================================================= */
+.blue-theme {
+  /* 🎨 Enhanced Color Palette */
+  --color-primary: oklch(60% 0.2 260); /* ✅ Більш насичений синій */
+  --color-secondary: oklch(70% 0.15 255);
+  --color-accent: oklch(75% 0.15 280); /* ✅ Фіолетовий відтінок */
+  --color-accent-hover: oklch(80% 0.15 280);
+
+  /* 🖼️ Background System */
+  --color-background: oklch(18% 0.05 265);
+  --color-surface: oklch(25% 0.04 260);
+  --color-surface-hover: oklch(30% 0.04 260);
+
+  /* 🌌 Page Gradient */
+  --color-page-gradient: linear-gradient(
+    135deg,
+    oklch(17.859% 0.07415 260.331),
+    oklch(0.17 0.01 301)
+  );
+
+  /* 🔤 Typography */
+  --color-text: oklch(95% 0.01 265);
+  --color-text-secondary: oklch(80% 0.02 260);
+  --color-text-muted: oklch(65% 0.02 260);
+  --color-white: oklch(100% 0 0);
+
+  /* ✨ Borders & Effects */
+  --color-border: oklch(0.576 0.23 5.683 / 0.3); /* ✅ Яскравіший border */
+  --color-shadow: 0 10px 40px oklch(0% 0 0 / 0.5);
+
+  /* 🌫️ Overlay */
+  --color-overlay: linear-gradient(
+    to bottom,
+    oklch(40% 0.08 270 / 0.5),
+    oklch(20% 0.04 270 / 0.8)
+  );
+
+  --color-grid: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 49.5%,
+    var(--color-accent) 50%,
+    transparent 50.5%,
+    transparent 100%
+  );
+
+  /* 💎 Glass Morphism */
+  --glass-bg: oklch(20% 0.05 265 / 0.6);
+  --glass-border: oklch(70% 0.15 255 / 0.2);
+
+  /* 🌈 Accent Gradients */
+  --gradient-subtle: linear-gradient(
+    135deg,
+    oklch(20% 0.05 265),
+    oklch(25% 0.04 260)
+  );
+
+  --gradient-accent: linear-gradient(
+    135deg,
+    oklch(60% 0.2 260),
+    oklch(75% 0.15 280)
+  );
+}
+
+/* =======================================================================================
+   ☀️ PRELIGHT THEME – Minimalist with Punch
+   ======================================================================================= */
+.prelight-theme {
+  /* 🎨 Enhanced Color Palette */
+  --color-primary: oklch(55% 0.2 280); /* ✅ Більш насичений */
+  --color-secondary: oklch(70% 0.12 280);
+  --color-accent: oklch(70% 0.18 285); /* ✅ Яскравіший акцент */
+  --color-accent-hover: oklch(60% 0.2 285);
+
+  /* 🖼️ Background System */
+  --color-background: oklch(96% 0.01 220);
+  --color-surface: oklch(90% 0.005 200);
+  --color-surface-hover: oklch(85% 0.01 250);
+
+  /* 🌄 Page Gradient */
+  --color-page-gradient: linear-gradient(
+    135deg,
+    oklch(97% 0.01 220),
+    oklch(93% 0.02 240)
+  );
+
+  /* 🔤 Typography */
+  --color-text: oklch(25% 0.02 260); /* ✅ Темніший текст */
+  --color-text-secondary: oklch(45% 0.02 260);
+  --color-text-muted: oklch(60% 0.01 260);
+  --color-title: oklch(80% 0.001 270);
+
+  /* ✨ Borders & Effects */
+  --color-border: oklch(0.522 0.206 18.723 / 0.15); /* ✅ Помітніший border */
+  --color-shadow: 0 4px 12px oklch(0% 0 0 / 0.08);
+
+  /* 🌫️ Overlay */
+  --color-overlay: oklch(20% 0.02 220 / 0.4);
+
+  --color-grid: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 49.5%,
+    var(--color-border) 50%,
+    transparent 50.5%,
+    transparent 100%
+  );
+
+  /* 💎 Glass Morphism */
+  --glass-bg: oklch(95% 0 0 / 0.6);
+  --glass-border: oklch(50% 0.25 280 / 0.1);
+
+  /* 🌈 Accent Gradients */
+  --gradient-subtle: linear-gradient(
+    135deg,
+    oklch(95% 0.01 220),
+    oklch(90% 0.02 250)
+  );
+
+  --gradient-accent: linear-gradient(
+    135deg,
+    oklch(55% 0.2 280),
+    oklch(70% 0.18 285)
+  );
+}
+
+/* =======================================================================================
+   🎭 NEUTRAL THEME – Professional with Depth
+   ======================================================================================= */
+.neutral-theme {
+  /* 🎨 Enhanced Color Palette */
+  --color-primary: oklch(70% 0.02 285); /* ✅ Більш виразний */
+  --color-secondary: oklch(60% 0.03 280);
+  --color-accent: oklch(55% 0.06 305); /* ✅ М'який акцент */
+  --color-accent-hover: oklch(65% 0.06 285);
+
+  /* 🖼️ Background System */
+  --color-background: oklch(18% 0.015 260);
+  --color-surface: oklch(22% 0.01 260);
+  --color-surface-hover: oklch(25% 0.015 280);
+
+  /* 🌄 Page Gradient */
+  --color-page-gradient: linear-gradient(
+    135deg,
+    oklch(20% 0.01 260),
+    oklch(15% 0.005 280)
+  );
+
+  /* 🔤 Typography */
+  --color-text: oklch(90% 0.03 260);
+  --color-text-secondary: oklch(75% 0.02 250);
+  --color-text-muted: oklch(60% 0.01 250);
+  --color-title: oklch(95% 0.001 270);
+
+  /* ✨ Borders & Effects */
+  --color-border: oklch(100% 0 0 / 0.1); /* ✅ Помітніший на темному */
+  --color-shadow: 0 8px 30px oklch(0% 0 0 / 0.6);
+
+  /* 🌫️ Overlay */
+  --color-overlay: oklch(20% 0.01 260 / 0.6);
+
+  --color-grid: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 49.5%,
+    var(--color-border) 50%,
+    transparent 50.5%,
+    transparent 100%
+  );
+
+  /* 💎 Glass Morphism */
+  --glass-bg: oklch(20% 0 0 / 0.6);
+  --glass-border: oklch(100% 0 0 / 0.1);
+
+  /* 🌈 Accent Gradients */
+  --gradient-subtle: linear-gradient(
+    135deg,
+    oklch(20% 0.01 260),
+    oklch(25% 0.015 280)
+  );
+
+  --gradient-accent: linear-gradient(
+    135deg,
+    oklch(90% 0.03 285),
+    oklch(75% 0.02 285)
+  );
+}
+
+.scrollbar-hidden {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+.gradient-text {
+  background: linear-gradient(
+    135deg,
+    var(--color-accent),
+    var(--color-primary)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Cards & Glass */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--blur-md));
+  -webkit-backdrop-filter: blur(var(--blur-md));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-base);
+}
+
+.glass-card:hover {
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+.glass-effect {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--blur-md));
+  -webkit-backdrop-filter: blur(var(--blur-md));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Animations */
+.fade-up {
+  animation: fadeUp 0.6s var(--transition-base) both;
+}
+
+.pulse {
+  animation: softPulse 2s var(--transition-fast) infinite;
+}
+
+.glow {
+  box-shadow: 0 0 12px var(--color-accent);
+}

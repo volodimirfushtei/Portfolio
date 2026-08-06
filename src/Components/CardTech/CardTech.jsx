@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import styles from './CardTech.module.css'
+import { motion } from 'framer-motion'
 
 const techStack = [
   { name: 'React', icon: 'icon-react' },
@@ -25,9 +26,28 @@ const SvgIcon = ({ id, className, width = 24, height = 24 }) => (
 
 const CardTech = () => {
   const containerRef = useRef(null)
+  const techItemRef = useRef(null)
   const [isVisible, setIsVisible] = useState(false)
   const [copied, setCopied] = useState(false)
+const container = {
+    hidden:{},
+    show:{
+        transition:{
+            staggerChildren:.08
+        }
+    }
+}
 
+const item = {
+    hidden:{
+        opacity:0,
+        y:40
+    },
+    show:{
+        opacity:1,
+        y:0
+    }
+}
   const handleCopyEmail = useCallback(async () => {
     try {
       await navigator.clipboard.writeText('fuschteyy@gmail.com')
@@ -62,36 +82,11 @@ const CardTech = () => {
     return () => observer.disconnect()
   }, [])
 
-  useEffect(() => {
-    if (!isVisible) return
 
-    const ctx = gsap.context(() => {
-      // Анімація входу
-      gsap.to(containerRef.current, {
-        opacity: 1,
-        y: 0,
-        duration: 1.5,
-        ease: 'power4.out',
-      })
-
-      // Анімація tech items
-      gsap.from('.techItem', {
-        opacity: 0,
-        y: 30,
-        stagger: 0.08,
-        duration: 1,
-        ease: 'power3.out',
-        delay: 0.5,
-      })
-
-    }, containerRef)
-
-    return () => ctx.revert()
-  }, [isVisible])
 
   return (
     <section
-      ref={containerRef}
+      
       className={styles.chaoticContainer}
       data-cursor="hover"
       data-cursor-type="link"
@@ -102,12 +97,12 @@ const CardTech = () => {
       <div className={styles.divider} style={{ bottom: '15%', left: '15%', transform: 'rotate(5deg)' }} />
       <div className={styles.divider} style={{ top: '40%', left: '80%', transform: 'rotate(-30deg)' }} />
 
-      {/* Watermark */}
+   
       <div className={styles.watermark} style={{ top: '20%', left: '8%' }}>
         FUSHTEI
       </div>
 
-      {/* Аватарка (не по центру) */}
+  
       <div className={styles.avatarWrap} style={{ top: '15%', left: '12%' }}>
         <img
           src="/images/preview.webp"
@@ -120,7 +115,7 @@ const CardTech = () => {
         <span className={styles.avatarStatus} />
       </div>
 
-      {/* Інформація (асиметрично) */}
+      
       <div className={styles.info} style={{ top: '12%', left: '35%' }}>
         <span className={styles.status}>
           <span className={styles.statusDot} />
@@ -130,16 +125,18 @@ const CardTech = () => {
         <p className={styles.role}>Full Stack Developer</p>
       </div>
 
-      {/* Біо (під кутом) */}
+    
       <p className={styles.bio} style={{ top: '45%', left: '20%' }}>
         Building modern web experiences with React, Next.js, Node.js and motion-driven interfaces.
       </p>
 
-      {/* Tech Stack (хаотично) */}
-      <div className={styles.techStack}>
+   
+      <motion.div className={styles.techStack} data-cursor="hover" data-cursor-type="link" variants={container} initial="hidden" animate="show"   >
         {techStack.map((tech, index) => (
-          <span
+          <motion.span
             key={tech.name}
+           custom={index}
+           variants={item}
             className={styles.techItem}
             style={{
               top: `${10 + index * 8}%`,
@@ -150,11 +147,11 @@ const CardTech = () => {
           >
             <SvgIcon id={tech.icon} className={styles.svgIcon} />
             {tech.name}
-          </span>
+          </motion.span>
         ))}
-      </div>
+      </motion.div>
 
-      {/* Кнопки (внизу, асиметрично) */}
+      
       <div className={styles.actions} style={{ bottom: '10%', left: '25%' }}>
         <a
           href="https://github.com/volodimirfushtei"

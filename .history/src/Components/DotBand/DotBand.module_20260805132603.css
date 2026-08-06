@@ -1,0 +1,79 @@
+.dotBand {
+  --dot-size: 0.75px;
+  --dot-gap: 7px;
+  --dot-color: color-mix(in srgb, var(--color-text) 28%, transparent);
+
+  position: relative;
+  left: 0;
+  right: 0;
+  bottom: -5.8rem;
+  height: 6rem;
+  background-image: radial-gradient(
+    circle,
+    var(--dot-color) var(--dot-size),
+    transparent var(--dot-size)
+  );
+
+  background-size: var(--dot-gap) var(--dot-gap);
+  background-position: center;
+
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 55%,
+    rgba(0, 0, 0, 0.8) 70%,
+    transparent 100%
+  );
+
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 55%,
+    rgba(0, 0, 0, 0.8) 70%,
+    transparent 100%
+  );
+}
+
+.dotBand::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 2rem;
+  z-index: -2;
+  inset: 0;
+  left: 50%;
+  transform: translateX(-50%);
+
+  filter: brightness(2) blur(20px);
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  will-change: transform, background-position, filter;
+  transition:
+    transform 0.3s ease,
+    background-position 0.3s ease,
+    filter 0.3s ease;
+  background:
+    radial-gradient(
+      circle at 20% 50%,
+      rgba(90, 44, 227, 0.15),
+      transparent 35%
+    ),
+    radial-gradient(circle at 80% 50%, rgba(37, 23, 193, 0.29), transparent 35%);
+  background-size: 200% 100%;
+
+  animation: glowSlide 8s linear infinite;
+}
+
+@keyframes glowSlide {
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: 200% 50%;
+  }
+
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: 200% 50%;
+  }
+}

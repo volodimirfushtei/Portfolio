@@ -19,55 +19,42 @@ const techItems = [
 export default function ControllerSkills() {
   const sectionRef = useRef(null)
   const innerRef = useRef(null)
-  const innerRef2 = useRef(null)
+ 
 
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      // Анімація входу для карток
-      const cards = gsap.utils.toArray(`.${styles.card}`)
-      gsap.from(cards, {
-        y: 60,
-        autoAlpha: 0,
-        scale: 0.96,
-        duration: 1,
-        stagger: 0.08,
-        ease: 'expo.out',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 75%',
-          once: true,
-        },
-      })
+  const items = [...techItems, ...techItems, ...techItems];
+useLayoutEffect(() => {
+  const ctx = gsap.context(() => {
+    const distance = innerRef.current.scrollWidth / 3;
 
-      // Перший трек рухається вліво
-      gsap.to(innerRef.current, {
-        xPercent: -30,
-        ease: 'none',
-        duration: 60,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 1,
-        },
-      })
+    const marquee = gsap.fromTo(
+      innerRef.current,
+      { x: 0 },
+      {
+        x: -distance,
+        duration: 18,
+        ease: "none",
+        repeat: -1,
+      }
+    );
 
-      // Другий трек рухається вправо
-      gsap.to(innerRef2.current, {
-        xPercent: 30,
-        ease: 'none',
-        duration: 80,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 1,
-        },
-      })
-    }, sectionRef)
+    ScrollTrigger.create({
+      trigger: sectionRef.current,
+      start: "top bottom",
+      end: "bottom top",
+      onUpdate(self) {
+        marquee.timeScale(
+          gsap.utils.clamp(
+            0.5,
+            4,
+            1 + Math.abs(self.getVelocity()) / 3000
+          )
+        );
+      },
+    });
+  }, sectionRef);
 
-    return () => ctx.revert()
-  }, [])
+  return () => ctx.revert();
+}, []);
 
   return (
     <section ref={sectionRef} className={styles.section}>
@@ -86,11 +73,11 @@ export default function ControllerSkills() {
         {/* Перший трек */}
         <div className={styles.inner} ref={innerRef}>
           <div className={styles.devider} />
-          {[...techItems, ...techItems].map((tech, i) => (
+          {items.map((tech, i) => (
             <div
               key={`track1-${i}`}
               className={styles.card}
-              style={{ transform: `rotate(${i % 2 === 0 ? '2deg' : '-2deg'})` }}
+  
             >
               <div className={styles.cardContent}>
                 <svg className={styles.icon} aria-hidden="true" focusable="false">
@@ -105,27 +92,7 @@ export default function ControllerSkills() {
           ))}
         </div>
 
-        {/* Другий трек */}
-        <div className={styles.inner} ref={innerRef2}>
-          <div className={styles.devider} />
-          {[...techItems, ...techItems].map((tech, i) => (
-            <div
-              key={`track2-${i}`}
-              className={styles.card}
-              style={{ transform: `rotate(${i % 2 === 0 ? '-2deg' : '2deg'})` }}
-            >
-              <div className={styles.cardContent}>
-                <svg className={styles.icon} aria-hidden="true" focusable="false">
-                  <use href={`/sprite.svg#${tech.icon}`} />
-                </svg>
-                <div>
-                  <div className={styles.name}>{tech.name}</div>
-                  <div className={styles.desc}>{tech.description}</div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+        
       </div>
     </section>
   )

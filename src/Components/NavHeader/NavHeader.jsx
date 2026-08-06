@@ -1,41 +1,70 @@
-import React, { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useLayoutEffect, useMemo, useState } from 'react'
 import { NAV_ITEMS, socialLinks } from '../../constants/navigations.js'
 import TransitionLink from '../../hooks/useTransitionLink.jsx'
 import FullscreenButton from '../FullScreenButton/FullScreenButton.jsx'
 import styles from './NavHeader.module.css'
-import gsap from 'gsap'
 import { motion } from 'framer-motion'
 import HeaderImage from '../HeaderImage/HeaderImage.jsx'
 import BottomBlur from '../BottomBlur/BottomBlur.jsx'
-
+import { animate, useMotionValue } from 'framer-motion'
 // ── SvgIcon компонент ──
-const SvgIcon = React.memo(({ id, className = '', width = 24, height = 24 }) => (
-  <svg
-    className={`${styles.icon} ${className}`}
-    width={width}
-    height={height}
-    aria-hidden="true"
-    role="img"
-  >
-    <use href={`/sprite.svg#${id}`} />
-  </svg>
-))
+const SvgIcon = React.memo(
+  ({ id, className = '', width = 24, height = 24 }) => (
+    <svg
+      className={`${styles.icon} ${className}`}
+      width={width}
+      height={height}
+      aria-hidden="true"
+      role="img"
+    >
+      <use href={`/sprite.svg#${id}`} />
+    </svg>
+  ),
+)
 
 SvgIcon.displayName = 'SvgIcon'
 
 // ── Divider компонент ──
-const Divider = React.memo(({ style }) => (
-  <div className={styles.divider} style={style} aria-hidden="true" />
-))
+const Divider = React.memo(
+  ({ top, left, right, bottom, width, height, rotate, index }) => (
+    <motion.div
+      className={styles.divider}
+      style={{
+        top,
+        left,
+        right,
+        bottom,
+        width,
+        height,
+        transformOrigin: 'left',
+      }}
+      initial={{ scaleX: 0, opacity: 0, rotate }}
+      animate={{ scaleX: 1, opacity: 0.3, rotate }}
+      transition={{ duration: 1, delay: 0.1 * index, ease: 'easeOut' }}
+      aria-hidden="true"
+    />
+  ),
+)
 
 Divider.displayName = 'Divider'
 
 const NavHeader = () => {
-  const navRef = useRef(null)
   const [selectedLink, setSelectedLink] = useState(NAV_ITEMS[0])
   const [isHovered, setIsHovered] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
 
+  const handleMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+
+    const px = (e.clientX - rect.left) / rect.width
+
+    const py = (e.clientY - rect.top) / rect.height
+
+    animate(x, (px - 0.5) * 40)
+    animate(y, (py - 0.5) * 40)
+  }
   // ── Перевірка на мобільний пристрій ──
   useLayoutEffect(() => {
     const checkMobile = () => {
@@ -44,70 +73,6 @@ const NavHeader = () => {
     checkMobile()
     window.addEventListener('resize', checkMobile)
     return () => window.removeEventListener('resize', checkMobile)
-  }, [])
-
-  // ── GSAP анімація появи ──
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        defaults: {
-          ease: 'expo.out',
-          duration: 1.2,
-        },
-      })
-
-      // Анімація появи навігації
-      tl.fromTo(
-        navRef.current,
-        {
-          clipPath: 'polygon(0 0, 100% 0, 100% 0, 0 0)',
-          opacity: 0,
-        },
-        {
-          clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
-          opacity: 1,
-          duration: 1.4,
-          ease: 'expo.out',
-        },
-      )
-
-      // Анімація для divider елементів
-      const dividers = document.querySelectorAll(`.${styles.divider}`)
-      if (dividers.length > 0) {
-        gsap.fromTo(
-          dividers,
-          { scaleX: 0, opacity: 0 },
-          {
-            scaleX: 1,
-            opacity: 0.3,
-            duration: 1,
-            stagger: 0.1,
-            ease: 'power2.out',
-            transformOrigin: 'left',
-          },
-        )
-      }
-
-      // Анімація для футера
-      const footerItems = document.querySelectorAll(`.${styles.footer} ul`)
-      if (footerItems.length > 0) {
-        gsap.fromTo(
-          footerItems,
-          { y: 30, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.8,
-            stagger: 0.08,
-            ease: 'power3.out',
-            delay: 0.5,
-          },
-        )
-      }
-
-    }, navRef)
-
-    return () => ctx.revert()
   }, [])
 
   // ── Обробка вибору посилання ──
@@ -120,28 +85,30 @@ const NavHeader = () => {
     setIsHovered(false)
   }, [])
 
-  // ── Мемоізовані варіанти анімації ──
-  const translateVariants = useMemo(() => ({
-    initial: { y: '100%', opacity: 0 },
-    enter: (i) => ({
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 1,
-        ease: [0.76, 0, 0.24, 1],
-        delay: i?.[0] || 0,
-      },
+  const translateVariants = useMemo(
+    () => ({
+      initial: { y: '100%', opacity: 0 },
+      enter: (i) => ({
+        y: 0,
+        opacity: 1,
+        transition: {
+          duration: 1,
+          ease: [0.76, 0, 0.24, 1],
+          delay: i?.[0] || 0,
+        },
+      }),
+      exit: (i) => ({
+        y: '100%',
+        opacity: 0,
+        transition: {
+          duration: 0.7,
+          ease: [0.76, 0, 0.24, 1],
+          delay: i?.[1] || 0,
+        },
+      }),
     }),
-    exit: (i) => ({
-      y: '100%',
-      opacity: 0,
-      transition: {
-        duration: 0.7,
-        ease: [0.76, 0, 0.24, 1],
-        delay: i?.[1] || 0,
-      },
-    }),
-  }), [])
+    [],
+  )
 
   // ── Анімація для посилань при наведенні ──
   const linkVariants = {
@@ -149,29 +116,85 @@ const NavHeader = () => {
     hover: { scale: 1.05 },
   }
 
-  // ── Декоративні лінії ──
-  const dividers = useMemo(() => [
-    { style: { top: '0%', left: '0%', width: '100%', transform: 'rotate(-2deg)' } },
-    { style: { top: '10%', right: '0%', height: '80%', transform: 'rotate(90deg)' } },
-    { style: { bottom: '0%', left: '0%', width: '100%', transform: 'rotate(3deg)' } },
-    { style: { top: '20%', left: '10%', height: '60%', transform: 'rotate(-85deg)' } },
-  ], [])
-
   return (
-    <div className={styles.wrapper} ref={navRef}>
+    <motion.div
+      className={styles.wrapper}
+      initial={{
+        clipPath: 'polygon(0 0, 100% 0, 100% 0, 0 0)',
+        opacity: 0,
+        scale: 0.96,
+      }}
+      animate={{
+        clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+        opacity: 1,
+        scale: 1,
+      }}
+      transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+    >
+     <motion.div
+
+className={styles.glow}
+
+animate={{
+    scale:[1,1.2,1],
+    opacity:[.2,.45,.2],
+}}
+
+transition={{
+    duration:6,
+    repeat:Infinity,
+}}
+/>
       {/* ── Фонові ефекти ── */}
-      <BottomBlur />
-      <div className={styles.noise} aria-hidden="true" />
+
+      <div
+        className={styles.noise}
+        aria-hidden="true"
+        animate={{
+          opacity: [0.3, 0.6, 0.3],
+        }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+        }}
+      />
 
       {/* ── Декоративні dividers ── */}
-      {dividers.map((divider, index) => (
-        <Divider key={index} style={divider.style} />
-      ))}
+      <div
+        className={styles.divider}
+        style={{ top: '10%', left: '5%', transform: 'rotate(-15deg)' }}
+      />
+      <div
+        className={styles.divider}
+        style={{ top: '60%', right: '10%', transform: 'rotate(20deg)' }}
+      />
+      <div
+        className={styles.divider}
+        style={{ bottom: '20%', left: '15%', transform: 'rotate(5deg)' }}
+      />
+      <div
+        className={styles.divider}
+        style={{ top: '40%', right: '20%', transform: 'rotate(-25deg)' }}
+      />
 
       <div className={styles.frame} aria-hidden="true" />
 
       <div className={styles.fullscreenButton}>
-        <FullscreenButton aria-label="Toggle fullscreen mode" />
+        <FullscreenButton
+          aria-label="Toggle fullscreen mode"
+          whileHover={{
+            scale: 1.08,
+            rotate: 90,
+          }}
+          whileTap={{
+            scale: 0.94,
+          }}
+          transition={{
+            type: 'spring',
+            stiffness: 400,
+            damping: 18,
+          }}
+        />
       </div>
 
       {/* ── Навігація ── */}
@@ -200,9 +223,27 @@ const NavHeader = () => {
               className={({ isActive }) =>
                 `${styles.navLink} ${isActive ? styles.active : ''}`
               }
-              aria-current={selectedLink.path === item.path ? 'page' : undefined}
-            >
-              <span className={styles.linkText}>{item.label}</span>
+              aria-current={
+                selectedLink.path === item.path ? 'page' : undefined
+              }
+            ><span className={styles.mobileNum}>0{index + 1}</span>
+              <span className={styles.linkText}>
+                <span className={styles.mask}>
+                  <motion.span
+                    whileHover={{
+                      y: '-50%',
+                    }}
+                    transition={{
+                      duration: 0.5,
+                      ease: [0.76, 0, 0.24, 1],
+                    }}
+                    className={styles.double}
+                  >
+                    <span>{item.label}</span>
+                    <span>{item.label}</span>
+                  </motion.span>
+                </span>
+              </span>
               {selectedLink.path === item.path && (
                 <motion.span
                   className={styles.linkIndicator}
@@ -216,7 +257,17 @@ const NavHeader = () => {
       </motion.nav>
 
       {/* ── Header Image ── */}
-      <HeaderImage selectedLink={selectedLink} />
+
+      <div
+        className={styles.headerImageWrapper}
+        style={{
+          x,
+          y,
+        }}
+        onMouseMove={handleMove}
+      >
+        <HeaderImage selectedLink={selectedLink} />
+      </div>
 
       {/* ── Mobile Footer ── */}
       <div className={styles.mobileFooter}>
@@ -242,34 +293,40 @@ const NavHeader = () => {
       {/* ── Desktop Footer ── */}
       <footer className={styles.footer}>
         <motion.ul
-          custom={[0.3, 0]}
+          custom={[0.5, 0]}
           variants={translateVariants}
           initial="initial"
           animate="enter"
           exit="exit"
         >
-          <li><span>Made by:</span> Studio Fush</li>
+          <li>
+            <span>Made by:</span> Studio Fush
+          </li>
         </motion.ul>
         <motion.ul
-          custom={[0.3, 0]}
+          custom={[0.58, 0]}
           variants={translateVariants}
           initial="initial"
           animate="enter"
           exit="exit"
         >
-          <li><span>Typography:</span> Google Fonts</li>
+          <li>
+            <span>Typography:</span> Google Fonts
+          </li>
         </motion.ul>
         <motion.ul
-          custom={[0.3, 0]}
+          custom={[0.66, 0]}
           variants={translateVariants}
           initial="initial"
           animate="enter"
           exit="exit"
         >
-          <li><span>Images:</span> Lummi</li>
+          <li>
+            <span>Images:</span> Lummi
+          </li>
         </motion.ul>
         <motion.ul
-          custom={[0.3, 0]}
+          custom={[0.74, 0]}
           variants={translateVariants}
           initial="initial"
           animate="enter"
@@ -279,7 +336,7 @@ const NavHeader = () => {
           <li>Terms &amp; Conditions 2026</li>
         </motion.ul>
       </footer>
-    </div>
+    </motion.div>
   )
 }
 

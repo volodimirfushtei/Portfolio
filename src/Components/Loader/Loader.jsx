@@ -32,6 +32,8 @@ const Loader = ({ onComplete }) => {
   const noiseRef = useRef(null)
   const dividerRefs = useRef([])
   const columns = Array.from({ length: 48 })
+
+
   useEffect(() => {
     const tl = gsap.timeline()
 

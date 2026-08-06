@@ -1,0 +1,73 @@
+.button {
+  --btn-height: 56px;
+  --btn-radius: 4px;
+  --btn-padding: 0 24px;
+
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='10' viewBox='0 0 10 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 9L9 1M9 1H1M9 1V9' stroke='%231E1D28'/%3E%3C/svg%3E%0A");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  content: '';
+  flex: 0 0 10px;
+  height: 10px;
+  transition: transform 0.3s;
+  width: 10px;
+
+  transition:
+    background 0.35s,
+    color 0.35s,
+    border-color 0.35s,
+    transform 0.25s,
+    box-shadow 0.35s;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+}
+
+.button:active {
+  transform: scale(0.98);
+}
+
+.button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.primary {
+  color: var(--color-background);
+  background: var(--color-text);
+  border-color: var(--color-text);
+
+  box-shadow: 0 10px 25px rgba(246, 159, 9, 0.25);
+}
+
+.primary:hover {
+  box-shadow: 0 15px 35px rgba(246, 159, 9, 0.4);
+}
+.secondary {
+  color: var(--color-text);
+
+  border: 1px solid var(--color-border);
+
+  background: rgba(255, 255, 255, 0.04);
+
+  backdrop-filter: blur(16px);
+}
+
+.secondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+.ghost {
+  color: var(--color-secondary);
+
+  background: transparent;
+}
+
+.ghost:hover {
+  color: var(--color-text);
+}
+.outline {
+  color: var(--color-text);
+
+  border: 1px solid var(--color-border);
+}
