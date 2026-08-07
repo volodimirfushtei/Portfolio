@@ -29,6 +29,7 @@
   justify-content: center;
   gap: 10px;
   color: var(--color-text);
+  background: var(--color-page-gradient);
 }
 
 .title {

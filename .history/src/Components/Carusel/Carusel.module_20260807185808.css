@@ -474,6 +474,50 @@
 }
 
 /* ═══════════════════════════════════════════
+   8. DARK / LIGHT MODE SUPPORT
+═══════════════════════════════════════════ */
+@media (prefers-color-scheme: light) {
+  .panel {
+    background: rgba(255, 255, 255, 0.6);
+  }
+
+  .item {
+    background: #ffffff;
+    border-color: rgba(0, 0, 0, 0.06);
+  }
+
+  .item:hover {
+    border-color: var(--color-accent);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  }
+
+  .active {
+    background: rgba(102, 126, 234, 0.04);
+  }
+
+  .glowBox {
+    background: radial-gradient(
+      circle at top left,
+      rgba(102, 126, 234, 0.05),
+      transparent 70%
+    );
+    border-color: rgba(0, 0, 0, 0.06);
+  }
+
+  .glowBox:hover {
+    border-color: var(--color-accent);
+  }
+
+  .plus {
+    background: rgba(0, 0, 0, 0.02);
+  }
+
+  .plus:hover {
+    background: rgba(102, 126, 234, 0.06);
+  }
+}
+
+/* ═══════════════════════════════════════════
    9. ANIMATIONS — ENTRANCE
 ═══════════════════════════════════════════ */
 @keyframes fadeInUp {
