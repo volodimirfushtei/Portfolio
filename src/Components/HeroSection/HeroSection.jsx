@@ -1,13 +1,37 @@
-import { lazy, Suspense, useCallback, useLayoutEffect, useRef } from 'react'
+import React, { lazy, Suspense, useCallback, useLayoutEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText } from 'gsap/SplitText'
 import styles from './HeroSection.module.css'
 import Button from '../Button/Button.jsx'
-import { useOverlay } from '../OverlayProvider/OverlayProvider.jsx'
 import DotBand from '../DotBand/DotBand.jsx'
+
 gsap.registerPlugin(ScrollTrigger, SplitText)
 const HeroMedia = lazy(() => import('../HeroMedia/HeroMedia.jsx'))
+
+
+const Divider = React.memo(
+  ({ top, left, right, bottom, width, height, rotate, index }) => (
+    <div
+      className={styles.divider}
+      style={{
+        top,
+        left,
+        right,
+        bottom,
+        width,
+        height,
+        rotate,
+        transformOrigin: 'left center',
+      }}
+
+      aria-hidden="true"
+    />
+  ),
+)
+
+Divider.displayName = 'Divider'
+
 
 const HeroSection = () => {
   const sectionRef = useRef(null)
@@ -25,7 +49,12 @@ const HeroSection = () => {
   const gridBlur1Ref = useRef(null)
   const gridBlur2Ref = useRef(null)
   const gridBlur3Ref = useRef(null)
-
+  const bottomRightRef = useRef(null)
+  const bottomLeftRef = useRef(null)
+  const topRightRef = useRef(null)
+  const topLeftRef = useRef(null)
+  const cornersRef = useRef(null)
+  const dividersRef = useRef(null)
   const light = useRef()
 
   useLayoutEffect(() => {
@@ -51,10 +80,9 @@ const HeroSection = () => {
         scale: 1.15,
         yPercent: -10,
         duration: 1.5,
-
         ease: 'none',
         scrollTrigger: {
-          trigger: bgImageRef.current,
+          trigger: sectionRef.current,
           start: 'top top',
           end: 'bottom top',
           scrub: true,
@@ -66,11 +94,11 @@ const HeroSection = () => {
           ease: 'power4.out',
         },
       })
+
       intro.from(
         mediaRef.current,
         {
           opacity: 0,
-
           rotateY: -15,
           scale: 0.95,
           duration: 1.5,
@@ -78,7 +106,25 @@ const HeroSection = () => {
         },
         '<',
       )
+      intro.from(cornersRef.current.children, {
 
+        scale: 0.4,
+        yPercent: -20,
+
+        opacity: 0,
+        stagger: 0.25,
+        duration: 1.5,
+        ease: 'expo.out',
+      }, '<')
+
+      intro.from(dividersRef.current.children, {
+
+        scale: 0.4,
+        opacity: 0,
+        stagger: 0.25,
+        duration: 1.5,
+        ease: 'expo.out',
+      })
       const fills = gsap.utils.toArray(`.${styles.fill}`)
 
       intro.to(fills, {
@@ -128,14 +174,11 @@ const HeroSection = () => {
         bgImageRef.current,
         {
           opacity: 0,
-          scale: 1.15,
           backgroundPosition: '50% 0%',
           filter: 'blur(16px)',
         },
         {
           opacity: 0.95,
-          scale: 1.0,
-          
           backgroundPosition: '50% 30%',
           filter: 'blur(0px)',
           duration: 2,
@@ -151,6 +194,7 @@ const HeroSection = () => {
           start: 'top top',
           end: 'bottom top',
           scrub: true,
+
         },
       })
 
@@ -163,12 +207,18 @@ const HeroSection = () => {
         },
         'hero',
       )
-
+      tl.to(dividersRef.current.children, {
+        scaleX: 1.15,
+        opacity: 0.12,
+        yPercent: -15,
+        stagger: 0.05,
+        ease: 'none',
+      }, 'hero')
       tl.to(
         bgRef.current,
         {
           opacity: 0.5,
-        
+
           borderRadius: 0,
           ease: 'none',
         },
@@ -177,7 +227,7 @@ const HeroSection = () => {
       tl.to(
         titleRef.current,
         {
-         
+
           scale: 0.98,
           ease: 'none',
         },
@@ -212,7 +262,7 @@ const HeroSection = () => {
             opacity: 1,
             ease: 'none',
           },
-          'hero+=0,1',
+          'hero+=0.1',
         )
         .to(
           scrollIndicatorRef.current,
@@ -237,29 +287,51 @@ const HeroSection = () => {
     )
   }, [])
 
-  const handleRevealClick = useCallback(() => {
-  const rotate = gsap.timeline({
-      defaults: {
-        duration: 0.6,
-       
-    },
-  })
-    rotate.from(buttonsRef.current, {
-      yPercent: -40,
-     
-      duration: 0.6,
-      ease: 'power3.out',
-    })
-    rotate.to(buttonsRef.current, {
-      yPercent: 0,
-     
-      duration: 0.6,
-      ease: 'power3.out',
-    })
-  }, [])
+
+  const dividers = [
+    { top: '13%', left: '15%', width: '80%', rotate: '0deg', index: 0 },
+    { top: '10%', left: '90%', width: '80%', rotate: '90deg', index: 1 },
+    { top: '-20%', left: '50%', width: '60%', rotate: '90deg', index: 2 },
+
+
+    { bottom: '18%', left: '15%', width: '80%', rotate: '0deg', index: 4 },
+    { bottom: '18%', left: '5%', width: '80%', rotate: '0deg', index: 5 },
+    { bottom: '10%', left: '10%', width: '80%', rotate: '270deg', index: 6 },
+
+
+  ]
 
   return (
     <section ref={sectionRef} className={styles.heroContainer}>
+
+
+      {/* ── Corners ── */}
+      <div className={styles.cornerSecWrapper} ref={cornersRef}>
+        <div ref={topLeftRef} className={`${styles.cornerSec} ${styles.topLeft}`} />
+        <div ref={topRightRef} className={`${styles.cornerSec} ${styles.topRight}`} />
+        <div ref={bottomLeftRef} className={`${styles.cornerSec} ${styles.bottomLeft}`} />
+        <div ref={bottomRightRef} className={`${styles.cornerSec} ${styles.bottomRight}`} />
+      </div>
+
+
+      {/* ── Dividers ── */}
+      <div className={styles.dividers} aria-hidden="true" ref={dividersRef}>
+
+        {dividers.map((divider) => (
+          <Divider
+            key={divider.index}
+            top={divider.top}
+            left={divider.left}
+            right={divider.right}
+            bottom={divider.bottom}
+            width={divider.width}
+            height={divider.height}
+            rotate={divider.rotate}
+            index={divider.index}
+          />
+        ))}
+      </div>
+
       <div ref={light} className={styles.cursorLight} />
       {/* ── Background ── */}
       <div
@@ -314,11 +386,13 @@ const HeroSection = () => {
           <div ref={eyebrowRef} className={styles.eyebrow}>
             <span className={styles.eyebrowLine} />
             <span className={styles.eyebrowText}>
-              Fullstack Developer · 2025
+              Fullstack Developer · 2026
             </span>
             <span className={styles.eyebrowDot} />
           </div>
-
+          <div className={styles.crosshair}>
+            <div className={styles.crosshairDot} />
+          </div>
           {/* Giant title */}
           <h1
             ref={titleRef}
@@ -381,7 +455,7 @@ const HeroSection = () => {
             variant="primary"
             size="xl"
             aria-label="Start a project"
-             className={`${styles.button} ${styles.buttonPrimary}`}
+            className={`${styles.button} ${styles.buttonPrimary}`}
           >
             <span className={styles.primaryButtonText}>Start a project</span>
             <svg
@@ -431,21 +505,6 @@ const HeroSection = () => {
               />
             </svg>
           </Button>
-
-          <div className={styles.buttonDivider}>
-            <div className={styles.dotBand} />
-
-            <button
-              className={styles.scrollButton}
-              aria-label="Scroll to next section"
-              onMouseDown={handleRevealClick}
-            >
-              <span className={styles.ring}></span>
-              <svg className={styles.scrollIcon}>
-                <use href="/sprite.svg#icon-chevron-down" />
-              </svg>
-            </button>
-          </div>
         </div>
       </div>
 

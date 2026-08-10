@@ -111,10 +111,11 @@ const Certificate = () => {
       },
     })
 
+
     // Анімація часу
     gsap.from(timeRef.current, {
       opacity: 0,
-      y: 20,
+      y: -20,
       duration: 1,
       ease: 'power3.out',
       scrollTrigger: {
@@ -166,8 +167,9 @@ const Certificate = () => {
             </a>
           </div>
         </div>
+        
 
-        {/* Картка сертифіката (не по центру) */}
+        {/* Картка сертифіката */}
         <div
           className={styles.cardContainer}
           data-cursor="hover"

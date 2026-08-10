@@ -1,18 +1,19 @@
-import React from "react";
-import s from "./Logo.module.css";
+import React from 'react'
+import s from './Logo.module.css'
 
-const Logo = () => {
+const Logo = ({ svgRef }) => {
   return (
     <div className={s.logoContainer}>
       <svg
+        ref={svgRef}
         viewBox="0 0 100 100"
         xmlns="http://www.w3.org/2000/svg"
         className={s.logoSvg}
       >
         <defs>
           <linearGradient id="primaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style={{ stopColor: "var(--color-primary)" }} />
-            <stop offset="100%" style={{ stopColor: "var(--color-accent)" }} />
+            <stop offset="0%" style={{ stopColor: 'var(--color-primary)' }} />
+            <stop offset="100%" style={{ stopColor: 'var(--color-accent)' }} />
           </linearGradient>
         </defs>
 
@@ -25,7 +26,7 @@ const Logo = () => {
           stroke="currentColor"
           strokeWidth="2"
         />
-        
+
         {/* Animated hover circle */}
         <circle
           cx="50"
@@ -60,7 +61,7 @@ const Logo = () => {
         />
       </svg>
     </div>
-  );
-};
+  )
+}
 
-export default Logo;
+export default Logo

@@ -7,7 +7,7 @@ import gsap from 'gsap'
 
 const ENTRANCE_FROM = {
   opacity: 0,
-
+  x: -50,
   scale: 0.5,
   filter: 'blur(4px)',
 
@@ -17,7 +17,7 @@ const ENTRANCE_TO = {
   opacity: 1,
 
   scale: 1,
-
+  x: 0,
   filter: 'blur(0px)',
   duration: 0.8,
   ease: 'expo.out',
@@ -25,121 +25,166 @@ const ENTRANCE_TO = {
 
 const Loader = ({ onComplete }) => {
   const [isLoading, setIsLoading] = useState(true)
-  const logoRef = useRef(null)
+  const svgLogoRef = useRef(null)
   const overlayRef = useRef(null)
   const topBarRef = useRef(null)
   const bottomBarRef = useRef(null)
   const noiseRef = useRef(null)
-  const dividerRefs = useRef([])
-  const columns = Array.from({ length: 48 })
-
+  const nameRef = useRef(null)
 
   useEffect(() => {
-    const tl = gsap.timeline()
+    const ctx = gsap.context(() => {
+      const logo = svgLogoRef.current
+      gsap.from(overlayRef.current, {
+          opacity: 0.5,
+          scale: 1,
+          filter: 'blur(0px)',
+          duration: 0.8,
+          ease: 'expo.out',
+          repeat: -1,
+          yoyo: true,
+        },
+      )
 
-    const noiseTween = gsap.to(noiseRef.current, {
-      opacity: 0,
-      duration: 2,
-      ease: 'power2.inOut',
-      repeat: -1,
-      yoyo: true,
-    })
+      if (!logo) return
 
-    tl.fromTo(
-      overlayRef.current,
-      { autoAlpha: 0, scale: 1.08, filter: 'blur(20px)' },
-      { autoAlpha: 1, scale: 1, filter: 'blur(0px)', duration: 0.8, ease: 'expo.out' },
-    )
-      .fromTo(topBarRef.current, ENTRANCE_FROM, ENTRANCE_TO)
-      .fromTo(bottomBarRef.current, ENTRANCE_FROM, ENTRANCE_TO)
+      const circles = logo.querySelectorAll('circle')
+      const paths = logo.querySelectorAll('path')
 
+      // -------------------------
+      // Prepare SVG
+      // -------------------------
 
-      .fromTo(
-        logoRef.current,
+      gsap.set(logo, {
+        autoAlpha: 1,
+        scale: 1,
+        svgRef: svgLogoRef,
+
+        clearProps: 'filter',
+      })
+
+      // Підготовка stroke для кіл
+      circles.forEach((circle) => {
+        const length = circle.getTotalLength?.()
+
+        if (length) {
+          gsap.set(circle, {
+            strokeDasharray: length,
+            strokeDashoffset: length,
+          })
+        }
+      })
+
+      // Підготовка V/F
+      paths.forEach((path) => {
+        const length = path.getTotalLength()
+
+        gsap.set(path, {
+          strokeDasharray: length,
+          strokeDashoffset: length,
+        })
+      })
+
+      // -------------------------
+      // Timeline
+      // -------------------------
+
+      const tl = gsap.timeline({
+        defaults: {
+          overwrite: 'auto',
+        },
+      })
+
+      tl.fromTo(
+        overlayRef.current,
         {
           autoAlpha: 0,
-          scale: 0.5,
-          opacity: 0,
-          filter: 'blur(20px)',
-          clipPath: 'inset(0 100% 0 0)',
-          strokeDashoffset: '2512px',
+          scale: 1.06,
+          filter: 'blur(12px)',
         },
         {
           autoAlpha: 1,
-          scale: 1.5,
-          opacity: 1,
-          filter: 'blur(0px)', clipPath: 'inset(0 0% 0 0)', strokeDashoffset: '0',
-          duration: 1,
+          scale: 1,
+          filter: 'blur(0px)',
+          duration: 0.7,
           ease: 'expo.out',
         },
-        '-=0.3',
       )
-      .fromTo(
-        dividerRefs.current,
-        {
-          scaleY: 0,
-          opacity: 0,
-          y:
-            -300,
-        },
-        {
-          scaleY: 1,
-          opacity: 1,
-          y: 0,
+
+        // Header
+        .fromTo(
+          topBarRef.current,
+          ENTRANCE_FROM,
+          ENTRANCE_TO,
+        )
+
+        // Footer одночасно з header
+        .fromTo(
+          bottomBarRef.current,
+          ENTRANCE_FROM,
+          ENTRANCE_TO,
+        )
+        .fromTo(nameRef.current, ENTRANCE_FROM, ENTRANCE_TO)
+        // -------------------------
+        // SVG
+        // -------------------------
+
+        // Спочатку малюємо зовнішнє коло
+        .to(circles[0], {
+          strokeDashoffset: 0,
           duration: 1,
-          stagger: {
-            each: 0.015,
-            from: 'center',
+          ease: 'power2.inOut',
+        })
+
+        // Потім друге коло
+        .to(circles[1], {
+          strokeDashoffset: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+        })
+
+        // Потім V
+        .to(paths[0], {
+          strokeDashoffset: 0,
+          duration: 0.7,
+          ease: 'power2.out',
+        })
+
+        // Потім F
+        .to(paths[1], {
+          strokeDashoffset: 0,
+          duration: 0.7,
+          ease: 'power2.out',
+        })
+
+        // Невелика пауза
+        .to({}, {
+          duration: 0.6,
+        })
+
+        // -------------------------
+        // Exit
+        // -------------------------
+
+        .to(overlayRef.current, {
+          clipPath: 'inset(0 0 0 100%)',
+          scale: 1.03,
+          duration: 1.2,
+          ease: 'power4.inOut',
+
+          onComplete: () => {
+            setIsLoading(false)
+            onComplete?.()
           },
-          ease: 'expo.out',
-        },
-      )
-      .to(dividerRefs.current, {
-        scaleY: 1.2,
-        duration: .35,
-        stagger: {
-          each: .01,
-          yoyo: true,
-          repeat: 1,
-          from: 'edges',
-        },
-        ease: 'sine.inOut',
-      })
+        })
 
-      .to(dividerRefs.current, {
-        scaleY: 0,
-        opacity: 0,
-        y: -500,
-        duration: .8,
-        stagger: {
-          each: .008,
-          from: 'random',
-        },
-        ease: 'power4.in',
-      })
-      .to({}, { duration: 0.8 })
+      return () => {
+        tl.kill()
+      }
+    }, svgLogoRef)
 
-      .to(overlayRef.current, {
-        autoAlpha: 0,
-        scale: 1.15,
-
-        clipPath: 'inset(0 0% 100% 0)',
-        filter: 'blur(12px)',
-        duration: 1.2,
-        onComplete: () => {
-          setIsLoading(false)
-          onComplete?.()
-        },
-
-      })
-
-
-    return () => {
-      tl.kill()
-      noiseTween.kill()
-    }
-  }, [])
-
+    return () => ctx.revert()
+  }, [onComplete])
   if (!isLoading) return null
 
   return (
@@ -150,34 +195,23 @@ const Loader = ({ onComplete }) => {
         <NoiseOverlay />
       </div>
 
-
-      <div className={styles.columns}>
-        {columns.map((_, i) => (
-          <span
-            key={i}
-            ref={(el) => (dividerRefs.current[i] = el)}
-            className={styles.column}
-            style={{
-              left: `${(i / 20) * 100}%`,
-              height: `${20 + Math.random() * 80}%`,
-              opacity: 0.2 + Math.random() * 0.8,
-
-            }}
-          />
-        ))}
-      </div>
-
-
-      <div className={styles.logoWrap}>
-        <div ref={logoRef}>
-          <Logo />
-        </div>
-      </div>
-
       <div className={styles.topBar} ref={topBarRef}>
         <span className={styles.brandName}>VF / PORTFOLIO</span>
         <span className={styles.year}>2026</span>
       </div>
+      <div className={styles.logoWrap}>
+        <div>
+          <Logo svgRef={svgLogoRef} />
+        </div>
+        <div className={styles.name} ref={nameRef}>
+          <svg className={styles.svg}>
+            <use href="/sprite.svg#trademark-registered" />
+
+          </svg>
+          Fush
+        </div>
+      </div>
+
 
       <div className={styles.bottomBar} ref={bottomBarRef}>
         <span className={styles.statusText}>

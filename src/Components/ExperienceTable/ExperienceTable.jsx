@@ -96,18 +96,18 @@ export default function ExperienceTable() {
   useLayoutEffect(() => {
     document.fonts.ready.then(() => {
       let split = SplitText.create(titleRef.current, { type: 'words' })
-  
-    
-     const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: gridRef.current,
-        start: 'top 80%',
-        end: 'top 20%',
-        scrub: 1,
-        delay: 1,
-      }
-     })
-   tl.from(split.words, {
+
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: gridRef.current,
+          start: 'top 80%',
+          end: 'top 20%',
+          scrub: 1,
+          delay: 1,
+        },
+      })
+      tl.from(split.words, {
         opacity: 0,
         y: 20,
         duration: 1.5,
@@ -120,30 +120,30 @@ export default function ExperienceTable() {
 
   // Анімація карток при скролі
 
-const cards = gsap.utils.toArray(`.${styles.card}`);
+  const cards = gsap.utils.toArray(`.${styles.card}`)
 
-const handleMove = (e) => {
-  gsap.to(cards, {
-    flexGrow: 1,
-    duration: 0.45,
-    ease: "power3.out",
-  });
+  const handleMove = (e) => {
+    gsap.to(cards, {
+      flexGrow: 1,
+      duration: 0.45,
+      ease: 'power3.out',
+    })
 
-  gsap.to(e.currentTarget, {
-    flexGrow: 2.2,
-    duration: 0.45,
-    ease: "power3.out",
-    
-  });
-};
+    gsap.to(e.currentTarget, {
+      flexGrow: 2.2,
+      duration: 0.45,
+      ease: 'power3.out',
 
-const handleLeave = () => {
-  gsap.to(cards, {
-    flexGrow: 1,
-    duration: 0.45,
-    ease: "power3.out",
-  });
-};
+    })
+  }
+
+  const handleLeave = () => {
+    gsap.to(cards, {
+      flexGrow: 1,
+      duration: 0.45,
+      ease: 'power3.out',
+    })
+  }
 
   return (
     <section ref={sectionRef} className={styles.section}>
@@ -185,7 +185,9 @@ const handleLeave = () => {
             <span className={styles.index}>
               {(index + 1).toString().padStart(2, '0')}
             </span>
-            <svg className={styles.icon}  width={20} height={20}><use href="/sprite.svg#icon-chevron-up" /></svg>
+            <svg className={styles.icon} width={28} height={28}>
+              <use href="/sprite.svg#icon-target" />
+            </svg>
             <img
               src={item.image}
               className={styles.image}

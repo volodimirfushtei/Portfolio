@@ -6,7 +6,7 @@
     position: relative;
     padding: clamp(100px, 12vw, 200px) 6vw;
     overflow: hidden;
-    background: var(--color-background);
+    background: var(--glass-bg);
     isolation: isolate;
 }
 
@@ -31,7 +31,8 @@
     position: absolute;
     inset: 0;
     background-image: url('/images/texture.webp');
-    opacity: 0.03;
+    background-size: cover;
+    opacity: 0.06;
     pointer-events: none;
     z-index: 0;
 }

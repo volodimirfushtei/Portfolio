@@ -8,8 +8,8 @@ gsap.registerPlugin(ScrollTrigger)
 gsap.registerPlugin(SplitText)
 
 export default function SoftSkills() {
-  const titleRef = useRef(null)
-
+  const subtitleRef = useRef(null)
+  const sectionRef = useRef(null)
   const skills = [
     {
       title: 'Communication',
@@ -35,6 +35,8 @@ export default function SoftSkills() {
       ],
     },
   ]
+
+
   useLayoutEffect(() => {
     let split
     const ctx = gsap.context(() => {
@@ -66,6 +68,30 @@ export default function SoftSkills() {
           },
         )
       })
+
+      // SplitText анімація
+
+      document.fonts.ready.then(() => {
+        let split = SplitText.create(subtitleRef.current, { type: 'words' })
+
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: `.${styles.grid}`,
+            start: 'top bottom',
+            end: 'top 10%',
+            scrub: 1,
+            delay: 1,
+          },
+        })
+        tl.from(split.words, {
+          opacity: 0,
+          y: 20,
+          duration: 1.5,
+          ease: 'sine.out',
+          stagger: 0.1,
+        })
+      })
     })
 
     return () => {
@@ -75,7 +101,7 @@ export default function SoftSkills() {
   }, [])
 
   return (
-    <section className={styles.section} id="soft-skills">
+    <section className={styles.section} ref={sectionRef} id="soft-skills">
       <div className={styles.wrapper}>
         <div className={styles.content}>
           <div className={styles.header}>
@@ -83,7 +109,7 @@ export default function SoftSkills() {
               <span className={styles.eyebrowLine} />
               <h3 className={styles.eyebrowText}>Capabilities</h3>
             </div>
-            <h2 className={styles.title} ref={titleRef}>
+            <h2 className={styles.title}>
               <span className={styles.titleLine}>
                 <span className={styles.titleAccent}>Personal</span>
               </span>
@@ -91,7 +117,7 @@ export default function SoftSkills() {
                 <span className={styles.titlePlain}>Skills</span>
               </span>
             </h2>
-            <h3 className={styles.subtitle}>
+            <h3 className={styles.subtitle} ref={subtitleRef}>
               I believe that soft skills work well in a team, and halp to think
               creatively.
             </h3>

@@ -72,10 +72,10 @@
 .grid {
     position: relative;
     display: flex;
-  
-     width: 100%;
-  align-items: stretch;
-  overflow: hidden;
+
+    width: 100%;
+    align-items: stretch;
+    overflow: hidden;
     gap: 6px;
     z-index: 10;
 }
@@ -84,8 +84,8 @@
 .card {
     position: relative;
     min-height: 660px;
-  flex: 1 1 0;
-  min-width: 0;
+    flex: 1 1 0;
+    min-width: 0;
     padding: 3rem;
     display: flex;
     flex-direction: column;
@@ -99,7 +99,7 @@
 }
 
 .card:hover {
-    
+
     background: rgba(255, 255, 255, 0.01);
     transform: translateY(-5px);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
@@ -140,22 +140,28 @@
     color: var(--color-title);
     margin-bottom: 1rem;
 }
-.icon{
+
+.icon {
     margin-left: auto;
     fill: var(--color-accent);
-    opacity: .5;
+    opacity: .6;
     position: absolute;
-    top: 60%;
+    top: 70%;
     right: 50%;
+
+    display: block;
+    color: currentColor;
     transform: translate(50%, -50%) rotate(270deg);
     transition: all 0.4s ease;
-    
+
 }
-.icon:hover{
+
+.icon:hover {
     fill: var(--color-accent);
     opacity: 1;
     transform: translate(50%, -50%) rotate(270deg);
 }
+
 /* Текст */
 .text {
     margin-top: auto;

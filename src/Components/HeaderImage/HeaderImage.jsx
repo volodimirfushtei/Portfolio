@@ -14,30 +14,24 @@ const HeaderImage = ({ selectedLink }) => {
 
   useLayoutEffect(() => {
     if (!imageRef.current) return
+
     const ctx = gsap.context(() => {
-      gsap.fromTo(imageRef.current, {
-          clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+      gsap.fromTo(
+        imageRef.current,
+        {
           scale: 0.8,
           opacity: 0,
-          duration: 1,
-          ease: 'Power2.easeOut',
-        }, {
-          clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+        },
+        {
           scale: 1,
           opacity: 1,
           duration: 1,
-          ease: 'Power2.easeOut',
+          ease: 'power2.out',
         },
       )
+    }, imageRef)
 
-
-    })
-    return () => {
-
-      ctx.revert()
-
-
-    }
+    return () => ctx.revert()
   }, [selectedLink.path])
 
 
@@ -47,9 +41,8 @@ const HeaderImage = ({ selectedLink }) => {
       className={styles.imageContainer}>
       <img ref={imageRef}
            src={selectedImage.src}
-           width={300}
-           height={180}
            alt="image"
+
       />
     </div>
   )
