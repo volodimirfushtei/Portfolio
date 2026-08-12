@@ -25,9 +25,9 @@ const Logo = ({ svgRef }) => {
           fill="none"
           stroke="currentColor"
           strokeWidth="2"
+          data-logo="track"
         />
 
-        {/* Animated hover circle */}
         <circle
           cx="50"
           cy="50"
@@ -36,9 +36,9 @@ const Logo = ({ svgRef }) => {
           stroke="url(#primaryGradient)"
           strokeWidth="3"
           className={s.pulseCircle}
+          data-logo="pulse"
         />
 
-        {/* The 'V' */}
         <path
           d="M 32 36 L 50 64 L 68 36"
           fill="none"
@@ -47,9 +47,9 @@ const Logo = ({ svgRef }) => {
           strokeLinecap="round"
           strokeLinejoin="round"
           className={s.pathV}
+          data-logo="v"
         />
 
-        {/* The 'F' */}
         <path
           d="M 41 36 L 41 64 M 41 36 L 56 36 M 41 50 L 53 50"
           fill="none"
@@ -58,6 +58,7 @@ const Logo = ({ svgRef }) => {
           strokeLinecap="round"
           strokeLinejoin="round"
           className={s.pathF}
+          data-logo="f"
         />
       </svg>
     </div>

@@ -8,7 +8,6 @@ import Logo from '../Logo/Logo'
 import NavHeader from '../NavHeader/NavHeader.jsx'
 import clsx from 'clsx'
 
-// ✅ Reusable SVG Icon component with memo
 
 const SvgIcon = React.memo(({ id, className = '', width = 24, height = 24 }) => (
   <svg className={`${styles.icon} ${className}`} width={width} height={height} aria-hidden="true">
@@ -128,7 +127,7 @@ const Header = () => {
                 <span></span>
                 <span></span>
               </div>
-              
+
               <div className={styles.words}>
                 <div ref={wrapperRef}>
                   <p>Menu</p>

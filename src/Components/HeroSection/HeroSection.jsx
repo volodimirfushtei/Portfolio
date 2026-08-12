@@ -5,6 +5,7 @@ import { SplitText } from 'gsap/SplitText'
 import styles from './HeroSection.module.css'
 import Button from '../Button/Button.jsx'
 import DotBand from '../DotBand/DotBand.jsx'
+import { useOutletContext } from 'react-router-dom'
 
 gsap.registerPlugin(ScrollTrigger, SplitText)
 const HeroMedia = lazy(() => import('../HeroMedia/HeroMedia.jsx'))
@@ -56,7 +57,7 @@ const HeroSection = () => {
   const cornersRef = useRef(null)
   const dividersRef = useRef(null)
   const light = useRef()
-
+  const { loading } = useOutletContext()
   useLayoutEffect(() => {
     const move = (e) => {
       gsap.to(light.current, {
@@ -72,79 +73,73 @@ const HeroSection = () => {
   }, [])
 
   useLayoutEffect(() => {
-    if (!sectionRef.current) {
+    if (!sectionRef.current || loading) {
       return
     }
     const ctx = gsap.context(() => {
-      gsap.to(bgImageRef.current, {
-        scale: 1.15,
-        yPercent: -10,
-        duration: 1.5,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true,
-        },
-      })
+
 
       const intro = gsap.timeline({
         defaults: {
           ease: 'power4.out',
+          duration: 0.5,
         },
       })
-
+      intro.from(sectionRef.current, {
+        opacity: 0,
+        scale: 0.5,
+        duration: 1.5,
+        ease: 'bounce.out',
+        delay: 0.5,
+        filter: 'blur(12px)',
+      })
       intro.from(
         mediaRef.current,
         {
           opacity: 0,
-          rotateY: -15,
+          x: 100,
+          rotation: -15,
           scale: 0.95,
           duration: 1.5,
+          delay: 0.5,
           ease: 'expo.out',
-        },
-        '<',
+        }
+        , '+=0.2',
       )
-      intro.from(cornersRef.current.children, {
 
-        scale: 0.4,
-        yPercent: -20,
-
-        opacity: 0,
-        stagger: 0.25,
-        duration: 1.5,
-        ease: 'expo.out',
-      }, '<')
-
-      intro.from(dividersRef.current.children, {
-
-        scale: 0.4,
-        opacity: 0,
-        stagger: 0.25,
-        duration: 1.5,
-        ease: 'expo.out',
-      })
       const fills = gsap.utils.toArray(`.${styles.fill}`)
 
-      intro.to(fills, {
-        clipPath: 'inset(0% 0 0 0)',
-        duration: 1.8,
-        stagger: 0.25,
-        ease: 'power4.out',
-      })
+      intro.fromTo(fills, {
+
+          opacity: 0.5,
+
+          duration: 1.8,
+
+          ease: 'power4.out',
+          fontSize: '10rem',
+        },
+        {
+          opacity: 1,
+          clipPath: 'inset(0% 0 0 0)',
+          duration: 1.8,
+
+          ease: 'power4.out',
+          fontSize: '12rem',
+        },
+      )
+
 
       intro.from(
         buttonsRef.current,
         {
           opacity: 0,
           y: -60,
-          rotationX: -25,
+
           duration: 0.8,
           ease: 'power4.out',
           stagger: 0.25,
         },
-        '>-1.0',
+        '>0.5',
       )
 
       intro.fromTo(
@@ -186,6 +181,25 @@ const HeroSection = () => {
         },
         '+=0.2',
       )
+      intro.from(cornersRef.current.children, {
+
+        scale: 0.4,
+        yPercent: -20,
+
+        opacity: 0,
+        stagger: 0.25,
+        duration: 1.5,
+        ease: 'expo.out',
+      })
+
+      intro.from(dividersRef.current.children, {
+
+        scale: 0.4,
+        opacity: 0,
+        stagger: 0.25,
+        duration: 1.5,
+        ease: 'expo.out',
+      })
 
       // ScrollTrigger animation
       const tl = gsap.timeline({
@@ -195,25 +209,35 @@ const HeroSection = () => {
           end: 'bottom top',
           scrub: true,
 
+
         },
       })
 
-      tl.addLabel('hero').to(
+      tl.to(
         sectionRef.current,
         {
+          y: 100,
           borderRadius: 40,
-          yPercent: -10,
+          scale: 0.9,
           ease: 'none',
         },
-        'hero',
+        0,
       )
       tl.to(dividersRef.current.children, {
         scaleX: 1.15,
-        opacity: 0.12,
+        opacity: 0.72,
+        backgroundColor: 'transparent',
         yPercent: -15,
         stagger: 0.05,
         ease: 'none',
-      }, 'hero')
+      }, 0)
+      tl.to(cornersRef.current.children, {
+        scale: 1.15,
+        opacity: 0.72,
+
+        stagger: 0.05,
+        ease: 'none',
+      })
       tl.to(
         bgRef.current,
         {
@@ -227,13 +251,21 @@ const HeroSection = () => {
       tl.to(
         titleRef.current,
         {
-
+          yPercent: -15,
           scale: 0.98,
           ease: 'none',
         },
         0,
       )
-
+        .to(
+          mediaRef.current,
+          {
+            yPercent: -15,
+            scale: 0.92,
+            ease: 'none',
+          },
+          '<',
+        )
         .to(
           buttonsRef.current,
           {
@@ -245,15 +277,6 @@ const HeroSection = () => {
           0,
         )
 
-        .to(
-          mediaRef.current,
-          {
-            yPercent: -25,
-            scale: 0.92,
-            ease: 'none',
-          },
-          0,
-        )
 
         .to(
           gridBlur3Ref.current,
@@ -262,7 +285,7 @@ const HeroSection = () => {
             opacity: 1,
             ease: 'none',
           },
-          'hero+=0.1',
+          0,
         )
         .to(
           scrollIndicatorRef.current,
@@ -270,14 +293,15 @@ const HeroSection = () => {
             opacity: 1,
             ease: 'none',
           },
-          'hero+=0.2',
+          0,
         )
+
     }, sectionRef)
 
     return () => {
       ctx.revert()
     }
-  }, [])
+  }, [loading])
 
   const handleGitHubClick = useCallback(() => {
     window.open(
@@ -507,10 +531,10 @@ const HeroSection = () => {
           </Button>
         </div>
       </div>
-
       <div className={styles.heroDivider}>
         <DotBand />
       </div>
+
     </section>
   )
 }

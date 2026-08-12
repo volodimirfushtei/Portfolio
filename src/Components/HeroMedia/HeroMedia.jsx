@@ -33,7 +33,7 @@ const HeroMedia = () => {
 
         .from(imageRef.current, {
           scale: 1.3,
-          yPercent: -10,
+          yPercent: 10,
           opacity: 0,
           filter: 'blur(10px)',
           duration: 1.6,
@@ -61,6 +61,7 @@ const HeroMedia = () => {
           opacity: 0,
           duration: .6,
         }, '<0.1')
+
 
         .from(
           contentRef.current.querySelectorAll('[data-reveal]'),
@@ -159,9 +160,6 @@ const HeroMedia = () => {
         LIVE
       </div>
 
-      <span ref={nameRef} className={styles.name}>
-        VOLODYMYR FUSHTEI
-      </span>
 
       <div ref={contentRef} className={styles.footer}>
         <div className={styles.info}>

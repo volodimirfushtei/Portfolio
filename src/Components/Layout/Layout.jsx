@@ -1,12 +1,13 @@
 import { Outlet, useLocation } from 'react-router-dom'
+import { useLayoutEffect, useRef, useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import ScrollToTopBtn from '../ScrollToTopBtn/ScrollTotopBtn'
 import Header from '../Header/Header'
 import { ScrollSmoother } from 'gsap/ScrollSmoother'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useLayoutEffect, useRef } from 'react'
 import gsap from 'gsap'
 import s from './Layout.module.css'
+import Loader from '../Loader/Loader'
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
@@ -14,7 +15,7 @@ const Layout = () => {
   const wrapperRef = useRef(null)
   const contentRef = useRef(null)
   const smootherRef = useRef(null)
-
+  const [loading, setLoading] = useState(true)
   const location = useLocation()
 
   // Створюємо ScrollSmoother лише один раз
@@ -57,6 +58,9 @@ const Layout = () => {
     <div className={s.layoutContainer}>
       <Header />
       <ScrollToTopBtn />
+      <div className={s.loaderWrapper}><Loader
+        onComplete={() => setLoading(false)}
+      /></div>
 
 
       <main className={s.mainContent}>
@@ -70,9 +74,11 @@ const Layout = () => {
             ref={contentRef}
             className={s.content}
           >
-            <AnimatePresence mode="wait">
-              <Outlet />
-            </AnimatePresence>
+            {!loading && (<AnimatePresence mode="wait">
+              <div key={location.pathname}>
+                <Outlet context={{ loading }} />
+              </div>
+            </AnimatePresence>)}
           </div>
         </div>
       </main>

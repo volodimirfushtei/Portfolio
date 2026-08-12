@@ -44,9 +44,21 @@
     min-height: 100svh;
     padding-top: var(--hero-padding-top);
     padding-bottom: var(--hero-padding-bottom);
-
+    overflow: hidden;
+    isolation: isolate;
     background: transparent;
     scroll-snap-align: start;
+    scroll-snap-type: y mandatory;
+
+}
+
+.heroDivider {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -40px; /* половина смуги заходить на Hero */
+    z-index: 12;
+    height: 8rem;
 }
 
 .dividers {
@@ -73,27 +85,55 @@
     transform-origin: left center;
 }
 
+.divider::before,
+.divider::after {
+    content: '';
+
+    position: absolute;
+    left: 50%;
+
+    width: 5px;
+    height: 3px;
+
+    border: 1px solid var(--color-text);
+
+    transform: translateX(-50%);
+
+    background: white;
+}
+
+.divider::before {
+    top: 0;
+}
+
+.divider::after {
+    bottom: 0;
+}
+
 .cornerSec {
     position: absolute;
     width: 80px;
     height: 80px;
 }
 
+
 .cornerSec::before,
 .cornerSec::after {
     content: '';
     position: absolute;
-    background: var(--color-border);
+    background: var(--gradient-accent);
+
+    opacity: 0.5;
 }
 
 .cornerSec::before {
-    width: 80px;
+    width: 40px;
     height: 1px;
 }
 
 .cornerSec::after {
-    width: 2px;
-    height: 80px;
+    width: 1px;
+    height: 40px;
 }
 
 .topLeft {
@@ -382,8 +422,7 @@
     display: grid;
 
     grid-template-columns:
-    55%
-    45%;
+    55% 45%;
 
     grid-template-rows:
     1fr
@@ -512,7 +551,7 @@
     background: linear-gradient(
             120deg,
             var(--color-text),
-            var(--color-secondary)
+            var(--color-accent)
     );
 
     background-clip: text;
@@ -524,7 +563,7 @@
 /* --- Buttons --- */
 .buttons {
     position: absolute;
-    bottom: -100px;
+    bottom: -80px;
     left: 50%;
     transform: translateX(-50%);
 
@@ -701,19 +740,19 @@
 }
 
 .buttons:hover .tl {
-    transform: translate(-6px, -6px);
+    transform: translate(-8px, -8px);
 }
 
 .buttons:hover .tr {
-    transform: translate(6px, -6px);
+    transform: translate(8px, -8px);
 }
 
 .buttons:hover .bl {
-    transform: translate(-6px, 6px);
+    transform: translate(-8px, 8px);
 }
 
 .buttons:hover .br {
-    transform: translate(6px, 6px);
+    transform: translate(8px, 8px);
 }
 
 .buttons:hover {

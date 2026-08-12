@@ -180,11 +180,12 @@ const HomePage = () => {
     <div className={styles.container} ref={sectionRef}>
       <div id="viewport-blur" className={styles.viewportBlur}></div>
       <section className={styles.heroSectionWrapper} id="hero">
-        <HeroSection />
-       
-        
-      </section>
 
+        <HeroSection />
+
+
+      </section>
+      <DotBand />
       <section
         id="expertise"
         className={`${styles.section} ${styles.fadeSection}`}
@@ -196,9 +197,9 @@ const HomePage = () => {
 
       <section className={`${styles.section} ${styles.fadeSection}`}>
         <ExperienceTable />
-        
-         <DotBand />
-       
+
+        <DotBand />
+
       </section>
 
 
@@ -207,23 +208,23 @@ const HomePage = () => {
         className={`${styles.section} ${styles.fadeSection}`}
       >
         <ControllerSkills items={skills} />
-      <DotBand />
+        <DotBand />
       </section>
 
 
       <section className={`${styles.section} ${styles.fadeSection}`}>
         <SoftSkills />
-       <DotBand />
+        <DotBand />
       </section>
-    
+
       <section className={`${styles.section} ${styles.fadeSection}`}>
         <Carusel />
-     <DotBand />
+        <DotBand />
       </section>
 
       <section id="cta" className={`${styles.section} ${styles.fadeSection}`}>
         <CtaSection />
-       <DotBand />
+        <DotBand />
       </section>
 
       <section
@@ -236,12 +237,12 @@ const HomePage = () => {
 
       <section className={`${styles.stickySection} ${styles.fadeSection}`}>
         <StickyZoomSection />
-        
+
 
       </section>
       <div className={`${styles.heroDivider} `}>
-<DotBand />
-</div>
+        <DotBand />
+      </div>
       <Footer />
     </div>
   )

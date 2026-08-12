@@ -3,7 +3,7 @@ import { Route, Routes, useLocation } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import { OverlayProvider } from './Components/OverlayProvider/OverlayProvider.jsx'
 import ErrorBoundary from './Components/ErrorBoundary/ErrorBoundary.jsx'
-import Loader from './Components/Loader/Loader.jsx'
+
 import Layout from './Components/Layout/Layout.jsx'
 import ScrollToTop from './Components/ScrollToTop/ScrollToTop.jsx'
 import CustomCursor from './Components/CustomCursor/CustomCursor.jsx'
@@ -49,7 +49,6 @@ const toastStyle = {
 
 function App() {
   const location = useLocation()
-  const [loading, setLoading] = useState(true)
   const [isTouchDevice, setIsTouchDevice] = useState(false)
 
 
@@ -66,14 +65,6 @@ function App() {
     }
   }, [])
 
-
-  const handleLoaderComplete = () => {
-    setLoading(false)
-  }
-
-  if (loading) {
-    return <Loader onComplete={handleLoaderComplete} />
-  }
 
   return (
     <OverlayProvider>
