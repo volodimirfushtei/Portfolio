@@ -118,7 +118,6 @@ export default function ExperienceTable() {
     })
   }, [])
 
-  // Анімація карток при скролі
 
   const cards = gsap.utils.toArray(`.${styles.card}`)
 
@@ -144,6 +143,31 @@ export default function ExperienceTable() {
       ease: 'power3.out',
     })
   }
+useLayoutEffect(() => {
+  const ctx = gsap.context(() => {
+    const cards = gsap.utils.toArray(`.${styles.card}`)
+
+    cards.forEach((card, index) => {
+      gsap.to(card, {
+        yPercent: -25,
+        
+        scale: 0.94,
+        opacity: 0.9,
+        rotateY: index % 4 === 0 ? -30 : 30,
+        ease: 'none',
+
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 20%',
+          end: 'top 5%',
+          scrub: 1,
+        },
+      })
+    })
+  }, sectionRef)
+
+  return () => ctx.revert()
+}, [])
 
   return (
     <section ref={sectionRef} className={styles.section}>

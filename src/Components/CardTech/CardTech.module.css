@@ -6,14 +6,75 @@
   position: relative;
   width: 100%;
   min-height: 80vh;
-  border-radius: var(--radius-lg);
   padding: 2rem;
+
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  background: transparent;
   isolation: isolate;
+
+  background: transparent;
+  cursor: pointer;
 }
 
 .chaoticContainer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+
+  border-radius: inherit;
+  padding: 2px;
+
+background: linear-gradient(
+  115deg,
+  transparent 0%,
+  transparent 35%,
+  color-mix(in srgb, var(--color-accent) 70%, transparent) 50%,
+  transparent 65%,
+  transparent 100%
+);
+
+  background-size: 300% 100%;
+  animation: borderScan 5s cubic-bezier(.65, 0, .35, 1) infinite;
+
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes borderScan {
+  0% {
+    background-position: 300% 50%;
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.8;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 0.8;
+  }
+
+  100% {
+    background-position: -100% 50%;
+    opacity: 0;
+  }
+}
+
+.chaoticContainer {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.noise {
   content: '';
   position: absolute;
   inset: 0;
@@ -244,6 +305,9 @@ letter-spacing:-.05em;
 /* Tech Stack */
 .techStack {
   position: absolute;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
   width: 100%;
   height: 100%;
   z-index: 10;
@@ -251,39 +315,31 @@ letter-spacing:-.05em;
 
 .techItem {
   position: absolute;
+ width: clamp(80px,12vw,160px);
+height: clamp(16px,3vw,40px);
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
-  padding: 0.5rem 1rem;
+  padding: clamp(0.2rem 2vw 0.6rem) clamp(0.5rem 2vw 1rem);
 backdrop-filter:blur(14px);
 
 background:
-oklch(from var(--glass-bg) l c h /.4);
+
+oklch(from var(--glass-subtle) l c h /.4);
 
 border:
 
 1px solid
-oklch(from var(--color-border) l c h /.4);
+oklch(from var(--glass-bg) l c h /.4);
 
-border-radius:999px;
+border-radius: 999px;
   font-family: var(--font-mono);
-  font-size: 1rem;
+  font-size: clamp(10px, 1vw, 1rem);
   color: var(--color-text-muted);
   opacity: 0;
   transition: all 0.3s ease;
   cursor: default;
-  animation: fadeInUp 1s ease-out forwards;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px) rotate(0deg);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) rotate(var(--rotation, 0deg));
-  }
 }
 
 .techItem:hover{

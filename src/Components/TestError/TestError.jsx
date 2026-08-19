@@ -75,8 +75,9 @@ const TestError = () => {
   return (
     <section ref={sectionRef} className={styles.section}>
       {/* DotGrid background */}
+     
       <div className={styles.noise} ref={noiseRef} />
-
+      
       {/* Card */}
       <div ref={cardRef} className={styles.card}>
         {/* Header */}

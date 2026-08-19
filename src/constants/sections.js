@@ -20,3 +20,4 @@ export const sections = [
   },
   { id: "sticky", number: 7, label: "Showcase", component: StickyZoomSection },
 ];
+ export const words = ["experianse", "animations", "scrolltrigger", "smoothtriger"]

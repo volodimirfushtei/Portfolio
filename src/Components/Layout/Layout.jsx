@@ -1,24 +1,27 @@
-import { Outlet, useLocation } from 'react-router-dom'
-import { useLayoutEffect, useRef, useState } from 'react'
-import { AnimatePresence } from 'framer-motion'
-import ScrollToTopBtn from '../ScrollToTopBtn/ScrollTotopBtn'
-import Header from '../Header/Header'
-import { ScrollSmoother } from 'gsap/ScrollSmoother'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import gsap from 'gsap'
+import React, { useLayoutEffect, useRef, useState } from 'react'
 import s from './Layout.module.css'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { ScrollSmoother } from 'gsap/ScrollSmoother'
+import { AnimatePresence } from 'framer-motion'
+import { Outlet, useLocation } from 'react-router-dom'
+import Header from '../Header/Header'
+import ScrollToTopBtn from '../ScrollToTopBtn/ScrollToTopBtn'
 import Loader from '../Loader/Loader'
 
-gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
+gsap.registerPlugin(ScrollSmoother, ScrollTrigger)
+
 
 const Layout = () => {
   const wrapperRef = useRef(null)
   const contentRef = useRef(null)
   const smootherRef = useRef(null)
+
   const [loading, setLoading] = useState(true)
+
   const location = useLocation()
 
-  // Створюємо ScrollSmoother лише один раз
+  // ScrollSmoother
   useLayoutEffect(() => {
     if (!wrapperRef.current || !contentRef.current) return
 
@@ -36,14 +39,15 @@ const Layout = () => {
 
     return () => {
       ctx.revert()
-
       smootherRef.current?.kill()
       smootherRef.current = null
     }
   }, [])
 
-  // Після переходу просто оновлюємо
+  // Refresh
   useLayoutEffect(() => {
+    if (loading) return
+
     const id = requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         smootherRef.current?.refresh()
@@ -52,16 +56,20 @@ const Layout = () => {
     })
 
     return () => cancelAnimationFrame(id)
-  }, [location.pathname])
-
+  }, [location.pathname, loading])
+ 
   return (
     <div className={s.layoutContainer}>
-      <Header />
-      <ScrollToTopBtn />
-      <div className={s.loaderWrapper}><Loader
-        onComplete={() => setLoading(false)}
-      /></div>
 
+      <Header />
+
+      <ScrollToTopBtn />
+
+      {loading && (
+        <div className={s.loaderWrapper}>
+          <Loader onComplete={() => setLoading(false)} />
+        </div>
+      )}
 
       <main className={s.mainContent}>
         <div
@@ -70,20 +78,30 @@ const Layout = () => {
           className={s.wrapper}
         >
           <div
+            style={{ 
+        opacity: loading ? 0 : 1,
+        transition: 'opacity 0.6s ease',
+        minHeight: '100vh',
+        background: '#0a0a0f',
+      }}
             id="smooth-content"
             ref={contentRef}
             className={s.content}
           >
-            {!loading && (<AnimatePresence mode="wait">
-              <div key={location.pathname}>
-                <Outlet context={{ loading }} />
-              </div>
-            </AnimatePresence>)}
+            <AnimatePresence mode="wait">
+              {!loading && (
+                <div key={location.pathname} >
+                  <Outlet context={{ loading }} />
+                </div>
+            )}
+              
+            </AnimatePresence>
           </div>
         </div>
       </main>
+
     </div>
   )
 }
-
 export default Layout
+

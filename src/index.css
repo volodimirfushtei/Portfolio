@@ -31,7 +31,7 @@
 }
 
 :root {
-    --color-background: #111;
+    --color-background: transparent;
     --color-text: #fff;
     /* Spacing */
     --spacing-xs: 0.25rem;
@@ -155,7 +155,7 @@ a {
 }
 
 html {
-    scroll-behavior: auto;
+    scroll-behavior: smooth;
 }
 
 html {
@@ -168,26 +168,8 @@ body {
     overscroll-behavior: none;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    background: var(--color-background);
-    color: var(--color-text);
 }
 
-body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-
-    background-image: url('/noise/noisechat.png');
-    background-repeat: repeat;
-    background-size: 216px auto;
-
-    opacity: 0.25;
-
-    pointer-events: none;
-    z-index: 1000;
-
-    mix-blend-mode: soft-light;
-}
 
 body::-webkit-scrollbar {
     display: none;
@@ -237,7 +219,7 @@ a {
     /* 🎨 Enhanced Color Palette */
     --color-primary: oklch(45% 0.25 260); /* ✅ Більш насичений */
     --color-secondary: oklch(55% 0.05 260); /* ✅ Кращий контраст з primary */
-    --color-accent: oklch(0.65 0.201 24.659); /* ✅ Яскравіший акцент */
+    --color-accent: oklch(55% 0.112 265); /* ✅ Яскравіший акцент */
     --color-accent-hover: oklch(60% 0.18 265); /* ✅ Помітніший hover */
 
     /* 🖼️ Background System */
@@ -252,17 +234,15 @@ a {
             oklch(94% 0.01 240)
     );
 
-    /* 🔤 Typography (кращий контраст) */
-    --color-text: oklch(20% 0.03 260); /* ✅ Темніший текст */
+    --color-text: oklch(20% 0.03 260);
     --color-text-secondary: oklch(35% 0.03 260);
-    --color-text-muted: oklch(50% 0.02 260); /* ✅ Кращий контраст з background */
+    --color-text-muted: oklch(50% 0.02 260);
     --color-title: oklch(70% 0.15 265);
 
     /* ✨ Borders & Effects */
-    --color-border: oklch(0.994 0.001 286.376); /* ✅ Помітніший border */
+    --color-border: oklch(0.994 0.001 286.376);
     --color-shadow: 0 4px 12px oklch(0% 0 0 / 0.1);
 
-    /* 🌫️ Overlay (прозоріший для світлої теми) */
     --color-overlay: linear-gradient(
             to bottom,
             oklch(95% 0.002 260 / 0.4),
@@ -278,11 +258,9 @@ a {
             transparent 100%
     );
 
-    /* 💎 Glass Morphism (помітніший) */
     --glass-bg: rgba(255, 255, 255, 0.12);
     --glass-border: oklch(20% 0.03 260 / 0.12);
 
-    /* 🌈 Accent Gradients (яскравіші) */
     --gradient-subtle: linear-gradient(
             135deg,
             oklch(98% 0.005 260),
@@ -295,8 +273,10 @@ a {
             oklch(60% 0.18 265)
     );
     --gradient-primery: linear-gradient(
-            180deg, oklch(0.812 0.088 1.037),
-            oklch(0.589 0.24 27.641));
+            180deg,
+            oklch(0.812 0.088 1.037),
+            oklch(0.589 0.24 27.641)
+    );
 }
 
 /* =======================================================================================

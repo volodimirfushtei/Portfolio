@@ -14,6 +14,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useOverlay } from '../../Components/OverlayProvider/OverlayProvider.jsx'
 import SoftSkills from '../../Components/SoftSkills/SoftSkills.jsx'
 import DotBand from '../../Components/DotBand/DotBand.jsx'
+import { useOutletContext } from 'react-router-dom'
 
 const Model = lazy(() => import('../../Components/Model/Model.jsx'))
 
@@ -24,7 +25,7 @@ const HomePage = () => {
   const [scrollProgress, setScrollProgress] = useState(0)
   const [isMobile, setIsMobile] = useState(false)
   const sectionRef = useRef(null)
-
+  const { loading } = useOutletContext()
   // Перевірка на мобільний пристрій
   useEffect(() => {
     const checkMobile = () => {
@@ -58,7 +59,7 @@ const HomePage = () => {
     const sections = gsap.utils.toArray(`.${styles.fadeSection}`)
 
     sections.forEach((section) => {
-      gsap.to(section, {
+      gsap.to(sectionRef.current, {
         '--fade': '15%',
         ease: 'power2.out',
 
@@ -181,7 +182,7 @@ const HomePage = () => {
       <div id="viewport-blur" className={styles.viewportBlur}></div>
       <section className={styles.heroSectionWrapper} id="hero">
 
-        <HeroSection />
+        <HeroSection loading={loading} />
 
 
       </section>

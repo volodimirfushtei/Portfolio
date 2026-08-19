@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import styles from './CardTech.module.css'
-import { motion } from 'framer-motion'
 
 const techStack = [
   { name: 'React', icon: 'icon-react' },
@@ -26,28 +25,8 @@ const SvgIcon = ({ id, className, width = 24, height = 24 }) => (
 
 const CardTech = () => {
   const containerRef = useRef(null)
-  const techItemRef = useRef(null)
-  const [isVisible, setIsVisible] = useState(false)
+  const techRefs = useRef([])
   const [copied, setCopied] = useState(false)
-const container = {
-    hidden:{},
-    show:{
-        transition:{
-            staggerChildren:.08
-        }
-    }
-}
-
-const item = {
-    hidden:{
-        opacity:0,
-        y:40
-    },
-    show:{
-        opacity:1,
-        y:0
-    }
-}
   const handleCopyEmail = useCallback(async () => {
     try {
       await navigator.clipboard.writeText('fuschteyy@gmail.com')
@@ -61,21 +40,35 @@ const item = {
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
-    gsap.set(containerRef.current, { opacity: 0, y: 50 })
-
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setIsVisible(true)
+            gsap.to(containerRef.current, { opacity: 1, y: 0, duration: 1, ease: 'power3.out' })
+            
+            gsap.fromTo(
+              techRefs.current,
+              { opacity: 0, y: 30 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                stagger: 0.1,
+                ease: 'back.out(1.5)',
+                delay: 0.2,
+                clearProps: 'y'
+              }
+            )
+
             observer.unobserve(entry.target)
           }
         })
       },
-      { threshold: 0.1 },
+      { threshold: 0.1 }
     )
 
     if (containerRef.current) {
+      gsap.set(containerRef.current, { opacity: 0, y: 50 })
       observer.observe(containerRef.current)
     }
 
@@ -86,11 +79,11 @@ const item = {
 
   return (
     <section
-      
+      ref={containerRef}
       className={styles.chaoticContainer}
       data-cursor="hover"
       data-cursor-type="link"
-    >
+    ><div className={styles.noise}/>
       {/* Хаотичні dividers */}
       <div className={styles.divider} style={{ top: '10%', left: '5%', transform: 'rotate(-15deg)' }} />
       <div className={styles.divider} style={{ top: '60%', right: '10%', transform: 'rotate(25deg)' }} />
@@ -131,25 +124,23 @@ const item = {
       </p>
 
    
-      <motion.div className={styles.techStack} data-cursor="hover" data-cursor-type="link" variants={container} initial="hidden" animate="show"   >
+      <div className={styles.techStack} data-cursor="hover" data-cursor-type="link">
         {techStack.map((tech, index) => (
-          <motion.span
+          <span
             key={tech.name}
-           custom={index}
-           variants={item}
+            ref={(el) => (techRefs.current[index] = el)}
             className={styles.techItem}
             style={{
               top: `${10 + index * 8}%`,
               right: '15%',
               transform: `rotate(${index % 2 === 0 ? '2deg' : '-2deg'})`,
-              animationDelay: `${index * 0.1}s`,
             }}
           >
             <SvgIcon id={tech.icon} className={styles.svgIcon} />
             {tech.name}
-          </motion.span>
+          </span>
         ))}
-      </motion.div>
+      </div>
 
       
       <div className={styles.actions} style={{ bottom: '10%', left: '25%' }}>

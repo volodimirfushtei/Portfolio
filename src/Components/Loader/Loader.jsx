@@ -3,25 +3,6 @@ import styles from './Loader.module.css'
 import Logo from '../Logo/Logo'
 import gsap from 'gsap'
 
-
-const ENTRANCE_FROM = {
-  opacity: 0,
-  x: -50,
-  scale: 0.5,
-  filter: 'blur(4px)',
-
-}
-
-const ENTRANCE_TO = {
-  opacity: 1,
-
-  scale: 1,
-  x: 0,
-  filter: 'blur(0px)',
-  duration: 0.8,
-  ease: 'expo.out',
-}
-
 const Loader = ({ onComplete }) => {
   const [isLoading, setIsLoading] = useState(true)
 
@@ -33,188 +14,297 @@ const Loader = ({ onComplete }) => {
   const nameRef = useRef(null)
   const leftRef = useRef(null)
   const rightRef = useRef(null)
+  const dividerRef = useRef(null)
+  const firstNameRef = useRef(null)
+  const secondNameRef = useRef(null)
+  const animationDone = useRef(false)
+
   useEffect(() => {
+    if (animationDone.current) return
+    animationDone.current = true
+
     const ctx = gsap.context(() => {
-      const logo = svgLogoRef.current
-      gsap.from(overlayRef.current, {
-          opacity: 0.5,
-          scale: 1.08,
-          filter: 'blur(0px)',
-          duration: 0.8,
-          ease: 'expo.out',
-          repeat: -1,
-          yoyo: true,
-        },
-      )
-
-
-      if (!logo) return
-
-      const circles = logo.querySelectorAll('circle')
-
-
-      // -------------------------
-      // Prepare SVG
-      // -------------------------
-
-      gsap.set(logo, {
-        autoAlpha: 1,
-        scale: 1,
-        svgRef: svgLogoRef,
-
-        clearProps: 'filter',
+      // ── Початковий стан: все приховано ──
+      gsap.set(overlayRef.current, {
+        autoAlpha: 0,
+        scale: 1.05,
+        filter: 'blur(12px)',
       })
 
-      // Підготовка stroke для кіл
-      circles.forEach((circle) => {
-        const length = circle.getTotalLength?.()
-
-        if (length) {
-          gsap.set(circle, {
-            strokeDasharray: length,
-            strokeDashoffset: length,
-          })
-        }
+      gsap.set([topBarRef.current, bottomBarRef.current, firstNameRef.current, secondNameRef.current], {
+        opacity: 0,
+        y: 30,
+        scale: 0.9,
+        filter: 'blur(8px)',
       })
 
+      gsap.set(svgLogoRef.current, {
+        autoAlpha: 0,
+        scale: 0.8,
+        rotate: -5,
+      })
 
-      // -------------------------
-      // Timeline
-      // -------------------------
+      // ── Панелі: приховані ──
+      gsap.set([leftRef.current, rightRef.current], {
+        xPercent: 0,
+        opacity: 0,
+      })
 
+      // ── Лінія: починає знизу ──
+      gsap.set(dividerRef.current, {
+        height: 0,
+        opacity: 0,
+        y: '100%', // Стартує знизу
+        transform: 'translate(-50%, 0%)',
+
+      })
+
+      // ── Основний таймлайн ──
       const tl = gsap.timeline({
         defaults: {
-          overwrite: 'auto',
+          ease: 'power3.out',
         },
       })
 
-      tl.fromTo(
-        overlayRef.current,
-        {
-          autoAlpha: 0,
-          scale: 1.06,
-          filter: 'blur(12px)',
-        },
-        {
+      // ── ВХІД ──
+      tl.addLabel('enter')
+        // Overlay
+        .to(overlayRef.current, {
           autoAlpha: 1,
           scale: 1,
           filter: 'blur(0px)',
-          duration: 0.7,
-          ease: 'expo.out',
-        },
-      )
-
-        // Header
-        .fromTo(
-          topBarRef.current,
-          ENTRANCE_FROM,
-          ENTRANCE_TO,
-        )
-
-        // Footer одночасно з header
-        .fromTo(
-          bottomBarRef.current,
-          ENTRANCE_FROM,
-          ENTRANCE_TO,
-        )
-        .fromTo(nameRef.current, ENTRANCE_FROM, ENTRANCE_TO)
-        // -------------------------
-        // SVG
-        // -------------------------
-
-        // Спочатку малюємо зовнішнє коло
-        .to(circles[0], {
-          strokeDashoffset: 0,
-          duration: 1.8,
-          ease: 'power2.inOut',
-        })
-
-        // Потім друге коло
-        .to(circles[1], {
-          strokeDashoffset: 0,
           duration: 0.8,
-          ease: 'power2.out',
-        })
+        }, 'enter')
 
-
-
-        // Невелика пауза
-        .to({}, {
-          duration: 0.6,
-        })
-
-      // -------------------------
-      // Exit
-      // -------------------------
-
-      tl.to(
-        leftRef.current,
-        {
-          xPercent: -100,
+        // Logo
+        .to(svgLogoRef.current, {
+          autoAlpha: 1,
+          scale: 1,
+          rotate: 0,
           duration: 1.2,
-          ease: 'expo.inOut',
-        },
-        '-=0.1',
-      )
+          ease: 'back.out(1.7)',
+        }, 'enter+=0.2')
 
-      tl.to(
-        rightRef.current,
-        {
-          xPercent: 100,
-          duration: 1.2,
-          ease: 'expo.inOut',
+        // Top Bar
+        .to(topBarRef.current, {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          filter: 'blur(0px)',
+          duration: 0.8,
+        }, 'enter+=0.4')
 
 
-          onComplete: () => {
-            setIsLoading(false)
-            onComplete?.()
+
+        // Bottom Bar
+        .to(bottomBarRef.current, {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          filter: 'blur(0px)',
+          duration: 0.8,
+        }, 'enter+=0.6')
+
+
+
+        // Панелі з'являються
+        .fromTo(
+          leftRef.current,
+          {
+            x: -100,
+            opacity: 0,
+            filter: 'blur(16px)',
           },
-        }, '<')
+          {
+            x: 0,
+            opacity: 1,
+            filter: 'blur(0px)',
+            duration: 0.8,
+          },
+          'enter+=0.2',
+        )
 
-      return () => {
-        tl.kill()
-      }
-    }, svgLogoRef)
+        .fromTo(
+          rightRef.current,
+          {
+            x: 100,
+            opacity: 0,
+            filter: 'blur(16px)',
+          },
+          {
+            x: 0,
+            opacity: 1,
+            filter: 'blur(0px)',
+            duration: 0.8,
+          },
+          'enter+=0.2',
+        )
 
-    return () => ctx.revert()
+        // Імена
+        .fromTo(
+          firstNameRef.current,
+          {
+            x: 100,
+            opacity: 0,
+            filter: 'blur(16px)',
+          },
+          {
+            x: 0,
+            opacity: 1,
+            filter: 'blur(0px)',
+            duration: 0.8,
+            ease: 'power3.out',
+          },
+          'enter+=0.8',
+        )
+
+        .fromTo(
+          secondNameRef.current,
+          {
+            x: -100,
+            opacity: 0,
+            filter: 'blur(16px)',
+          },
+          {
+            x: 0,
+            opacity: 1,
+            filter: 'blur(0px)',
+            duration: 0.8,
+            ease: 'power3.out',
+          },
+          'enter+=0.9',
+        )
+
+        // Лінія виїжджає знизу вгору
+        .to(dividerRef.current, {
+          height: '100%',
+          opacity: 0.99,
+          y: '0%', // Піднімається вгору
+          duration: 1.2,
+          ease: 'power3.out',
+        }, 'enter+=0.8')
+
+      // ── Затримка перед виходом ──
+      tl.to({}, {
+        duration: 1.2,
+      })
+
+      // ─────────────────────────────
+// EXIT
+// ─────────────────────────────
+
+      tl.addLabel('exit')
+
+        // TEXT + LOGO
+        .to(
+          [
+            topBarRef.current,
+            bottomBarRef.current,
+
+            svgLogoRef.current,
+          ],
+          {
+            opacity: 0,
+            y: -30,
+            scale: 0.9,
+            filter: 'blur(10px)',
+            duration: 0.6,
+            stagger: 0.15,
+            ease: 'power3.in',
+          },
+          'exit',
+        )
+
+        // DIVIDER DOWN
+        .to(
+          dividerRef.current,
+          {
+            height: 0,
+            opacity: 0,
+            y: '100%',
+            duration: 0.6,
+            ease: 'power2.in',
+          },
+          'exit+=0.1',
+        )
+
+        // LEFT PANEL
+        .to(
+          leftRef.current,
+          {
+            xPercent: -100,
+            filter: 'blur(16px)',
+            duration: 1.2,
+            ease: 'power4.inOut',
+          },
+          'exit+=0.2',
+        )
+
+        .to(
+          rightRef.current,
+          {
+            xPercent: 100,
+            filter: 'blur(16px)',
+            duration: 1.2,
+            ease: 'power4.inOut',
+          },
+          '<',
+        )
+
+        // OVERLAY ONLY AFTER PANELS
+        .to(
+          overlayRef.current,
+          {
+            autoAlpha: 0,
+            scale: 1.02,
+            filter: 'blur(20px)',
+            duration: 0.6,
+            ease: 'power4.inOut',
+            onComplete: () => {
+              setIsLoading(false)
+              onComplete?.()
+            },
+          },
+          '>-0.1',
+        )
+
+    }, overlayRef)
+
+    return () => {
+      ctx.revert()
+      animationDone.current = false
+    }
   }, [onComplete])
+
   if (!isLoading) return null
 
   return (
     <div className={styles.overlay} ref={overlayRef}>
-      <div ref={noiseRef}>
-        <div
-          ref={leftRef}
-          className={styles.panel}
-        />
+      {/* Лінія посередині */}
+      <div className={styles.divider} ref={dividerRef} />
 
-        <div
-          ref={rightRef}
-          className={styles.panel}
-        />
-
-
+      {/* Шум */}
+      <div ref={noiseRef} className={styles.noise}>
+        <div ref={leftRef} className={styles.panel}><span ref={secondNameRef}
+                                                          className={styles.secondName}>Fushtei</span></div>
+        <div ref={rightRef} className={styles.panel}><span ref={firstNameRef}
+                                                           className={styles.firstName}>Volodymyr</span></div>
       </div>
 
-
+      {/* Top Bar */}
       <div className={styles.topBar} ref={topBarRef}>
         <span className={styles.brandName}>VF / PORTFOLIO</span>
         <span className={styles.year}>2026</span>
       </div>
+      {/* Name */}
+
+      {/* Logo */}
       <div className={styles.logoWrap}>
-
-        <Logo svgRef={svgLogoRef} className={styles.logoSvg} />
-
-        <div className={styles.name} ref={nameRef}>
-          <svg className={styles.svg}>
-            <use href="/sprite.svg#trademark-registered" />
-
-          </svg>
-          Fush
-        </div>
+        <Logo svgRef={svgLogoRef} className={styles.logoSvg} variant="large" />
       </div>
 
 
+      {/* Bottom Bar */}
       <div className={styles.bottomBar} ref={bottomBarRef}>
         <span className={styles.statusText}>
           Frontend Engineer / Crafting Digital Excellence

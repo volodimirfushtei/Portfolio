@@ -84,7 +84,7 @@
 .card {
     position: relative;
     min-height: 660px;
-    flex: 1 1 0;
+    flex: 1 1 0 ;
     min-width: 0;
     padding: 3rem;
     display: flex;
@@ -96,6 +96,7 @@
     overflow: hidden;
     border: 2px solid var(--color-border);
     cursor: pointer;
+    clip-path: inset(0px 0px 0px 0px);
 }
 
 .card:hover {

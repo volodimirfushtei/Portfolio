@@ -102,7 +102,7 @@ const Header = () => {
         <div className={styles.container}>
           {/* Logo */}
           <Link to="/about" className={styles.logo} aria-label="Volodimir Fushtei - Home">
-            <Logo />
+            <Logo variant="small" />
             <span className={styles.logoText}>Volodimir Fushtei</span>
           </Link>
 

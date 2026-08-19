@@ -8,7 +8,7 @@
 
     --media-height-mobile: 340px;
     --media-height-tablet: 400px;
-    --media-height-desktop: 600px;
+    --media-height-desktop: 700px;
 
     --blur-amount: 12px;
     --glow-color: rgba(255, 45, 85, 0.3);
@@ -27,8 +27,8 @@
 .mediaContainer {
     position: relative;
     width: 100%;
-    max-width: 1400px;
-    min-height: var(--media-height-mobile);
+    max-width: 720px;
+    min-height: var(--media-height-desktop);
     margin: 0 auto;
     overflow: hidden;
     background: transparent;

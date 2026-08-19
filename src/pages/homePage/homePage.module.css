@@ -25,7 +25,7 @@
     z-index: 0;
 
     border-radius: 8px;
-
+    background: var(--color-background, #0a0a0a);
     transition: opacity 0.3s ease;
 }
 
@@ -39,13 +39,8 @@
     z-index: -2;
     width: clamp(1200px, 20vw, 1200px);
     height: clamp(80px, 15vw, 120px);
-    filter: blur(var(--blur-amount-2));
+    filter: blur(var(--blur-amount));
 
-    background: radial-gradient(
-            circle,
-            var(--color-accent-hover) 0%,
-            transparent 70%
-    );
     opacity: 0.43;
 }
 
@@ -57,10 +52,9 @@
     padding: var(--section-padding-desktop);
     width: 100%;
     max-width: 100%;
-    background: transparent;
+
     z-index: 1;
 }
-
 
 .section:nth-child(0) {
     padding: 1rem;
@@ -91,15 +85,15 @@
     mask-image: linear-gradient(
             to bottom,
             transparent,
-            black var(--fade),
-            black calc(100% - var(--fade)),
+            #1a1a2e var(--fade),
+            #1a1a2e calc(100% - var(--fade)),
             transparent
     );
     -webkit-mask-image: linear-gradient(
             to bottom,
             transparent,
-            black var(--fade),
-            black calc(100% - var(--fade)),
+            #1a1a2e var(--fade),
+            #1a1a2e calc(100% - var(--fade)),
             transparent
     );
 }
