@@ -8,6 +8,7 @@ import { Outlet, useLocation } from 'react-router-dom'
 import Header from '../Header/Header'
 import ScrollToTopBtn from '../ScrollToTopBtn/ScrollToTopBtn'
 import Loader from '../Loader/Loader'
+import SiteGrid from '../SiteGrid/SiteGrid.jsx'
 
 gsap.registerPlugin(ScrollSmoother, ScrollTrigger)
 
@@ -57,7 +58,7 @@ const Layout = () => {
 
     return () => cancelAnimationFrame(id)
   }, [location.pathname, loading])
- 
+
   return (
     <div className={s.layoutContainer}>
 
@@ -72,29 +73,30 @@ const Layout = () => {
       )}
 
       <main className={s.mainContent}>
+        <SiteGrid loading={loading} />
         <div
           id="smooth-wrapper"
           ref={wrapperRef}
           className={s.wrapper}
         >
           <div
-            style={{ 
-        opacity: loading ? 0 : 1,
-        transition: 'opacity 0.6s ease',
-        minHeight: '100vh',
-        background: '#0a0a0f',
-      }}
+            style={{
+              opacity: loading ? 0 : 1,
+              transition: 'opacity 0.6s ease',
+              minHeight: '100vh',
+              background: '#0a0a0f',
+            }}
             id="smooth-content"
             ref={contentRef}
             className={s.content}
           >
             <AnimatePresence mode="wait">
               {!loading && (
-                <div key={location.pathname} >
+                <div key={location.pathname}>
                   <Outlet context={{ loading }} />
                 </div>
-            )}
-              
+              )}
+
             </AnimatePresence>
           </div>
         </div>

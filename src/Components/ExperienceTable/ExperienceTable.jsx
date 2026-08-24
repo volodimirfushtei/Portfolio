@@ -143,31 +143,31 @@ export default function ExperienceTable() {
       ease: 'power3.out',
     })
   }
-useLayoutEffect(() => {
-  const ctx = gsap.context(() => {
-    const cards = gsap.utils.toArray(`.${styles.card}`)
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      const cards = gsap.utils.toArray(`.${styles.card}`)
 
-    cards.forEach((card, index) => {
-      gsap.to(card, {
-        yPercent: -25,
-        
-        scale: 0.94,
-        opacity: 0.9,
-        rotateY: index % 4 === 0 ? -30 : 30,
-        ease: 'none',
+      cards.forEach((card, index) => {
+        gsap.to(card, {
+          yPercent: -25,
 
-        scrollTrigger: {
-          trigger: card,
-          start: 'top 20%',
-          end: 'top 5%',
-          scrub: 1,
-        },
+          scale: 0.94,
+          opacity: 0.9,
+          rotateY: index % 4 === 0 ? -30 : 30,
+          ease: 'none',
+
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 20%',
+            end: 'top 5%',
+            scrub: 1,
+          },
+        })
       })
-    })
-  }, sectionRef)
+    }, sectionRef)
 
-  return () => ctx.revert()
-}, [])
+    return () => ctx.revert()
+  }, [])
 
   return (
     <section ref={sectionRef} className={styles.section}>
@@ -190,10 +190,18 @@ useLayoutEffect(() => {
           <span className={styles.eyebrowLine} />
           <span className={styles.eyebrowText}>My experience</span>
         </div>
-        <h3 className={styles.title} ref={titleRef}>
+        <h2 className={styles.title}>
+              <span className={styles.titleLine}>
+                <span className={styles.titleAccent}>Experience</span>
+              </span>
+          <span className={styles.titleLine}>
+                <span className={styles.titlePlain}>of development</span>
+              </span>
+        </h2>
+        <h3 className={styles.subtitle} ref={titleRef}>
           Building products
           <br />
-          with modern technologies .
+          with modern technologies and animation
         </h3>
       </div>
 

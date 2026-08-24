@@ -81,7 +81,7 @@ background: linear-gradient(
   pointer-events: none;
   background: url('/images/grungedark.webp') center/cover no-repeat;
   z-index: -1;
-  opacity: 0.35;
+  opacity: 0.05;
 }
 .chaoticContainer::after{
 
@@ -97,7 +97,7 @@ radial-gradient(
 
 circle at 20% 20%,
 
-oklch(from var(--color-accent) l c h /.18),
+oklch(from var(--color-primary) l c h /.18),
 
 transparent 45%
 

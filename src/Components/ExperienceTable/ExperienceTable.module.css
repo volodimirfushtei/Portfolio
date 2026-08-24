@@ -60,6 +60,54 @@
 }
 
 .title {
+    font-family: var(--font-display, 'Bebas Neue', sans-serif);
+    font-size: clamp(2.8rem, 8vw, 8rem);
+    font-weight: 700;
+    line-height: 0.9;
+    text-transform: uppercase;
+    margin: clamp(0.5rem, 2vh, 1rem);
+    letter-spacing: -0.02em;
+}
+
+.titleLine {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.05em;
+}
+
+.titleAccent {
+    display: inline-block;
+    background: linear-gradient(
+            135deg,
+            #667eea 0%,
+            #764ba2 40%,
+            #ed0c4c 70%,
+            #667eea 100%
+    );
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 6s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+.titlePlain {
+    display: block;
+    color: var(--color-text, #ffffff);
+    -webkit-text-fill-color: var(--color-text, #ffffff);
+}
+
+.subtitle {
     font-size: clamp(2.5rem, 5vw, 5rem);
     font-weight: 500;
     line-height: 0.95;
@@ -84,7 +132,7 @@
 .card {
     position: relative;
     min-height: 660px;
-    flex: 1 1 0 ;
+    flex: 1 1 0;
     min-width: 0;
     padding: 3rem;
     display: flex;

@@ -11,7 +11,7 @@ const Loader = ({ onComplete }) => {
   const topBarRef = useRef(null)
   const bottomBarRef = useRef(null)
   const noiseRef = useRef(null)
-  const nameRef = useRef(null)
+
   const leftRef = useRef(null)
   const rightRef = useRef(null)
   const dividerRef = useRef(null)

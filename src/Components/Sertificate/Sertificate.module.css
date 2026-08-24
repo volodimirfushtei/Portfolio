@@ -6,7 +6,7 @@
     position: relative;
     padding: clamp(100px, 12vw, 200px) 6vw;
     overflow: hidden;
-    background: var(--glass-bg);
+    background: transparent;
     isolation: isolate;
 }
 

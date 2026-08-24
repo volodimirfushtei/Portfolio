@@ -19,7 +19,7 @@
     padding-bottom: var(--hero-padding-bottom);
     overflow: hidden;
     isolation: isolate;
-    background: var(--glass-bg);
+    background: transparent;
     scroll-snap-align: start;
     scroll-snap-type: y mandatory;
 }
@@ -49,7 +49,7 @@
     background: linear-gradient(
             90deg,
             transparent,
-            oklch(1 0 89.876 / 0.98),
+            var(--color-primary),
             transparent
     );
 
@@ -62,7 +62,7 @@
 /* ───────── Horizontal ───────── */
 
 .horizontal {
-    height: 2px;
+    height: 1px;
 }
 
 .horizontal::before,
@@ -70,51 +70,16 @@
     content: '';
     position: absolute;
 
-    left: 0;
+    left: 50%;
 
-    width: 5px;
-    height: 5px;
+    width: 6px;
+    height: 6px;
 
     background: var(--color-text);
 
     transform: translateY(-50%);
 }
 
-.horizontal::before {
-    left: 0;
-}
-
-.horizontal::after {
-    right: 0;
-}
-
-/* │ Vertical │ */
-
-.vertical {
-    width: 1px;
-}
-
-.vertical::before,
-.vertical::after {
-    content: '';
-    position: absolute;
-
-    left: 50%;
-    width: 5px;
-    height: 5px;
-
-    background: var(--color-text);
-
-    transform: translateX(-50%);
-}
-
-.vertical::before {
-    top: 0;
-}
-
-.vertical::after {
-    bottom: 0;
-}
 
 .cornerSec {
     position: absolute;
@@ -192,7 +157,7 @@
 
     background-size: 8px 8px;
     background-position: center;
-    opacity: 0.6;
+    opacity: 0.4;
 
     pointer-events: none;
 
@@ -209,7 +174,7 @@
             var(--color-secondary),
             transparent
     );
-    opacity: 0.2;
+    opacity: 0.1;
     pointer-events: none;
     z-index: -3;
 }
@@ -230,12 +195,12 @@
     position: absolute;
     inset: 0;
     z-index: -4;
-    background-image: url('/images/surrealis.webp');
+    background-image: url('/images/hexa_dan_wave_10.jpg');
     background-size: cover;
     background-position: 50% 10%;
 
     background-repeat: no-repeat;
-    opacity: 0.75;
+    opacity: 0.85;
     perspective: 1200px;
     pointer-events: none;
     mix-blend-mode: overlay;
@@ -1253,12 +1218,8 @@
 
 .divider.horizontal {
     height: 1px;
-    width: 0%;
+    width: 0;
     transform-origin: left center;
 }
 
-.divider.vertical {
-    width: 1px;
-    height: 0%;
-    transform-origin: center top;
-}
+

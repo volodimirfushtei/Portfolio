@@ -122,7 +122,7 @@ const HeroSection = ({ loading }) => {
           filter: 'blur(16px)',
         },
         {
-          opacity: 0.95,
+          opacity: 0.25,
           backgroundPosition: '50% 30%',
           filter: 'blur(0px)',
           duration: 2,
@@ -246,16 +246,11 @@ const HeroSection = ({ loading }) => {
       }, 0)
 
       tl.to(horizontal, {
-        scaleX: 1.15,
-        opacity: 0.72,
-        ease: 'none',
-      }, 0)
-
-      tl.to(vertical, {
         scaleY: 1.15,
         opacity: 0.72,
         ease: 'none',
       }, 0)
+
 
       tl.to(cornersRef.current.children, {
         scale: 1.15,
@@ -315,10 +310,6 @@ const HeroSection = ({ loading }) => {
     { position: 'bottom', offset: '10%', width: '90%' },
   ]
 
-  const verticalDividers = [
-    { position: 'left', offset: '5%', height: '90%' },
-    { position: 'right', offset: '5%', height: '90%' },
-  ]
 
   // Плейсхолдер поки не готово
   if (loading || !animationsReady) {
@@ -364,14 +355,7 @@ const HeroSection = ({ loading }) => {
 
           />
         ))}
-        {verticalDividers.map((divider, index) => (
-          <Divider
-            key={`vertical-${index}`}
-            {...divider}
-            type="vertical"
 
-          />
-        ))}
       </div>
 
       {/* ── Corner Badge ── */}

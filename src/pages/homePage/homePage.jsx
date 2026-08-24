@@ -15,6 +15,7 @@ import { useOverlay } from '../../Components/OverlayProvider/OverlayProvider.jsx
 import SoftSkills from '../../Components/SoftSkills/SoftSkills.jsx'
 import DotBand from '../../Components/DotBand/DotBand.jsx'
 import { useOutletContext } from 'react-router-dom'
+import SectionsDividers from '../../Components/SectionsDeviders/SectionsDeviders'
 
 const Model = lazy(() => import('../../Components/Model/Model.jsx'))
 
@@ -181,53 +182,42 @@ const HomePage = () => {
     <div className={styles.container} ref={sectionRef}>
       <div id="viewport-blur" className={styles.viewportBlur}></div>
       <section className={styles.heroSectionWrapper} id="hero">
-
         <HeroSection loading={loading} />
-
-
       </section>
       <DotBand />
       <section
         id="expertise"
         className={`${styles.section} ${styles.fadeSection}`}
-      >
+      ><SectionsDividers top bottom />
         <Expertise />
         <DotBand />
       </section>
-
-
       <section className={`${styles.section} ${styles.fadeSection}`}>
+        <SectionsDividers top bottom />
         <ExperienceTable />
-
         <DotBand />
-
       </section>
-
-
       <section
         id="skills"
         className={`${styles.section} ${styles.fadeSection}`}
-      >
+      ><SectionsDividers top bottom />
         <ControllerSkills items={skills} />
         <DotBand />
       </section>
-
-
       <section className={`${styles.section} ${styles.fadeSection}`}>
+        <SectionsDividers top bottom />
         <SoftSkills />
         <DotBand />
       </section>
-
       <section className={`${styles.section} ${styles.fadeSection}`}>
+        <SectionsDividers top bottom />
         <Carusel />
         <DotBand />
       </section>
-
       <section id="cta" className={`${styles.section} ${styles.fadeSection}`}>
         <CtaSection />
         <DotBand />
       </section>
-
       <section
         id="certificate"
         className={`${styles.section} ${styles.fadeSection}`}
@@ -235,16 +225,16 @@ const HomePage = () => {
         <Sertificate />
         <DotBand />
       </section>
-
       <section className={`${styles.stickySection} ${styles.fadeSection}`}>
+        <SectionsDividers top bottom />
         <StickyZoomSection />
-
-
       </section>
       <div className={`${styles.heroDivider} `}>
         <DotBand />
       </div>
+
       <Footer />
+
     </div>
   )
 }
