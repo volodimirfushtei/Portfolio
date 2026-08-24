@@ -6,7 +6,7 @@ import { ScrollSmoother } from 'gsap/ScrollSmoother'
 import { AnimatePresence } from 'framer-motion'
 import { Outlet, useLocation } from 'react-router-dom'
 import Header from '../Header/Header'
-import ScrollToTopBtn from '../ScrollToTopBtn/ScrollToTopBtn'
+import ScrollToTopBtn from '../ScrollToTopBtn/ScrollTotopBtn.jsx'
 import Loader from '../Loader/Loader'
 import SiteGrid from '../SiteGrid/SiteGrid.jsx'
 
