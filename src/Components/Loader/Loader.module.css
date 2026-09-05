@@ -50,18 +50,18 @@
 
 
 .firstName {
-    margin-left: 30px;
+    margin-left: 40px;
 }
 
 .secondName {
-    margin-right: 40px;
+    margin-right: 42px;
 }
 
 .firstName,
 .secondName {
     position: absolute;
     font-family: var(--font-display, 'Bebas Neue', sans-serif);
-    font-size: clamp(3rem, 8vw, 8rem);
+    font-size: clamp(2rem, 5vw, 5rem);
     line-height: 1;
     white-space: nowrap;
     color: white;
@@ -85,7 +85,7 @@
     content: '';
     position: absolute;
     top: 50%;
-    left: calc(100% + 18px);
+    left: calc(100% + 22px);
 
     width: 55px;
     height: 1px;
@@ -97,7 +97,7 @@
     content: '';
     position: absolute;
     top: 50%;
-    right: calc(100% + 18px);
+    right: calc(100% + 22px);
 
     width: 55px;
     height: 1px;
@@ -237,7 +237,7 @@
 
 .developerName {
     font-family: var(--font-display, 'Bebas Neue', sans-serif);
-    font-size: clamp(2.5rem, 8vw, 6rem);
+    font-size: clamp(2.5rem, 6vw, 5rem);
     font-weight: 400;
     letter-spacing: -0.02em;
     margin: 0;

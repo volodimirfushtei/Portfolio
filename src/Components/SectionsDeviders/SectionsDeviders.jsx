@@ -65,13 +65,15 @@ const SectionsDividers = ({ top = false, bottom = false }) => {
           strokeDasharray: 300,
           strokeDashoffset: 300,
           opacity: 0,
+          yPercent: -20,
         },
         {
           strokeDashoffset: 0,
           opacity: 1,
+          yPercent: 0,
           duration: 1.5,
           ease: 'power3.out',
-          stagger: 0.05,
+          stagger: 0.1,
           scrollTrigger: {
             trigger: containerRef.current,
             start: 'top 80%',
@@ -97,11 +99,6 @@ const SectionsDividers = ({ top = false, bottom = false }) => {
       {top && <span className={styles.horizontalTop} />}
       {bottom && <span className={styles.horizontalBottom} />}
 
-      {/* Хаотичні діагональні лінії */}
-      <span className={styles.diagonalLine} style={{ top: '10%', left: '0%', transform: 'rotate(-15deg)' }} />
-      <span className={styles.diagonalLine} style={{ top: '60%', right: '0%', transform: 'rotate(20deg)' }} />
-      <span className={styles.diagonalLine} style={{ bottom: '20%', left: '15%', transform: 'rotate(5deg)' }} />
-      <span className={styles.diagonalLine} style={{ top: '40%', right: '20%', transform: 'rotate(-25deg)' }} />
 
       {/* Honeycomb сітка */}
       <div className={styles.honeycomb} ref={honeyRef}>

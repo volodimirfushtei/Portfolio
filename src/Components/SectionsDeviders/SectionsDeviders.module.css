@@ -60,10 +60,12 @@
 }
 
 .diagonalLine {
+    position: absolute;
     width: 100%;
     height: 1px;
-    background: var(--color-text);
-    
+    opacity: 0.12;
+    background: var(--color-accent);
+
 
 }
 
@@ -73,8 +75,8 @@
     left: 50%;
     transform: translateX(-50%);
     display: grid;
-    grid-template-columns: repeat(24, 80px);
-    grid-template-rows: repeat(3, 80px);
+    grid-template-columns: repeat(12, 80px);
+    grid-auto-rows: 70px;
     gap: 6px;
     mask-image: linear-gradient(
             to bottom,
@@ -85,7 +87,8 @@
     );
 
     pointer-events: none;
-    width: 110%;
+    width: max-content;
+
     mix-blend-mode: multiply;
 }
 
@@ -100,9 +103,11 @@
 
 .hexagon {
     width: 80px;
-    height: 80px;
+    height: 92px;
     display: block;
-    color: rgba(255, 255, 255, .18);
+
+    color: rgba(255, 255, 255, .28);
+
 }
 
 .hexagon:nth-child(even) {
@@ -114,3 +119,4 @@
     transform: translateX(-1px);
     color: rgba(99, 98, 98, 0.18);
 }
+

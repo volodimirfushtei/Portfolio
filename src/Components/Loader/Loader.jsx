@@ -54,6 +54,7 @@ const Loader = ({ onComplete }) => {
       gsap.set(dividerRef.current, {
         height: 0,
         opacity: 0,
+        duration: 1.2,
         y: '100%', // Стартує знизу
         transform: 'translate(-50%, 0%)',
 
@@ -73,7 +74,7 @@ const Loader = ({ onComplete }) => {
           autoAlpha: 1,
           scale: 1,
           filter: 'blur(0px)',
-          duration: 0.8,
+          duration: 1.2,
         }, 'enter')
 
         // Logo
