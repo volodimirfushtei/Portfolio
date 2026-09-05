@@ -62,7 +62,7 @@
     position: absolute;
     font-family: var(--font-display, 'Bebas Neue', sans-serif);
     font-size: clamp(2rem, 5vw, 5rem);
-    line-height: 1;
+
     white-space: nowrap;
     color: white;
     mix-blend-mode: screen;
