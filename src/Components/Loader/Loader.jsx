@@ -17,6 +17,7 @@ const Loader = ({ onComplete }) => {
   const dividerRef = useRef(null)
   const firstNameRef = useRef(null)
   const secondNameRef = useRef(null)
+  const progressNumberRef = useRef(null)
   const animationDone = useRef(false)
 
   useEffect(() => {
@@ -41,7 +42,7 @@ const Loader = ({ onComplete }) => {
       gsap.set(svgLogoRef.current, {
         autoAlpha: 0,
         scale: 0.8,
-        rotate: -5,
+        rotate: -15,
       })
 
       // ── Панелі: приховані ──
@@ -184,7 +185,20 @@ const Loader = ({ onComplete }) => {
           duration: 1.2,
           ease: 'power3.out',
         }, 'enter+=0.8')
+        .to(progressNumberRef.current, {
+          textContent: '100',
+          scaleX: 1,
+          duration: 4.6,
+          roundProps: 'textContent',
+          ease: 'power3.out',
+        }, 'enter+=0.8')
+        .to(progressNumberRef.current, {
+          x: -30,
+          autoAlpha: 0,
+          ease: 'power3.out',
+          duration: 0.4,
 
+        })
       // ── Затримка перед виходом ──
       tl.to({}, {
         duration: 1.2,
@@ -282,7 +296,7 @@ const Loader = ({ onComplete }) => {
   return (
     <div className={styles.overlay} ref={overlayRef}>
       {/* Лінія посередині */}
-      <div className={styles.divider} ref={dividerRef} />
+      <div className={styles.divider} ref={dividerRef} data-hidden />
 
       {/* Шум */}
       <div ref={noiseRef} className={styles.noise}>
@@ -301,6 +315,7 @@ const Loader = ({ onComplete }) => {
 
       {/* Logo */}
       <div className={styles.logoWrap}>
+        <span className={styles.progressNumber} ref={progressNumberRef}>0</span>
         <Logo svgRef={svgLogoRef} className={styles.logoSvg} variant="large" />
       </div>
 

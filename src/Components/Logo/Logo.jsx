@@ -23,19 +23,21 @@ const Logo = ({ svgRef, className, variant = 'default' }) => {
       gsap.fromTo(
         bgRef.current,
         {
-          clipPath: 'inset(100% 0% 0% 0%)',
+          clipPath: 'inset(0% 100% 0% 0%)',
           opacity: 0,
 
         },
         {
           clipPath: 'inset(0% 0% 0% 0%)',
-          opacity: 0.15,
-          duration: 1.2,
-          delay: 0.2,
+          opacity: 0.2,
+          duration: 4.6,
+          delay: 0.4,
           ease: 'expo.out',
 
           onStart: () => {
+
             setIsLoading(true)
+
           },
           onComplete: () => {
             setIsLoading(false)

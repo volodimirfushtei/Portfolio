@@ -3,6 +3,8 @@ import { motion, useMotionValueEvent, useScroll, useTransform } from 'framer-mot
 import styles from './ScrollBar.module.css'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import Cards from '../Cards/Cards.jsx'
+
 
 gsap.registerPlugin(ScrollTrigger)
 const pages = [
@@ -33,7 +35,7 @@ const pages = [
       'Animation & Interactions',
       'Performance Optimization',
       'Responsive Design',
-      'API Integration',
+
     ],
     image: '/images/surrealis.webp',
     cta: { text: 'Learn More', url: '#services' },
@@ -55,7 +57,7 @@ const pages = [
   },
   {
     id: 4,
-    color: 'var(--color-secondary)',
+    color: 'var(--color-primary)',
     title: 'Contact',
     subtitle: 'Get In Touch',
     description: 'Let\'s discuss your project and how I can help bring your ideas to life.',
@@ -65,10 +67,11 @@ const pages = [
       'Flexible cooperation',
       'Worldwide clients',
     ],
-    image: '/images/3dmodern.webp',
+    image: '/images/darkroom.webp',
     cta: { text: 'Contact Me', url: '#contacts' },
   },
 ]
+
 
 const ScrollBar = () => {
   const containerRef = useRef(null)
@@ -114,48 +117,48 @@ const ScrollBar = () => {
 
   const scrollProgress = useTransform(scrollYProgress, [0, 1], [0, 1])
   useLayoutEffect(() => {
-    if (!backgroundRef.current) {
-      return; 
+    if (!backgroundRef.current) return
 
 
-      gsap.fromTo(
-        backgroundRef.current,
-        {
-          clipPath: 'inset(100% 0% 0% 0%)',
-          scale: 0.5,
-          opacity: 0,
-          filter: 'blur(10px)',
-        },
-        {
-          clipPath: 'inset(0% 0% 0% 0%)',
-          scale: 1,
-          opacity: 1,
-          filter: 'blur(0px)',
-          duration: 1.2,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: backgroundRef.current,
-            start: 'top 80%',
-            end: 'top 20%',
-            scrub: 1,
-            markers: false, // Для дебагу можна ввімкнути
-          },
-        },
-      )
-      gsap.to(backgroundRef.current, {
-        yPercent: -15,
-        ease: 'none',
+    gsap.fromTo(
+      backgroundRef.current,
+      {
+        clipPath: 'inset(100% 0% 0% 0%)',
+        scale: 0.5,
+        opacity: 0,
+        filter: 'blur(10px)',
+      },
+      {
+        clipPath: 'inset(0% 0% 0% 0%)',
+        scale: 1,
+        opacity: 1,
+        filter: 'blur(0px)',
+        duration: 1.2,
+        ease: 'power2.out',
         scrollTrigger: {
           trigger: backgroundRef.current,
-          start: 'top bottom',
-          end: 'bottom top',
+          start: 'top 80%',
+          end: 'top 20%',
           scrub: 1,
+
         },
-      })
-    }
+      },
+    )
+    gsap.to(backgroundRef.current, {
+      yPercent: -15,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: backgroundRef.current,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 1,
+      },
+    })
+
   }, [pages.image])
   return (
     <div className={styles.wrapper}>
+
       {/* Main Content */}
       <div
         ref={containerRef}
@@ -168,7 +171,7 @@ const ScrollBar = () => {
             id={`section-${page.id}`}
             className={styles.section}
             style={{ backgroundColor: page.color }}
-          >
+          ><Cards page={page} />
             <div
               className={styles.sectionBackground} ref={backgroundRef}
               style={{ backgroundImage: `url(${page.image})` }}

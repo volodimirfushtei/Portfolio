@@ -184,8 +184,8 @@ const NavHeader = () => {
                     transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
                     className={styles.double}
                   >
-                    <span>{item.label}</span>
-                    <span>{item.label}</span>
+                    <span className={styles.linkText}>{item.label}</span>
+                    <span className={styles.linkText}>{item.label}</span>
                   </motion.span>
                 </span>
               </span>

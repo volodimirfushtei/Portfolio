@@ -225,6 +225,7 @@ export default function ExperienceTable() {
               className={styles.image}
               alt={item.title}
               ref={imageRef}
+
             />
             {/* Лічильник */}
             <div className={styles.number}>

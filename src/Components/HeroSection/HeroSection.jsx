@@ -168,16 +168,20 @@ const HeroSection = ({ loading }) => {
       }, '+=0.2')
 
       // Кнопки
+      const buttonItems = gsap.utils.toArray(
+        buttonsRef.current.querySelectorAll('button'),
+      )
+
       intro.from(
-        buttonsRef.current,
+        buttonItems,
         {
           opacity: 0,
-          y: -60,
-          duration: 0.8,
+          y: -30,
+          duration: 0.6,
+          stagger: 0.15,
           ease: 'power4.out',
-          stagger: 0.25,
         },
-        '>0.5',
+        '>0.2',
       )
 
       // Фон
@@ -193,7 +197,7 @@ const HeroSection = ({ loading }) => {
           duration: 0.8,
           ease: 'power4.out',
         },
-        '>-1.0',
+        '>-0.4',
       )
 
       // Кути
@@ -264,12 +268,15 @@ const HeroSection = ({ loading }) => {
         scaleX: 0.8,
         ease: 'none',
       }, 0)
-      tl.to(bgImageRef.current, {
-        scaleY: 1.15,
-
-        yPercent: 15,
-        ease: 'expo.out',
-      })
+      tl.to(
+        bgImageRef.current,
+        {
+          scaleY: 1.15,
+          yPercent: 15,
+          ease: 'none',
+        },
+        0,
+      )
 
       tl.to(titleRef.current, {
         xPercent: -15,
@@ -431,7 +438,7 @@ const HeroSection = ({ loading }) => {
             </span>
             <Button
               data-cursor="hover"
-              size="sm"
+              size="md"
               data-cursor-type="link"
               data-cursor-text="Published"
               className={`${styles.buttonCircleLabel} ${styles.button}`}

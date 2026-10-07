@@ -24,6 +24,10 @@
     background: var(--color-surface);
 }
 
+[data-hidden] {
+    opacity: 0;
+}
+
 .panel {
     position: fixed;
     top: 0;
@@ -50,18 +54,18 @@
 
 
 .firstName {
-    margin-left: 40px;
+    margin-left: 60px;
 }
 
 .secondName {
-    margin-right: 42px;
+    margin-right: 64px;
 }
 
 .firstName,
 .secondName {
     position: absolute;
     font-family: var(--font-display, 'Bebas Neue', sans-serif);
-    font-size: clamp(2rem, 5vw, 5rem);
+    font-size: clamp(1.2rem, 6vw, 6rem);
 
     white-space: nowrap;
     color: white;
@@ -76,9 +80,9 @@
     bottom: -22px;
 
     font-family: var(--font-mono);
-    font-size: 0.85rem;
+    font-size: clamp(0.65rem, 1vh, 1rem);
     letter-spacing: .16em;
-    color: rgba(255, 255, 255, .3);
+    color: rgba(255, 255, 255, .35);
 }
 
 .firstName::after {
@@ -86,10 +90,8 @@
     position: absolute;
     top: 50%;
     left: calc(100% + 22px);
-
-    width: 55px;
+    width: 50px;
     height: 1px;
-
     background: rgba(255, 255, 255, .35);
 }
 
@@ -98,10 +100,8 @@
     position: absolute;
     top: 50%;
     right: calc(100% + 22px);
-
-    width: 55px;
+    width: 50px;
     height: 1px;
-
     background: rgba(255, 255, 255, .35);
 }
 
@@ -110,9 +110,8 @@
     position: absolute;
     right: 0;
     bottom: -22px;
-
     font-family: var(--font-mono);
-    font-size: 0.85rem;
+    font-size: clamp(0.65rem, 1vh, 1rem);
     letter-spacing: .16em;
     color: rgba(255, 255, 255, .35);
 }
@@ -126,7 +125,7 @@
 
     position: absolute;
     z-index: 20;
-    bottom: 10%;
+    bottom: 0;
     left: 50%;
     transform: translateX(-50%) rotateX(-180deg);
     opacity: 0;
@@ -153,9 +152,20 @@
     gap: 1rem;
 
     text-decoration: none;
-    color: var(--color-accent, #ed0c4c);
+
+
 }
 
+.progressNumber {
+    position: absolute;
+    top: 16%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+    font-size: clamp(0.45rem, 1vw, 1rem);
+    color: rgba(255, 255, 255, .35);
+    transform: scaleX(0);
+
+}
 
 /* Slides Wrapper */
 
@@ -237,7 +247,7 @@
 
 .developerName {
     font-family: var(--font-display, 'Bebas Neue', sans-serif);
-    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-size: clamp(2.5rem, 5vw, 5rem);
     font-weight: 400;
     letter-spacing: -0.02em;
     margin: 0;
@@ -248,14 +258,17 @@
 
 
 .firstName {
-    background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #bac7db 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
 }
 
 .lastName {
-    color: var(--color-text, #ffffff);
+    background: linear-gradient(135deg, #ffffff 0%, #b8c6dd 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
 /* Counter */
@@ -265,7 +278,7 @@
     gap: 0.1rem;
     font-family: var(--font-body, 'DM Mono', monospace);
     font-size: clamp(2rem, 6vw, 4rem);
-    font-weight: 300;
+    font-weight: 400;
     color: var(--color-accent, #ed0c4c);
 }
 
@@ -298,7 +311,7 @@
     position: relative;
     z-index: 10;
     width: 100%;
-    max-width: 400px;
+    max-width: 360px;
     padding: 0 1rem;
 }
 
@@ -346,14 +359,14 @@
 }
 
 .statusText {
-    opacity: 0.6;
+    opacity: 0.8;
 }
 
 .statusDot {
     width: 8px;
     height: 8px;
 
-    background: #ac021b;
+    background: var(--color-text);
     display: inline-block;
 }
 
@@ -398,7 +411,33 @@
     }
 
     .trackWrap {
-        max-width: 220px;
+        max-width: 160px;
+    }
+
+    .firstName {
+        margin-left: 30px;
+    }
+
+    .secondName {
+        margin-right: 34px;
+    }
+
+    .firstName::after {
+
+
+        width: 30px;
+
+
+        background: rgba(255, 255, 255, .25);
+    }
+
+    .secondName::before {
+
+
+        width: 30px;
+
+
+        background: rgba(255, 255, 255, .25);
     }
 
     .counterWrap {
@@ -406,11 +445,11 @@
     }
 
     .tagline {
-        font-size: 0.55rem;
+        font-size: 0.45rem;
     }
 
     .developerName {
-        font-size: clamp(2rem, 6vw, 3rem);
+        font-size: clamp(2.5rem, 4vw, 3rem);
     }
 }
 

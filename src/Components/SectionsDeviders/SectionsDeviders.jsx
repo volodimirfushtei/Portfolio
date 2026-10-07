@@ -103,6 +103,7 @@ const SectionsDividers = ({ top = false, bottom = false }) => {
       {/* Honeycomb сітка */}
       <div className={styles.honeycomb} ref={honeyRef}>
         {items.map((_, index) => (
+
           <svg
             className={styles.hexagon}
             viewBox="0 0 100 100"

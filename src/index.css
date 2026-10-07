@@ -57,7 +57,7 @@
 
     /* Type scale */
 
-    --font-sm: 0.65rem;
+    --font-sm: 0.55rem;
     --font-xs: 0.75rem;
     --font-base: 1rem;
     --font-lg: 1.125rem;
@@ -86,7 +86,7 @@
 }
 
 .sm {
-    --btn-height: 38px;
+    --btn-height: 42px;
     --btn-padding: 0 16px;
     --font-size: var(--font-sm);
     --btn-radius: 4px;
