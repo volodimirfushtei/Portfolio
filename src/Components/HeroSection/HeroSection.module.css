@@ -89,8 +89,8 @@
 
 .cornerSec {
     position: absolute;
-    width: 40px;
-    height: 40px;
+    width: 20px;
+    height: 20px;
 }
 
 .cornerSec::before,
@@ -103,13 +103,13 @@
 }
 
 .cornerSec::before {
-    width: clamp(1rem, 2vw, 2rem);
+    width: clamp(1rem, 1.4vw, 1.4rem);
     height: 1px;
 }
 
 .cornerSec::after {
     width: 1px;
-    height: clamp(1rem, 2vw, 2rem);
+    height: clamp(1rem, 1.4vw, 1.4rem);
 }
 
 .topLeft {
