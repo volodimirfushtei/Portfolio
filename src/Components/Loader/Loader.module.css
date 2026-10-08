@@ -68,6 +68,7 @@
     font-size: clamp(1.2rem, 4vw, 4rem);
 
     white-space: nowrap;
+    line-height: 0.85;
     color: white;
     mix-blend-mode: screen;
     z-index: 22;

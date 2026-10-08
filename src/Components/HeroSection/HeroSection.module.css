@@ -3,8 +3,8 @@
    Mobile First + Fluid Typography + Layers
 ============================================= */
 :root {
-    --hero-padding-top: clamp(2rem, 2vw, 4rem);
-    --hero-padding-bottom: clamp(2rem, 2vw, 6rem);
+    --hero-padding-top: clamp(1rem, 2vw, 2rem);
+    --hero-padding-bottom: clamp(2rem, 2vw, 2rem);
 }
 
 /* ============================================
@@ -587,7 +587,8 @@
 /* --- Buttons --- */
 .buttons {
     grid-area: buttons;
-    width: clamp(260px, 28vw, 700px);
+    position: relative;
+    width: clamp(280px, 30vw, 900px);
     height: clamp(120px, 20vw, 160px);
     background: var(--glass-bg);
     border-radius: var(--radius-lg);
@@ -844,6 +845,7 @@
 /* Corners */
 .corner {
     position: absolute;
+
     width: 12px;
     height: 12px;
     border-color: rgba(255, 255, 255, 0.05);
@@ -1087,6 +1089,7 @@
     justify-content: center;
     align-items: center;
     align-self: center;
+    height: auto;
     width: 100%;
     max-width: clamp(300px, 80vw, 680px);
     perspective: 1800px;
@@ -1094,6 +1097,10 @@
 }
 
 @media (max-width: 768px) {
+    .heroContainer {
+        height: auto;
+    }
+
     .heroGrid {
         width: min(100% - 2rem, 600px);
         height: auto;
@@ -1106,6 +1113,16 @@
             "media"
             "buttons";
         gap: 0.5rem;
+    }
+
+    .mediaContainer {
+
+        height: auto;
+        width: 96%;
+        margin: 0 auto;
+        max-width: clamp(260px, 80vw, 680px);
+
+
     }
 
     .textContent {

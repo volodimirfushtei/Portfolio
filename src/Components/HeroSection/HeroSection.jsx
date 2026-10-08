@@ -430,6 +430,10 @@ const HeroSection = ({ loading }) => {
 
         {/* Buttons */}
         <div ref={buttonsRef} className={styles.buttons}>
+          <span className={`${styles.corner} ${styles.tl}`} />
+          <span className={`${styles.corner} ${styles.tr}`} />
+          <span className={`${styles.corner} ${styles.bl}`} />
+          <span className={`${styles.corner} ${styles.br}`} />
           <div className={styles.buttonCircleHeader}>
             <span className={styles.buttonCircle}>
               <span className={styles.buttonCircleInner} />
@@ -447,10 +451,6 @@ const HeroSection = ({ loading }) => {
             </Button>
           </div>
 
-          <span className={`${styles.corner} ${styles.tl}`} />
-          <span className={`${styles.corner} ${styles.tr}`} />
-          <span className={`${styles.corner} ${styles.bl}`} />
-          <span className={`${styles.corner} ${styles.br}`} />
 
           <Button
             data-cursor="hover"
