@@ -5,21 +5,17 @@
 ═══════════════════════════════════════════ */
 .overlay {
     position: fixed;
-
     color: aliceblue;
     font-size: larger;
     inset: 0;
-
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
     align-items: center;
     opacity: 0;
     z-index: 0;
     pointer-events: none;
     overflow: hidden;
-
     isolation: isolate;
     background: var(--color-surface);
 }
@@ -67,12 +63,11 @@
 
     font-family: var(--font-display, 'Bebas Neue', sans-serif);
     font-size: clamp(1.2rem, 4vw, 4rem);
-    font-weight: 400;
-
+    font-weight: 500;
     line-height: 1;
     white-space: nowrap;
 
-    color: #fff;
+    color: var(--color-text);
 
     z-index: 22;
 }
@@ -81,8 +76,8 @@
 .lastName {
     background: linear-gradient(
             135deg,
-            #ffffff 0%,
-            #bac7db 100%
+            var(--color-text) 0%,
+            var(--color-accent) 100%
     );
 
     -webkit-background-clip: text;
@@ -223,7 +218,7 @@
     font-size: 0.6rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--color-secondary);
+    color: var(--color-text);
 }
 
 .brandName {
@@ -370,7 +365,7 @@
     font-size: 0.55rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--color-secondary);
+    color: var(--color-text);
 }
 
 .statusText {

@@ -19,10 +19,10 @@
 ========================================= */
 .card {
     position: absolute;
-    top: 0;
+    top: 20px;
     left: 50%;
-    width: 120px;
-    height: 120px;
+    width: 110px;
+    height: 110px;
     padding: 6px;
     box-sizing: border-box;
     overflow: hidden;
@@ -212,7 +212,7 @@
 ========================================= */
 @media (max-width: 768px) {
     .container {
-        top: 80px;
+        top: 100px;
     }
 
     .card {
@@ -236,7 +236,7 @@
 
 @media (max-width: 480px) {
     .container {
-        top: 60px;
+        top: 80px;
     }
 
     .card {

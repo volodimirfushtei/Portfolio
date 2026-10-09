@@ -46,7 +46,7 @@ const STATS = [
   {
     value: 4,
     suffix: '+',
-    title: 'Professional',
+    title: 'Prof',
     subtitle: 'Certificates',
     image: '/images/surrealis.webp',
   },
@@ -217,7 +217,7 @@ export default function ExperienceTable() {
             <span className={styles.index}>
               {(index + 1).toString().padStart(2, '0')}
             </span>
-            <svg className={styles.icon} width={28} height={28}>
+            <svg className={styles.icon} width={24} height={24}>
               <use href="/sprite.svg#icon-target" />
             </svg>
             <img
