@@ -1,10 +1,11 @@
-import React, { useRef, useEffect, forwardRef, useState, lazy } from 'react'
+import React, { forwardRef, lazy, useEffect, useRef, useState } from 'react'
 
 import { PerspectiveCamera } from '@react-three/drei/core/PerspectiveCamera'
 import { useFrame, useThree } from '@react-three/fiber'
 import { Iphone } from '../Iphone/Iphone'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
 const Environment = lazy(() => import('@react-three/drei').then(m => ({ default: m.Environment })))
 gsap.registerPlugin(ScrollTrigger)
 
@@ -63,52 +64,56 @@ const Model = forwardRef(({ progress }, ref) => {
 
   // Анімація з GSAP та ScrollTrigger
   useEffect(() => {
-    if (!groupRef.current) return
+    const group = groupRef.current
+    if (!group) return
+    const ctx = gsap.context(() => {
 
-        // Основна анімація
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: document.body,
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 2,
-        invalidateOnRefresh: true,
-      }
+
+      // Основна анімація
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: document.body,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 2,
+          invalidateOnRefresh: true,
+        },
+      })
+
+      // 1. Рух вниз (Y) + обертання
+      tl.to(groupRef.current.position, {
+        y: -8, // Рух вниз до футера
+        x: 0,
+        z: 0,
+        duration: 1,
+        ease: 'none',
+      }, 0)
+
+      // 2. Обертання навколо осі Y
+      tl.to(groupRef.current.rotation, {
+        y: Math.PI * 12, // 3 повних оберти
+        duration: 1,
+        ease: 'none',
+      }, 0)
+
+      // 3. Додатковий рух по X (для ефекту траєкторії)
+      tl.to(groupRef.current.position, {
+        x: 2,
+        duration: 1,
+        ease: 'none',
+      }, 0.3)
+
+      // 4. Зміна масштабу (ефект наближення)
+      tl.to(groupRef.current.scale, {
+        x: 0.8,
+        y: 0.8,
+        z: 0.8,
+        duration: 0.5,
+        ease: 'power2.inOut',
+      }, 0.5)
+
+      return () => ctx.revert()
     })
-
-    // 1. Рух вниз (Y) + обертання
-    tl.to(groupRef.current.position, {
-      y: -8, // Рух вниз до футера
-      x: 0,
-      z: 0,
-      duration: 1,
-      ease: "none"
-    }, 0)
-
-    // 2. Обертання навколо осі Y
-    tl.to(groupRef.current.rotation, {
-      y: Math.PI * 12, // 3 повних оберти
-      duration: 1,
-      ease: "none"
-    }, 0)
-
-    // 3. Додатковий рух по X (для ефекту траєкторії)
-    tl.to(groupRef.current.position, {
-      x: 2,
-      duration: 1,
-      ease: "none"
-    }, 0.3)
-
-    // 4. Зміна масштабу (ефект наближення)
-    tl.to(groupRef.current.scale, {
-      x: 0.8,
-      y: 0.8,
-      z: 0.8,
-      duration: 0.5,
-      ease: "power2.inOut"
-    }, 0.5)
-
-    return () => ctx.revert()
   }, [])
 
   // Обробка зміни progress (якщо використовується зовнішній скрол)
@@ -150,7 +155,7 @@ const Model = forwardRef(({ progress }, ref) => {
       <div className="webgl-fallback">
         <p>3D context lost. Reloading...</p>
       </div>
-    );
+    )
   }
   return (
     <>
@@ -159,7 +164,7 @@ const Model = forwardRef(({ progress }, ref) => {
         near={0.1}
         far={1000}
         makeDefault
-        position={[3, 0, 5]}
+        position={[3, 2, 5]}
         ref={cameraRef}
       />
 
@@ -169,16 +174,16 @@ const Model = forwardRef(({ progress }, ref) => {
       />
 
       {/* Додаткове освітлення для кращого вигляду */}
-      <ambientLight intensity={0.5} />
+      <ambientLight intensity={0.2} />
       <pointLight position={[5, 5, 5]} intensity={1} />
-      <pointLight position={[-3, 2, 4]} intensity={0.5} color="#ed0c4c" />
+      <pointLight position={[-3, 2, 4]} intensity={0.5} color="#ed0" />
       <pointLight position={[0, 3, -2]} intensity={0.3} />
 
       <group
         ref={groupRef}
-        position={[-1, -2.2, -2.8]}
-        rotation={[0, 0, 0]}
-        scale={[1, 1, 1]}
+        position={[-1, 0, -2.8]}
+        rotation={[0, 0.2, 0]}
+        scale={[1.2, 1.2, 1.2]}
       >
         <Iphone />
       </group>

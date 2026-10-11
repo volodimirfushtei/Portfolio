@@ -77,3 +77,22 @@
         background-position: 200% 50%;
     }
 }
+
+@media (max-width: 768px) {
+    .dotBand {
+        bottom: -1rem;
+        --dot-size: 0.45px;
+        --dot-gap: 5px;
+        height: 3rem;
+    }
+
+    .dotBand::after {
+        height: 3rem;
+        animation: none;
+        background-size: 100% 100%;
+        background-position: center;
+        background: transparent;
+    }
+}
+
+

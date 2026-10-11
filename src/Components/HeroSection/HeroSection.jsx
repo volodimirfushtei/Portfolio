@@ -40,41 +40,61 @@ const Divider = React.memo(
 )
 
 Divider.displayName = 'Divider'
-
+export const useSectionRefs = (refNames) => {
+  const refs = {}
+  refNames.forEach(name => {
+    refs[name] = useRef(null)
+  })
+  return refs
+}
 
 const HeroSection = ({ loading }) => {
-  const sectionRef = useRef(null)
-  const bgRef = useRef(null)
-  const bgImageRef = useRef(null)
-  const textRef = useRef(null)
-  const eyebrowRef = useRef(null)
-  const contentRef = useRef(null)
-  const buttonsRef = useRef(null)
-  const mediaRef = useRef(null)
-  const cornerRef = useRef(null)
-  const scrollIndicatorRef = useRef(null)
-  const scrollLineRef = useRef(null)
-  const titleRef = useRef(null)
-  const gridBlur1Ref = useRef(null)
-  const gridBlur2Ref = useRef(null)
-  const gridBlur3Ref = useRef(null)
-  const bottomRightRef = useRef(null)
-  const bottomLeftRef = useRef(null)
-  const topRightRef = useRef(null)
-  const topLeftRef = useRef(null)
-  const cornersRef = useRef(null)
-  const dividersRef = useRef(null)
-  const light = useRef()
+// hooks/useSectionRefs.js
+
+
+  const {
+    sectionRef,
+    bgRef,
+    bgImageRef,
+    textRef,
+    eyebrowRef,
+    contentRef,
+    buttonsRef,
+    mediaRef,
+    cornerRef,
+    scrollIndicatorRef,
+    scrollLineRef,
+    titleRef,
+    gridBlur1Ref,
+    gridBlur2Ref,
+    gridBlur3Ref,
+    bottomRightRef,
+    bottomLeftRef,
+    topRightRef,
+    topLeftRef,
+    cornersRef,
+    dividersRef,
+  } = useSectionRefs([
+    'sectionRef', 'bgRef', 'bgImageRef', 'textRef', 'eyebrowRef',
+    'contentRef', 'buttonsRef', 'mediaRef', 'cornerRef',
+    'scrollIndicatorRef', 'scrollLineRef', 'titleRef',
+    'gridBlur1Ref', 'gridBlur2Ref', 'gridBlur3Ref',
+    'bottomRightRef', 'bottomLeftRef', 'topRightRef', 'topLeftRef',
+    'cornersRef', 'dividersRef',
+  ])
+  const light = useRef(null)
 
   const [animationsReady, setAnimationsReady] = useState(false)
 
   // ── Анімація світла за курсором ──
   useLayoutEffect(() => {
     const move = (e) => {
+      if (!light.current) return
       gsap.to(light.current, {
         x: e.clientX,
         y: e.clientY,
         duration: 0.6,
+        overwrite: 'auto',
       })
     }
     window.addEventListener('pointermove', move)
@@ -96,9 +116,18 @@ const HeroSection = ({ loading }) => {
   useLayoutEffect(() => {
     if (!sectionRef.current || !animationsReady) return
     // Горизонтальні ділителі
-    const horizontal = gsap.utils.toArray(`.${styles.horizontal}`)
-    const vertical = gsap.utils.toArray(`.${styles.vertical}`)
+    const horizontal = gsap.utils.toArray(
+      `.${styles.horizontal}`,
+      sectionRef.current,
+    )
+
+    const vertical = gsap.utils.toArray(
+      `.${styles.vertical}`,
+      sectionRef.current,
+    )
     const ctx = gsap.context(() => {
+
+
       const intro = gsap.timeline({
         defaults: { ease: 'power4.out', duration: 0.5 },
       })
@@ -166,24 +195,29 @@ const HeroSection = ({ loading }) => {
         duration: 1.8,
         ease: 'power4.out',
       }, '+=0.2')
-
+      if (buttonsRef.current) {
+        intro.from(buttonsRef.current, {
+          autoAlpha: 0,
+          ease: 'none',
+        })
+      }
       // Кнопки
-      const buttonItems = gsap.utils.toArray(
-        buttonsRef.current.querySelectorAll('button'),
+      const buttonItems = buttonsRef.current.querySelectorAll(
+        'button, a',
       )
-
-      intro.from(
-        buttonItems,
-        {
-          opacity: 0,
-          y: -30,
-          duration: 0.6,
-          stagger: 0.15,
-          ease: 'power4.out',
-        },
-        '>0.2',
-      )
-
+      if (buttonItems.length) {
+        intro.from(
+          buttonItems,
+          {
+            opacity: 0,
+            y: -30,
+            duration: 0.6,
+            stagger: 0.15,
+            ease: 'power4.out',
+          },
+          '>0.2',
+        )
+      }
       // Фон
       intro.fromTo(
         bgRef.current,
@@ -325,6 +359,7 @@ const HeroSection = ({ loading }) => {
 
   return (
     <section ref={sectionRef} className={styles.heroContainer}>
+
       {/* ── Background Layers ── */}
       <div ref={bgRef} className={styles.gradientBackground} aria-hidden="true" />
       <div ref={bgImageRef} className={styles.bgImage} aria-hidden="true" />

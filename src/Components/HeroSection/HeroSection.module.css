@@ -602,6 +602,8 @@
     align-items: center;
     column-gap: 24px;
     z-index: 30;
+    opacity: 1;
+    will-change: transform;
     padding: clamp(1rem, 2vw, 2rem) clamp(1rem, 2vw, 2rem);
 
 }

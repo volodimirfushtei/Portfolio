@@ -17,7 +17,8 @@ import DotBand from '../../Components/DotBand/DotBand.jsx'
 import { useOutletContext } from 'react-router-dom'
 import SectionsDividers from '../../Components/SectionsDeviders/SectionsDeviders'
 
-const Model = lazy(() => import('../../Components/Model/Model.jsx'))
+
+const IphoneScene = lazy(() => import('../../Components/IphoneScene/IphoneScene.jsx'))
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -181,6 +182,7 @@ const HomePage = () => {
   return (
     <div className={styles.container} ref={sectionRef}>
       <div id="viewport-blur" className={styles.viewportBlur}></div>
+      <IphoneScene />
       <section className={styles.heroSectionWrapper} id="hero">
         <HeroSection loading={loading} />
       </section>
