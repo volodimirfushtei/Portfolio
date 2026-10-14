@@ -1079,6 +1079,11 @@
     transform: translate(4px, -4px);
 }
 
+.buttonCircleLabel {
+    font-family: var(--font-mono);
+
+}
+
 /* ============================================
    7. MEDIA CONTAINER (HeroMedia)
 ============================================= */

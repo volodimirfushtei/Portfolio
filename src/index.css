@@ -223,14 +223,14 @@ a {
     --color-accent-hover: oklch(60% 0.18 265); /* ✅ Помітніший hover */
 
     /* 🖼️ Background System */
-    --color-background: oklch(99% 0 0); /* ✅ Чистий білий */
-    --color-surface: oklch(97% 0.002 260); /* ✅ Світліший surface */
+    --color-background: oklch(0.907 0.046 252.346); /* ✅ Чистий білий */
+    --color-surface: oklch(0.891 0.055 252.662); /* ✅ Світліший surface */
     --color-surface-hover: oklch(95% 0.003 260);
 
     /* 🌄 Page Gradient (м'якший для читання) */
     --color-page-gradient: linear-gradient(
             135deg,
-            oklch(98% 0.005 260),
+            oklch(0.895 0.053 249.285),
             oklch(94% 0.01 240)
     );
 

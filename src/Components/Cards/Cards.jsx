@@ -4,16 +4,19 @@ import styles from '../Cards/Cards.module.css'
 const cards = [
   {
     image: '/images/card_1.webp',
+    mobileImage: '/images//card_1_mob.webp',
     alt: 'Abstract blue waves',
     label: 'Waves',
   },
   {
     image: '/images/card_3.webp',
+    mobileImage: '/images/card_3_mob.webp',
     alt: 'Abstract 3D geometric structure',
     label: 'Structure',
   },
   {
     image: '/images/card_2.webp',
+    mobileImage: '/images/card_2_mob.webp',
     alt: 'Abstract 3D curves and spheres',
     label: 'Curves',
   },
@@ -43,14 +46,22 @@ const Cards = () => {
             }}
             onMouseEnter={() => setActiveIndex(index)}
           >
-            <img
-              src={card.image}
-              alt={card.alt}
-              className={styles.avatar}
-              loading="lazy"
-              width="100"
-              height="100"
-            />
+            <picture>
+              <source
+                media="(max-width: 768px)"
+                srcSet={card.mobileImage}
+              />
+
+              <img
+                src={card.image}
+                alt={card.alt}
+                className={styles.avatar}
+                loading="lazy"
+                width="100"
+                height="100"
+              />
+              <source />
+            </picture>
 
             {/* Статус */}
             <span className={`${styles.avatarStatus} ${isActive ? styles.online : ''}`} />

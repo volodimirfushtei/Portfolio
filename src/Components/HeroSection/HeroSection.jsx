@@ -83,9 +83,10 @@ const HeroSection = ({ loading }) => {
     'cornersRef', 'dividersRef',
   ])
   const light = useRef(null)
-
+  const animationRef = useRef(null)
   const [animationsReady, setAnimationsReady] = useState(false)
-
+  const [published, setPublished] = useState(false)
+  const [isInitializing, setIsInitializing] = useState(false)
   // ── Анімація світла за курсором ──
   useLayoutEffect(() => {
     const move = (e) => {
@@ -172,7 +173,7 @@ const HeroSection = ({ loading }) => {
           delay: 0.5,
           ease: 'expo.out',
         },
-        '+=0.2',
+        '<',
       )
       intro.from(titleRef.current, {
         opacity: 0,
@@ -194,7 +195,7 @@ const HeroSection = ({ loading }) => {
         clipPath: 'inset(0% 0 0 0)',
         duration: 1.8,
         ease: 'power4.out',
-      }, '+=0.2')
+      }, '+=0.1')
       if (buttonsRef.current) {
         intro.from(buttonsRef.current, {
           autoAlpha: 0,
@@ -345,6 +346,106 @@ const HeroSection = ({ loading }) => {
   const handleGitHubClick = useCallback(() => {
     window.open('https://github.com/volodimirfushtei', '_blank', 'noopener,noreferrer')
   }, [])
+  const handlePublish = useCallback(() => {
+    if (!sectionRef.current || isInitializing) return
+
+    setIsInitializing(true)
+
+    animationRef.current?.kill()
+
+    const ctx = gsap.context(() => {
+      const t2 = gsap.timeline({
+
+        defaults: {
+          ease: 'expo.out',
+
+
+        },
+        onComplete: () => {
+          setPublished((prev) => !prev)
+          setIsInitializing(false)
+        },
+        onInterrupt: () => {
+          setIsInitializing(false)
+        },
+      })
+
+      if (!published) {
+        t2.to(sectionRef.current, {
+          scale: 1.01,
+          duration: 0.5,
+
+        })
+          .to(
+            titleRef.current,
+            {
+              xPercent: 140,
+              scale: 1.02,
+              duration: 0.6,
+
+            },
+            '<',
+          )
+          .to(
+            mediaRef.current,
+            {
+              xPercent: -140,
+              scale: 0.96,
+              duration: 0.6,
+
+            },
+            '<',
+          )
+          .to(bgImageRef.current,
+            {
+              backgroundPosition: '50% 0%',
+              scale: 1.02,
+              duration: 2,
+
+            }, '<',
+          )
+          .to(
+            buttonsRef.current,
+            {
+              xPercent: 100,
+              scale: 0.9,
+              duration: 0.6,
+
+            },
+            '<',
+          )
+      } else {
+        t2.to(sectionRef.current, {
+          scale: 1,
+          duration: 0.5,
+
+        })
+          .to(titleRef.current, {
+            xPercent: 0,
+            duration: 0.6,
+
+          }, '<')
+          .to(mediaRef.current, {
+            xPercent: 0,
+            scale: 1,
+            duration: 0.6,
+
+          }, '<')
+          .to(buttonsRef.current, {
+            xPercent: 0,
+            scale: 1,
+            duration: 0.6,
+
+          }, '<')
+      }
+
+
+      animationRef.current = t2
+    })
+    return (() => ctx.revert())
+    return () => animationRef.current?.kill()
+  }, [published, isInitializing])
+
 
   const horizontalDividers = [
     { position: 'top', offset: '10%', width: '90%' },
@@ -475,14 +576,20 @@ const HeroSection = ({ loading }) => {
               <span className={styles.buttonCircleInner} />
               <span className={styles.buttonCircleInner} />
             </span>
+
             <Button
               data-cursor="hover"
               size="md"
               data-cursor-type="link"
-              data-cursor-text="Published"
+              data-cursor-text={published ? 'Reset' : 'Published'}
+              onClick={handlePublish}
               className={`${styles.buttonCircleLabel} ${styles.button}`}
             >
-              Publish
+              {isInitializing
+                ? 'INITIALIZING...'
+                : published
+                  ? 'RESET'
+                  : 'Call now'}
             </Button>
           </div>
 

@@ -23,7 +23,7 @@
     left: 50%;
     width: 110px;
     height: 110px;
-    padding: 6px;
+    padding: 4px;
     box-sizing: border-box;
     overflow: hidden;
     border-radius: 14px;
@@ -37,6 +37,13 @@
     opacity 600ms ease,
     box-shadow 700ms cubic-bezier(0.16, 1, 0.3, 1),
     background 600ms ease;
+}
+
+.card picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 16 / 9;
 }
 
 /* ── Card texture (шум) ── */
@@ -121,6 +128,7 @@
     width: 100%;
     height: 100%;
     display: block;
+    aspect-ratio: 16 / 9;
     object-fit: cover;
     border-radius: 8px;
     filter: grayscale(100%) contrast(1.2) brightness(0.7);
@@ -185,7 +193,7 @@
     z-index: 5;
     transform: translateX(-50%);
     font-family: var(--font-mono, monospace);
-    font-size: 0.5rem;
+    font-size: clamp(0.5rem, 1vh, 1rem);
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: rgba(170, 170, 170, 0.9);
@@ -218,7 +226,9 @@
     .card {
         width: 95px;
         height: 95px;
-        padding: 8px;
+        padding: 3px;
+        border-radius: 8px;
+
     }
 
     .card.inactive[style*="--position: -1"] {
@@ -236,22 +246,22 @@
 
 @media (max-width: 480px) {
     .container {
-        top: 80px;
+        top: 60px;
     }
 
     .card {
-        width: 80px;
-        height: 80px;
-        padding: 6px;
-        border-radius: 10px;
+        width: 55px;
+        height: 55px;
+        padding: 2px;
+        border-radius: 4px;
     }
 
     .card.inactive[style*="--position: -1"] {
-        transform: translate(calc(-50% - 18px), 5px) rotateY(8deg) rotateZ(2deg) scale(0.9);
+        transform: translate(calc(-50% - 22px), 5px) rotateY(8deg) rotateZ(2deg) scale(0.9);
     }
 
     .card.inactive[style*="--position: 1"] {
-        transform: translate(calc(-50% + 18px), -5px) rotateY(-8deg) rotateZ(-2deg) scale(0.9);
+        transform: translate(calc(-50% + 22px), -5px) rotateY(-8deg) rotateZ(-2deg) scale(0.9);
     }
 
     .avatarStatus {

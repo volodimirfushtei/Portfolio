@@ -54,7 +54,7 @@
 }
 
 .secondName {
-    margin-right: 64px;
+    margin-right: 62px;
 }
 
 .firstName,
@@ -89,7 +89,7 @@
     position: absolute;
     top: 50%;
     left: calc(100% + 22px);
-    width: 50px;
+    width: clamp(0.8rem, 4vh, 4rem);
     height: 1px;
     background: rgba(255, 255, 255, .35);
 }
@@ -99,7 +99,7 @@
     position: absolute;
     top: 50%;
     right: calc(100% + 22px);
-    width: 50px;
+    width: clamp(0.8rem, 4vh, 4rem);
     height: 1px;
     background: rgba(255, 255, 255, .35);
 }
