@@ -70,9 +70,10 @@ export default function Carousel() {
   return (
     <div className={styles.carousel}>
       {/* Хаотичні dividers */}
-      <div className={styles.divider} style={{ top: '0%', left: '0%', width: '100%', transform: 'rotate(-3deg)' }} />
-      <div className={styles.divider} style={{ top: '15%', right: '0%', height: '70%', transform: 'rotate(90deg)' }} />
-      <div className={styles.divider} style={{ bottom: '0%', left: '0%', width: '100%', transform: 'rotate(2deg)' }} />
+      <div className={styles.divider} style={{ top: '20%', left: '-5%', width: '50%', transform: 'rotate(-58deg)' }} />
+      <div className={styles.divider} style={{ top: '45%', right: '5%', height: '1px', transform: 'rotate(30deg)' }} />
+      <div className={styles.divider} style={{ bottom: '10%', left: '0%', width: '60%', transform: 'rotate(8deg)' }} />
+      <div className={styles.divider} style={{ bottom: '0%', right: '0%', width: '50%', transform: 'rotate(95deg)' }} />
 
       <div className={styles.panel} ref={panelRef}>
         <h2 className={styles.title}>What I Do</h2>
@@ -81,7 +82,7 @@ export default function Carousel() {
         </h3>
 
         {/* Accordion */}
-        <div className={styles.accordion}>
+        <div className={styles.accordion} data-scroll="fade" data-scroll-direction="vertical" data-speed="1.4">
           {ACCORDION.map((item, i) => (
             <div
               key={i}

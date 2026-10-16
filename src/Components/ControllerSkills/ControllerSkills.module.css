@@ -8,6 +8,24 @@
 
 }
 
+.divider {
+    position: absolute;
+    width: clamp(200px, 30vw, 500px);
+    height: 1px;
+    background: linear-gradient(
+            90deg,
+            transparent,
+            var(--color-accent),
+            transparent
+    );
+    opacity: 0.05;
+    pointer-events: none;
+    z-index: 1;
+
+
+}
+
+
 .section::after {
     content: "Technologies";
     position: absolute;

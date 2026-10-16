@@ -143,7 +143,8 @@ const Certificate = () => {
         FRONTEND • REACT • NEXT • GSAP • TYPESCRIPT • Framer
       </div>
 
-      <div className={styles.wrapper}>
+      <div className={styles.wrapper} data-cursor="hover" data-cursor-type="link" data-cursor-text="Current time"
+           data-speed="1" data-scroll={true}>
         {/* Інформаційна частина (хаотично розташована) */}
         <div className={styles.infoContainer}>
           <div className={styles.infoSubtitle}>
@@ -167,7 +168,7 @@ const Certificate = () => {
             </a>
           </div>
         </div>
-        
+
 
         {/* Картка сертифіката */}
         <div
@@ -175,6 +176,7 @@ const Certificate = () => {
           data-cursor="hover"
           data-cursor-type="link"
           data-cursor-text="GOIT Certificate"
+          data-speed="1.2"
         >
           <div
             className={styles.card}

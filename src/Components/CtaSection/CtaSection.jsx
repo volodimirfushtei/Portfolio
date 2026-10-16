@@ -153,6 +153,12 @@ const CtaSection = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-100px' }}
+          data-cursor="hover"
+          data-cursor-type="link"
+          data-cursor-text="Let's work together"
+          data-scroll="fade"
+          data-scroll-direction="vertical"
+          data-speed="1.3"
         >
           {/* Eyebrow */}
           <motion.div className={styles.eyebrow} variants={itemVariants}>

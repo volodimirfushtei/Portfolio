@@ -10,6 +10,8 @@
         position: relative;
         overflow: hidden;
         border-radius: var(--radius-lg);
+        box-shadow: 0 0 10px var(--color-accent);
+        corner-shape: squircle;
         border: 1px solid var(--color-border);
     }
 
@@ -25,10 +27,20 @@
         background-size: 216px auto;
         background-repeat: repeat;
         background-position: left top;
-        opacity: 0.18;
+        opacity: 0.28;
         pointer-events: none;
         z-index: 2;
         transition: opacity 0.5s ease;
+    }
+
+    .imageContainer::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        opacity: 0.8;
+        mix-blend-mode: color-dodge;
+        background: conic-gradient(var(--glass-bg), var(--color-page-gradient));
     }
 
     .imageContainer:hover::before {
@@ -41,6 +53,8 @@
         height: 100%;
         object-fit: cover;
         border-radius: var(--radius-lg);
+        corner-shape: squircle;
+
         transform: scale(1);
         transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
         filter 0.7s ease;
@@ -48,5 +62,7 @@
 
     .imageContainer:hover img {
         transform: scale(0.96);
+        corner-shape: squircle;
+
     }
 }

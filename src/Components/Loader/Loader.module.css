@@ -32,7 +32,7 @@
     z-index: 1;
     pointer-events: none;
     opacity: 0;
-    background: var(--color-surface);
+    background: var(--color-page-gradient);
     will-change: transform, opacity, filter;
     display: flex;
     align-items: center;
@@ -89,9 +89,18 @@
     position: absolute;
     top: 50%;
     left: calc(100% + 22px);
-    width: clamp(0.8rem, 4vh, 4rem);
-    height: 1px;
-    background: rgba(255, 255, 255, .35);
+    width: clamp(0.8rem, 10vh, 10rem);
+    transform: rotate(0deg);
+    height: 4px;
+
+    background: linear-gradient(
+            to bottom,
+            transparent,
+            rgba(255, 255, 255, 0.35) 20%,
+            rgba(72, 101, 248, 0.25) 50%,
+            rgba(255, 255, 255, 0.35) 80%,
+            transparent
+    );
 }
 
 .secondName::before {
@@ -99,9 +108,17 @@
     position: absolute;
     top: 50%;
     right: calc(100% + 22px);
-    width: clamp(0.8rem, 4vh, 4rem);
-    height: 1px;
-    background: rgba(255, 255, 255, .35);
+    width: clamp(0.8rem, 10vh, 10rem);
+    height: 4px;
+    transform: rotate(0deg);
+    background: linear-gradient(
+            to bottom,
+            transparent,
+            rgba(255, 255, 255, 0.35) 20%,
+            rgba(72, 101, 248, 0.25) 50%,
+            rgba(255, 255, 255, 0.35) 80%,
+            transparent
+    );
 }
 
 .secondName::after {
@@ -171,14 +188,14 @@
     left: 50%;
     top: 0%;
     transform: translate(-50%, -50%);
-    width: 1px;
+    width: 2px;
     height: 0;
     background: linear-gradient(
             to bottom,
             transparent,
-            rgba(255, 255, 255, 0.25) 20%,
-            rgba(108, 92, 231, 0.25) 50%,
-            rgba(255, 255, 255, 0.25) 80%,
+            rgba(255, 255, 255, 0.35) 20%,
+            rgba(72, 101, 248, 0.25) 50%,
+            rgba(255, 255, 255, 0.35) 80%,
             transparent
     );
     z-index: 2;

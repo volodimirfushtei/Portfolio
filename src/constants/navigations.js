@@ -36,5 +36,5 @@ export const imagesNavHeader = [
   { src: '/images/ryan_wilson_map.jpg', link: '/tech' },
   { src: '/images/marek.webp', link: '/contacts' },
   { src: '/images/error.jpg', link: '/error' },
-  { src: '/images/preview-portrait.webp', link: '/about' },
+  { src: '/images/card_1.webp', link: '/about' },
 ]

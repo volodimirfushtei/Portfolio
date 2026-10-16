@@ -19,51 +19,76 @@ const techItems = [
 export default function ControllerSkills() {
   const sectionRef = useRef(null)
   const innerRef = useRef(null)
- 
+  const wrapperRef = useRef(null)
 
-  const items = [...techItems, ...techItems, ...techItems];
-useLayoutEffect(() => {
-  const ctx = gsap.context(() => {
-    const distance = innerRef.current.scrollWidth / 3;
+  const items = [...techItems, ...techItems, ...techItems]
+  useLayoutEffect(() => {
+    const section = sectionRef.current
+    const inner = innerRef.current
+    const wrapper = wrapperRef.current.children
 
-    const marquee = gsap.fromTo(
-      innerRef.current,
-      { x: 0 },
-      {
-        x: -distance,
-        duration: 18,
-        ease: "none",
-        repeat: -1,
-      }
-    );
+    if (!section || !inner || !wrapper) return
 
-    ScrollTrigger.create({
-      trigger: sectionRef.current,
-      start: "top bottom",
-      end: "bottom top",
-      onUpdate(self) {
-        marquee.timeScale(
-          gsap.utils.clamp(
-            0.5,
-            4,
-            1 + Math.abs(self.getVelocity()) / 3000
+    const ctx = gsap.context(() => {
+      const distance = inner.scrollWidth / 3
+
+      gsap.to(wrapper, {
+        xPercent: 20,
+        width: '40%',
+        height: '100%',
+        duration: 1,
+        ease: 'power3.out',
+        stagger: 0.15,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1,
+        },
+      })
+
+      const marquee = gsap.fromTo(
+        inner,
+        { x: 0 },
+        {
+          x: -distance,
+          duration: 18,
+          ease: 'none',
+          repeat: -1,
+        },
+      )
+
+      ScrollTrigger.create({
+        trigger: section,
+        start: 'top bottom',
+        end: 'bottom top',
+        onUpdate(self) {
+          marquee.timeScale(
+            gsap.utils.clamp(
+              0.5,
+              4,
+              1 + Math.abs(self.getVelocity()) / 3000,
+            ),
           )
-        );
-      },
-    });
-  }, sectionRef);
+        },
+      })
+    }, section)
 
-  return () => ctx.revert();
-}, []);
+    return () => ctx.revert()
+  }, [])
 
   return (
     <section ref={sectionRef} className={styles.section}>
       {/* Хаотичні dividers */}
-      <div className={styles.divider} style={{ top: '0%', left: '0%', width: '100%', transform: 'rotate(-2deg)' }} />
-      <div className={styles.divider} style={{ top: '10%', right: '0%', height: '80%', transform: 'rotate(90deg)' }} />
-      <div className={styles.divider} style={{ bottom: '0%', left: '0%', width: '100%', transform: 'rotate(3deg)' }} />
-      <div className={styles.divider} style={{ top: '20%', left: '10%', height: '60%', transform: 'rotate(-85deg)' }} />
-
+      <div className={styles.wrapper} ref={wrapperRef}>
+        <div className={styles.divider} style={{ top: '0%', left: '0%', width: '40%', transform: 'rotate(-2deg)' }} />
+        <div className={styles.divider}
+             style={{ top: '10%', right: '0%', height: '1px', transform: 'rotate(70deg)' }} />
+        <div className={styles.divider}
+             style={{ bottom: '0%', left: '20%', width: '70%', transform: 'rotate(30deg)' }} />
+        <div className={styles.divider}
+             style={{ top: '90%', left: '0%', height: '1px', transform: 'rotate(-85deg)' }} />
+      </div>
       <div className={styles.eyebrow}>
         <span className={styles.eyebrowLine} />
         <h3 className={styles.eyebrowText}>Coding process and tools</h3>
@@ -77,7 +102,7 @@ useLayoutEffect(() => {
             <div
               key={`track1-${i}`}
               className={styles.card}
-  
+
             >
               <div className={styles.cardContent}>
                 <svg className={styles.icon} aria-hidden="true" focusable="false">
@@ -92,7 +117,7 @@ useLayoutEffect(() => {
           ))}
         </div>
 
-        
+
       </div>
     </section>
   )

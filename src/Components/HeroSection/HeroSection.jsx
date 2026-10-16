@@ -390,7 +390,7 @@ const HeroSection = ({ loading }) => {
             mediaRef.current,
             {
               xPercent: -140,
-              scale: 0.96,
+              scale: 0.98,
               duration: 0.6,
 
             },
@@ -443,10 +443,14 @@ const HeroSection = ({ loading }) => {
       animationRef.current = t2
     })
     return (() => ctx.revert())
-    return () => animationRef.current?.kill()
+
   }, [published, isInitializing])
 
-
+  useEffect(() => {
+    return () => {
+      animationRef.current?.kill()
+    }
+  }, [])
   const horizontalDividers = [
     { position: 'top', offset: '10%', width: '90%' },
     { position: 'bottom', offset: '10%', width: '90%' },

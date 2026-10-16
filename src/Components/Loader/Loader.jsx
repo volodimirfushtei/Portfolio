@@ -199,9 +199,10 @@ const Loader = ({ onComplete }) => {
           duration: 0.4,
 
         })
+
       // ── Затримка перед виходом ──
       tl.to({}, {
-        duration: 1.2,
+        duration: 0.5,
       })
 
       // ─────────────────────────────
@@ -242,7 +243,13 @@ const Loader = ({ onComplete }) => {
           },
           'exit+=0.1',
         )
-
+        .to([firstNameRef.current, secondNameRef.current],
+          {
+            autoAlpha: 0,
+            filter: 'blur(12px)',
+            ease: 'bounce.out',
+            duration: 0.6,
+          }, 'exit-=0.1')
         // LEFT PANEL
         .to(
           leftRef.current,

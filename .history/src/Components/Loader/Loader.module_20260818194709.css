@@ -1,0 +1,224 @@
+/* ── Loader.module.css ── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #0a0a0f;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* ── Panels ── */
+.noise {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  background: #0a0a0f;
+  z-index: 1;
+}
+
+.panel:first-of-type {
+  left: 0;
+  background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
+}
+
+.panel:nth-of-type(2) {
+  right: 0;
+  background: linear-gradient(225deg, #0a0a0f 0%, #1a1a2e 100%);
+}
+
+/* ── Divider (вертикальна лінія) ── */
+.divider {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 1px;
+  height: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(255, 255, 255, 0.05) 20%,
+    rgba(108, 92, 231, 0.15) 50%,
+    rgba(255, 255, 255, 0.05) 80%,
+    transparent
+  );
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+}
+
+/* ── Top Bar ── */
+.topBar {
+  position: absolute;
+  top: 2rem;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 3rem;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.2);
+  z-index: 10;
+  opacity: 0;
+}
+
+/* ── Logo ── */
+.logoWrap {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoSvg {
+  width: clamp(4rem, 8vw, 7rem);
+  height: clamp(4rem, 8vw, 7rem);
+}
+
+/* ── Name ── */
+.nameWrap {
+  position: relative;
+  z-index: 10;
+  margin-top: 1.5rem;
+  opacity: 0;
+}
+
+.name {
+  font-family: var(--font-display, 'Bebas Neue', sans-serif);
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* ── Bottom Bar ── */
+.bottomBar {
+  position: absolute;
+  bottom: 2rem;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 3rem;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.5rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.15);
+  z-index: 10;
+  opacity: 0;
+}
+
+.statusText {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.statusDot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #6c5ce7;
+  display: inline-block;
+  animation: dotPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.5);
+    box-shadow: 0 0 20px rgba(108, 92, 231, 0.3);
+  }
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .topBar {
+    padding: 0 1.5rem;
+    font-size: 0.5rem;
+    top: 1.5rem;
+  }
+
+  .bottomBar {
+    padding: 0 1.5rem;
+    font-size: 0.4rem;
+    bottom: 1.5rem;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .name {
+    font-size: clamp(1.2rem, 4vw, 2rem);
+  }
+
+  .logoSvg {
+    width: clamp(3rem, 10vw, 5rem);
+    height: clamp(3rem, 10vw, 5rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .topBar {
+    padding: 0 1rem;
+    font-size: 0.4rem;
+    top: 1rem;
+  }
+
+  .bottomBar {
+    padding: 0 1rem;
+    font-size: 0.35rem;
+    bottom: 1rem;
+  }
+
+  .name {
+    font-size: clamp(1rem, 5vw, 1.5rem);
+    margin-top: 1rem;
+  }
+
+  .logoSvg {
+    width: clamp(2.5rem, 12vw, 4rem);
+    height: clamp(2.5rem, 12vw, 4rem);
+  }
+
+  .divider {
+    display: none;
+  }
+
+  .panel {
+    width: 100%;
+  }
+
+  .panel:first-of-type {
+    transform: translateY(-100%);
+  }
+
+  .panel:nth-of-type(2) {
+    transform: translateY(100%);
+  }
+}

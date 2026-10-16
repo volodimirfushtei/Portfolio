@@ -16,6 +16,7 @@ import SoftSkills from '../../Components/SoftSkills/SoftSkills.jsx'
 import DotBand from '../../Components/DotBand/DotBand.jsx'
 import { useOutletContext } from 'react-router-dom'
 import SectionsDividers from '../../Components/SectionsDeviders/SectionsDeviders'
+import BottomBlur from '../../Components/BottomBlur/BottomBlur.jsx'
 
 
 const IphoneScene = lazy(() => import('../../Components/IphoneScene/IphoneScene.jsx'))
@@ -181,10 +182,12 @@ const HomePage = () => {
 
   return (
     <div className={styles.container} ref={sectionRef}>
-      <div id="viewport-blur" className={styles.viewportBlur}></div>
+
+      <div id="viewport-blur" className={styles.viewportBlur}><BottomBlur /></div>
       <IphoneScene />
       <section className={styles.heroSectionWrapper} id="hero">
         <HeroSection loading={loading} />
+
       </section>
       <DotBand />
       <section

@@ -19,10 +19,10 @@
     background: linear-gradient(
             90deg,
             transparent,
-            var(--color-border),
+            var(--color-accent),
             transparent
     );
-    opacity: 0.85;
+    opacity: 0.45;
     pointer-events: none;
     z-index: 1;
 }

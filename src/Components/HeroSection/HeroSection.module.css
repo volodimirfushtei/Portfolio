@@ -1006,8 +1006,7 @@
     align-items: center;
     justify-content: center;
     gap: 0.75rem;
-    padding: var(--button-padding);
-    height: var(--button-height);
+
     border-radius: 999px;
     font-family: var(--font-mono);
     font-size: var(--font-sm);
@@ -1029,7 +1028,7 @@
     -webkit-backdrop-filter: blur(12px);
     color: var(--color-text);
     border: 1px solid var(--color-border);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+
 }
 
 .primaryButton::before {
@@ -1081,6 +1080,7 @@
 
 .buttonCircleLabel {
     font-family: var(--font-mono);
+
 
 }
 

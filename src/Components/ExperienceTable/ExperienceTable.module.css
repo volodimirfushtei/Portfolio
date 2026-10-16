@@ -8,20 +8,21 @@
     overflow: hidden;
     background: var(--color-background);
     isolation: isolate;
+
 }
 
 /* Хаотичні dividers */
 .divider {
     position: absolute;
-    width: clamp(300px, 40vw, 600px);
+    width: clamp(200px, 30vw, 500px);
     height: 1px;
     background: linear-gradient(
             90deg,
             transparent,
-            var(--color-border),
+            var(--color-accent),
             transparent
     );
-    opacity: 0.8;
+    opacity: 0.25;
     pointer-events: none;
     z-index: 1;
 }
