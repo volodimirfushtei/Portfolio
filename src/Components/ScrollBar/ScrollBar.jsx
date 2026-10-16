@@ -10,7 +10,8 @@ gsap.registerPlugin(ScrollTrigger)
 const pages = [
   {
     id: 1,
-    color: 'var(--color-accent)',
+    index: 1,
+    color: 'var(--color-page-gradient)',
     title: 'Welcome',
     subtitle: 'Frontend Developer & UI Specialist',
     description: 'I create modern, performant web applications with focus on user experience and clean code architecture.',
@@ -25,6 +26,7 @@ const pages = [
   },
   {
     id: 2,
+    index: 2,
     color: 'var(--color-text)',
     title: 'Services',
     subtitle: 'What I Offer',
@@ -42,6 +44,7 @@ const pages = [
   },
   {
     id: 3,
+    index: 3,
     color: 'var(--color-secondary)',
     title: 'Portfolio',
     subtitle: 'My Recent Work',
@@ -57,6 +60,7 @@ const pages = [
   },
   {
     id: 4,
+    index: 4,
     color: 'var(--color-primary)',
     title: 'Contact',
     subtitle: 'Get In Touch',
@@ -67,15 +71,30 @@ const pages = [
       'Flexible cooperation',
       'Worldwide clients',
     ],
-    image: '/images/darkroom.webp',
+    image: '/images/Workspace.webp',
     cta: { text: 'Contact Me', url: '#contacts' },
   },
+  {
+    id: 5,
+    index: 5,
+    color: 'var(--color-accent)',
+    title: 'Thank You',
+    subtitle: 'For Your Visit',
+    description: 'I\'m looking forward to working with you!',
+    features: [
+      'Let\'s create something amazing together!',
+    ],
+    image: '/images/hexa_dan_wave_10.webp',
+    cta: { text: 'Back to Top', url: '#hero' },
+  },
+    
 ]
 
 
 const ScrollBar = () => {
   const containerRef = useRef(null)
   const backgroundRef = useRef(null)
+  const cardsRef = useRef(null)
   const { scrollYProgress } = useScroll({
     container: containerRef,
     offset: ['start start', 'end end'],
@@ -116,52 +135,62 @@ const ScrollBar = () => {
   }, [activeIndex])
 
   const scrollProgress = useTransform(scrollYProgress, [0, 1], [0, 1])
-  useLayoutEffect(() => {
-    if (!backgroundRef.current) return
+ 
 
+useLayoutEffect(() => {
+  const container = containerRef.current
+  if (!container) return
 
-    gsap.fromTo(
-      backgroundRef.current,
-      {
-        clipPath: 'inset(100% 0% 0% 0%)',
-        scale: 0.5,
-        opacity: 0,
-        filter: 'blur(10px)',
-      },
-      {
-        clipPath: 'inset(0% 0% 0% 0%)',
-        scale: 1,
-        opacity: 1,
-        filter: 'blur(0px)',
-        duration: 1.2,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: backgroundRef.current,
-          start: 'top 80%',
-          end: 'top 20%',
-          scrub: 1,
-
-        },
-      },
+  const ctx = gsap.context(() => {
+    const backgrounds = gsap.utils.toArray(
+      `.${styles.sectionBackground}`,
     )
-    gsap.to(backgroundRef.current, {
-      yPercent: -15,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: backgroundRef.current,
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: 1,
-      },
-    })
 
-  }, [pages.image])
+    backgrounds.forEach((background) => {
+      const section = background.closest('section')
+      if (!section) return
+
+      gsap.fromTo(
+        background,
+        {
+          
+
+         scale: 1.04,
+          autoAlpha: 0,
+          filter: 'blur(10px)',
+        },
+        {
+         
+          scale: 1,
+          autoAlpha: 1,
+          
+          filter: 'blur(0px)',
+          duration: 1.2,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: section,
+            scroller: container,
+            start: 'top 80%',
+            end: 'top 20%',
+            scrub: 1,
+           
+          },
+        },
+      )
+
+     
+    })
+  }, container)
+
+  return () => ctx.revert()
+}, [])
   return (
     <div className={styles.wrapper}>
 
       {/* Main Content */}
       <div
-        ref={containerRef}
+        
+       ref={containerRef}
         className={`${styles.mainContent} ${styles.container}`}
         style={{ scrollSnapType: 'y mandatory' }}
       >
@@ -170,13 +199,15 @@ const ScrollBar = () => {
             key={page.id}
             id={`section-${page.id}`}
             className={styles.section}
-            style={{ backgroundColor: page.color }}
-          ><Cards page={page} />
+            
+            style={{ backgroundColor: page.color, scrollSnapAlign: 'start' ,opacity: 0.8, }}
+          ><div ><Cards page={page}  /></div>
             <div
-              className={styles.sectionBackground} ref={backgroundRef}
+              className={styles.sectionBackground}
+               
               style={{ backgroundImage: `url(${page.image})` }}
             />
-            <div className={styles.sectionOverlay} />
+            <div className={styles.sectionOverlay}  />
 
             <motion.div
               className={styles.contentWrapper}
@@ -185,7 +216,7 @@ const ScrollBar = () => {
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
               viewport={{ once: true }}
             >
-              <motion.h2 className={styles.sectionTitle}>
+              <motion.h2 className={styles.sectionTitle} ref={cardsRef}>
                 {page.title}
               </motion.h2>
 
@@ -243,9 +274,15 @@ const ScrollBar = () => {
             {pages.map((_, index) => (
               <button
                 key={index}
+                data-cursor="pointer"
+                data-cursor-text={`Go to slide ${index + 1}`}
+                data-cursor-color="var(--color-accent)"
                 className={`${styles.dot} ${activeIndex === index ? styles.active : ''}`}
                 onClick={() => scrollToSection(index)}
-                aria-label={`Go to section ${index + 1}`}
+                aria-label={`Go to slide ${index + 1}`}
+                data-testid={`dot-${index}`}
+                data-active={activeIndex === index ? 'true' : 'false'}
+                aria-pressed={activeIndex === index ? 'true' : 'false'}
               />
             ))}
             <motion.p
