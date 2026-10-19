@@ -48,12 +48,14 @@ const CardTech = () => {
             
             gsap.fromTo(
               techRefs.current,
-              { opacity: 0, y: 30 },
+              { opacity: 0, y: 30, scale: 0.95,clipPath: 'inset(0% 0% 100% 0%)' },
               {
                 opacity: 1,
                 y: 0,
+                clipPath: 'inset(0% 0% 0% 0%)',
+                scale: 1,
                 duration: 0.6,
-                stagger: 0.1,
+                stagger: 0.2,
                 ease: 'back.out(1.5)',
                 delay: 0.2,
                 clearProps: 'y'
@@ -81,8 +83,10 @@ const CardTech = () => {
     <section
       ref={containerRef}
       className={styles.chaoticContainer}
-      data-cursor="hover"
-      data-cursor-type="link"
+      aria-hidden="true"
+        data-cursor="true"
+       data-cursor-text="View Skills"
+      
     ><div className={styles.noise}/>
       {/* Хаотичні dividers */}
       <div className={styles.divider} style={{ top: '10%', left: '5%', transform: 'rotate(-15deg)' }} />
@@ -150,12 +154,18 @@ const CardTech = () => {
           rel="noopener noreferrer"
           className={styles.primaryBtn}
           aria-label="View on GitHub"
+          data-cursor="hover"
+          data-cursor-type="link"
+          data-cursor-text="View GitHub"
         >
           <SvgIcon id="icon-github" className={styles.svgIcon} />
           View GitHub
         </a>
         <button
           className={styles.secondaryBtn}
+          data-cursor="pointer"
+          data-cursor-text="Email Copied!"
+          data-cursor-type="link"
           onClick={handleCopyEmail}
           aria-label={copied ? 'Copied!' : 'Copy email'}
         >

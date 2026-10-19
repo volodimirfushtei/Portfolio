@@ -9,7 +9,7 @@ import Header from '../Header/Header'
 import ScrollToTopBtn from '../ScrollToTopBtn/ScrollTotopBtn.jsx'
 import Loader from '../Loader/Loader'
 import SiteGrid from '../SiteGrid/SiteGrid.jsx'
-
+import BottomBlur from '../BottomBlur/BottomBlur.jsx'
 gsap.registerPlugin(ScrollSmoother, ScrollTrigger)
 
 
@@ -73,6 +73,7 @@ const Layout = () => {
       )}
 
       <main className={s.mainContent}>
+         <div id="viewport-blur" className={s.viewportBlur}><BottomBlur /></div>
         <SiteGrid loading={loading} />
         <div
           id="smooth-wrapper"

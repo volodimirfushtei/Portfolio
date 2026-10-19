@@ -183,7 +183,7 @@ const HomePage = () => {
   return (
     <div className={styles.container} ref={sectionRef}>
 
-      <div id="viewport-blur" className={styles.viewportBlur}><BottomBlur /></div>
+     
       <IphoneScene />
       <section className={styles.heroSectionWrapper} id="hero">
         <HeroSection loading={loading} />

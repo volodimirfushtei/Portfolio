@@ -380,7 +380,7 @@ const HeroSection = ({ loading }) => {
             titleRef.current,
             {
               xPercent: 140,
-              scale: 1.02,
+              scale: 0.98,
               duration: 0.6,
 
             },
@@ -464,6 +464,7 @@ const HeroSection = ({ loading }) => {
 
   return (
     <section ref={sectionRef} className={styles.heroContainer}>
+
 
       {/* ── Background Layers ── */}
       <div ref={bgRef} className={styles.gradientBackground} aria-hidden="true" />

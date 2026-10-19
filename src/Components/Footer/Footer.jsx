@@ -11,7 +11,7 @@ const Footer = () => {
   const footerRef = useRef(null)
   const lettersRef = useRef([])
   const smokeRef = useRef(null)
-
+const copirightRef = useRef(null)
   const setRef = (el, i) => {
     if (el) {
       lettersRef.current[i] = el
@@ -91,6 +91,16 @@ const Footer = () => {
         repeat: -1,
         yoyo: true,
         ease: 'sine.inOut',
+      })
+      gsap.to(copirightRef.current, {
+      
+        yPercent: -20,
+        scale: 1.05,
+        duration: 4,
+        repeat: -1,
+        yoyo: true,
+       
+        ease: 'none',
       })
     }, footerRef)
 
@@ -257,7 +267,7 @@ const Footer = () => {
       </div>
 
       {/* Copyright */}
-      <div className={styles.copyright}>
+      <div className={styles.copyright} ref={copirightRef}>
         <img
           src="/images/Myphoto.jpg"
           alt="my_photo"

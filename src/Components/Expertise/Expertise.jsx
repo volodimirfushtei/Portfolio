@@ -30,14 +30,15 @@ const Expertise = () => {
           trigger: sectionRef.current,
           start: 'top 85%',
           end: 'bottom 10%',
-          once: true,
+          once: false,
+          
         },
       })
 
       // 1. Background reveal
       tl.from(backgroundRef.current, {
         autoAlpha: 0,
-        scale: 1.15,
+        scale: 1.05,
         filter: 'blur(50px)',
         duration: 1.6,
       })
@@ -69,23 +70,23 @@ const Expertise = () => {
         autoAlpha: 0,
         x: 50,
         scale: 0.9,
-        rotateX: 10,
+        rotateY: -10,
         duration: 1.4,
       })
         .to(cardRef.current, {
-          y: -8,
+          scale: 1,
           duration: 0.25,
+          rotateY: 0,
           ease: 'power2.out',
         })
-        .to(cardRef.current, {
-          y: 0,
-          duration: 0.4,
-          ease: 'bounce.out',
-        })
+     
+        
 
       // 7. Blur Orbs (parallax on scroll)
       gsap.to([blurOrb1Ref.current, blurOrb2Ref.current], {
-        yPercent: -20,
+        yPercent: -40,
+        autoAlpha: 0.6,
+        duration: 1.5,
         ease: 'none',
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -105,6 +106,7 @@ const Expertise = () => {
           gsap.to(card, {
             x: x * 30,
             y: y * 30,
+            overwrite: 'auto',
             duration: 0.6,
             ease: 'power3.out',
           })
@@ -173,7 +175,7 @@ const Expertise = () => {
 
         {/* Content Columns */}
         <div className={styles.columns}>
-          <div className={styles.cardCol} ref={cardRef}>
+          <div className={styles.cardCol} ref={cardRef} data-scroll data-speed="1.2" >
             <CardTech />
           </div>
         </div>

@@ -1,0 +1,53 @@
+.bottomBlur  {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: 120px;
+
+  pointer-events: none;
+  z-index: 9999;
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  mask-image: linear-gradient(
+    to top,
+    black 20%,
+    rgba(0,0,0,.9) 35%,
+    rgba(0,0,0,.6) 60%,
+    transparent 100%
+  );
+
+  -webkit-mask-image: linear-gradient(
+    to top,
+    black 20%,
+    rgba(0,0,0,.9) 35%,
+    rgba(0,0,0,.6) 60%,
+    transparent 100%
+  );
+}
+    .bottomBlur::before{
+    content:"";
+    position:absolute;
+    inset:0;
+
+    background:
+    radial-gradient(
+        circle at center,
+        rgba(255,255,255,.08),
+        transparent 70%
+    );
+
+    mix-blend-mode:overlay;
+}
+.bottomBlur::after{
+    content:"";
+    position:absolute;
+    inset:0;
+
+    background-image:url('/images/grunge_texture.webp');
+
+    opacity:.01;
+}

@@ -197,7 +197,7 @@
     position: absolute;
     inset: 0;
     z-index: -4;
-    background-image: url('/images/hexa_dan_wave_10.webp');
+    background-image: url('/images/yves.jpg');
     background-size: cover;
     background-position: 50% 10%;
     background-repeat: no-repeat;
@@ -1204,7 +1204,7 @@
 
     .gradientBackground {
         animation: none;
-        opacity: 0.5;
+        opacity: 0.6;
     }
 
     .gridBlur1,

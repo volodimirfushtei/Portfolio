@@ -1,10 +1,14 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion'
+import {
+  motion,
+  useMotionValueEvent,
+  useScroll,
+  useTransform,
+} from 'framer-motion'
 import styles from './ScrollBar.module.css'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Cards from '../Cards/Cards.jsx'
-
 
 gsap.registerPlugin(ScrollTrigger)
 const pages = [
@@ -14,7 +18,8 @@ const pages = [
     color: 'var(--color-page-gradient)',
     title: 'Welcome',
     subtitle: 'Frontend Developer & UI Specialist',
-    description: 'I create modern, performant web applications with focus on user experience and clean code architecture.',
+    description:
+      'I create modern, performant web applications with focus on user experience and clean code architecture.',
     features: [
       '5+ years of experience',
       '15+ completed projects',
@@ -30,14 +35,14 @@ const pages = [
     color: 'var(--color-text)',
     title: 'Services',
     subtitle: 'What I Offer',
-    description: 'Full cycle development from concept to deployment with focus on performance and scalability.',
+    description:
+      'Full cycle development from concept to deployment with focus on performance and scalability.',
     features: [
       'Custom Web Development',
       'UI/UX Design Implementation',
       'Animation & Interactions',
       'Performance Optimization',
       'Responsive Design',
-
     ],
     image: '/images/surrealis.webp',
     cta: { text: 'Learn More', url: '#services' },
@@ -48,7 +53,8 @@ const pages = [
     color: 'var(--color-secondary)',
     title: 'Portfolio',
     subtitle: 'My Recent Work',
-    description: 'Explore my latest projects showcasing modern web technologies and creative solutions.',
+    description:
+      'Explore my latest projects showcasing modern web technologies and creative solutions.',
     features: [
       'E-commerce platforms',
       'Corporate websites',
@@ -64,7 +70,8 @@ const pages = [
     color: 'var(--color-primary)',
     title: 'Contact',
     subtitle: 'Get In Touch',
-    description: 'Let\'s discuss your project and how I can help bring your ideas to life.',
+    description:
+      "Let's discuss your project and how I can help bring your ideas to life.",
     features: [
       'Available for freelance',
       'Fast response time',
@@ -80,20 +87,17 @@ const pages = [
     color: 'var(--color-accent)',
     title: 'Thank You',
     subtitle: 'For Your Visit',
-    description: 'I\'m looking forward to working with you!',
-    features: [
-      'Let\'s create something amazing together!',
-    ],
+    description: "I'm looking forward to working with you!",
+    features: ["Let's create something amazing together!"],
     image: '/images/hexa_dan_wave_10.webp',
     cta: { text: 'Back to Top', url: '#hero' },
   },
-    
 ]
-
 
 const ScrollBar = () => {
   const containerRef = useRef(null)
   const backgroundRef = useRef(null)
+  const sectionOverlayRef = useRef(null)
   const cardsRef = useRef(null)
   const { scrollYProgress } = useScroll({
     container: containerRef,
@@ -135,62 +139,64 @@ const ScrollBar = () => {
   }, [activeIndex])
 
   const scrollProgress = useTransform(scrollYProgress, [0, 1], [0, 1])
- 
 
-useLayoutEffect(() => {
-  const container = containerRef.current
-  if (!container) return
+  useLayoutEffect(() => {
+    const container = containerRef.current
+    const sectionOverlay = sectionOverlayRef.current
+    if (!container) return
 
-  const ctx = gsap.context(() => {
-    const backgrounds = gsap.utils.toArray(
-      `.${styles.sectionBackground}`,
-    )
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline()
 
-    backgrounds.forEach((background) => {
-      const section = background.closest('section')
-      if (!section) return
-
-      gsap.fromTo(
-        background,
-        {
-          
-
-         scale: 1.04,
-          autoAlpha: 0,
-          filter: 'blur(10px)',
-        },
-        {
-         
-          scale: 1,
+      if (sectionOverlay) {
+        tl.to(sectionOverlay, {
           autoAlpha: 1,
-          
-          filter: 'blur(0px)',
           duration: 1.2,
           ease: 'power2.out',
-          scrollTrigger: {
-            trigger: section,
-            scroller: container,
-            start: 'top 80%',
-            end: 'top 20%',
-            scrub: 1,
-           
+        })
+      }
+      const backgrounds = gsap.utils.toArray(`.${styles.sectionBackground}`)
+
+      backgrounds.forEach((background) => {
+        const section = background.closest('section')
+        if (!section) return
+
+        tl.fromTo(
+          background,
+          {
+            scale: 1.04,
+            autoAlpha: 0,
+            filter: 'blur(10px)',
+            brightness: 0.8,
+            shadow: '0px 0px 20px rgba(0, 0, 0, 0.5)',
           },
-        },
-      )
+          {
+            scale: 1,
+            autoAlpha: 1,
+            filter: 'blur(0px)',
+            brightness: 1,
+            duration: 1.2,
+            shadow: '0px 0px 0px rgba(0, 0, 0, 0)',
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: section,
+              scroller: container,
+              start: 'top 80%',
+              end: 'top 20%',
+              scrub: 1,
+            },
+          },
+        )
+      })
+    }, container)
 
-     
-    })
-  }, container)
-
-  return () => ctx.revert()
-}, [])
+    return () => ctx.revert()
+  }, [])
   return (
     <div className={styles.wrapper}>
-
       {/* Main Content */}
       <div
-        
-       ref={containerRef}
+        ref={containerRef}
         className={`${styles.mainContent} ${styles.container}`}
         style={{ scrollSnapType: 'y mandatory' }}
       >
@@ -199,15 +205,20 @@ useLayoutEffect(() => {
             key={page.id}
             id={`section-${page.id}`}
             className={styles.section}
-            
-            style={{ backgroundColor: page.color, scrollSnapAlign: 'start' ,opacity: 0.8, }}
-          ><div ><Cards page={page}  /></div>
+            style={{
+              backgroundColor: page.color,
+              scrollSnapAlign: 'start',
+              opacity: 0.8,
+            }}
+          >
+            <div>
+              <Cards page={page} />
+            </div>
             <div
               className={styles.sectionBackground}
-               
               style={{ backgroundImage: `url(${page.image})` }}
             />
-            <div className={styles.sectionOverlay}  />
+            <div ref={sectionOverlayRef} className={styles.sectionOverlay} />
 
             <motion.div
               className={styles.contentWrapper}

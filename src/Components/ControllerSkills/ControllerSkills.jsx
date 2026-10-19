@@ -102,7 +102,12 @@ export default function ControllerSkills() {
             <div
               key={`track1-${i}`}
               className={styles.card}
-
+              style={{
+                '--index': i,
+              }}
+              data-cursor="hover"
+              data-cursor-type="link"
+              data-cursor-text={tech.name}
             >
               <div className={styles.cardContent}>
                 <svg className={styles.icon} aria-hidden="true" focusable="false">
@@ -116,8 +121,6 @@ export default function ControllerSkills() {
             </div>
           ))}
         </div>
-
-
       </div>
     </section>
   )
