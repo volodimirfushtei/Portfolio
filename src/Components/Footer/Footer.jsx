@@ -11,7 +11,7 @@ const Footer = () => {
   const footerRef = useRef(null)
   const lettersRef = useRef([])
   const smokeRef = useRef(null)
-const copirightRef = useRef(null)
+  const copirightRef = useRef(null)
   const setRef = (el, i) => {
     if (el) {
       lettersRef.current[i] = el
@@ -74,6 +74,10 @@ const copirightRef = useRef(null)
         xPercent: 20,
         yPercent: -8,
         scale: 1.12,
+        opacity: 0.18,
+        duration: 14,
+        repeat: -1,
+        yoyo: true,
         rotation: 1,
         ease: 'none',
         scrollTrigger: {
@@ -93,13 +97,12 @@ const copirightRef = useRef(null)
         ease: 'sine.inOut',
       })
       gsap.to(copirightRef.current, {
-      
         yPercent: -20,
         scale: 1.05,
         duration: 4,
         repeat: -1,
         yoyo: true,
-       
+
         ease: 'none',
       })
     }, footerRef)
@@ -173,10 +176,9 @@ const copirightRef = useRef(null)
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
 
-
         width: '100%',
         height: '100%',
-      }} 
+      }}
     >
       <div className={styles.fadeSection}>FOOTER</div>
       <div ref={smokeRef} className={styles.smoke} />
@@ -192,6 +194,7 @@ const copirightRef = useRef(null)
             <h4 className={styles.portfolio}>Portfolio</h4>
             <p className={styles.description}>
               Modern web development solutions tailored to your needs
+              incorporating the latest technologies and best practices.
             </p>
           </div>
           <div className={styles.socialLinks}>
@@ -237,9 +240,14 @@ const copirightRef = useRef(null)
           <address className={styles.contactInfo}>
             {contactInfo.map((item, index) => (
               <p key={index}>
-                <svg className={styles.icon} width={24} height={24}>
+                <motion.svg
+                  whileHover={{ scale: 1.2, rotate: 10 }}
+                  className={styles.icon}
+                  width={24}
+                  height={24}
+                >
                   <use href={`/sprite.svg#${item.icon}`} />
-                </svg>
+                </motion.svg>
                 {item.url ? (
                   <a className={styles.contactLink} href={item.url}>
                     {item.text}

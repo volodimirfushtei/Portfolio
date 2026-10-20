@@ -32,7 +32,7 @@
   z-index: 1;
   pointer-events: none;
   opacity: 0;
-  background: var(--color-page-gradient);
+  background: transparent;
   will-change: transform, opacity, filter;
   display: flex;
   align-items: center;
@@ -40,17 +40,22 @@
 
 .panel:first-of-type {
   left: 0;
+  opacity: 0;
   justify-content: flex-end;
-  background: url(/images/robs.jpg) no-repeat center center;
+  background: url(/images/left-half.webp) no-repeat center center;
   background-size: cover;
+  opacity: 0;
+
   will-change: transform, opacity, filter;
 }
 
 .panel:nth-of-type(2) {
   right: 0;
   justify-content: flex-start;
-  background: url(/images/robs.jpg) no-repeat center center;
+  background: url(/images/right-half.webp) no-repeat center center;
   background-size: cover;
+  opacity: 0;
+
   will-change: transform, opacity, filter;
 }
 
@@ -84,7 +89,7 @@
   font-family: var(--font-mono);
   font-size: clamp(0.65rem, 1vh, 1rem);
   letter-spacing: 0.16em;
-  color: rgba(255, 255, 255, 0.35);
+  color: var(--color-secondary, rgba(255, 255, 255, 0.35));
 }
 
 .firstName::after {
@@ -132,7 +137,7 @@
   font-family: var(--font-mono);
   font-size: clamp(0.65rem, 1vh, 1rem);
   letter-spacing: 0.16em;
-  color: rgba(255, 255, 255, 0.35);
+  color: var(--color-secondary, rgba(255, 255, 255, 0.35));
 }
 
 .logoSvg {

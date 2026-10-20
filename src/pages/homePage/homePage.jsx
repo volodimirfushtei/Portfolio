@@ -237,7 +237,7 @@ const HomePage = () => {
       <div className={`${styles.heroDivider} `}>
         <DotBand />
       </div>
-      <div style={{ position: 'relative', zIndex: 10, padding: '0.1rem 0.1rem', borderRadius: '0.2rem' }}><Footer />
+      <div style={{ position: 'relative', zIndex: 10, padding: '0.5rem 0.5rem', borderRadius: '0.4rem' }}><Footer />
       </div>
 
 

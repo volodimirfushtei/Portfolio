@@ -113,7 +113,7 @@ const Loader = ({ onComplete }) => {
         .fromTo(
           leftRef.current,
           {
-            x: -100,
+            x: -140,
             opacity: 0,
             filter: 'blur(16px)',
           },
@@ -129,8 +129,8 @@ const Loader = ({ onComplete }) => {
         .fromTo(
           rightRef.current,
           {
-            x: 100,
-            opacity: 0,
+            x: 140,
+            opacity: 1,
             filter: 'blur(16px)',
           },
           {
