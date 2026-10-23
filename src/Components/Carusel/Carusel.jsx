@@ -76,7 +76,7 @@ export default function Carousel() {
       <div className={styles.divider} style={{ bottom: '0%', right: '0%', width: '50%', transform: 'rotate(95deg)' }} />
 
       <div className={styles.panel} ref={panelRef}>
-        <h2 className={styles.title}>What I Do</h2>
+        <h2 className={`${styles.title} ${styles.titleAccent}`}>What I Do</h2>
         <h3 className={styles.subtitle}>
           Focused on modern UI, performance and interactive experiences.
         </h3>

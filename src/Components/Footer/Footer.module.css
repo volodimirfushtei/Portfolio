@@ -10,10 +10,13 @@
   overflow: hidden;
   border-radius: var(--radius-lg);
   isolation: isolate;
-  min-height: 100vh;
+  height: 100svh;
+  height: 100%;
+  width: 100%;
+  min-width: 100%;
   background-size: 100% 100%;
   background-position: center;
-  padding: 4rem clamp(1.5rem, 5vw, 6rem);
+  padding: 4rem clamp(2rem, 5vw, 6rem);
   margin: -3rem auto;
   transform-style: preserve-3d;
   will-change: transform;
@@ -24,7 +27,7 @@
   content: '';
   position: absolute;
   inset: auto 0 0;
-  height: 180px;
+  height: 160px;
 
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
@@ -35,7 +38,7 @@
     rgba(10, 10, 10, 0.85) 60%,
     #0a0a0a 100%
   );
-
+  z-index: -1;
   pointer-events: none;
 }
 
@@ -142,7 +145,7 @@
   z-index: 2;
   display: grid;
   grid-template-columns: 1.2fr 1fr 1fr;
-
+  padding: 1rem 2rem;
   gap: 1px;
   max-width: 1400px;
   margin: 0 auto;
@@ -373,16 +376,16 @@
 .getStarted {
   position: relative;
   font-family: var(--font-mono);
-  font-size: clamp(3rem, 12vw, 12rem);
-  font-weight: 400;
+  font-size: clamp(4rem, 11vw, 12rem);
+  font-weight: 500;
   line-height: 1;
-  opacity: 0.14;
-
+  opacity: 0.18;
+  width: max-content;
   -webkit-text-stroke: 1px;
 
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
   text-align: center;
-  margin: 2rem auto;
+  margin: 1rem auto;
   padding: 2rem 0;
   overflow: hidden;
   z-index: 2;
@@ -442,7 +445,7 @@
 ═══════════════════════════════════════════ */
 .copyright {
   position: relative;
-  bottom: -3rem;
+  bottom: 1rem;
   z-index: 2;
   display: flex;
   flex-direction: column;
@@ -540,7 +543,8 @@
 /* Small Mobile */
 @media (max-width: 480px) {
   .footer {
-    padding: 2rem 0.75rem;
+    padding: 1rem 0.5rem;
+    height: auto;
   }
 
   .column {
@@ -552,7 +556,7 @@
   }
 
   .description {
-    font-size: 0.6rem;
+    font-size: 0.5rem;
   }
 
   .socialLink {
@@ -568,6 +572,7 @@
   .copyright {
     flex-direction: column;
     gap: 0.5rem;
+    bottom: 4rem;
   }
 }
 

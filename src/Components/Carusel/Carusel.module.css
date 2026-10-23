@@ -19,7 +19,6 @@
     padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3rem);
 }
 
-
 /* Хаотичні dividers */
 .divider {
     position: absolute;
@@ -35,7 +34,6 @@
     pointer-events: none;
     z-index: 1;
 }
-
 
 /* ═══════════════════════════════════════════
    2. TYPOGRAPHY (Mobile First)
@@ -54,9 +52,34 @@
     font-size: clamp(1.6rem, 3.5vw, 2.4rem);
     font-weight: 700;
     margin-bottom: 0.5rem;
-    color: var(--color-title);
     letter-spacing: -0.01em;
     text-align: center;
+}
+
+.titleAccent {
+    display: inline-block;
+    background: linear-gradient(
+            135deg,
+            #667eea 0%,
+            #764ba2 40%,
+            #ed0c4c 70%,
+            #667eea 100%
+    );
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 6s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
 }
 
 .subtitle {
@@ -78,7 +101,7 @@
     margin: 0 auto; /* ← змінено відступи */
     flex-direction: column;
     gap: 0.75rem;
-    width: clamp(700px, 100%, 900px);
+    width: clamp(700px, 100%, 1400px);
     max-width: 100%;
     border-radius: var(--radius-lg);
     padding: clamp(0.5rem, 1vw, 1rem);
@@ -96,7 +119,6 @@
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
     border-radius: var(--radius-sm);
-
 }
 
 .item::before {

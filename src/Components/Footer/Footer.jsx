@@ -175,9 +175,6 @@ const Footer = () => {
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
-
-        width: '100%',
-        height: '100%',
       }}
     >
       <div className={styles.fadeSection}>FOOTER</div>

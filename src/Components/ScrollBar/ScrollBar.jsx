@@ -1,14 +1,10 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import {
-  motion,
-  useMotionValueEvent,
-  useScroll,
-  useTransform,
-} from 'framer-motion'
+import { motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion'
 import styles from './ScrollBar.module.css'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Cards from '../Cards/Cards.jsx'
+import Button from '../Button/Button.jsx'
 
 gsap.registerPlugin(ScrollTrigger)
 const pages = [
@@ -71,7 +67,7 @@ const pages = [
     title: 'Contact',
     subtitle: 'Get In Touch',
     description:
-      "Let's discuss your project and how I can help bring your ideas to life.",
+      'Let\'s discuss your project and how I can help bring your ideas to life.',
     features: [
       'Available for freelance',
       'Fast response time',
@@ -87,16 +83,17 @@ const pages = [
     color: 'var(--color-accent)',
     title: 'Thank You',
     subtitle: 'For Your Visit',
-    description: "I'm looking forward to working with you!",
-    features: ["Let's create something amazing together!"],
+    description: 'I\'m looking forward to working with you!',
+    features: ['Let\'s create something amazing together!'],
     image: '/images/hexa_dan_wave_10.webp',
     cta: { text: 'Back to Top', url: '#hero' },
   },
 ]
-
+const cards = [{ card: '/icons/iphone16.svg' }, { card: '/icons/iphone16-light.svg' }, {
+  card: '/icons/iphone16-dark.svg',
+}]
 const ScrollBar = () => {
   const containerRef = useRef(null)
-  const backgroundRef = useRef(null)
   const sectionOverlayRef = useRef(null)
   const cardsRef = useRef(null)
   const { scrollYProgress } = useScroll({
@@ -142,56 +139,108 @@ const ScrollBar = () => {
 
   useLayoutEffect(() => {
     const container = containerRef.current
-    const sectionOverlay = sectionOverlayRef.current
     if (!container) return
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline()
+      // Фонові зображення
+      gsap.utils
+        .toArray(`.${styles.sectionBackground}`)
+        .forEach((background) => {
+          const section = background.closest('section')
+          if (!section) return
 
-      if (sectionOverlay) {
-        tl.to(sectionOverlay, {
-          autoAlpha: 1,
-          duration: 1.2,
-          ease: 'power2.out',
-        })
-      }
-      const backgrounds = gsap.utils.toArray(`.${styles.sectionBackground}`)
-
-      backgrounds.forEach((background) => {
-        const section = background.closest('section')
-        if (!section) return
-
-        tl.fromTo(
-          background,
-          {
-            scale: 1.04,
-            autoAlpha: 0,
-            filter: 'blur(10px)',
-            brightness: 0.8,
-            shadow: '0px 0px 20px rgba(0, 0, 0, 0.5)',
-          },
-          {
-            scale: 1,
-            autoAlpha: 1,
-            filter: 'blur(0px)',
-            brightness: 1,
-            duration: 1.2,
-            shadow: '0px 0px 0px rgba(0, 0, 0, 0)',
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: section,
-              scroller: container,
-              start: 'top 80%',
-              end: 'top 20%',
-              scrub: 1,
+          tl.fromTo(
+            background,
+            {
+              scale: 1.04,
+              autoAlpha: 0,
+              filter: 'blur(10px)',
             },
-          },
-        )
-      })
+            {
+              scale: 1,
+              autoAlpha: 1,
+              filter: 'blur(0px)',
+              ease: 'none',
+              scrollTrigger: {
+                trigger: section,
+                scroller: container,
+                start: 'top 80%',
+                end: 'top 20%',
+                scrub: 1,
+              },
+            },
+          )
+        }, '+=0.2')
+
+      // Контейнери з трьома iPhone-картками
+      gsap.utils
+        .toArray(`.${styles.sectionImageContainer}`)
+        .forEach((cardsContainer) => {
+          const section = cardsContainer.closest('section')
+          if (!section) return
+
+          tl.fromTo(
+            cardsContainer,
+            {
+              scale: 1,
+              x: 0,
+              filter: 'blur(0px)',
+              autoAlpha: 1,
+            },
+            {
+              scale: 1.04,
+              x: 40,
+              filter: 'blur(8px)',
+              autoAlpha: 0,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: section,
+                scroller: container,
+                start: 'top top',
+                end: 'bottom top',
+                scrub: 1,
+              },
+            },
+          )
+        }, '+=0.2')
+
+      // Компонент Cards у кожній секції
+      gsap.utils
+        .toArray(`.${styles.cardsWrapper}`)
+        .forEach((cardsElement) => {
+          const section = cardsElement.closest('section')
+          if (!section) return
+
+          tl.fromTo(
+            cardsElement,
+            {
+
+              autoAlpha: 0,
+
+
+            },
+            {
+
+              autoAlpha: 1,
+
+              duration: 0.4,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: section,
+                scroller: container,
+                start: 'top 70%',
+                end: 'bottom 30%',
+                toggleActions: 'play none none play',
+              },
+            },
+          )
+        }, '+=0.2')
     }, container)
 
     return () => ctx.revert()
   }, [])
+
   return (
     <div className={styles.wrapper}>
       {/* Main Content */}
@@ -211,9 +260,29 @@ const ScrollBar = () => {
               opacity: 0.8,
             }}
           >
-            <div>
+
+            <div className={styles.sectionImageContainer} ref={cardsRef}>
+              {[0, 1, 2].map((item) => (
+                <div
+                  key={item}
+                  className={`${styles.sectionImage} ${styles[`card${item + 1}`]}`}
+                >
+                  <img
+                    loading="lazy"
+                    decoding="async"
+                    alt={`Project preview ${item + 1}`}
+                    className={styles.imageCard}
+                    src={cards[item].card}
+                  />
+                </div>
+              ))}
+            </div>
+
+            <div className={styles.cardsWrapper}>
               <Cards page={page} />
             </div>
+
+
             <div
               className={styles.sectionBackground}
               style={{ backgroundImage: `url(${page.image})` }}
@@ -256,7 +325,10 @@ const ScrollBar = () => {
               </motion.ul>
 
               {page.cta && (
-                <motion.a
+                <Button
+                  variant="primary"
+                  size="xl"
+
                   href={page.cta.url}
                   className={styles.ctaButton}
                   initial={{ opacity: 0, y: 20 }}
@@ -266,7 +338,7 @@ const ScrollBar = () => {
                 >
                   {page.cta.text}
                   <span className={styles.arrow}>→</span>
-                </motion.a>
+                </Button>
               )}
             </motion.div>
           </section>
@@ -285,6 +357,7 @@ const ScrollBar = () => {
             {pages.map((_, index) => (
               <button
                 key={index}
+
                 data-cursor="pointer"
                 data-cursor-text={`Go to slide ${index + 1}`}
                 data-cursor-color="var(--color-accent)"

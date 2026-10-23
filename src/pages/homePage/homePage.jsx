@@ -18,8 +18,9 @@ import { useOutletContext } from 'react-router-dom'
 import SectionsDividers from '../../Components/SectionsDeviders/SectionsDeviders'
 import BottomBlur from '../../Components/BottomBlur/BottomBlur.jsx'
 
-
-const IphoneScene = lazy(() => import('../../Components/IphoneScene/IphoneScene.jsx'))
+const IphoneScene = lazy(
+  () => import('../../Components/IphoneScene/IphoneScene.jsx'),
+)
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -182,18 +183,16 @@ const HomePage = () => {
 
   return (
     <div className={styles.container} ref={sectionRef}>
-
-     
       <IphoneScene />
       <section className={styles.heroSectionWrapper} id="hero">
         <HeroSection loading={loading} />
-
       </section>
       <DotBand />
       <section
         id="expertise"
         className={`${styles.section} ${styles.fadeSection}`}
-      ><SectionsDividers top bottom />
+      >
+        <SectionsDividers top bottom />
         <Expertise />
         <DotBand />
       </section>
@@ -205,7 +204,8 @@ const HomePage = () => {
       <section
         id="skills"
         className={`${styles.section} ${styles.fadeSection}`}
-      ><SectionsDividers top bottom />
+      >
+        <SectionsDividers top bottom />
         <ControllerSkills items={skills} />
         <DotBand />
       </section>
@@ -234,13 +234,10 @@ const HomePage = () => {
         <SectionsDividers top bottom />
         <StickyZoomSection />
       </section>
-      <div className={`${styles.heroDivider} `}>
-        <DotBand />
-      </div>
-      <div style={{ position: 'relative', zIndex: 10, padding: '0.5rem 0.5rem', borderRadius: '0.4rem' }}><Footer />
-      </div>
 
+      <DotBand />
 
+      <Footer />
     </div>
   )
 }

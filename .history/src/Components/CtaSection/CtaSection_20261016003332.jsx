@@ -1,0 +1,219 @@
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { motion } from 'framer-motion'
+import gsap from 'gsap'
+import styles from './CtaSection.module.css'
+
+const listItems = [
+  'Bespoke Development',
+  'High Performance',
+  'Editorial Interface',
+  'Scalable Architecture',
+]
+
+const images = [
+  'images/Workspace.webp',
+  'images/Discussion.webp',
+  'images/Coworking.webp',
+]
+
+const marqueeImages = [...images, ...images, ...images, ...images]
+
+const CtaSection = () => {
+  const sectionRef = useRef(null)
+  const buttonRef = useRef(null)
+  const [isMobile, setIsMobile] = useState(false)
+  const topTrackRef = useRef(null)
+  const bottomTrackRef = useRef(null)
+  const marqueeWrapRef = useRef(null)
+
+  // Marquee Animation
+  useEffect(() => {
+    const top = topTrackRef.current
+    const bottom = bottomTrackRef.current
+    if (!top || !bottom) return
+
+    const tl = gsap.context(() => {
+      gsap.to(top, {
+        x: -top.scrollWidth / 2,
+        duration: 250,
+        ease: 'none',
+        repeat: -1,
+      })
+
+      gsap.fromTo(bottom, {
+        x: -bottom.scrollWidth / 2,
+      }, {
+        x: 0,
+        duration: 280,
+        ease: 'none',
+        repeat: -1,
+      })
+    })
+
+    // Rotate marquee on scroll
+    gsap.to(marqueeWrapRef.current, {
+      rotate: -12,
+      y: -20,
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 1,
+      },
+      duration: 4,
+      ease: 'sine.inOut',
+      repeat: -1,
+      yoyo: true,
+    })
+
+    return () => tl.revert()
+  }, [])
+
+  // Responsive Check
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 1024)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
+
+  // Magnetic Effect
+  const handleMouseMove = useCallback((e) => {
+    if (isMobile || !buttonRef.current) return
+    const rect = buttonRef.current.getBoundingClientRect()
+    const x = e.clientX - (rect.left + rect.width / 2)
+    const y = e.clientY - (rect.top + rect.height / 2)
+
+    gsap.to(buttonRef.current, {
+      x: x * 0.3,
+      y: y * 0.3,
+      duration: 0.4,
+      ease: 'power2.out',
+    })
+  }, [isMobile])
+
+  const handleMouseLeave = useCallback(() => {
+    if (isMobile || !buttonRef.current) return
+    gsap.to(buttonRef.current, {
+      x: 0,
+      y: 0,
+      duration: 0.6,
+      ease: 'power2.out',
+    })
+  }, [isMobile])
+
+  // Framer Motion Variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+    },
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+    },
+  }
+
+  return (
+    <section ref={sectionRef} className={styles.section}>
+      {/* Хаотичні dividers */}
+      <div className={styles.divider} style={{ top: '10%', left: '5%', transform: 'rotate(-15deg)' }} />
+      <div className={styles.divider} style={{ top: '60%', right: '10%', transform: 'rotate(20deg)' }} />
+      <div className={styles.divider} style={{ bottom: '20%', left: '15%', transform: 'rotate(5deg)' }} />
+      <div className={styles.divider} style={{ top: '40%', right: '20%', transform: 'rotate(-25deg)' }} />
+
+      {/* Scanlines overlay */}
+      <div className={styles.scanlines} aria-hidden="true" />
+
+      {/* Marquee Background */}
+      <div className={styles.marqueeWrap} aria-hidden="true" ref={marqueeWrapRef}>
+        <div className={styles.row} ref={topTrackRef}>
+          {marqueeImages.map((src, i) => (
+            <img key={`m1-${i}`} src={src} alt="" className={styles.image} loading="lazy" />
+          ))}
+        </div>
+        <div className={styles.row} ref={bottomTrackRef}>
+          {marqueeImages.map((src, i) => (
+            <img key={`m2-${i}`} src={src} alt="" className={styles.image} loading="lazy" />
+          ))}
+        </div>
+        <div className={styles.marqueeOverlay} />
+      </div>
+
+      <div className={styles.container}>
+        <motion.div
+          className={styles.content}
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-100px' }}
+          data-cursor="hover"
+          data-cursor-type="link"
+          data-cursor-text="Let's work together"
+          data-scroll="fade"
+          data-scroll-direction="vertical"
+          data-speed="1.3"
+        >
+          {/* Eyebrow */}
+          <motion.div className={styles.eyebrow} variants={itemVariants}>
+            <span className={styles.eyebrowLine} />
+            <span className={styles.eyebrowText}>Ready to launch?</span>
+          </motion.div>
+
+          {/* Heading */}
+          <motion.h2 className={styles.heading} variants={itemVariants}>
+            Elevate your <span className={styles.headingAccent}>digital vision</span>
+          </motion.h2>
+
+          {/* Subheading */}
+          <motion.p className={styles.subheading} variants={itemVariants}>
+            Blending premium aesthetics with <span className={styles.highlight}>cutting-edge performance</span> for the
+            modern web.
+          </motion.p>
+
+          {/* Magnetic Button */}
+          <motion.div
+            className={styles.buttonWrapper}
+            variants={itemVariants}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            data-cursor="hover"
+            data-cursor-type="link"
+            data-cursor-text="Let's work together"
+          >
+            <a
+              href="https://github.com/volodimirfushtei"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.button}
+              ref={buttonRef}
+            >
+              <span className={styles.buttonText}>Experience Excellence</span>
+              <span className={styles.buttonArrow}>→</span>
+            </a>
+          </motion.div>
+
+          {/* Quality Tags */}
+          <motion.ul className={styles.list} variants={containerVariants}>
+            {listItems.map((text) => (
+              <motion.li key={text} className={styles.listItem} variants={itemVariants}>
+                <span className={styles.checkIcon}>✓</span>
+                <span>{text}</span>
+              </motion.li>
+            ))}
+          </motion.ul>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
+export default CtaSection

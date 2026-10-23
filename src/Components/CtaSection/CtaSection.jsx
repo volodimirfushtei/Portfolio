@@ -158,7 +158,7 @@ const CtaSection = () => {
           data-cursor-text="Let's work together"
           data-scroll="fade"
           data-scroll-direction="vertical"
-          data-speed="1.3"
+          data-speed="1.4"
         >
           {/* Eyebrow */}
           <motion.div className={styles.eyebrow} variants={itemVariants}>

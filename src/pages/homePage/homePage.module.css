@@ -6,7 +6,7 @@
 :root {
   --section-padding-mobile: 2rem 0;
   --section-padding-tablet: 4rem 0;
-  --section-padding-desktop: 8rem 0;
+  --section-padding-desktop: 6rem 0;
   --section-padding-large: 8rem 0;
 }
 
@@ -217,6 +217,10 @@
 
 /* Mobile */
 @media (max-width: 768px) {
+  .section {
+    padding: var(--section-padding-tablet);
+  }
+
   .canvasWrapper {
     display: none;
   }
@@ -450,6 +454,16 @@
 
 /* Mobile: ≤ 480px */
 @media (max-width: 480px) {
+  .content {
+    flex-direction: column;
+  }
+
+  .textContent {
+    text-align: center;
+  }
+  .section {
+    padding: var(--section-padding-mobile);
+  }
   .skillsSection {
     margin: 0.5rem auto;
     max-width: 100%;
