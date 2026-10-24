@@ -2,7 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 import styles from './Loader.module.css'
 import Logo from '../Logo/Logo'
 import gsap from 'gsap'
-
+const imgMobileL = '../../images/left-half_mob.webp'
+const imgDesktopL = '../../images/left-half.webp'
+const imgMobileR = '../../images/right-half_mob.webp'
+const imgDesktopR = '../../images/right-half.webp'
 const Loader = ({ onComplete }) => {
   const [isLoading, setIsLoading] = useState(true)
 
@@ -32,12 +35,20 @@ const Loader = ({ onComplete }) => {
         filter: 'blur(12px)',
       })
 
-      gsap.set([topBarRef.current, bottomBarRef.current, firstNameRef.current, secondNameRef.current], {
-        opacity: 0,
-        y: 30,
-        scale: 0.9,
-        filter: 'blur(8px)',
-      })
+      gsap.set(
+        [
+          topBarRef.current,
+          bottomBarRef.current,
+          firstNameRef.current,
+          secondNameRef.current,
+        ],
+        {
+          opacity: 0,
+          y: 30,
+          scale: 0.9,
+          filter: 'blur(8px)',
+        },
+      )
 
       gsap.set(svgLogoRef.current, {
         autoAlpha: 0,
@@ -58,7 +69,6 @@ const Loader = ({ onComplete }) => {
         duration: 1.2,
         y: '100%', // Стартує знизу
         transform: 'translate(-50%, 0%)',
-
       })
 
       // ── Основний таймлайн ──
@@ -71,43 +81,55 @@ const Loader = ({ onComplete }) => {
       // ── ВХІД ──
       tl.addLabel('enter')
         // Overlay
-        .to(overlayRef.current, {
-          autoAlpha: 1,
-          scale: 1,
-          filter: 'blur(0px)',
-          duration: 1.2,
-        }, 'enter')
+        .to(
+          overlayRef.current,
+          {
+            autoAlpha: 1,
+            scale: 1,
+            filter: 'blur(0px)',
+            duration: 1.2,
+          },
+          'enter',
+        )
 
         // Logo
-        .to(svgLogoRef.current, {
-          autoAlpha: 1,
-          scale: 1,
-          rotate: 0,
-          duration: 1.2,
-          ease: 'back.out(1.7)',
-        }, 'enter+=0.2')
+        .to(
+          svgLogoRef.current,
+          {
+            autoAlpha: 1,
+            scale: 1,
+            rotate: 0,
+            duration: 1.2,
+            ease: 'back.out(1.7)',
+          },
+          'enter+=0.2',
+        )
 
         // Top Bar
-        .to(topBarRef.current, {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          filter: 'blur(0px)',
-          duration: 0.8,
-        }, 'enter+=0.4')
-
-
+        .to(
+          topBarRef.current,
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            filter: 'blur(0px)',
+            duration: 0.8,
+          },
+          'enter+=0.4',
+        )
 
         // Bottom Bar
-        .to(bottomBarRef.current, {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          filter: 'blur(0px)',
-          duration: 0.8,
-        }, 'enter+=0.6')
-
-
+        .to(
+          bottomBarRef.current,
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            filter: 'blur(0px)',
+            duration: 0.8,
+          },
+          'enter+=0.6',
+        )
 
         // Панелі з'являються
         .fromTo(
@@ -178,47 +200,52 @@ const Loader = ({ onComplete }) => {
         )
 
         // Лінія виїжджає знизу вгору
-        .to(dividerRef.current, {
-          height: '100%',
-          opacity: 0.99,
-          y: '0%', // Піднімається вгору
-          duration: 1.2,
-          ease: 'power3.out',
-        }, 'enter+=0.8')
-        .to(progressNumberRef.current, {
-          textContent: '100',
-          scaleX: 1,
-          duration: 4.6,
-          roundProps: 'textContent',
-          ease: 'power3.out',
-        }, 'enter+=0.8')
+        .to(
+          dividerRef.current,
+          {
+            height: '100%',
+            opacity: 0.99,
+            y: '0%', // Піднімається вгору
+            duration: 1.2,
+            ease: 'power3.out',
+          },
+          'enter+=0.8',
+        )
+        .to(
+          progressNumberRef.current,
+          {
+            textContent: '100',
+            scaleX: 1,
+            duration: 4.6,
+            roundProps: 'textContent',
+            ease: 'power3.out',
+          },
+          'enter+=0.8',
+        )
         .to(progressNumberRef.current, {
           x: -30,
           autoAlpha: 0,
           ease: 'power3.out',
           duration: 0.4,
-
         })
 
       // ── Затримка перед виходом ──
-      tl.to({}, {
-        duration: 0.2,
-      })
+      tl.to(
+        {},
+        {
+          duration: 0.2,
+        },
+      )
 
       // ─────────────────────────────
-// EXIT
-// ─────────────────────────────
+      // EXIT
+      // ─────────────────────────────
 
       tl.addLabel('exit')
 
         // TEXT + LOGO
         .to(
-          [
-            topBarRef.current,
-            bottomBarRef.current,
-
-            svgLogoRef.current,
-          ],
+          [topBarRef.current, bottomBarRef.current, svgLogoRef.current],
           {
             opacity: 0,
             y: -30,
@@ -243,13 +270,16 @@ const Loader = ({ onComplete }) => {
           },
           'exit+=0.1',
         )
-        .to([firstNameRef.current, secondNameRef.current],
+        .to(
+          [firstNameRef.current, secondNameRef.current],
           {
             autoAlpha: 0,
             filter: 'blur(12px)',
             ease: 'bounce.out',
             duration: 0.6,
-          }, 'exit-=0.1')
+          },
+          'exit-=0.1',
+        )
         // LEFT PANEL
         .to(
           leftRef.current,
@@ -289,7 +319,6 @@ const Loader = ({ onComplete }) => {
           },
           '>-0.1',
         )
-
     }, overlayRef)
 
     return () => {
@@ -307,11 +336,45 @@ const Loader = ({ onComplete }) => {
 
       {/* Шум */}
       <div ref={noiseRef} className={styles.noise}>
-        <div ref={leftRef} className={styles.panel}><span ref={secondNameRef}
-                                                          className={styles.secondName}>Fushtei</span></div>
-        <div ref={rightRef} className={styles.panel}><span ref={firstNameRef}
-                                                           className={styles.firstName}>Volodymyr</span></div>
-      </div>
+  <div ref={leftRef} className={styles.panel}>
+    <picture className={styles.picture}>
+      <source
+        media="(max-width: 768px)"
+        srcSet={imgMobileL}
+      />
+    
+      <img
+        src={imgDesktopL}
+        alt="Volodymyr Fushtei"
+        className={styles.image}
+        fetchPriority="high"
+      />
+    </picture>
+
+    <span ref={secondNameRef} className={styles.secondName}>
+      Fushtei
+    </span>
+  </div>
+
+        <div ref={rightRef} className={styles.panel}>
+          <picture className={styles.picture}>
+      <source
+        media="(max-width: 768px)"
+        srcSet={imgMobileR}
+      />
+     
+      <img
+        src={imgDesktopR}
+        alt="Volodymyr Fushtei"
+        className={styles.image}
+        fetchPriority="high"
+      />
+    </picture>
+    <span ref={firstNameRef} className={styles.firstName}>
+      Volodymyr
+    </span>
+  </div>
+</div>
 
       {/* Top Bar */}
       <div className={styles.topBar} ref={topBarRef}>
@@ -322,10 +385,11 @@ const Loader = ({ onComplete }) => {
 
       {/* Logo */}
       <div className={styles.logoWrap}>
-        <span className={styles.progressNumber} ref={progressNumberRef}>0</span>
+        <span className={styles.progressNumber} ref={progressNumberRef}>
+          0
+        </span>
         <Logo svgRef={svgLogoRef} className={styles.logoSvg} variant="large" />
       </div>
-
 
       {/* Bottom Bar */}
       <div className={styles.bottomBar} ref={bottomBarRef}>

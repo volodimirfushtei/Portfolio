@@ -94,6 +94,19 @@ const HeroMedia = () => {
         yoyo: true,
         ease: 'sine.inOut',
       })
+     gsap.to(containerRef.current, {
+       width: '1800px',
+       height: '100vh',
+      duration: 2,
+       ease: 'sine.inOut',
+       scrollTrigger: {
+         trigger: containerRef.current,
+         start: 'top top',
+         end: 'bottom top',
+         scrub: true,
+         pin: true,
+       }
+     })
     }, containerRef)
 
     /* ── Magnetic Hover ── */

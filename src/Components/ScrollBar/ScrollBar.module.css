@@ -165,8 +165,8 @@
 @media (max-width: 480px) {
   .sectionImageContainer {
     padding: 20px 4px;
-    bottom: -10px;
-    left: 50%;
+    bottom: -1rem;
+    right: 20%;
     transform: translateX(-50%);
   }
 
@@ -278,8 +278,8 @@
 .contentWrapper {
   position: relative;
   max-width: 1000px;
-  margin-top: 80px;
-  padding: 2rem;
+  margin-top: clamp(1rem, 6vh, 6rem);
+  padding: 0 2rem;
   text-align: center;
   z-index: 10;
 }
@@ -324,17 +324,17 @@
   font-family: var(--font-display);
   font-size: clamp(1.5rem, 4vw, 2.5rem);
   color: var(--color-text-secondary);
-  margin-bottom: 1.5rem;
+  margin-bottom: clamp(1rem, 1.5vw, 1.5rem);
   font-weight: 300;
 }
 
 /* Section Description */
 .sectionDescription {
   font-family: var(--font-primary);
-  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-size: clamp(0.5rem, 1.2vw, 1.2rem);
   color: var(--color-secondary);
-  line-height: 1.8;
-  margin-bottom: 2rem;
+  line-height: 1.2;
+  margin-bottom: clamp(1rem, 1.5vw, 1.5rem);
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
@@ -348,19 +348,19 @@
 .featuresList {
   list-style: none;
   padding: 0;
-  margin: 2rem 0;
+  margin: clamp(0.5rem, 2vw, 2rem) 0;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: clamp(0.25rem, 1vw, 1rem);
 }
 
 .featureItem {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
+  gap: clamp(0.4rem, 2vw, 2rem);
   font-family: var(--font-mono);
-  font-size: clamp(0.9rem, 1.5vw, 1rem);
+  font-size: clamp(0.4rem, 1.5vw, 1.2rem);
   color: rgba(255, 255, 255, 0.9);
   transition: all 0.3s ease;
 }
@@ -380,10 +380,10 @@
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.8rem 1.6rem;
+  padding: clamp(0.2rem, 1.5vw, 1rem) clamp(0.5rem, 2vw, 1.5rem);
 
   font-family: var(--font-mono);
-  font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+  font-size: clamp(0.6rem, 1.5vw, 0.9rem);
   font-weight: 500;
   border: none;
   border-radius: 8px;
@@ -486,7 +486,7 @@
 
 .titleDot {
   position: absolute;
-  height: clamp(2rem, 15vw, 2rem);
+  height: clamp(6rem, 7vw, 8rem);
   width: clamp(2rem, 2vw, 2rem);
   right: 20px;
   top: 40%;
@@ -505,7 +505,7 @@
   border: 1px solid rgba(255, 255, 255, 0.3);
   padding: 0.2rem 0.5rem;
   border-radius: 4px;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--glass-border);
   transition: all 0.3s ease;
 }
 

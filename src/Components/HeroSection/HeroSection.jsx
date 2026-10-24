@@ -435,7 +435,7 @@ const HeroSection = ({ loading }) => {
           .to(
             titleRef.current,
             {
-              xPercent: 140,
+              yPercent: -140,
               scale: 0.98,
               duration: 0.6,
             },
@@ -444,7 +444,7 @@ const HeroSection = ({ loading }) => {
           .to(
             mediaRef.current,
             {
-              xPercent: -140,
+              yPercent: -140,
               scale: 0.98,
               duration: 0.6,
             },

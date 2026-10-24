@@ -10,7 +10,7 @@
   overflow: hidden;
   border-radius: var(--radius-lg);
   isolation: isolate;
-  height: 100svh;
+  min-height: 100svh;
   height: 100%;
   width: 100%;
   min-width: 100%;
@@ -376,7 +376,7 @@
 .getStarted {
   position: relative;
   font-family: var(--font-mono);
-  font-size: clamp(4rem, 11vw, 12rem);
+  font-size: clamp(4rem, 12vw, 12rem);
   font-weight: 500;
   line-height: 1;
   opacity: 0.18;
@@ -385,7 +385,7 @@
 
   letter-spacing: -0.02em;
   text-align: center;
-  margin: 1rem auto;
+  margin: 2rem auto;
   padding: 2rem 0;
   overflow: hidden;
   z-index: 2;

@@ -22,7 +22,7 @@ const pages = [
       'React & Next.js expert',
       'GSAP animations',
     ],
-    image: '/images/surreali.webp',
+    image: '/images/ueruko.jpg',
     cta: { text: 'View My Work', url: '#projects' },
   },
   {
@@ -40,7 +40,7 @@ const pages = [
       'Performance Optimization',
       'Responsive Design',
     ],
-    image: '/images/surrealis.webp',
+    image: '/images/njeromin2.jpg',
     cta: { text: 'Learn More', url: '#services' },
   },
   {
@@ -159,7 +159,7 @@ const ScrollBar = () => {
             },
             {
               scale: 1,
-              autoAlpha: 1,
+              autoAlpha: 0.9,
               filter: 'blur(0px)',
               ease: 'none',
               scrollTrigger: {
