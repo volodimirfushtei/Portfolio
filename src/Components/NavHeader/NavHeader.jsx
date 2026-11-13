@@ -29,7 +29,7 @@ const Divider = React.memo(({ top, left, right, bottom, width, height, rotate, i
       transformOrigin: 'center',
     }}
     initial={{ scaleX: 0, opacity: 0, rotate }}
-    animate={{ scaleX: 1, opacity: 0.3, rotate }}
+    animate={{ scaleX: 1, opacity: 0.08, rotate }}
     transition={{ duration: 1, delay: 0.1 * index, ease: 'easeOut' }}
     aria-hidden="true"
   />

@@ -171,7 +171,7 @@ const Footer = () => {
       aria-label="Footer"
       style={{
         backgroundPositionY: bgPositionSpring,
-        backgroundImage: 'url(/images/Workspace.webp)',
+        backgroundImage: 'url(/images/chromatica10.webp)',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
@@ -259,17 +259,18 @@ const Footer = () => {
       </div>
 
       {/* GET STARTED текст */}
-      <div className={styles.getStarted} aria-label="BUILDING FUTURE">
-        {'BUILDING FUTURE'.split('').map((char, i) => (
-          <span
-            key={i}
-            ref={(el) => setRef(el, i)}
-            className={styles.getStartedChar}
-          >
-            {char === ' ' ? '\u00A0' : char}
-          </span>
-        ))}
-      </div>
+     <div className={styles.getStarted} aria-label="BUILDING FUTURE">
+  {'BUILDING FUTURE'.split('').map((char, i) => (
+    <span
+      key={i}
+      ref={(el) => setRef(el, i)}
+      className={styles.getStartedChar}
+      aria-hidden="true"
+    >
+      {char === ' ' ? '\u00A0' : char}
+    </span>
+  ))}
+</div>
 
       {/* Copyright */}
       <div className={styles.copyright} ref={copirightRef}>

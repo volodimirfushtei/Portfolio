@@ -22,7 +22,7 @@ const pages = [
       'React & Next.js expert',
       'GSAP animations',
     ],
-    image: '/images/ueruko.jpg',
+    image: '/images/surrealis.webp',
     cta: { text: 'View My Work', url: '#projects' },
   },
   {
@@ -40,7 +40,7 @@ const pages = [
       'Performance Optimization',
       'Responsive Design',
     ],
-    image: '/images/njeromin2.jpg',
+    image: '/images/logan-voss.jpg',
     cta: { text: 'Learn More', url: '#services' },
   },
   {
@@ -57,7 +57,7 @@ const pages = [
       'Web applications',
       'Interactive experiences',
     ],
-    image: '/images/marek.webp',
+    image: '/images/card_2.webp',
     cta: { text: 'View Projects', url: '#projects' },
   },
   {
@@ -74,7 +74,7 @@ const pages = [
       'Flexible cooperation',
       'Worldwide clients',
     ],
-    image: '/images/Workspace.webp',
+    image: '/images/logan-voss-F.jpg',
     cta: { text: 'Contact Me', url: '#contacts' },
   },
   {
@@ -85,7 +85,7 @@ const pages = [
     subtitle: 'For Your Visit',
     description: 'I\'m looking forward to working with you!',
     features: ['Let\'s create something amazing together!'],
-    image: '/images/hexa_dan_wave_10.webp',
+    image: '/images/card_3.webp',
     cta: { text: 'Back to Top', url: '#hero' },
   },
 ]
@@ -363,6 +363,9 @@ const ScrollBar = () => {
                 data-cursor-color="var(--color-accent)"
                 className={`${styles.dot} ${activeIndex === index ? styles.active : ''}`}
                 onClick={() => scrollToSection(index)}
+                onKeyPress={(e) => { if (e.key === 'Enter') scrollToSection(index); }}
+                tabIndex={0}
+                aria-current={activeIndex === index ? 'true' : undefined}
                 aria-label={`Go to slide ${index + 1}`}
                 data-testid={`dot-${index}`}
                 data-active={activeIndex === index ? 'true' : 'false'}

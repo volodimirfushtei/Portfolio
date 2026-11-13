@@ -16,13 +16,14 @@
 }
 
 .noise.dark {
-  opacity: 0.15;
-  background-image: url('/images/texture_broken.webp');
-  background-size: cover;
+  opacity: 0.25;
+  background-image: url('https://framerusercontent.com/images/vnavbq4pUFwlZnn0m0MYlTBEBY.png?width=500&height=500');
+  background-size: 200px 200px;
+  background-position: top center;
 }
 
 .noise.light {
   opacity: 0.3;
-  background-image: url('/images/texture.webp');
+  background-image: url('https://framerusercontent.com/images/vnavbq4pUFwlZnn0m0MYlTBEBY.png?width=500&height=500');
   background-size: cover;
 }

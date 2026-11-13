@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 import styles from './Loader.module.css'
 import Logo from '../Logo/Logo'
 import gsap from 'gsap'
-const imgMobileL = '../../images/left-half_mob.webp'
-const imgDesktopL = '../../images/left-half.webp'
-const imgMobileR = '../../images/right-half_mob.webp'
-const imgDesktopR = '../../images/right-half.webp'
+const imgMobileL = '/images/left-half_mob.webp'
+const imgDesktopL = '/images/left-half.webp'
+const imgMobileR = '/images/right-half_mob.webp'
+const imgDesktopR = '/images/right-half.webp'
 const Loader = ({ onComplete }) => {
   const [isLoading, setIsLoading] = useState(true)
 
@@ -152,7 +152,7 @@ const Loader = ({ onComplete }) => {
           rightRef.current,
           {
             x: 140,
-            opacity: 1,
+            opacity: 0,
             filter: 'blur(16px)',
           },
           {
@@ -347,7 +347,7 @@ const Loader = ({ onComplete }) => {
         src={imgDesktopL}
         alt="Volodymyr Fushtei"
         className={styles.image}
-        fetchPriority="high"
+        
       />
     </picture>
 
@@ -367,7 +367,7 @@ const Loader = ({ onComplete }) => {
         src={imgDesktopR}
         alt="Volodymyr Fushtei"
         className={styles.image}
-        fetchPriority="high"
+        
       />
     </picture>
     <span ref={firstNameRef} className={styles.firstName}>

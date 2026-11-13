@@ -31,7 +31,7 @@ export const socialLinks = [
   },
 ]
 export const imagesNavHeader = [
-  { src: '/images/Coworking.webp', link: '/' },
+  { src: '/images/Streets.webp', link: '/' },
   { src: '/images/Discussion.webp', link: '/projects' },
   { src: '/images/ryan_wilson_map.jpg', link: '/tech' },
   { src: '/images/marek.webp', link: '/contacts' },

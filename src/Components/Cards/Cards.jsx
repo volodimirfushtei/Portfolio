@@ -3,20 +3,20 @@ import styles from '../Cards/Cards.module.css'
 
 const cards = [
   {
-    image: '/images/card_1.webp',
-    mobileImage: '/images//card_1_mob.webp',
+    image: '/images/Glossy.webp',
+    mobileImage: '/images/Glossy.webp',
     alt: 'Abstract blue waves',
     label: 'Waves',
   },
   {
-    image: '/images/card_3.webp',
-    mobileImage: '/images/card_3_mob.webp',
+    image: '/images/Robot.webp',
+    mobileImage: '/images/Robot.webp',
     alt: 'Abstract 3D geometric structure',
     label: 'Structure',
   },
   {
-    image: '/images/card_2.webp',
-    mobileImage: '/images/card_2_mob.webp',
+    image: '/images/Swirling.webp',
+    mobileImage: '/images/Swirling.webp',
     alt: 'Abstract 3D curves and spheres',
     label: 'Curves',
   },

@@ -8,6 +8,7 @@ gsap.registerPlugin(ScrollTrigger)
 const HeroMedia = () => {
   const containerRef = useRef(null)
   const imageRef = useRef(null)
+  const deviderRef = useRef(null)
   const overlayRef = useRef(null)
   const contentRef = useRef(null)
   const frameRef = useRef(null)
@@ -23,45 +24,62 @@ const HeroMedia = () => {
         },
       })
 
-      tl
+      tl.from(frameRef.current, {
+        scale: 0.8,
+        opacity: 0,
+        duration: 1,
+      })
 
-        .from(frameRef.current, {
-          scale: 0.8,
-          opacity: 0,
-          duration: 1,
-        })
+        .from(
+          imageRef.current,
+          {
+            scale: 1.3,
+            yPercent: 10,
+            opacity: 0,
+            filter: 'blur(10px)',
+            duration: 1.6,
+          },
+          '<',
+        )
 
-        .from(imageRef.current, {
-          scale: 1.3,
-          yPercent: 10,
-          opacity: 0,
-          filter: 'blur(10px)',
-          duration: 1.6,
-        }, '<')
+        .from(
+          overlayRef.current,
+          {
+            opacity: 0,
+            scale: 1.2,
+            duration: 1,
+          },
+          '<0.2',
+        )
+        .from(
+          titleRef.current,
+          {
+            x: -20,
+            opacity: 0,
+            duration: 0.6,
+          },
+          '<0.1',
+        )
+        .from(
+          nameRef.current,
+          {
+            y: 40,
+            opacity: 0,
+            filter: 'blur(10px)',
+            duration: 0.8,
+          },
+          '-=0.8',
+        )
 
-        .from(overlayRef.current, {
-          opacity: 0,
-          scale: 1.2,
-          duration: 1,
-        }, '<0.2')
-        .from(titleRef.current, {
-          x: -20,
-          opacity: 0,
-          duration: .6,
-        }, '<0.1')
-        .from(nameRef.current, {
-          y: 40,
-          opacity: 0,
-          filter: 'blur(10px)',
-          duration: .8,
-        }, '-=0.8')
-
-        .from(badgeRef.current, {
-          x: 20,
-          opacity: 0,
-          duration: .6,
-        }, '<0.1')
-
+        .from(
+          badgeRef.current,
+          {
+            x: 20,
+            opacity: 0,
+            duration: 0.6,
+          },
+          '<0.1',
+        )
 
         .from(
           contentRef.current.querySelectorAll('[data-reveal]'),
@@ -69,9 +87,9 @@ const HeroMedia = () => {
             x: 60,
             opacity: 0,
             rotateX: 15,
-            scale: .95,
+            scale: 0.95,
             filter: 'blur(8px)',
-            stagger: .12,
+            stagger: 0.12,
             duration: 1,
           },
           '-=0.5',
@@ -89,24 +107,13 @@ const HeroMedia = () => {
       gsap.to(overlayRef.current, {
         x: 20,
         y: -10,
+        opacity: 0.5,
         duration: 8,
         repeat: -1,
         yoyo: true,
         ease: 'sine.inOut',
       })
-     gsap.to(containerRef.current, {
-       width: '1800px',
-       height: '100vh',
-      duration: 2,
-       ease: 'sine.inOut',
-       scrollTrigger: {
-         trigger: containerRef.current,
-         start: 'top top',
-         end: 'bottom top',
-         scrub: true,
-         pin: true,
-       }
-     })
+     
     }, containerRef)
 
     /* ── Magnetic Hover ── */
@@ -144,7 +151,6 @@ const HeroMedia = () => {
       ctx.revert()
       container.removeEventListener('mousemove', handleMove)
       container.removeEventListener('mouseleave', handleLeave)
-
     }
   }, [])
 
@@ -163,7 +169,7 @@ const HeroMedia = () => {
         className={styles.image}
         loading="lazy"
       />
-      <div className={styles.divider} />
+      <div className={styles.divider} ref={deviderRef} />
       <div className={styles.overlayHalf} />
       <div ref={overlayRef} className={styles.overlay} />
       <div ref={frameRef} className={styles.frame} />
@@ -172,7 +178,6 @@ const HeroMedia = () => {
         <span className={styles.liveDot} />
         LIVE
       </div>
-
 
       <div ref={contentRef} className={styles.footer}>
         <div className={styles.info}>

@@ -8,7 +8,7 @@
 
   --media-height-mobile: 340px;
   --media-height-tablet: 400px;
-  --media-height-desktop: 680px;
+  --media-height-desktop: 700px;
 
   --blur-amount: 12px;
   --glow-color: rgba(255, 45, 85, 0.3);
@@ -26,8 +26,8 @@
 ═══════════════════════════════════════ */
 .mediaContainer {
   position: relative;
-  width: 100%;
-  max-width: 720px;
+  width: 1440px;
+  max-width: 620px;
   min-height: var(--media-height-desktop);
   margin: 0 auto;
   overflow: hidden;
@@ -36,6 +36,7 @@
   cursor: move;
   isolation: isolate;
   transition: all var(--transition-slow);
+  border-radius: var(--radius-lg);
 }
 
 .mediaContainer::before {

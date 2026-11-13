@@ -17,10 +17,12 @@ import DotBand from '../../Components/DotBand/DotBand.jsx'
 import { useOutletContext } from 'react-router-dom'
 import SectionsDividers from '../../Components/SectionsDeviders/SectionsDeviders'
 import BottomBlur from '../../Components/BottomBlur/BottomBlur.jsx'
-
+import NoiseOverlay from '../../Components/NoiseOverlay/NoiseOverlay.jsx'
 const IphoneScene = lazy(
   () => import('../../Components/IphoneScene/IphoneScene.jsx'),
 )
+
+
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -183,6 +185,7 @@ const HomePage = () => {
 
   return (
     <div className={styles.container} ref={sectionRef}>
+      <NoiseOverlay />
       <IphoneScene />
       <section className={styles.heroSectionWrapper} id="hero">
         <HeroSection loading={loading} />

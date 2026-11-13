@@ -1,12 +1,4 @@
-import React, {
-  lazy,
-  Suspense,
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react'
+import React, { lazy, Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import styles from './HeroSection.module.css'
@@ -77,6 +69,7 @@ const HeroSection = ({ loading }) => {
     topLeftRef,
     cornersRef,
     dividersRef,
+    iconRef,
   } = useSectionRefs([
     'sectionRef',
     'bgRef',
@@ -86,7 +79,7 @@ const HeroSection = ({ loading }) => {
     'contentRef',
     'buttonsRef',
     'mediaRef',
-    'cornerRef',
+    'iconRef',
     'scrollIndicatorRef',
     'scrollLineRef',
     'titleRef',
@@ -168,10 +161,10 @@ const HeroSection = ({ loading }) => {
           filter: 'blur(16px)',
         },
         {
-          opacity: 0.25,
-          backgroundPosition: '50% 30%',
+          opacity: 0.45,
+          backgroundPosition: '80% 30%',
           filter: 'blur(0px)',
-          duration: 2,
+          duration: 3,
           ease: 'expo.out',
         },
         '+=0.2',
@@ -222,24 +215,29 @@ const HeroSection = ({ loading }) => {
         '+=0.1',
       )
       if (buttonsRef.current) {
-        intro.from(buttonsRef.current, {
-          autoAlpha: 0,
-          ease: 'none',
-        })
+        intro.from(
+          buttonsRef.current,
+          {
+            autoAlpha: 0,
+            duration: 0.8,
+            ease: 'power3.out',
+          },
+          '<0.2',
+        )
       }
       // Кнопки
-      const buttonItems = buttonsRef.current.querySelectorAll('button, a')
+      const buttonItems = buttonsRef.current.querySelectorAll('a,button')
       if (buttonItems.length) {
         intro.from(
           buttonItems,
           {
-            opacity: 0,
-            y: -30,
+            opacity: 1,
+            y: -20,
             duration: 0.6,
-            stagger: 0.15,
+            stagger: 0.1,
             ease: 'power4.out',
           },
-          '>0.2',
+          '<0.1',
         )
       }
       // Фон
@@ -293,7 +291,7 @@ const HeroSection = ({ loading }) => {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top top',
-          end: 'bottom top',
+          end: 'bottom bottom',
           scrub: true,
         },
       })
@@ -301,7 +299,7 @@ const HeroSection = ({ loading }) => {
       tl.to(
         sectionRef.current,
         {
-          y: -10,
+          y: -40,
           borderRadius: 20,
           scale: 0.9,
           ease: 'none',
@@ -320,17 +318,6 @@ const HeroSection = ({ loading }) => {
       )
 
       tl.to(
-        cornersRef.current.children,
-        {
-          scale: 1.15,
-          opacity: 0.72,
-          stagger: 0.05,
-          ease: 'none',
-        },
-        0,
-      )
-
-      tl.to(
         bgRef.current,
         {
           opacity: 0.5,
@@ -342,8 +329,9 @@ const HeroSection = ({ loading }) => {
       tl.to(
         bgImageRef.current,
         {
-          scaleY: 1.15,
-          yPercent: 15,
+          scaleY: 1.25,
+          opacity: 0.5,
+          backgroundPosition: '80% 20%',
           ease: 'none',
         },
         0,
@@ -352,48 +340,54 @@ const HeroSection = ({ loading }) => {
       tl.to(
         titleRef.current,
         {
-          xPercent: -15,
+          yPercent: -25,
 
-          scale: 0.98,
+          scale: 1.04,
           ease: 'none',
         },
         0,
       )
-        .to(
-          mediaRef.current,
-          {
-            xPercent: 15,
-            scale: 0.92,
-            ease: 'none',
-          },
-          '<',
-        )
-        .to(
-          buttonsRef.current,
-          {
-            yPercent: 10,
-            scale: 0.9,
-            ease: 'none',
-          },
-          0,
-        )
-        .to(
-          gridBlur3Ref.current,
-          {
-            scale: 2,
-            opacity: 1,
-            ease: 'none',
-          },
-          0,
-        )
-        .to(
-          scrollIndicatorRef.current,
-          {
-            yPercent: 100,
-            ease: 'none',
-          },
-          0,
-        )
+      tl.to(
+        mediaRef.current,
+        {
+          yPercent: -25,
+          scale: 1.04,
+          ease: 'none',
+        },
+        '<',
+      )
+      tl.to(
+        buttonsRef.current,
+        {
+          rotateY: -10,
+
+          scale: 1.02,
+          ease: 'none',
+        },
+        0,
+      )
+      tl.to(
+        gridBlur3Ref.current,
+        {
+          scale: 2,
+          opacity: 1,
+          ease: 'none',
+        },
+        0,
+      )
+      tl.to(
+        scrollIndicatorRef.current,
+        {
+          yPercent: 100,
+          ease: 'none',
+        },
+        0,
+      )
+      tl.to(iconRef.current, {
+        rotate: 45,
+        duration: 1.5,
+        ease: 'none',
+      })
     }, sectionRef)
 
     return () => ctx.revert()
@@ -435,7 +429,7 @@ const HeroSection = ({ loading }) => {
           .to(
             titleRef.current,
             {
-              yPercent: -140,
+              xPercent: 130,
               scale: 0.98,
               duration: 0.6,
             },
@@ -444,7 +438,7 @@ const HeroSection = ({ loading }) => {
           .to(
             mediaRef.current,
             {
-              yPercent: -140,
+              xPercent: -130,
               scale: 0.98,
               duration: 0.6,
             },
@@ -620,10 +614,16 @@ const HeroSection = ({ loading }) => {
               <span className={styles.fill}>DIGITAL</span>
             </span>
             <span className={styles.separator}>&</span>
+
             <span className={styles.word}>
               <span className={styles.stroke}>PRODUCTS</span>
               <span className={styles.fill}>PRODUCTS</span>
             </span>
+            <div className={styles.iconWord} ref={iconRef}>
+              <svg className={styles.icon} width={82} height={82}>
+                <use href={'/sprite.svg#icon-move-up-right'} />
+              </svg>
+            </div>
           </h1>
         </div>
 
@@ -655,6 +655,7 @@ const HeroSection = ({ loading }) => {
 
             <Button
               data-cursor="hover"
+
               size="md"
               data-cursor-type="link"
               data-cursor-text={published ? 'Reset' : 'Published'}

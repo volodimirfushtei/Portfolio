@@ -1,68 +1,68 @@
 .imageContainer {
-    display: none;
+  display: none;
 }
 
 @media only screen and (min-width: 1000px) {
-    .imageContainer {
-        display: block;
-        width: 550px;
-        height: 320px;
-        position: relative;
-        overflow: hidden;
-        border-radius: var(--radius-lg);
-        box-shadow: 0 0 10px var(--color-accent);
-        corner-shape: squircle;
-        border: 1px solid var(--color-border);
-    }
+  .imageContainer {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 0 10px var(--color-accent);
+    corner-shape: squircle;
+    border: 1px solid var(--color-border);
+  }
 
-    .imageContainer:hover {
-        cursor: pointer;
-    }
+  .imageContainer:hover {
+    cursor: pointer;
+  }
 
-    .imageContainer::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background-image: url('https://framerusercontent.com/images/9ErWmXn2IIfOUCaXNwDeuxqJXM.png?width=432&height=288');
-        background-size: 216px auto;
-        background-repeat: repeat;
-        background-position: left top;
-        opacity: 0.28;
-        pointer-events: none;
-        z-index: 2;
-        transition: opacity 0.5s ease;
-    }
+  .imageContainer::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('https://framerusercontent.com/images/9ErWmXn2IIfOUCaXNwDeuxqJXM.png?width=432&height=288');
+    background-size: 216px auto;
+    background-repeat: repeat;
+    background-position: left top;
+    opacity: 0.38;
+    pointer-events: none;
+    z-index: 2;
+    transition: opacity 0.5s ease;
+  }
 
-    .imageContainer::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        z-index: 1;
-        opacity: 0.8;
-        mix-blend-mode: color-dodge;
-        background: conic-gradient(var(--glass-bg), var(--color-page-gradient));
-    }
+  .imageContainer::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    opacity: 0.95;
+    mix-blend-mode: color-dodge;
+    background: conic-gradient(var(--color-overlay), var(--gradient-accent));
+  }
 
-    .imageContainer:hover::before {
-        opacity: 0;
-    }
+  .imageContainer:hover::before {
+    opacity: 0;
+  }
 
-    .imageContainer img {
-        display: block;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: var(--radius-lg);
-        corner-shape: squircle;
+  .imageContainer img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    corner-shape: squircle;
 
-        transform: scale(1);
-        transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-        filter 0.7s ease;
-    }
+    transform: scale(1);
+    transition:
+      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+      filter 0.7s ease;
+  }
 
-    .imageContainer:hover img {
-        transform: scale(0.96);
-        corner-shape: squircle;
-
-    }
+  .imageContainer:hover img {
+    transform: scale(0.96);
+    corner-shape: squircle;
+  }
 }
